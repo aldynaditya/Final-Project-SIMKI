@@ -2,10 +2,17 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+// const db = require('./app/db/index');
 
 const app = express();
 
+//untuk eksekusi database
+// (async()=>{
+//     await db.sync();
+// })();
+
 //router
+const userklinikRouter = require('./app/api/v1/userKlinik/router');
 const pasienRouter = require('./app/api/v1/pasien/router');
 
 const v1 = '/api/v1/cms';
@@ -22,6 +29,7 @@ app.get('/', (req, res) => {
     })
 });
 
+app.use(v1, userklinikRouter);
 app.use(v1, pasienRouter);
 
 module.exports = app;
