@@ -20,10 +20,10 @@ const {
     deletePasien,
 } = require("./controller");
 
-router.get('/Pasien', getPasien);
-router.get('/Pasien/:id', getPasienById);
-router.post('/Pasien', createPasien);
-router.patch('/Pasien/:id', updatePasien);
-router.delete('/Pasien/:id', deletePasien);
+router.get('/pasien', getPasien);
+router.get('/pasien/:id', getPasienById);
+router.post('/pasien', createPasien);
+router.patch('/pasien/:id', updatePasien);
+router.delete('/pasien/:id', deletePasien);
 
 module.exports = router;
