@@ -2,7 +2,9 @@ const { StatusCodes } = require('http-status-codes');
 const { 
     getAllObat,
     createObat,
-    getOneObat } = require('../../../services/sequelize/obat'); // Assuming you have a Category model defined in 'models' directory
+    getOneObat,
+    updateObat,
+    deleteObat } = require('../../../services/sequelize/obat'); // Assuming you have a Category model defined in 'models' directory
 
 const index = async (req, res, next) => {
     try {
@@ -18,7 +20,7 @@ const index = async (req, res, next) => {
 
 const find = async (req, res, next) => {
     try {
-        const result = await getOneObat(obatId);
+        const result = await getOneObat(req);
         
         res.status(StatusCodes.OK).json({
             data: result,
@@ -42,19 +44,11 @@ const create = async (req, res, next) => {
 
 const update = async (req, res, next) => {
     try {
-        const obatId = req.params.id;
-        let obat = await Obat.findByPk(obatId);
-        
-        if (!obat) {
-            res.status(StatusCodes.NOT_FOUND).json({
-                error: 'Medication not found',
-            });
-        } else {
-            obat = await obat.update(req.body);
-            res.status(StatusCodes.OK).json({
-                data: obat,
-            });
-        }
+        const result = await updateObat(req);
+
+        res.status(StatusCodes.OK).json({
+            data: result,
+        });
     } catch (err) {
         next(err);
     }
@@ -62,19 +56,11 @@ const update = async (req, res, next) => {
 
 const destroy = async (req, res, next) => {
     try {
-        const obatId = req.params.id;
-        const obat = await Obat.findByPk(obatId);
+        const result = await deleteObat(req);
 
-    if (!obat) {
-        res.status(StatusCodes.NOT_FOUND).json({
-        error: 'Medication not found',
-        });
-    } else {
-        await obat.destroy();
         res.status(StatusCodes.OK).json({
             data: 'Medication deleted successfully',
         });
-    }
     } catch (err) {
         next(err);
     }
