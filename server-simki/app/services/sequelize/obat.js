@@ -1,4 +1,4 @@
-const { Op, UUID } = require('sequelize');
+const { Op } = require('sequelize');
 const Obat = require('../../api/v1/obat/model');
 const { BadRequestError, NotFoundError } = require('../../errors');
 
@@ -69,14 +69,6 @@ const deleteObat = async (req) => {
 
     return result;
 };
-
-// const checkingObat = async (id) => {
-//     const result = await Obat.findOne({ where: { uuid: id } });
-
-//     if (!result) throw new NotFoundError(`Tidak ada Kategori dengan id :  ${id}`);
-
-//     return result;
-// };
 
 module.exports = {
     getAllObat,

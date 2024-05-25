@@ -4,7 +4,7 @@ const {
     createObat,
     getOneObat,
     updateObat,
-    deleteObat } = require('../../../services/sequelize/obat'); // Assuming you have a Category model defined in 'models' directory
+    deleteObat } = require('../../../services/sequelize/obat');
 
 const index = async (req, res, next) => {
     try {
@@ -59,7 +59,7 @@ const destroy = async (req, res, next) => {
         const result = await deleteObat(req);
 
         res.status(StatusCodes.OK).json({
-            data: 'Medication deleted successfully',
+            data: 'Obat berhasil terhapus',
         });
     } catch (err) {
         next(err);
