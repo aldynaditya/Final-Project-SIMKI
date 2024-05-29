@@ -3,14 +3,14 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-// const db = require('./app/db/index');
+const db = require('./app/db/index');
 
 const app = express();
 
-//untuk eksekusi database
-// (async()=>{
-//     await db.sync();
-// })();
+
+(async()=>{
+    await db.sync();
+})();
 
 //router
 const userklinikRouter = require('./app/api/v1/userKlinik/router');
@@ -37,6 +37,7 @@ app.get('/', (req, res) => {
 // app.use(v1, userklinikRouter);
 // app.use(v1, pasienRouter);
 app.use(v1, obatRouter);
+// app.use(v1, userklinikRouter);
 
 //use middleware
 app.use(notFoundMiddleware);
