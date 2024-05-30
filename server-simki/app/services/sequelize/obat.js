@@ -3,7 +3,7 @@ const Obat = require('../../api/v1/obat/model');
 const { BadRequestError, NotFoundError } = require('../../errors');
 
 const getAllObat = async (req) => {
-    const result = await Obat.findAll();
+    const result = await Obat.findAll(req.body);
 
     return result;
 };
