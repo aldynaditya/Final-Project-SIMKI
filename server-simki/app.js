@@ -8,18 +8,20 @@ const db = require('./app/db/index');
 const app = express();
 
 
-(async()=>{
-    await db.sync();
-})();
+// (async()=>{
+//     await db.sync();
+// })();
 
 //router
 const userklinikRouter = require('./app/api/v1/userKlinik/router');
-const pasienRouter = require('./app/api/v1/pasien/router');
+const roleRouter = require('./app/api/v1/role/router');
+// const pasienRouter = require('./app/api/v1/pasien/router');
 const obatRouter = require('./app/api/v1/obat/router');
 
 const v1 = '/api/v1/cms';
 const notFoundMiddleware = require('./app/middleware/not-found');
 const handlerErrorMiddleware = require('./app/middleware/handler-error');
+// const authMiddleware = require('./app/middleware/auth');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -34,13 +36,15 @@ app.get('/', (req, res) => {
     })
 });
 //use router
-// app.use(v1, userklinikRouter);
+app.use(v1, userklinikRouter);
+app.use(v1, roleRouter);
 // app.use(v1, pasienRouter);
 app.use(v1, obatRouter);
-// app.use(v1, userklinikRouter);
+
 
 //use middleware
 app.use(notFoundMiddleware);
 app.use(handlerErrorMiddleware);
+// app.use(authMiddleware);
 
 module.exports = app;

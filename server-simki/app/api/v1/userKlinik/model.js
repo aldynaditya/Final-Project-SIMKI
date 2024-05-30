@@ -1,6 +1,7 @@
 const db = require('../../../db/index');
 const argon2 = require('argon2');
 const { DataTypes } = require('sequelize');
+const {Role, Permission}= require('../role/model');
 
 const UserKlinik = db.define('user_klinik', {
     uuid:{
@@ -21,15 +22,6 @@ const UserKlinik = db.define('user_klinik', {
                 args: [3, 50],
                 msg: 'Nama harus di antara 3 dan 50 karakter',
             },
-        },
-    },
-    email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        validate: {
-            notNull: { msg: 'Email harus diisi' },
-            isEmail: { msg: 'Format email tidak valid' },
         },
     },
     password: {
@@ -54,26 +46,9 @@ const UserKlinik = db.define('user_klinik', {
     },
 });
     
-const Role = db.define('Role', {
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-    },
-});
-    
-const Permission = db.define('Permission', {
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-    },
-});
-    
 const UserRole = db.define('UserRole', {});
-    
 const RolePermission = db.define('RolePermission', {});
-    
+
 UserKlinik.belongsToMany(Role, { through: UserRole });
 Role.belongsToMany(UserKlinik, { through: UserRole });
 Role.belongsToMany(Permission, { through: RolePermission });
@@ -83,4 +58,4 @@ UserKlinik.prototype.comparePassword = async function (candidatePassword) {
     return await argon2.verify(this.password, candidatePassword);
     };
     
-module.exports = { UserKlinik, Role, Permission, UserRole, RolePermission };
+module.exports = { UserKlinik, UserRole, RolePermission };
