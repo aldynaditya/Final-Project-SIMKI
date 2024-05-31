@@ -1,9 +1,26 @@
-const { getAllRole, createRole } = require('../../../services/sequelize/role');
+const { 
+    getAllRole,
+    getAllPermission,
+    createRole,
+    createPermissiontoRole } = require('../../../services/sequelize/role');
 const { StatusCodes } = require('http-status-codes');
 
-const index = async (req, res, next) => {
+const indexr = async (req, res, next) => {
     try {
         const result = await getAllRole(req);
+
+    res.status(StatusCodes.OK).json({
+        data: result,
+    });
+    } catch (err) {
+        next(err);
+    }
+
+};
+
+const indexp = async (req, res, next) => {
+    try {
+        const result = await getAllPermission(req);
 
     res.status(StatusCodes.OK).json({
         data: result,
@@ -26,16 +43,17 @@ const create = async (req, res, next) => {
     }
 };
 
-// const assignPermission = async (req, res) => {
-//     try {
-//         const { roleName, permissionName } = req.body;
-//         const role = await Role.findOne({ where: { name: roleName } });
-//         const permission = await Permission.findOne({ where: { name: permissionName } });
-//         await role.addPermission(permission);
-//         res.status(200).json({ message: 'Permission assigned successfully' });
-//     } catch (error) {
-//         res.status(400).json({ error: error.message });
-//     }
-// };
+const assign = async (req, res) => {
+    try {
+        const result = await assignPermissiontoRole(req);
+        
+        res.status(StatusCodes.CREATED).json({
+            data: result,
+        });
+    } catch (err) {
+        next(err);
+    }
+};
 
-module.exports = { index, create };
+
+module.exports = { indexr, indexp, create, assign };
