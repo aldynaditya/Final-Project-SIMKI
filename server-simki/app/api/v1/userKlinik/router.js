@@ -1,8 +1,12 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { createUser, assignRole } = require('./controller');
 
-router.post('/userklinik', createUser);
-router.post('/assign-role', assignRole);
+const { 
+    create,
+    index } = require('./controller');
+
+router.get('/userklinik', index)
+router.post('/userklinik', create);
+// router.post('/assign-permission', assignPermission);
 
 module.exports = router;

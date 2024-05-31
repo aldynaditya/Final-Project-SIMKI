@@ -1,25 +1,31 @@
-const {UserKlinik, Role} = require('./model');
+const { 
+    createUserKlinik, 
+    getAllUserKlinik} = require('../../../services/sequelize/userKlinik');
+const { StatusCodes } = require('http-status-codes');
 
-const createUser = async (req, res) => {
+const index = async (req, res, next) => {
     try {
-        const { name, password, role } = req.body;
-        const user = await UserKlinik.create({ name, password, role });
-        res.status(201).json(user);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
+        const result = await getAllUserKlinik(req);
+
+    res.status(StatusCodes.OK).json({
+        data: result,
+    });
+    } catch (err) {
+        next(err);
+    }
+
+};
+
+const create = async (req, res, next) => {
+    try {
+        const result = await createUserKlinik(req);
+        
+        res.status(StatusCodes.CREATED).json({
+            data: result,
+        });
+    } catch (err) {
+        next(err);
     }
 };
 
-const assignRole = async (req, res) => {
-    try {
-        const { userId, roleName } = req.body;
-        const user = await UserKlinik.findByPk(userId);
-        const role = await Role.findOne({ where: { name: roleName } });
-        await user.addRole(role);
-        res.status(200).json({ message: "Role assigned successfully" });
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-};
-
-module.exports = { createUser, assignRole };
+module.exports = { index, create };
