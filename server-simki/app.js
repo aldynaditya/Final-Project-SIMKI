@@ -3,20 +3,21 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const db = require('./app/db/index');
+const db = require('./app/db');
+
 
 const app = express();
 
-
+// force:true
 // (async()=>{
-//     await db.sync();
+//     await db.sync(); 
 // })();
 
 //router
-const userklinikRouter = require('./app/api/v1/userKlinik/router');
-const roleRouter = require('./app/api/v1/role/router');
-// const pasienRouter = require('./app/api/v1/pasien/router');
+// const userklinikRouter = require('./app/api/v1/userKlinik/router');
 const obatRouter = require('./app/api/v1/obat/router');
+const SuperUserRouter = require('./app/api/v1/superUser/router');
+const authRouter = require('./app/api/v1/auth/router');
 
 const v1 = '/api/v1/cms';
 const notFoundMiddleware = require('./app/middleware/not-found');
@@ -36,15 +37,15 @@ app.get('/', (req, res) => {
     })
 });
 //use router
-app.use(v1, userklinikRouter);
-app.use(v1, roleRouter);
-// app.use(v1, pasienRouter);
+// app.use(v1, userklinikRouter);
 app.use(v1, obatRouter);
+app.use(v1, SuperUserRouter);
+app.use(v1, authRouter);
 
 
 //use middleware
 app.use(notFoundMiddleware);
 app.use(handlerErrorMiddleware);
-// app.use(authMiddleware);
+
 
 module.exports = app;
