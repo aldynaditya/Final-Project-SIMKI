@@ -1,6 +1,7 @@
 const db = require('../../../db/index');
 const { DataTypes } = require('sequelize');
 const SuperUser = require('../superUser/model');
+const UserKlinik = require('../userKlinik/model');
 
 const Obat = db.define('obat', {
     uuid:{
@@ -52,20 +53,19 @@ const Obat = db.define('obat', {
             notEmpty: true,
         }
     },
-    superuser: {
-        type: DataTypes.UUID,
+    createdBy: {
+        type: DataTypes.STRING,
         allowNull: false,
-    }   
+    }  
 }, {
     timestamps: true,
     tableName: 'obat'
 });
 
-Obat.belongsTo(SuperUser, {
-    foreignKey: 'superuser',
-    targetKey: 'uuid',
-    as: 'superUser'
+Obat.belongsTo(UserKlinik, {
+    foreignKey: 'createdBy',
+    targetKey: 'name',
+    as: 'creator'
 });
-
 
 module.exports = Obat;

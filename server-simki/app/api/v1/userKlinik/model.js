@@ -16,6 +16,7 @@ const UserKlinik = db.define('user_klinik', {
   name: {
     type: DataTypes.STRING,
     allowNull: false,
+    unique: true,
     validate: {
       notNull: { msg: 'Nama harus diisi' },
       len: { args: [3, 50], msg: 'Nama harus antara 3 dan 50 karakter' },
@@ -73,5 +74,5 @@ UserKlinik.prototype.comparePassword = async function (candidatePassword) {
 SuperUser.hasMany(UserKlinik, { foreignKey: 'superuser' });
 UserKlinik.belongsTo(SuperUser, { foreignKey: 'superuser' });
 
-
 module.exports = UserKlinik;
+

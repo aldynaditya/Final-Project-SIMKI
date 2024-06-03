@@ -8,9 +8,9 @@ const db = require('./app/db');
 
 const app = express();
 
-// force:true
+// {force:true}
 // (async()=>{
-//     await db.sync(); 
+//     await db.sync({force:true}); 
 // })();
 
 //router

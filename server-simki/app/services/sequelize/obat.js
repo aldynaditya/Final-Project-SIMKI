@@ -11,6 +11,7 @@ const getAllObat = async (req) => {
 const createObat = async (req) => {
     const {nama_obat, kode_obat, harga_satuan_obat, satuan, stok } = req.body;
     const superuser = req.user.superuser;
+    const createdBy = req.user.name;
 
     const check = await Obat.findOne({ where: { nama_obat } });
     if (check) throw new BadRequestError('Obat telah terdaftar');
@@ -21,10 +22,11 @@ const createObat = async (req) => {
         harga_satuan_obat: harga_satuan_obat,
         satuan: satuan,
         stok: stok,
-        superuser
+        superuser,
+        createdBy
     });
 
-    return result;
+    return result
 };
 
 const getOneObat = async (req) => {
