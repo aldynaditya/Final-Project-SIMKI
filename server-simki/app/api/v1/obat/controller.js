@@ -4,7 +4,8 @@ const {
     createObat,
     getOneObat,
     updateObat,
-    deleteObat } = require('../../../services/sequelize/obat');
+    deleteObat 
+} = require('../../../services/sequelize/obat');
 
 const index = async (req, res, next) => {
     try {

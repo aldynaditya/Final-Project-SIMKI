@@ -1,6 +1,45 @@
-const { UserKlinik  } = require('../../api/v1/userKlinik/model');
-const { Role } = require('../../api/v1/role/model');
+const  UserKlinik  = require('../../api/v1/userKlinik/model');
+const SuperUser = require('../../api/v1/superUser/model');
 const { BadRequestError, NotFoundError } = require('../../errors');
+
+const createSuperUser = async (req) => {
+    const { superuser, name, email, password, confirmPassword, role } = req.body;
+
+    if (password !== confirmPassword) {
+        throw new BadRequestError('Password dan Konfirmasi password tidak cocok');
+        }
+    
+    const superUser = await SuperUser.create({ superuser });
+    const superuserId = superUser.uuid;
+    
+    const users = await UserKlinik.create({
+        email,
+        name,
+        password,
+        superuser: superuserId,
+        role,
+    });
+
+    return users;
+};
+
+const createUsers = async (req, res) => {
+    const { name, password, role, confirmPassword, email } = req.body;
+
+    if (password !== confirmPassword) {
+        throw new BadRequestError('Password dan Konfirmasi password tidak cocok');
+    }
+
+    const result = await UserKlinik.create({
+        name,
+        email,
+        superuser: req.user.superuser,
+        password,
+        role,
+    });
+
+    return result;
+};
 
 const getAllUserKlinik = async (req) => {
     const result = await UserKlinik.findAll(req.body);
@@ -8,23 +47,8 @@ const getAllUserKlinik = async (req) => {
     return result;
 };
 
-const createUserKlinik = async (req) => {
-    const { name, password, role } = req.body;
-    // Cari obat berdasarkan nama dan organizer
-    const check = await UserKlinik.findOne({ where: { name } });
-    if (check) throw new BadRequestError('Nama telah terdaftar');
-    const userRole = await Role.findOne({ where: { name : role } });
-    if (!userRole) throw new BadRequestError('Role tidak valid');
-
-    const result = await UserKlinik.create({
-        name,
-        password,
-        role
-    });
-
-    await result.addRole(userRole);
-
-    return result;
+module.exports = { 
+    createSuperUser,
+    createUsers,
+    getAllUserKlinik 
 };
-
-module.exports = { getAllUserKlinik, createUserKlinik };

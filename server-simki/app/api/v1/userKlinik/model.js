@@ -1,61 +1,77 @@
-const db = require('../../../db/index');
+const db = require('../../../db/index'); // Sesuaikan path ke instance Sequelize Anda
 const argon2 = require('argon2');
 const { DataTypes } = require('sequelize');
-const {Role, Permission}= require('../role/model');
+const SuperUser = require('../superUser/model');
 
 const UserKlinik = db.define('user_klinik', {
-    uuid:{
-        type: DataTypes. STRING,
-        defaultValue: DataTypes.UUIDV4,
-        allowNull: false,
-        primaryKey: true,
-        validate: {
-            notEmpty: true
-        }
+  uuid:{
+    type: DataTypes. UUID,
+    primaryKey: true,
+    defaultValue: DataTypes.UUIDV4,
+    allowNull: false,
+    validate: {
+        notEmpty: true
+    }
+},
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      notNull: { msg: 'Nama harus diisi' },
+      len: { args: [3, 50], msg: 'Nama harus antara 3 dan 50 karakter' },
     },
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            notNull: { msg: 'Nama harus diisi' },
-            len: {
-                args: [3, 50],
-                msg: 'Nama harus di antara 3 dan 50 karakter',
-            },
-        },
+  },
+  email: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: false,
+    validate: {
+      notNull: { msg: 'Email harus diisi' },
+      isEmail: { msg: 'Email tidak valid' },
     },
-    password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            notNull: { msg: 'Password harus diisi' },
-            len: {
-            args: [6],
-            msg: 'Password harus memiliki minimal 6 karakter',
-            },
-        },
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      notNull: { msg: 'Password harus diisi' },
+      len: { args: [6], msg: 'Password minimal 6 karakter' },
     },
-    }, {
-    timestamps: true,
-    hooks: {
-        beforeSave: async (user) => {
-            if (user.changed('password')) {
-            user.password = await argon2.hash(user.password);
-            }
-        },
+  },
+  role: {
+    type: DataTypes.ENUM('superuser', 'dokter', 'farmasi', 'petinggi'),
+    defaultValue: 'superuser',
+    validate: {
+      isIn: {
+        args: [['superuser', 'dokter', 'farmasi', 'petinggi']],
+        msg: 'Role tidak valid',
+      },
     },
+  },
+  superuser: {
+    type: DataTypes.UUID,
+    allowNull: false,
+  },
+}, {
+  hooks: {
+    beforeCreate: async (user) => {
+      user.password = await argon2.hash(user.password);
+    },
+    beforeUpdate: async (user) => {
+      if (user.changed('password')) {
+        user.password = await argon2.hash(user.password);
+      }
+    },
+  },
+  tableName: 'user_klinik'
 });
-    
-const UserRole = db.define('UserRole', {});
-const RolePermission = db.define('RolePermission', {});
 
-UserKlinik.belongsToMany(Role, { through: UserRole });
-Role.belongsToMany(UserKlinik, { through: UserRole });
-Role.belongsToMany(Permission, { through: RolePermission });
-Permission.belongsToMany(Role, { through: RolePermission });
-    
 UserKlinik.prototype.comparePassword = async function (candidatePassword) {
-    return await argon2.verify(this.password, candidatePassword);
-    };
-    
-module.exports = { UserKlinik, UserRole, RolePermission };
+  return await argon2.verify(this.password, candidatePassword);
+};
+
+SuperUser.hasMany(UserKlinik, { foreignKey: 'superuser' });
+UserKlinik.belongsTo(SuperUser, { foreignKey: 'superuser' });
+
+
+module.exports = UserKlinik;

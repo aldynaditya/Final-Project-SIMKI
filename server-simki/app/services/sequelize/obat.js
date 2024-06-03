@@ -9,10 +9,10 @@ const getAllObat = async (req) => {
 };
 
 const createObat = async (req) => {
-    const {nama_obat, kode_obat, harga_satuan_obat, satuan, stok} = req.body;
-    // Cari obat berdasarkan nama dan organizer
+    const {nama_obat, kode_obat, harga_satuan_obat, satuan, stok } = req.body;
+    const superuser = req.user.superuser;
+
     const check = await Obat.findOne({ where: { nama_obat } });
-    // Jika obat sudah ada, tampilkan error bad request
     if (check) throw new BadRequestError('Obat telah terdaftar');
 
     const result = await Obat.create({
@@ -21,6 +21,7 @@ const createObat = async (req) => {
         harga_satuan_obat: harga_satuan_obat,
         satuan: satuan,
         stok: stok,
+        superuser
     });
 
     return result;
@@ -76,5 +77,4 @@ module.exports = {
     getOneObat,
     updateObat,
     deleteObat,
-    // checkingObat,
 };
