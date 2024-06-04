@@ -33,7 +33,7 @@ const getOneObat = async (req) => {
     const { id } = req.params;
     const result = await Obat.findOne({ where: {uuid: id} });
 
-    if (!result) throw new NotFoundError(`Tidak ada Kategori dengan id :  ${id}`);
+    if (!result) throw new NotFoundError(`Tidak ada Obat dengan id :  ${id}`);
 
     return result;
 };
@@ -56,7 +56,7 @@ const updateObat = async (req) => {
         { where: { uuid: id }}
     );
 
-    if (!result) throw new NotFoundError(`Tidak ada Kategori dengan id :  ${id}`);
+    if (!result) throw new NotFoundError(`Tidak ada Obat dengan id :  ${id}`);
     
     return result;
 };

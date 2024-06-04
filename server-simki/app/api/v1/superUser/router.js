@@ -4,7 +4,8 @@ const router = express.Router();
 const { 
     createCMSsuperuser,
     createCMSusers,
-    getCMSusers
+    getCMSusers,
+    deleteCMSusers
 } = require('./controller');
 const {
     authenticateUser,
@@ -12,7 +13,8 @@ const {
 } = require('../../../middleware/auth');
 
 router.post('/superuser', createCMSsuperuser);
-router.post('/userklinik', authenticateUser, createCMSusers);
-router.get('/userklinik', authenticateUser, getCMSusers)
+router.post('/userklinik', authenticateUser, authorizeRoles('superuser'), createCMSusers);
+router.get('/userklinik', authenticateUser, authorizeRoles('superuser'), getCMSusers)
+router.delete('/userklinik/:id', authenticateUser, authorizeRoles('superuser'), deleteCMSusers);
 
 module.exports = router;

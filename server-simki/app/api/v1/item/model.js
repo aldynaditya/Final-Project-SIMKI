@@ -2,7 +2,7 @@ const db = require('../../../db/index');
 const { DataTypes } = require('sequelize');
 const UserKlinik = require('../userKlinik/model');
 
-const Obat = db.define('obat', {
+const Item = db.define('item', {
     uuid:{
         type: DataTypes. STRING,
         primaryKey: true,
@@ -12,7 +12,7 @@ const Obat = db.define('obat', {
             notEmpty: true
         }
     },
-    nama_obat:{
+    nama_item:{
         type: DataTypes. STRING,
         allowNull: false,
         validate: {
@@ -20,7 +20,7 @@ const Obat = db.define('obat', {
             len : [3,100]
         }
     },
-    kode_obat:{
+    kode_item:{
         type: DataTypes. STRING,
         allowNull: false,
         unique: {
@@ -30,19 +30,11 @@ const Obat = db.define('obat', {
             notEmpty: true,
         }
     },
-    harga_satuan_obat:{
+    harga_satuan_item:{
         type: DataTypes. INTEGER,
         allowNull: false,
         validate: {
             notEmpty: true,
-        }
-    },
-    satuan:{
-        type: DataTypes. STRING,
-        allowNull: false,
-        validate: {
-            notEmpty: true,
-            len : [3,100]
         }
     },
     stok:{
@@ -58,13 +50,13 @@ const Obat = db.define('obat', {
     }  
 }, {
     timestamps: true,
-    tableName: 'obat'
+    tableName: 'item'
 });
 
-Obat.belongsTo(UserKlinik, {
+Item.belongsTo(UserKlinik, {
     foreignKey: 'createdBy',
     targetKey: 'name',
     as: 'creator'
 });
 
-module.exports = Obat;
+module.exports = Item;
