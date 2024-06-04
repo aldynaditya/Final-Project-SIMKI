@@ -1,0 +1,21 @@
+const express = require("express");
+const router = express.Router();
+const {
+    index,
+    find,
+    create,
+    update,
+    destroy,
+} = require("./controller");
+const {
+    authenticateUser,
+    authorizeRoles
+} = require('../../../middleware/auth');
+
+router.get('/item',authenticateUser, authorizeRoles('superuser','perawat'), index);
+router.get('/item/:id',authenticateUser, authorizeRoles('superuser','perawat'),find);
+router.post('/item',authenticateUser, authorizeRoles('superuser','perawat'), create);
+router.patch('/item/:id',authenticateUser, authorizeRoles('superuser','perawat'), update);
+router.delete('/item/:id',authenticateUser, authorizeRoles('superuser','perawat'), destroy);
+
+module.exports = router;

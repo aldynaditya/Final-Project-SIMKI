@@ -11,7 +11,7 @@ const createSuperUser = async (req) => {
     
     const superUser = await SuperUser.create({ superuser });
     const superuserId = superUser.uuid;
-    
+
     const users = await UserKlinik.create({
         email,
         name,
@@ -37,7 +37,7 @@ const createUsers = async (req, res) => {
         password,
         role,
     });
-
+    
     return result;
 };
 
@@ -47,8 +47,21 @@ const getAllUserKlinik = async (req) => {
     return result;
 };
 
+const deleteUserKlinik = async (req) => {
+    const { id } = req.params;
+
+    const result = await UserKlinik.findOne({ where: {uuid: id} });
+
+    if (!result) throw new NotFoundError(`Tidak ada User Klinik dengan id :  ${id}`);
+
+    await result.destroy();
+
+    return result;
+};
+
 module.exports = { 
     createSuperUser,
     createUsers,
-    getAllUserKlinik 
+    getAllUserKlinik,
+    deleteUserKlinik 
 };

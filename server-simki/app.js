@@ -9,20 +9,20 @@ const db = require('./app/db');
 const app = express();
 
 // {force:true}
-// (async()=>{
-//     await db.sync({force:true}); 
-// })();
+(async()=>{
+    await db.sync(); 
+})();
 
 //router
-// const userklinikRouter = require('./app/api/v1/userKlinik/router');
-const obatRouter = require('./app/api/v1/obat/router');
 const SuperUserRouter = require('./app/api/v1/superUser/router');
 const authRouter = require('./app/api/v1/auth/router');
+const obatRouter = require('./app/api/v1/obat/router');
+const itemRouter = require('./app/api/v1/item/router');
 
 const v1 = '/api/v1/cms';
 const notFoundMiddleware = require('./app/middleware/not-found');
 const handlerErrorMiddleware = require('./app/middleware/handler-error');
-// const authMiddleware = require('./app/middleware/auth');
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -37,10 +37,10 @@ app.get('/', (req, res) => {
     })
 });
 //use router
-// app.use(v1, userklinikRouter);
-app.use(v1, obatRouter);
 app.use(v1, SuperUserRouter);
 app.use(v1, authRouter);
+app.use(v1, obatRouter);
+app.use(v1, itemRouter);
 
 
 //use middleware
