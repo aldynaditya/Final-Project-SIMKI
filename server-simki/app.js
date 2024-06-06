@@ -7,11 +7,34 @@ const db = require('./app/db');
 
 
 const app = express();
-
+// db.sync().then(() => {
+//     console.log('Database synchronized');
+// }).catch(err => {
+//     console.error('Database synchronization error:', err);
+// });
 // {force:true}
 (async()=>{
-    await db.sync(); 
+    await db.sync({force:true}); 
 })();
+const Pasien = require('./app/api/v1/pasien/model'); // Sesuaikan path ke model Pasien
+
+// Buat instansi Pasien baru
+// Pasien.create({
+//     nik: '1234567890',
+//     nama_lengkap: 'John Doe',
+//     tempat_lahir: 'Jakarta',
+//     tanggal_lahir: '1990-01-01',
+//     jenis_kelamin: 'laki-laki',
+//     gol_darah: 'O',
+//     suku_bangsa: 'WNI',
+//     alamat: 'Jl. Merdeka No. 1',
+//     email: 'johndoe@example.com',
+//     password: 'password123'
+// }).then(pasien => {
+//     console.log('Pasien created:', pasien);
+// }).catch(error => {
+//     console.error('Error creating pasien:', error);
+// });
 
 //router
 const SuperUserRouter = require('./app/api/v1/superUser/router');
