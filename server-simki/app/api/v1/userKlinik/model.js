@@ -5,7 +5,7 @@ const SuperUser = require('../superUser/model');
 
 const UserKlinik = db.define('user_klinik', {
     uuid:{
-        type: DataTypes. UUID,
+        type: DataTypes.UUID,
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
@@ -18,7 +18,7 @@ const UserKlinik = db.define('user_klinik', {
         allowNull: false,
         unique: true,
         validate: {
-        notNull: { msg: 'Nama harus diisi' },
+            notNull: { msg: 'Nama harus diisi' },
         len: { 
             args: [3, 50], 
             msg: 'Nama harus antara 3 dan 50 karakter' },
