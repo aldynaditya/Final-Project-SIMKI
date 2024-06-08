@@ -3,46 +3,31 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const db = require('./app/db');
-
+// const db = require('./app/db');
 
 const app = express();
+
 // db.sync().then(() => {
 //     console.log('Database synchronized');
 // }).catch(err => {
 //     console.error('Database synchronization error:', err);
 // });
-// {force:true}
-(async()=>{
-    await db.sync({force:true}); 
-})();
-const Pasien = require('./app/api/v1/pasien/model'); // Sesuaikan path ke model Pasien
+// const Pasien = require('./app/api/v1/pasien/model');
+// (async()=>{
+//     await db.sync({force:true}); 
+// })();
 
-// Buat instansi Pasien baru
-// Pasien.create({
-//     nik: '1234567890',
-//     nama_lengkap: 'John Doe',
-//     tempat_lahir: 'Jakarta',
-//     tanggal_lahir: '1990-01-01',
-//     jenis_kelamin: 'laki-laki',
-//     gol_darah: 'O',
-//     suku_bangsa: 'WNI',
-//     alamat: 'Jl. Merdeka No. 1',
-//     email: 'johndoe@example.com',
-//     password: 'password123'
-// }).then(pasien => {
-//     console.log('Pasien created:', pasien);
-// }).catch(error => {
-//     console.error('Error creating pasien:', error);
-// });
+
 
 //router
 const SuperUserRouter = require('./app/api/v1/superUser/router');
 const authRouter = require('./app/api/v1/auth/router');
 const obatRouter = require('./app/api/v1/obat/router');
 const itemRouter = require('./app/api/v1/item/router');
+const pasienRouter = require('./app/api/v1/pasien/router');
 
-const v1 = '/api/v1/cms';
+const v1 = '/api/v1';
+
 const notFoundMiddleware = require('./app/middleware/not-found');
 const handlerErrorMiddleware = require('./app/middleware/handler-error');
 
@@ -59,11 +44,13 @@ app.get('/', (req, res) => {
         message: "Welcome to API SIMKI",
     })
 });
+
 //use router
-app.use(v1, SuperUserRouter);
-app.use(v1, authRouter);
-app.use(v1, obatRouter);
-app.use(v1, itemRouter);
+app.use(`${v1}/cms`, SuperUserRouter);
+app.use(`${v1}/cms`, authRouter);
+app.use(`${v1}/cms`, obatRouter);
+app.use(`${v1}/cms`, itemRouter);
+app.use(`${v1}`, pasienRouter);
 
 
 //use middleware

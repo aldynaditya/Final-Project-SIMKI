@@ -20,6 +20,10 @@ const Pasien = db.define('pasien', {
         },
         validate: {
             notEmpty: true,
+            len: {
+                args: [16, 16],
+                msg: 'NIK terdiri dari 16 Karakter'
+            }
         }
     },
     nama_lengkap: {
@@ -101,16 +105,21 @@ const Pasien = db.define('pasien', {
     role: {
         type: DataTypes.ENUM('pasien'),
         defaultValue: 'pasien',
-        validate: {
-            isIn: {
-                args: [[ 'pasien' ]],
-                msg: 'Role tidak valid',
-            },
-        },
+    },
+    status: {
+        type: DataTypes.ENUM('aktif', 'tidak aktif'),
+        defaultValue: 'tidak aktif',
+    },
+    otp: {
+        type: DataTypes.STRING,
+        allowNull: false,
     },
 }, {
     hooks: {
         beforeCreate: async (user) => {
+            if (!user.role) {
+                user.role = 'pasien';
+            }
             user.password = await argon2.hash(user.password);
         },
         beforeUpdate: async (user) => {
