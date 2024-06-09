@@ -4,6 +4,8 @@ import "./Home.css";
 import klinikdipo from "../images/klinikdipo.png";
 import Footer from "../components/Footer";
 
+
+//ini Home
 const Home = () => {
   return (
     <div className="container">
