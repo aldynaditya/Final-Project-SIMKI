@@ -2,8 +2,7 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import "./KebijakanPrivasi.css";
 import Footer from "../components/Footer";
-
-
+// keebijakan privasi
 const KebijakanPrivasi = () => {
     return (
         <div className="container">
