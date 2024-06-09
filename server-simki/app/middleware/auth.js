@@ -23,7 +23,35 @@ const authenticateUser = async (req, res, next) => {
             id: payload.userId,
             superuser: payload.superuser,
         };
+        next();
+    } catch (error) {
+        next(error);
+    }
+};
 
+const authenticatePasien = async (req, res, next) => {
+    try {
+        let token;
+        // check header
+        const authHeader = req.headers.authorization;
+
+        if (authHeader && authHeader.startsWith('Bearer')) {
+            token = authHeader.split(' ')[1];
+        }
+
+        if (!token) {
+            throw new UnauthenticatedError('Authentication invalid');
+        }
+
+        const payload = isTokenValid({ token });
+
+        // Attach the user and his permissions to the req object
+        req.pasien = {
+            email: payload.email,
+            role: payload.role,
+            name: payload.name,
+            id: payload.pasienId,
+        };
         next();
     } catch (error) {
         next(error);

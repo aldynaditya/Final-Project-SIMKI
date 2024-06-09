@@ -8,16 +8,16 @@ const createTokenUser = (user) => {
     };
 };
 
-// const createTokenParticipant = (participant) => {
-//     return {
-//         lastName: participant.lastName,
-//         participantId: participant._id,
-//         firstName: participant.firstName,
-//         email: participant.email,
-//     };
-// };
+const createTokenPasien = (pasien) => {
+    return {
+        name: pasien.nama_lengkap,
+        pasienId: pasien.uuid, // Menggunakan uuid sebagai pasienId
+        role: pasien.role,
+        email: pasien.email,
+    };
+};
 
 module.exports = { 
     createTokenUser, 
-    // createTokenParticipant 
+    createTokenPasien
 };
