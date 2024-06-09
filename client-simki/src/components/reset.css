@@ -1,0 +1,18 @@
+/* Apply box-sizing: border-box to all elements for easier layout management */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Ensure html and body take full width and height */
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}

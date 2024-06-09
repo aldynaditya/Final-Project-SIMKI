@@ -1,0 +1,133 @@
+/* Pastikan seluruh halaman mengambil tinggi penuh */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+/* Atur body sebagai flex container */
+body {
+    display: flex;
+    flex-direction: column;
+    margin: 0; /* Hapus margin yang ada */
+}
+
+/* Kontainer utama harus fleksibel untuk mengisi ruang yang tersedia */
+#root {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Konten utama harus fleksibel untuk mengisi ruang antara header dan footer */
+.main-content {
+    flex: 1;
+}
+
+/* Styling footer yang ada */
+.footer {
+    background-color: #145149;
+    padding: 20px 0; /* Menambahkan padding untuk memberikan ruang */
+    width: 100%; /* Footer menempati seluruh lebar */
+    bottom: 0; /* Footer menempel ke bawah */
+    left: 0; /* Footer menempel ke kiri */
+   
+    z-index: 1000; /* Mengatur z-index agar footer berada di atas konten */
+}
+
+
+.footer {
+    background-color: #145149;
+    padding: 20px 0; /* Menambahkan padding untuk memberikan ruang */
+    margin-top: 70px;
+}
+
+.sb__footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Pusatkan konten secara horizontal */
+    padding: 20px; /* Tambahkan padding ke footer jika perlu */
+}
+
+
+.sb__footer-links {
+    display: flex;
+    justify-content: center; /* Pusatkan konten secara horizontal */
+    align-items: center; /* Pusatkan konten secara vertikal */
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 2rem;
+    gap: 2rem; /* Tambahkan jarak antar item */
+}
+
+.sb__footer-links-div {
+    width: 150px;
+    margin: 1rem;
+    display: flex;
+    align-items: center; /* Pusatkan konten secara horizontal */
+    flex-direction: column;
+    color: white;
+}
+
+a {
+    color: rgb(175, 175, 179);
+    text-decoration: none;
+}
+
+.socialmedia {
+    display: flex;
+    justify-content: center; /* Pusatkan ikon media sosial */
+    flex-direction: row;
+    gap: 1rem; /* Tambahkan jarak antar ikon media sosial */
+}
+
+.socialmedia img {
+    width: 80%;
+}
+
+.sb__footer-links-div h4 {
+    font-size: 14px;
+    line-height: 17px;
+    margin-bottom: 0.9rem;
+    word-spacing: normal;
+    letter-spacing: 1.5px;
+}
+
+.sb__footer-links-div p {
+    font-size: 12px;
+    line-height: 15px;
+    margin: 0.5rem 0;
+    cursor: pointer;
+    text-align: center; /* Pusatkan teks dalam paragraf */
+    word-spacing: normal;
+    letter-spacing: 1.5px;
+}
+
+.sb__footer-below {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Pusatkan konten secara vertikal */
+    justify-content: center; /* Pusatkan konten secara horizontal */
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+}
+
+
+.sb__footer-copyright {
+    display: flex; /* Pastikan wadah induk adalah kontainer flex */
+    justify-content: center; /* Pusatkan secara horizontal */
+    width: 100%; /* Pastikan mengambil lebar penuh untuk memusatkan */
+    font-family: 'Open Sans', sans-serif;
+}
+
+.sb__footer-copyright p {
+    font-size: 13px;
+    line-height: 15px;
+    color: rgb(255, 255, 255);
+    font-weight: 600;
+    text-align: center; /* Pusatkan teks dalam paragraf */
+    margin: 0; /* Hapus margin default */
+    margin-bottom: 20px;
+    font-family: 'Open Sans', sans-serif;
+}

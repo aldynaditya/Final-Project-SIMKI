@@ -1,0 +1,53 @@
+.container {
+  padding: 20px;
+}
+
+.klinik_dipo {
+  width: 100%;
+  max-width: 1200px;
+  margin: 50px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 50px;
+  padding: 20px; /* Tambahkan padding untuk membuat elemen lebih rapi */
+  background-color: #f9f9f9; /* Berikan warna latar belakang yang lembut */
+}
+
+.desc-jam-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+  box-sizing: border-box;
+  padding: 20px; /* Konsistensi padding di dalam container */
+  margin-bottom: 30px; /* Beri jarak di bawah untuk pemisahan yang jelas */
+  background-color: #fff; /* Warna latar belakang putih untuk kontras */
+ 
+}
+
+.desc, .jam {
+  line-height: 1.6;
+  font-style: normal;
+  font-family: 'Open Sans', sans-serif;
+  text-align: justify;
+  margin: 20px 0;
+  font-size: 18px; /* Sedikit kurangi ukuran font untuk keseimbangan visual */
+  width: 100%;
+}
+
+.desc {
+  margin-bottom: 10px; /* Kurangi ruang bawah pada elemen .desc */
+}
+
+.desc-jam-container .jam {
+  margin-bottom: 20px; /* Kurangi ruang bawah untuk elemen .jam */
+}
+
+/* Tambahkan aturan untuk gambar di dalam .desc-jam-container */
+.desc-jam-container img {
+  margin-bottom: 10px; /* Kurangi ruang bawah pada gambar */
+  max-width: 100%; /* Pastikan gambar tidak melebihi lebar kontainer */
+  height: auto; /* Pertahankan rasio aspek gambar */
+}

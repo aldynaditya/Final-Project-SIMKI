@@ -1,0 +1,112 @@
+/* Reset default margins and paddings */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+}
+
+/* Navbar container */
+.navbar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #145149;
+  padding: 0 20px; /* Add some horizontal padding for better aesthetics */
+ 
+
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+/* Logo container */
+.logo_container {
+  display: flex;
+  align-items: center;
+}
+
+/* Logo Klinik */
+.logo_klinik {
+  width: 75px;
+  margin-right: 15px; /* Adds right margin for spacing between logos */
+}
+
+/* Undip */
+.undip {
+  width: 60px;
+  margin-right: 70px;
+}
+
+/* Contact container */
+.contact_container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px; /* Adds spacing between logo and navigation list */
+  margin-top: 25px;
+}
+
+/* Informasi kontak */
+.contact_info {
+  display: flex;
+  align-items: center; /* Vertically centers the content */
+  margin-bottom: 10px; /* Adds spacing between contact info */
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Teks informasi kontak */
+.contact_text {
+  margin-left: 10px; /* Adds spacing between icon and contact text */
+  font-size: 14px; /* Contact text size */
+  color: #FBFBFB; /* Contact text color */
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Daftar navigasi */
+nav {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+
+/* Item daftar navigasi */
+nav ul li {
+  margin: 0 15px; /* Reduces margin for more items */
+  font-size: 18px;
+  cursor: pointer;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Link navigasi */
+nav ul li a {
+  color: #FBFBFB; /* White text color */
+  text-decoration: none; /* Removes underline */
+}
+
+/* Hover state for navigation items */
+nav ul li a:hover {
+  color: #7DAEA8; /* Change color on hover */
+}
+
+/* Active and focus state for navigation links */
+nav ul li a:active, nav ul li a:focus {
+  color: #7DAEA8;
+}
+
+/* Active navigation link */
+nav ul li a.active {
+  color: #7DAEA8;
+}

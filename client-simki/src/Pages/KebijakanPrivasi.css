@@ -1,0 +1,26 @@
+.container {
+    padding: 20px;
+  }
+  
+  .judul {
+    text-align: center;
+    justify-content: center; /* Memposisikan konten ke tengah secara horizontal */
+    font-family: 'Open Sans', sans-serif;
+    margin-top: 70px;
+    
+  }
+  
+  .desc {
+    line-height: normal;
+    font-style: normal;
+    font-family: 'Open Sans', sans-serif;
+    text-align: justify;
+    margin: 0 auto; /* Menengahkan kontainer */
+    font-size: 20px;
+    max-width: 1200px; /* Menetapkan lebar maksimum teks */
+    width: 100%; /* Memastikan lebar 100% dari kontainer induk */
+    margin-bottom: 50px;
+    margin-top: 20px;
+    padding: 20px; /* Opsional: Tambahkan padding untuk keterbacaan yang lebih baik */
+
+  }
