@@ -1,0 +1,114 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    padding: 20px;
+  }
+  
+  h1 {
+    margin-top: 50px;
+    text-align: center;
+    color: #333;
+  }
+  
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .form-fields {
+    width: 100%;
+    max-width: 600px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-fields div {
+    margin-bottom: 15px;
+  }
+  
+  .form-fields input[type="text"],
+  .form-fields input[type="date"],
+  .form-fields input[type="email"],
+  .form-fields input[type="password"],
+  .form-fields input[type="file"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .form-fields input[type="file"] {
+    padding: 3px;
+  }
+  
+  .form-fields input[type="text"]:focus,
+  .form-fields input[type="date"]:focus,
+  .form-fields input[type="email"]:focus,
+  .form-fields input[type="password"]:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  .profile-picture label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .daftar-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .daftar {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 260px;
+    height: 65px;
+    color: #fff;
+    background: #7DAEA8;
+    border-radius: 50px;
+    font-size: 19px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+  }
+  
+  .daftar:hover {
+    background: #5F8882;
+  }
+  
+  .daftar:active {
+    transform: scale(0.95);
+  }
+  
+  .daftar:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(125, 174, 168, 0.6);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+    .form-fields {
+        width: 100%;
+    }
+  
+    .daftar {
+        width: 100%;
+        font-size: 16px;
+    }
+  }
+  
