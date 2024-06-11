@@ -1,7 +1,7 @@
 const createTokenUser = (user) => {
     return {
         name: user.name,
-        userId: user.uuid, // Menggunakan uuid sebagai userId
+        userId: user.uuid,
         role: user.role,
         email: user.email,
         superuser: user.superuser,
@@ -11,7 +11,7 @@ const createTokenUser = (user) => {
 const createTokenPasien = (pasien) => {
     return {
         name: pasien.nama_lengkap,
-        pasienId: pasien.uuid, // Menggunakan uuid sebagai pasienId aaa
+        pasienId: pasien.uuid,
         role: pasien.role,
         email: pasien.email,
     };
