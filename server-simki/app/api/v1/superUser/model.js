@@ -3,7 +3,7 @@ const db = require('../../../db'); // Sesuaikan path ke instance Sequelize Anda
 
 const SuperUser = db.define('super_user', {
     uuid:{
-        type: DataTypes. UUID,
+        type: DataTypes.UUID,
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
