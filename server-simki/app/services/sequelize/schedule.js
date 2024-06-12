@@ -4,7 +4,7 @@ const UserKlinik = require('../../api/v1/userKlinik/model');
 const { BadRequestError, NotFoundError } = require('../../errors');
 
 const getAllSchedule = async (req) => {
-    const result = await Schedule.findAll({
+    const schedules = await Schedule.findAll({
         include: {
             model: UserKlinik,
             attributes: ['name'],
@@ -12,6 +12,16 @@ const getAllSchedule = async (req) => {
             required: true 
         }
     });
+
+    const result = schedules.map(schedule => ({
+        uuid: schedule.uuid,
+        hari: schedule.hari,
+        poli: schedule.poli,
+        status: schedule.status,
+        userklinikId: schedule.userklinikId,
+        dokter: schedule.user_klinik.name
+        }));
+    console.log(result);
     return result;
 };
 

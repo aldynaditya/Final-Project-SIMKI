@@ -68,6 +68,7 @@ const authorizeRoles = (...roles) => {
 };
 
 module.exports = { 
-    authenticateUser, 
-    authorizeRoles, 
+    authenticateUser,
+    authenticatePasien, 
+    authorizeRoles 
 };

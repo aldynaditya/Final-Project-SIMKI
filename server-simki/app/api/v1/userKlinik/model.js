@@ -42,11 +42,11 @@ const UserKlinik = db.define('user_klinik', {
         },
     },
     role: {
-        type: DataTypes.ENUM( 'superuser', 'dokter', 'perawat', 'farmasi', 'kasir', 'pimpinan', 'spvkeuangan' ),
+        type: DataTypes.ENUM( 'superuser', 'dokter', 'perawat', 'farmasi', 'kasir', 'pimpinan', 'spvkeuangan', 'resepsionis' ),
         defaultValue: 'superuser',
         validate: {
             isIn: {
-                args: [[ 'superuser', 'dokter', 'perawat', 'farmasi', 'kasir', 'pimpinan', 'spvkeuangan' ]],
+                args: [[ 'superuser', 'dokter', 'perawat', 'farmasi', 'kasir', 'pimpinan', 'spvkeuangan', 'resepsionis' ]],
                 msg: 'Role tidak valid',
             },
         },

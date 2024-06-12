@@ -28,6 +28,7 @@ const obatRouter = require('./app/api/v1/obat/router');
 const itemRouter = require('./app/api/v1/item/router');
 const pasienRouter = require('./app/api/v1/pasien/router');
 const scheduleRouter = require('./app/api/v1/schedule/router');
+const appointmentRouter = require('./app/api/v1/appointment/router');
 
 const v1 = '/api/v1';
 
@@ -54,6 +55,7 @@ app.use(`${v1}/cms`, authRouter);
 app.use(`${v1}/cms`, obatRouter);
 app.use(`${v1}/cms`, itemRouter);
 app.use(`${v1}/cms`, scheduleRouter);
+app.use(`${v1}/cms`, appointmentRouter);
 app.use(`${v1}`, pasienRouter);
 
 
