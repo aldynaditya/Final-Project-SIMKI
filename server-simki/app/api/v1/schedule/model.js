@@ -1,0 +1,47 @@
+const db = require('../../../db/index');
+const { DataTypes } = require('sequelize');
+const UserKlinik = require('../userKlinik/model');
+
+const Schedule = db.define('schedule', {
+    uuid:{
+        type: DataTypes.UUID,
+        primaryKey: true,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
+    },
+    hari: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            notNull: { msg: 'Hari Kerja harus diisi' },
+        },
+    },
+    poli: {
+        type: DataTypes.ENUM( 'Umum', 'Gigi' ),
+        allowNull: false,
+        validate: {
+            isIn: {
+                args: [[ 'Umum', 'Gigi' ]],
+                msg: 'Pilihan tidak valid',
+            },
+        },
+    },
+    status: {
+        type: DataTypes.ENUM( 'ada', 'tidak ada' ),
+        defaultValue: 'tidak ada',
+    },
+    userklinikId: {
+        type: DataTypes.UUID,
+        allowNull: false,
+    },
+}, {
+    timestamps: true,
+    tableName: 'schedule'
+});
+
+Schedule.belongsTo(UserKlinik, { foreignKey: 'userklinikId', targetKey: 'uuid',});
+
+module.exports = Schedule;

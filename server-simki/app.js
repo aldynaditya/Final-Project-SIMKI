@@ -3,7 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-// const db = require('./app/db');
+const db = require('./app/db');
 
 const app = express();
 
@@ -12,6 +12,8 @@ const app = express();
 // }).catch(err => {
 //     console.error('Database synchronization error:', err);
 // });
+// const Appointment = require('./app/api/v1/appointment/model');
+// const Schedule = require('./app/api/v1/schedule/model');
 // const Pasien = require('./app/api/v1/pasien/model');
 // (async()=>{
 //     await db.sync({force:true}); 
@@ -25,6 +27,7 @@ const authRouter = require('./app/api/v1/auth/router');
 const obatRouter = require('./app/api/v1/obat/router');
 const itemRouter = require('./app/api/v1/item/router');
 const pasienRouter = require('./app/api/v1/pasien/router');
+const scheduleRouter = require('./app/api/v1/schedule/router');
 
 const v1 = '/api/v1';
 
@@ -50,6 +53,7 @@ app.use(`${v1}/cms`, SuperUserRouter);
 app.use(`${v1}/cms`, authRouter);
 app.use(`${v1}/cms`, obatRouter);
 app.use(`${v1}/cms`, itemRouter);
+app.use(`${v1}/cms`, scheduleRouter);
 app.use(`${v1}`, pasienRouter);
 
 

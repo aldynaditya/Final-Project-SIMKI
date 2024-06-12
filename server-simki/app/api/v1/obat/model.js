@@ -4,7 +4,7 @@ const UserKlinik = require('../userKlinik/model');
 
 const Obat = db.define('obat', {
     uuid:{
-        type: DataTypes. STRING,
+        type: DataTypes.UUID,
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
