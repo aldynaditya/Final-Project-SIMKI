@@ -13,10 +13,13 @@ const Schedule = db.define('schedule', {
         }
     },
     hari: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM( 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat' ),
         allowNull: false,
         validate: {
-            notNull: { msg: 'Hari Kerja harus diisi' },
+            isIn: {
+                args: [[ 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat' ]],
+                msg: 'Pilihan tidak valid',
+            },
         },
     },
     poli: {
@@ -36,12 +39,16 @@ const Schedule = db.define('schedule', {
     userklinikId: {
         type: DataTypes.UUID,
         allowNull: false,
+        references: {
+            model: UserKlinik,
+            key: 'uuid'
+        }
     },
 }, {
     timestamps: true,
     tableName: 'schedule'
 });
 
-Schedule.belongsTo(UserKlinik, { foreignKey: 'userklinikId', targetKey: 'uuid',});
+Schedule.belongsTo(UserKlinik, { foreignKey: 'userklinikId', targetKey: 'uuid' });
 
 module.exports = Schedule;

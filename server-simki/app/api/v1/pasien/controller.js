@@ -1,7 +1,9 @@
+const app = require('../../../../app');
 const {
     signupPasien,
     activatePasien,
     signinPasien,
+    createAppointment
 } = require('../../../services/sequelize/pasien');
 const { StatusCodes } = require('http-status-codes');
 
@@ -41,8 +43,21 @@ const signin = async (req, res, next) => {
     }
 };
 
+const appointment = async (req, res, next) => {
+    try {
+        const result = await createAppointment(req);
+
+        res.status(StatusCodes.CREATED).json({
+            data: result,
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
 module.exports = {
     signup,
     activeAccount,
     signin,
+    appointment
 }
