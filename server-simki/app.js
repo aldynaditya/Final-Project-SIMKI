@@ -12,13 +12,16 @@ const app = express();
 // }).catch(err => {
 //     console.error('Database synchronization error:', err);
 // });
-// const Appointment = require('./app/api/v1/appointment/model');
+// const DataPasien = require('./app/api/v1/dataPasien/model');
+const Appointment = require('./app/api/v1/appointment/model');
 // const Schedule = require('./app/api/v1/schedule/model');
 // const Pasien = require('./app/api/v1/pasien/model');
 // (async()=>{
 //     await db.sync({force:true}); 
 // })();
-
+// (async()=>{
+//     await Appointment.sync({ force: true }); 
+// })();
 
 
 //router
