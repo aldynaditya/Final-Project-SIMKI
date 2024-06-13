@@ -9,6 +9,7 @@ const {
 const { createTokenPasien, createJWT } = require('../../utils');
 const { otpMail } = require('../mail');
 const { getDayOfWeek } = require('../functionConvert');
+const DataPasien = require('../../api/v1/dataPasien/model');
 
 const signupPasien = async (req) => {
     const { nik, nama_lengkap, tempat_lahir, tanggal_lahir, jenis_kelamin, gol_darah, suku_bangsa, alamat, email, password } = req.body;
@@ -32,6 +33,11 @@ const signupPasien = async (req) => {
         await result.save();
     } else {
         result = await Pasien.create({
+            email,
+            password,
+            otp: Math.floor(Math.random() * 9999),
+        });
+        await DataPasien.create({
             nik,
             nama_lengkap,
             tempat_lahir,
@@ -40,9 +46,7 @@ const signupPasien = async (req) => {
             gol_darah,
             suku_bangsa,
             alamat,
-            email,
-            password,
-            otp: Math.floor(Math.random() * 9999),
+            userId: result.uuid,
         });
     }
 
@@ -100,6 +104,17 @@ const signinPasien = async (req) => {
     return token;
 };
 
+const getpasienAppointments = async (req) => {
+    const user = req.pasien;
+
+    const result = await Appointment.findAll({
+        where: { pasienId: user.id },
+        attributes: ['tanggal', 'keluhan', 'status', 'keterangan'],
+    });
+
+    return result;
+};
+
 const createAppointment = async (req, res) => {
     const { tanggal, keluhan } = req.body;
     const { id: pasienId } = req.pasien;
@@ -112,12 +127,20 @@ const createAppointment = async (req, res) => {
         }
     });
 
-    if (!schedule) throw new NotFoundError( 'No available doctor on the selected date.' );
+    if (!schedule) throw new NotFoundError( 'Tidak ada Dokter yang tersedia pada tanggal itu' );
+
+    const dataPasien = await DataPasien.findOne({
+        where: { userId: pasienId }
+    });
+
+    // Jika dataPasien tidak ditemukan, Anda dapat melemparkan error atau melakukan penanganan yang sesuai
+    if (!dataPasien) throw new NotFoundError('Data Pasien tidak ditemukan');
 
     const result = await Appointment.create({
         tanggal,
         keluhan,
         pasienId,
+        dataPasienId: dataPasien.uuid,
         scheduleId: schedule.uuid
     });
 
@@ -128,5 +151,6 @@ module.exports = {
     signupPasien,
     activatePasien,
     signinPasien,
-    createAppointment
+    createAppointment,
+    getpasienAppointments
 };

@@ -2,6 +2,7 @@ const db = require('../../../db/index');
 const { DataTypes } = require('sequelize');
 const Pasien = require('../pasien/model');
 const Schedule = require('../schedule/model');
+const DataPasien = require('../dataPasien/model');
 
 const Appointment = db.define('appointment', {
     uuid:{
@@ -31,9 +32,18 @@ const Appointment = db.define('appointment', {
         type: DataTypes.ENUM('diterima', 'ditolak','diproses'),
         defaultValue: 'diproses',
     },
-    pasienId: {
-        type: DataTypes.UUID,
+    keterangan: {
+        type: DataTypes.STRING,
         allowNull: false,
+        defaultValue: '',
+    },
+    userId: {   //ini id untuk yang daftar manual
+        type: DataTypes.UUID,
+        allowNull: true,
+    },
+    pasienId: {  //ini id untuk yang daftar secara online
+        type: DataTypes.UUID,
+        allowNull: true,
     },
     scheduleId: {
         type: DataTypes.UUID,
@@ -44,8 +54,9 @@ const Appointment = db.define('appointment', {
     tableName: 'appointment'
 });
 
-Appointment.belongsTo(Pasien, { foreignKey: 'pasienId', targetKey: 'uuid',});
-
-Appointment.belongsTo(Schedule, { foreignKey: 'scheduleId', targetKey: 'uuid',});
+Appointment.belongsTo(Pasien, { foreignKey: 'pasienId', targetKey: 'uuid' });
+Appointment.belongsTo(DataPasien, { as: 'manualDataPasien', foreignKey: 'userId', targetKey: 'uuid' });
+Pasien.hasOne(DataPasien, { foreignKey: 'userId' });
+DataPasien.belongsTo(Pasien, { foreignKey: 'userId' });
 
 module.exports = Appointment;

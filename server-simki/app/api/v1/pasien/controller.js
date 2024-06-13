@@ -3,7 +3,8 @@ const {
     signupPasien,
     activatePasien,
     signinPasien,
-    createAppointment
+    createAppointment,
+    getpasienAppointments
 } = require('../../../services/sequelize/pasien');
 const { StatusCodes } = require('http-status-codes');
 
@@ -43,7 +44,19 @@ const signin = async (req, res, next) => {
     }
 };
 
-const appointment = async (req, res, next) => {
+const getmyAppointment = async (req, res, next) => {
+    try {
+        const result = await getpasienAppointments(req);
+
+    res.status(StatusCodes.OK).json({
+        data: result,
+    });
+    } catch (err) {
+        next(err);
+    }
+};
+
+const makeAppointment = async (req, res, next) => {
     try {
         const result = await createAppointment(req);
 
@@ -59,5 +72,6 @@ module.exports = {
     signup,
     activeAccount,
     signin,
-    appointment
+    makeAppointment,
+    getmyAppointment
 }

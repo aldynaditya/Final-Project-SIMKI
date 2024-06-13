@@ -4,7 +4,8 @@ const {
     signup,
     activeAccount,
     signin,
-    appointment
+    makeAppointment,
+    getmyAppointment
 } = require('./controller');
 
 const {
@@ -15,7 +16,8 @@ const {
 router.post('/auth/signup', signup);
 router.post('/auth/signin', signin);
 router.put('/active', activeAccount);
-router.post('/appointment',authenticatePasien, appointment)
+router.post('/appointment', authenticatePasien, makeAppointment);
+router.get('/appointment', authenticatePasien, getmyAppointment);
 
 
 module.exports = router;
