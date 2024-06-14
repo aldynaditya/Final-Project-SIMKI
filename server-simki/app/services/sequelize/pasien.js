@@ -1,5 +1,6 @@
 const Pasien = require('../../api/v1/pasien/model');
 const Schedule = require('../../api/v1/schedule/model');
+const UserKlinik = require('../../api/v1/userKlinik/model');
 const Appointment = require('../../api/v1/appointment/model');
 const {
     BadRequestError,
@@ -8,7 +9,7 @@ const {
 } = require('../../errors');
 const { createTokenPasien, createJWT } = require('../../utils');
 const { otpMail } = require('../mail');
-const { getDayOfWeek } = require('../functionConvert');
+const { getDayOfWeek } = require('../../utils/ConvertDatetoDay');
 const DataPasien = require('../../api/v1/dataPasien/model');
 
 const signupPasien = async (req) => {
@@ -110,9 +111,31 @@ const getpasienAppointments = async (req) => {
     const result = await Appointment.findAll({
         where: { pasienId: user.id },
         attributes: ['tanggal', 'keluhan', 'status', 'keterangan'],
+        include: [
+            {
+                model: Schedule, // Include the Schedule model
+                attributes: ['hari', 'poli'], // Specify the attributes you want to include
+                include: {
+                    model: UserKlinik,
+                    attributes: ['name'], // Include doctor's name
+                    as: 'user_klinik' // Use the alias for UserKlinik model
+                },
+            },
+        ]
     });
 
-    return result;
+    const formattedResult = result.map(appointment => {
+        return {
+            tanggal: appointment.tanggal,
+            nama_dokter: appointment.schedule ? appointment.schedule.user_klinik.name : null,
+            poli: appointment.schedule ? appointment.schedule.poli : null,
+            keterangan: appointment.keterangan,
+            status: appointment.status,
+
+        };
+    });
+
+    return formattedResult;
 };
 
 const createAppointment = async (req, res) => {
@@ -147,10 +170,41 @@ const createAppointment = async (req, res) => {
     return result;
 };
 
+const updateDataPasien = async (req) => {
+    const { nik, nama_lengkap, tempat_lahir, tanggal_lahir, jenis_kelamin, gol_darah, suku_bangsa, alamat } = req.body;
+    const { id: pasienId } = req.pasien;
+
+    const [updatedRows] = await DataPasien.update(
+        {
+            nik,
+            nama_lengkap,
+            tempat_lahir,
+            tanggal_lahir,
+            jenis_kelamin,
+            gol_darah,
+            suku_bangsa,
+            alamat,
+        },
+        { where: { userId: pasienId } }
+    );
+
+    if (updatedRows === 0) {
+        throw new NotFoundError('Data Pasien tidak ditemukan');
+    }
+
+    const updatedDataPasien = await DataPasien.findOne({
+        where: { userId: pasienId }
+    });
+
+    return updatedDataPasien;
+};
+
+
 module.exports = {
     signupPasien,
     activatePasien,
     signinPasien,
+    updateDataPasien,
     createAppointment,
     getpasienAppointments
 };

@@ -5,7 +5,8 @@ const {
     activeAccount,
     signin,
     makeAppointment,
-    getmyAppointment
+    getmyAppointment,
+    update
 } = require('./controller');
 
 const {
@@ -16,6 +17,7 @@ const {
 router.post('/auth/signup', signup);
 router.post('/auth/signin', signin);
 router.put('/active', activeAccount);
+router.patch('/pasien',authenticatePasien, update);
 router.post('/appointment', authenticatePasien, makeAppointment);
 router.get('/appointment', authenticatePasien, getmyAppointment);
 

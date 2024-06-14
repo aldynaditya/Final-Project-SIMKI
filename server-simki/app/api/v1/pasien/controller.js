@@ -3,6 +3,7 @@ const {
     signupPasien,
     activatePasien,
     signinPasien,
+    updateDataPasien,
     createAppointment,
     getpasienAppointments
 } = require('../../../services/sequelize/pasien');
@@ -68,10 +69,23 @@ const makeAppointment = async (req, res, next) => {
     }
 };
 
+const update = async (req, res, next) => {
+    try {
+        const result = await updateDataPasien(req);
+
+    res.status(StatusCodes.OK).json({
+        data: result,
+    });
+    } catch (err) {
+        next(err);
+    }
+};
+
 module.exports = {
     signup,
     activeAccount,
     signin,
+    update,
     makeAppointment,
     getmyAppointment
 }

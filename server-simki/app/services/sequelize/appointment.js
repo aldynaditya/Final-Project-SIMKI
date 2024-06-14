@@ -3,7 +3,8 @@ const Appointment = require('../../api/v1/appointment/model');
 const Schedule = require('../../api/v1/schedule/model');
 const Pasien = require('../../api/v1/pasien/model');
 const DataPasien = require('../../api/v1/dataPasien/model');
-const { getDayOfWeek } = require('../functionConvert');
+const UserKlinik = require('../../api/v1/userKlinik/model');
+const { getDayOfWeek } = require('../../utils/ConvertDatetoDay');
 const { BadRequestError, NotFoundError } = require('../../errors');
 
 const getAllAppointment = async (req) => {
@@ -21,7 +22,16 @@ const getAllAppointment = async (req) => {
                 model: DataPasien,
                 as: 'manualDataPasien', // Using alias to differentiate between online and manual registration
                 attributes: ['nik', 'nama_lengkap', 'tempat_lahir', 'tanggal_lahir', 'jenis_kelamin', 'gol_darah', 'suku_bangsa', 'alamat']
-            }
+            },
+            {
+                model: Schedule, // Include the Schedule model
+                attributes: ['hari', 'poli'], // Specify the attributes you want to include
+                include: {
+                    model: UserKlinik,
+                    attributes: ['name'], // Include doctor's name
+                    as: 'user_klinik' // Use the alias for UserKlinik model
+                },
+            },
         ]
     });
 
@@ -30,20 +40,13 @@ const getAllAppointment = async (req) => {
         const manualData = appointment.manualDataPasien || {};
 
         return {
-            uuid: appointment.uuid,
+            nama_lengkap: pasienData ? pasienData.nama_lengkap : manualData.nama_lengkap,
+            nama_dokter: appointment.schedule ? appointment.schedule.user_klinik.name : null,
+            poli: appointment.schedule ? appointment.schedule.poli : null,
             tanggal: appointment.tanggal,
             keluhan: appointment.keluhan,
             status: appointment.status,
             keterangan: appointment.keterangan,
-            email: appointment.pasien ? appointment.pasien.email : null,
-            nik: pasienData ? pasienData.nik : manualData.nik,
-            nama_lengkap: pasienData ? pasienData.nama_lengkap : manualData.nama_lengkap,
-            tempat_lahir: pasienData ? pasienData.tempat_lahir : manualData.tempat_lahir,
-            tanggal_lahir: pasienData ? pasienData.tanggal_lahir : manualData.tanggal_lahir,
-            jenis_kelamin: pasienData ? pasienData.jenis_kelamin : manualData.jenis_kelamin,
-            gol_darah: pasienData ? pasienData.gol_darah : manualData.gol_darah,
-            suku_bangsa: pasienData ? pasienData.suku_bangsa : manualData.suku_bangsa,
-            alamat: pasienData ? pasienData.alamat : manualData.alamat,
         };
     });
 
@@ -51,15 +54,16 @@ const getAllAppointment = async (req) => {
 };
 
 const createAppointment = async (req) => {
-    const { tanggal, keluhan, ...dataPasienAttributes } = req.body;
-    
-    // Membuat data pasien baru
-    const dataPasien = await DataPasien.create(dataPasienAttributes);
+    const { tanggal, keluhan, nik } = req.body;
 
-    // Menggunakan UUID dari data pasien baru sebagai pasienId
-    const userId = dataPasien.uuid;
+    let dataPasien = await DataPasien.findOne({
+        where: { nik }
+    });
 
-    // Mencari jadwal berdasarkan hari dari tanggal yang dimasukkan
+    if (!dataPasien) {
+        throw new BadRequestError('Tidak Ada Pasien yang terdaftar dengan NIK tersebut');
+    }
+
     const dayOfWeek = getDayOfWeek(tanggal);
     const schedule = await Schedule.findOne({
         where: {
@@ -71,16 +75,18 @@ const createAppointment = async (req) => {
     if (!schedule) {
         throw new NotFoundError('Tidak ada Dokter yang tersedia pada tanggal itu');
     }
-    // Membuat appointment baru dengan menggunakan data pasien yang baru dibuat
+
     const result = await Appointment.create({
         tanggal,
         keluhan,
-        userId,
+        userId: dataPasien.uuid,
         scheduleId: schedule.uuid
     });
 
     return result;
 };
+
+
 
 
 const updateAppointment = async (req) => {

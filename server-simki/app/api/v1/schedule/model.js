@@ -49,6 +49,7 @@ const Schedule = db.define('schedule', {
     tableName: 'schedule'
 });
 
-Schedule.belongsTo(UserKlinik, { foreignKey: 'userklinikId', targetKey: 'uuid' });
+UserKlinik.hasMany(Schedule, { foreignKey: 'userklinikId' });
+Schedule.belongsTo(UserKlinik, { as: 'user_klinik', foreignKey: 'userklinikId' });
 
 module.exports = Schedule;
