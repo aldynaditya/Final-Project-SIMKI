@@ -7,6 +7,7 @@ const getAllSchedule = async (req) => {
     const schedules = await Schedule.findAll({
         include: {
             model: UserKlinik,
+            as: 'user_klinik',
             attributes: ['name'],
             where: { role: 'dokter' },
             required: true 

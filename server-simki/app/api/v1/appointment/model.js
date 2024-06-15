@@ -54,12 +54,9 @@ const Appointment = db.define('appointment', {
     tableName: 'appointment'
 });
 
-Appointment.belongsTo(Pasien, { foreignKey: 'pasienId', targetKey: 'uuid' });
+// Appointment.belongsTo(Pasien, { foreignKey: 'pasienId', targetKey: 'uuid' });
 
 Appointment.belongsTo(DataPasien, { as: 'manualDataPasien', foreignKey: 'userId', targetKey: 'uuid' });
-
-Pasien.hasOne(DataPasien, { foreignKey: 'userId' });
-DataPasien.belongsTo(Pasien, { foreignKey: 'userId' });
 
 Appointment.belongsTo(Schedule, { foreignKey: 'scheduleId', targetKey: 'uuid' });
 

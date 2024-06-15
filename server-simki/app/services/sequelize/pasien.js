@@ -139,15 +139,26 @@ const getpasienAppointments = async (req) => {
 };
 
 const createAppointment = async (req, res) => {
-    const { tanggal, keluhan } = req.body;
+    const { tanggal, keluhan, dokter, poli } = req.body;
     const { id: pasienId } = req.pasien;
     const dayOfWeek = getDayOfWeek(tanggal);
 
     const schedule = await Schedule.findOne({
         where: {
             hari: dayOfWeek,
-            status: 'ada'
-        }
+            status: 'ada',
+            poli
+        },
+        include: [
+            {
+                model: UserKlinik,
+                as: 'user_klinik',
+                where: {
+                    name: dokter,
+                },
+                attributes: ['name'],
+            },
+        ],
     });
 
     if (!schedule) throw new NotFoundError( 'Tidak ada Dokter yang tersedia pada tanggal itu' );
@@ -156,7 +167,6 @@ const createAppointment = async (req, res) => {
         where: { userId: pasienId }
     });
 
-    // Jika dataPasien tidak ditemukan, Anda dapat melemparkan error atau melakukan penanganan yang sesuai
     if (!dataPasien) throw new NotFoundError('Data Pasien tidak ditemukan');
 
     const result = await Appointment.create({

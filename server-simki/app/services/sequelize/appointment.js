@@ -20,16 +20,16 @@ const getAllAppointment = async (req) => {
             },
             {
                 model: DataPasien,
-                as: 'manualDataPasien', // Using alias to differentiate between online and manual registration
+                as: 'manualDataPasien',
                 attributes: ['nik', 'nama_lengkap', 'tempat_lahir', 'tanggal_lahir', 'jenis_kelamin', 'gol_darah', 'suku_bangsa', 'alamat']
             },
             {
-                model: Schedule, // Include the Schedule model
-                attributes: ['hari', 'poli'], // Specify the attributes you want to include
+                model: Schedule, 
+                attributes: ['hari', 'poli'],
                 include: {
                     model: UserKlinik,
-                    attributes: ['name'], // Include doctor's name
-                    as: 'user_klinik' // Use the alias for UserKlinik model
+                    attributes: ['name'],
+                    as: 'user_klinik'
                 },
             },
         ]
@@ -54,7 +54,7 @@ const getAllAppointment = async (req) => {
 };
 
 const createAppointment = async (req) => {
-    const { tanggal, keluhan, nik } = req.body;
+    const { dokter, poli, tanggal, keluhan, nik } = req.body;
 
     let dataPasien = await DataPasien.findOne({
         where: { nik }
@@ -68,8 +68,19 @@ const createAppointment = async (req) => {
     const schedule = await Schedule.findOne({
         where: {
             hari: dayOfWeek,
-            status: 'ada'
-        }
+            status: 'ada',
+            poli
+        },
+        include: [
+            {
+                model: UserKlinik,
+                as: 'user_klinik',
+                where: {
+                    name: dokter,
+                },
+                attributes: ['name'],
+            },
+        ],
     });
 
     if (!schedule) {

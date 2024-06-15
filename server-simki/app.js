@@ -3,14 +3,14 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-// const db = require('./app/db');
+const db = require('./app/db');
 
 const app = express();
 
 // ini untuk sync database
 
 // const DataPasien = require('./app/api/v1/dataPasien/model');
-// const Appointment = require('./app/api/v1/appointment/model');
+const Appointment = require('./app/api/v1/appointment/model');
 // const Schedule = require('./app/api/v1/schedule/model');
 // const Pasien = require('./app/api/v1/pasien/model');
 
