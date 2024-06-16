@@ -1,4 +1,4 @@
-const EMRPasien = require('../../api/v1/empPasien/model');
+const EMRPasien = require('../../api/v1/emrPasien/model');
 const Appointment = require('../../api/v1/appointment/model');
 const DataPasien = require('../../api/v1/dataPasien/model');
 const Schedule = require('../../api/v1/schedule/model');
