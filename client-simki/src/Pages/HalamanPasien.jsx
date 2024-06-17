@@ -11,25 +11,20 @@ const HalamanPasien = () => {
     const navigate = useNavigate();
 
     const Home = () => {
-        navigate('/'); // Lakukan routing ke Home
-    };
-
-    const handleDetailkunjungan = () => {
-        navigate('/detail-kunjungan'); // 
+        navigate('/');
     };
 
     const handleProfil = () => {
-        navigate('/profile'); 
+        navigate('/profile');
     };
 
     const handleBuatjanji = () => {
-        navigate('/buat-janji'); 
-    };
-    
-    const handleRiwayatkunjungan = () => {
-        navigate('/riwayat-kunjungan'); 
+        navigate('/buat-janji');
     };
 
+    const handleRiwayatkunjungan = () => {
+        navigate('/riwayat-kunjungan');
+    };
 
     return (
         <div className="halaman_pasien_container">
@@ -58,7 +53,7 @@ const HalamanPasien = () => {
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td><button className="tombol_pending" onClick={handleDetailkunjungan}>Pending</button></td>
+                            <td><div className="tombol_pending">Pending</div></td>
                         </tr>
                     </tbody>
                 </table>

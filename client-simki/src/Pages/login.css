@@ -1,12 +1,29 @@
+/* Mengatur halaman dengan Flexbox */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Container utama untuk layout login */
 .login_container {
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* Ini memungkinkan konten utama mengisi sisa halaman */
+}
+
+/* Styling untuk elemen-elemen dalam halaman login */
+.logo-container {
   text-align: center;
+  margin-top: 20px;
 }
 
 .text {
   text-align: center;
   font-family: 'Open Sans', sans-serif;
-  margin-top: 70px;
+  margin-top: 150px;
   margin-bottom: 30px;
 }
 
@@ -56,6 +73,7 @@
   margin: 20px 0;
   color: #000;
   font-size: 18px;
+  text-align: center; /* Menempatkan teks di tengah */
 }
 
 .forgot-password span {
@@ -67,6 +85,8 @@
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  gap: 30px; /* Menambahkan jarak antara tombol */
+  margin-bottom: 200px;
 }
 
 .submit {
@@ -113,4 +133,14 @@
       width: 100%;
       font-size: 16px;
   }
+}
+
+.footer {
+  width: 100%;
+  background-color: #145149;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  position: relative; /* Supaya tidak ada space tambahan */
+  bottom: 0;
 }
