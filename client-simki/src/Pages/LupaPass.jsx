@@ -41,7 +41,7 @@ const LupaPass = () => {
   };
 
   return (
-    <div className="container">
+    <div className="lupa_pass_container">
       <Navbar />
       <h1 className='text'>Lupa Kata Sandi</h1>
       <div className='inputs'>

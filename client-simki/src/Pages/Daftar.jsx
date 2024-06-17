@@ -1,17 +1,20 @@
-// Pages/Daftar.jsx
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import './Daftar.css';
 
-const handleClick = () => {
-  // Tambahkan logika untuk menangani submit di sini
-  alert('Form submitted!');
-};
-
 const Daftar = () => {
+  const navigate = useNavigate();
+
+  const handleDaftar = () => {
+    // Logika untuk menangani submit di sini
+    alert('Form submitted!');
+    navigate('/halaman-pasien'); // Lakukan routing ke HalamanPasien
+  };
+
   return (
-    <div className="container">
+    <div className="regist_container">
       <Navbar />
       <h1>Registrasi Akun</h1>
       <div className="form-container">
@@ -51,9 +54,10 @@ const Daftar = () => {
             <label htmlFor="profilePicture">Unggah Foto Profil</label>
             <input type="file" id="profilePicture" accept="image/*" />
           </div>
-          <div className='daftar'onClick={handleClick}>Daftar</div>
+          <div className="daftar-container">
+            <div className='daftar' onClick={handleDaftar}>Daftar</div>
+          </div>
         </div>
-        
       </div>
       <Footer />
     </div>

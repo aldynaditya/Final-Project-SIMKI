@@ -1,53 +1,58 @@
-.container {
-  padding: 20px;
-}
-
-.klinik_dipo {
-  width: 100%;
-  max-width: 1200px;
-  margin: 50px auto;
+.home_container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 50px;
-  padding: 20px; /* Tambahkan padding untuk membuat elemen lebih rapi */
-  background-color: #f9f9f9; /* Berikan warna latar belakang yang lembut */
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.tentang_kami {
+  margin: 20px 0;
+  margin-top: 50px;
+}
+
+.klinik_dipo img {
+  max-width: 100%;
+  height: auto;
 }
 
 .desc-jam-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
-  max-width: 800px;
-  box-sizing: border-box;
-  padding: 20px; /* Konsistensi padding di dalam container */
-  margin-bottom: 30px; /* Beri jarak di bawah untuk pemisahan yang jelas */
-  background-color: #fff; /* Warna latar belakang putih untuk kontras */
- 
-}
-
-.desc, .jam {
-  line-height: 1.6;
-  font-style: normal;
-  font-family: 'Open Sans', sans-serif;
-  text-align: justify;
-  margin: 20px 0;
-  font-size: 18px; /* Sedikit kurangi ukuran font untuk keseimbangan visual */
-  width: 100%;
+  justify-content: center;
+  margin-top: 20px;
 }
 
 .desc {
-  margin-bottom: 10px; /* Kurangi ruang bawah pada elemen .desc */
+  width: 100%;
+  max-width: 600px;
+  text-align: justify;
+  font-size: 16px; /* Atur ukuran font sesuai kebutuhan */
+  font-family: 'Open Sans', sans-serif; /* Sesuaikan dengan font yang digunakan */
 }
 
-.desc-jam-container .jam {
-  margin-bottom: 20px; /* Kurangi ruang bawah untuk elemen .jam */
+.jam {
+  width: 100%;
+  max-width: 600px;
+  text-align: justify;
+  font-size: 16px; /* Atur ukuran font sesuai kebutuhan */
+  font-family: 'Open Sans', sans-serif; /* Sesuaikan dengan font yang digunakan */
+  margin-top: 0;
 }
 
-/* Tambahkan aturan untuk gambar di dalam .desc-jam-container */
-.desc-jam-container img {
-  margin-bottom: 10px; /* Kurangi ruang bawah pada gambar */
-  max-width: 100%; /* Pastikan gambar tidak melebihi lebar kontainer */
-  height: auto; /* Pertahankan rasio aspek gambar */
+.desc p span, .jam p span {
+  display: block;
+}
+
+ul {
+  list-style-type: disc;
+  padding-left: 20px; /* Memberikan ruang yang cukup untuk bullet point */
+  font-size: 16px; /* Ukuran font yang sama */
+  font-family: 'Open Sans', sans-serif; /* Konsistensi font */
+}
+
+li {
+  padding: 5px 0;
 }

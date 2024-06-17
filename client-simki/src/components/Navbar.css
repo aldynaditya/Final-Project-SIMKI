@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+
 /* Reset default margins and paddings */
 * {
   margin: 0;
@@ -8,6 +10,8 @@
 body, html {
   width: 100%;
   height: 100%;
+  padding-top: 80px; /* Add padding to the top to prevent content overlap with navbar */
+  font-family: 'Open Sans', sans-serif; /* Apply Open Sans font to the entire body */
 }
 
 /* Navbar container */
@@ -17,9 +21,8 @@ body, html {
   align-items: center;
   justify-content: space-between;
   background: #145149;
-  padding: 0 20px; /* Add some horizontal padding for better aesthetics */
- 
-
+  padding: 10px 20px; /* Add some padding for better aesthetics */
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
@@ -47,8 +50,6 @@ body, html {
 .contact_container {
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px; /* Adds spacing between logo and navigation list */
-  margin-top: 25px;
 }
 
 /* Informasi kontak */
@@ -94,6 +95,7 @@ nav ul li {
 nav ul li a {
   color: #FBFBFB; /* White text color */
   text-decoration: none; /* Removes underline */
+  font-family: 'Open Sans', sans-serif;
 }
 
 /* Hover state for navigation items */

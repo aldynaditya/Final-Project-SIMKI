@@ -1,8 +1,8 @@
-.container {
+.layanan_container {
   padding: 20px;
 }
 
-.center_text {
+.layanan_kami {
   text-align: center;
   justify-content: center; /* Memposisikan konten ke tengah secara horizontal */
   font-family: 'Open Sans', sans-serif;
