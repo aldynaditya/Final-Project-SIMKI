@@ -1,36 +1,56 @@
-.layanan_container {
-  padding: 20px;
+/* Menyusun halaman dengan Flexbox */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
+/* Container untuk konten utama */
+.layanan_container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Margin dan padding untuk elemen dalam layanan */
 .layanan_kami {
   text-align: center;
-  justify-content: center; /* Memposisikan konten ke tengah secara horizontal */
+  margin-top: 120px;
   font-family: 'Open Sans', sans-serif;
-  margin-top: 70px;
-  
 }
 
-
 .klinik_dipo {
-  width: 1200px;
-  height: 400px;
-  margin: 50px auto; /* Auto pada sisi kiri dan kanan untuk memposisikan ke tengah secara horizontal */
-  margin-top: 70px; /* Menambahkan margin atas agar tidak menempel dengan navbar */
   display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: center; /* Memposisikan konten ke tengah secara horizontal */
-  margin-bottom: 70px;
+  margin: 50px auto 70px auto;
+  max-width: 1200px; /* Sesuaikan sesuai kebutuhan */
+  width: 100%;
+}
+
+.klinik_dipo img {
+  width: 100%; /* Sesuaikan ukuran gambar sesuai kebutuhan */
+  height: auto;
 }
 
 .desc {
-  line-height: normal;
-  font-style: normal;
-  font-family: 'Open Sans', sans-serif;
   text-align: justify;
-  margin: 0 auto; /* Menengahkan kontainer */
+  font-family: 'Open Sans', sans-serif;
   font-size: 20px;
-  max-width: 800px; /* Menetapkan lebar maksimum teks */
-  width: 100%; /* Memastikan lebar 100% dari kontainer induk */
-  margin-bottom: 50px;
-  padding: 20px; /* Opsional: Tambahkan padding untuk keterbacaan yang lebih baik */
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.footer {
+  width: 100%;
+  background-color: #145149;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  position: relative; /* Supaya tidak ada space tambahan */
+  bottom: 0;
 }

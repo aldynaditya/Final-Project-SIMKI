@@ -4,22 +4,23 @@ import "./Home.css";
 import klinikdipo from "../images/klinikdipo.png";
 import Footer from "../components/Footer";
 
-
-//ini Home
 const Home = () => {
   return (
     <div className="container">
       <Navbar />
       <h1 className="tentang_kami">Tentang Kami</h1>
       <div className="klinik_dipo">
-        <img src={klinikdipo} alt="Klinik Diponegoro" className="klinik_dipo" />
+        <img src={klinikdipo} alt="Klinik Diponegoro" />
       </div>
       <div className="desc-jam-container">
         <div className="desc">
           <p>
-            <span>
-              Klinik Pratama Diponegoro 1 merupakan unit layanan kesehatan dari UNDIP MAJU. Klinik Pratama Diponegoro 1 menjadi Fasilitas Kesehatan Tingkat Pertama (FKTP) bagi civitas akademika Universitas Diponegoro dan masyarakat di sekitar wilayah Tembalang. Klinik Pratama Diponegoro 1 dilengkapi dengan Pelayanan Umum dan Pelayanan Gigi dan juga menerima pelayanan BPJS Kesehatan - JKN.
-            </span>
+            Klinik Pratama Diponegoro 1 merupakan unit layanan kesehatan dari
+            UNDIP MAJU. Klinik Pratama Diponegoro 1 menjadi Fasilitas Kesehatan
+            Tingkat Pertama (FKTP) bagi civitas akademika Universitas Diponegoro
+            dan masyarakat di sekitar wilayah Tembalang. Klinik Pratama
+            Diponegoro 1 dilengkapi dengan Pelayanan Umum dan Pelayanan Gigi
+            dan juga menerima pelayanan BPJS Kesehatan - JKN.
           </p>
         </div>
         <div className="jam">

@@ -36,6 +36,7 @@
   .submit-container {
     display: flex;
     justify-content: center;
+    margin-bottom: 100px;
   }
   
   .submit {
@@ -50,6 +51,7 @@
     font-size: 19px;
     font-weight: 700;
     cursor: pointer;
+    margin-bottom: 150px;
   }
   
   .gray {

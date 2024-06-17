@@ -9,12 +9,13 @@
 
 .tentang_kami {
   margin: 20px 0;
-  margin-top: 50px;
+  margin-top: 150px;
 }
 
 .klinik_dipo img {
   max-width: 100%;
   height: auto;
+  margin-bottom: 20px; /* Tambahkan margin bawah untuk memberi jarak antara gambar dan teks */
 }
 
 .desc-jam-container {
@@ -25,21 +26,13 @@
   margin-top: 20px;
 }
 
-.desc {
+.desc, .jam {
   width: 100%;
   max-width: 600px;
   text-align: justify;
-  font-size: 16px; /* Atur ukuran font sesuai kebutuhan */
-  font-family: 'Open Sans', sans-serif; /* Sesuaikan dengan font yang digunakan */
-}
-
-.jam {
-  width: 100%;
-  max-width: 600px;
-  text-align: justify;
-  font-size: 16px; /* Atur ukuran font sesuai kebutuhan */
-  font-family: 'Open Sans', sans-serif; /* Sesuaikan dengan font yang digunakan */
-  margin-top: 0;
+  font-size: 16px;
+  font-family: 'Open Sans', sans-serif;
+  margin: 0 0 20px 0; /* Atur margin untuk mengurangi jarak antara elemen */
 }
 
 .desc p span, .jam p span {
@@ -48,9 +41,9 @@
 
 ul {
   list-style-type: disc;
-  padding-left: 20px; /* Memberikan ruang yang cukup untuk bullet point */
-  font-size: 16px; /* Ukuran font yang sama */
-  font-family: 'Open Sans', sans-serif; /* Konsistensi font */
+  padding-left: 20px;
+  font-size: 16px;
+  font-family: 'Open Sans', sans-serif;
 }
 
 li {

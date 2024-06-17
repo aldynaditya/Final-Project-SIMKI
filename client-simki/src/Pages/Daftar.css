@@ -1,78 +1,63 @@
-body {
-  font-family: 'Open Sans', sans-serif;
-  background-color: #f7f7f7;
+/* Mengatur halaman dengan Flexbox */
+html, body {
+  height: 100%;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Open Sans', sans-serif; /* Terapkan font ke seluruh halaman */
 }
 
+/* Container utama untuk layout daftar */
 .regist_container {
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* Ini memungkinkan konten utama mengisi sisa halaman */
 }
 
+/* Styling untuk elemen-elemen dalam halaman daftar */
 h1 {
-  margin-top: 50px;
-  margin-bottom: 50px;
   text-align: center;
-  color: #333;
+  margin-top: 150px;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .form-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
+  flex: 1; /* Membuat form-container mengisi ruang yang tersisa */
 }
 
 .form-fields {
-  width: 100%;
+  width: 80%;
   max-width: 600px;
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
 }
 
-.form-fields div {
-  margin-bottom: 15px;
-}
-
-.form-fields input[type="text"],
-.form-fields input[type="date"],
-.form-fields input[type="email"],
-.form-fields input[type="password"],
-.form-fields input[type="file"] {
-  width: calc(100% - 20px);
+.form-fields input {
+  width: 100%;
   padding: 10px;
-  margin: 5px 0;
+  margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 16px;
+  box-sizing: border-box;
 }
 
-.form-fields input[type="file"] {
-  padding: 3px;
-}
-
-.form-fields input[type="text"]:focus,
-.form-fields input[type="date"]:focus,
-.form-fields input[type="email"]:focus,
-.form-fields input[type="password"]:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-}
-
-.profile-picture label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-.daftar-container {
+.form-fields .ttl {
   display: flex;
-  justify-content: center;
+  gap: 10px;
+}
+
+.form-fields .ttl input {
+  flex: 1;
+}
+
+.form-fields .daftar-container {
+  text-align: center;
   margin-top: 20px;
 }
 
-.daftar {
+.form-fields .daftar {
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -87,29 +72,26 @@ h1 {
   border: none;
   text-decoration: none;
   text-align: center; /* Ensure text is centered */
+  margin-bottom: 150px;
 }
 
-.daftar:hover {
-  background: #5F8882;
+.form-fields .daftar:hover {
+  background-color: #5F8882;
 }
 
-.daftar:active {
-  transform: scale(0.95);
-}
-
-.daftar:focus {
-  outline: none;
-  box-shadow: 0 0 10px rgba(125, 174, 168, 0.6);
+/* Styling untuk footer */
+.footer {
+  width: 100%;
+  background-color: #145149;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  margin-top: auto; /* Memastikan footer berada di bagian bawah */
 }
 
 /* Responsive adjustments */
 @media (max-width: 600px) {
   .form-fields {
     width: 100%;
-  }
-
-  .daftar {
-    width: 100%;
-    font-size: 16px;
   }
 }
