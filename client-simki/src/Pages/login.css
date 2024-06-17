@@ -1,4 +1,4 @@
-.container {
+.login_container {
   padding: 20px;
   text-align: center;
 }
@@ -66,8 +66,7 @@
 .submit-container {
   display: flex;
   justify-content: center;
-  gap: 30px;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 .submit {
@@ -77,16 +76,41 @@
   width: 220px;
   height: 59px;
   color: #fff;
-  background: #7DAEA8;
+  background: #7DAEA8; /* Default color for both buttons */
   border-radius: 50px;
   font-size: 19px;
   font-weight: 700;
   cursor: pointer;
-  border: none; /* Jika Anda menggunakan button HTML */
-  text-decoration: none; /* Jika Anda menggunakan link styled sebagai button */
+  border: none; /* For HTML buttons */
+  text-decoration: none; /* If using styled links as buttons */
+}
+
+.submit:hover {
+  background: #5F8882;
+}
+
+.submit:active {
+  transform: scale(0.95);
+}
+
+.submit:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(125, 174, 168, 0.6);
 }
 
 .gray {
-  background: #eaeaee;
-  color: #D9D9D9;
+  background: #7DAEA8; /* Ensure the inactive state color matches */
+  color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .form-fields {
+      width: 100%;
+  }
+
+  .submit {
+      width: 100%;
+      font-size: 16px;
+  }
 }

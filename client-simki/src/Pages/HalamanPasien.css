@@ -1,0 +1,202 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.halaman_pasien_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.center_text {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nama_pasien {
+    margin-left: 50px; /* Sesuaikan sesuai kebutuhan */
+}
+
+.keluar {
+    background-color: #145149; /* Warna hijau */
+    color: white; /* Warna teks putih */
+    width: 100px; /* Lebar tetap */
+    height: 30px; /* Tinggi tetap */
+    border: none; /* Tanpa garis pinggir */
+    border-radius: 5px; /* Opsional: sudut membulat */
+    font-size: 16px; /* Opsional: ukuran font */
+    cursor: pointer; /* Penunjuk untuk menunjukkan bahwa tombol dapat diklik */
+    text-align: center; /* Mengatur teks agar rata tengah secara horizontal */
+    line-height: 30px; /* Mengatur teks agar rata tengah secara vertikal berdasarkan tinggi tombol */
+    display: inline-block; /* Memastikan tombol berperilaku seperti elemen blok namun tetap inline */
+    margin-right: 50px;
+}
+
+.keluar:hover {
+    background-color: #7DAEA8; /* Warna hijau sedikit lebih gelap saat mengapung */
+}
+
+.transaksi {
+    width: 100%;
+    text-align: left; /* Menyelaraskan teks ke kiri */
+    margin-top: 0;
+    margin-left: 100px;
+    margin-bottom: 50px;
+    
+}
+
+.tabel_transaksi table {
+    width: 100%; /* Menyesuaikan lebar tabel */
+    border-collapse: collapse; /* Menghapus ruang antara garis-garis tabel */
+}
+
+.tabel_transaksi th, .tabel_transaksi td {
+    border: 1px solid #ccc; /* Garis batas abu-abu untuk elemen tabel */
+    padding: 8px;
+    text-align: center;
+    min-width: 250px; /* Menetapkan lebar minimum untuk elemen tabel */
+}
+
+.tabel_transaksi th {
+    background-color: #f2f2f2; /* Warna latar belakang untuk header tabel */
+}
+
+.tombol_pending{
+    background-color: #145149; /* Warna hijau */
+    color: white; /* Warna teks putih */
+    width: 80px; /* Lebar tetap */
+    height: 30px; /* Tinggi tetap */
+    border: none; /* Tanpa garis pinggir */
+    border-radius: 5px; /* Opsional: sudut membulat */
+    font-size: 16px; /* Opsional: ukuran font */
+    cursor: pointer; /* Penunjuk untuk menunjukkan bahwa tombol dapat diklik */
+    text-align: center; /* Mengatur teks agar rata tengah secara horizontal */
+    line-height: 30px; /* Mengatur teks agar rata tengah secara vertikal berdasarkan tinggi tombol */
+    display: inline-block; /* Memastikan tombol berperilaku seperti elemen blok namun tetap inline */
+}
+
+.tombol_pending:hover {
+    background-color: #7DAEA8; /* Warna hijau sedikit lebih gelap saat mengapung */
+}
+
+.klik_pasien {
+    display: flex;
+    justify-content: center; /* Memusatkan elemen secara horizontal */
+    gap: 70px; /* Memberikan jarak 30px antara elemen */
+    padding: 20px; /* Padding tambahan untuk estetika */
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Align items vertically centered */
+    align-items: center; /* Align items horizontally centered */
+    width: 200px; /* Width of the clickable area */
+    height: 150px; /* Height of the clickable area */
+    background-color: #C6E6E1; /* Button color */
+    border: 1px solid #C6E6E1; /* Border for the button */
+    cursor: pointer; /* Indicates clickable item */
+    padding: 10px; /* Padding to make clickable area larger */
+    box-sizing: border-box; /* Include padding in the width/height */
+    border-radius: 10px; /* Ensuring the button has sharp, square corners */
+    margin-top: 50px;
+}
+.profile:hover {
+    background-color: #7DAEA8; /* Color when hovered */
+}
+.user {
+    width: 50px; /* Size of the user image */
+    height: 50px; /* Size of the user image */
+    margin-bottom: 10px; /* Space between image and text */
+    border-radius: 50%; /* Make the user image circular, if desired */
+}
+
+.profile p {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif; /* Font style */
+    font-weight: normal; /* Non-bold text */
+    color: black; /* Text color */
+    text-align: center;
+    font-size: 20px; /* Adjust size as needed */
+    line-height: 1.2; /* Adjust line-height as needed */
+}
+
+
+.buat_janji {
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* Memusatkan item secara horizontal */
+    justify-content: center;  /* Memusatkan item secara vertikal */
+    width: 200px; /* Lebar area yang dapat diklik */
+    height: 150px; /* Tinggi area yang dapat diklik */
+    background-color: #C6E6E1; /* Warna tombol default */
+    border: 1px solid #C6E6E1; /* Border untuk tombol */
+    cursor: pointer; /* Menunjukkan item yang dapat diklik */
+    padding: 10px; /* Padding untuk memperluas area klik */
+    box-sizing: border-box; /* Memasukkan padding dalam lebar/tinggi */
+    border-radius: 10px; /* Memastikan tombol memiliki sudut membulat */
+    margin-top: 50px;
+    transition: background-color 0.3s ease; /* Transisi warna latar belakang yang halus */
+}
+
+.buat_janji:hover {
+    background-color: #7DAEA8; /* Warna saat dihover */
+}
+
+.buatjanji {
+    width: 50px; /* Ukuran gambar pengguna */
+    height: 50px; /* Ukuran gambar pengguna */
+    margin-bottom: 10px; /* Ruang antara gambar dan teks */
+}
+
+.buat_janji p {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif; /* Gaya font */
+    font-weight: normal; /* Teks non-bold */
+    color: black; /* Warna teks */
+    text-align: center;
+    font-size: 20px; /* Sesuaikan ukuran sesuai kebutuhan */
+    line-height: 1.2; /* Sesuaikan line-height sesuai kebutuhan */
+}
+
+.riwayat_kunjungan {
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* Memusatkan item secara horizontal */
+    justify-content: center;  /* Memusatkan item secara vertikal */
+    width: 200px; /* Lebar area yang dapat diklik */
+    height: 150px; /* Tinggi area yang dapat diklik */
+    background-color: #C6E6E1; /* Warna tombol default */
+    border: 1px solid #C6E6E1; /* Border untuk tombol */
+    cursor: pointer; /* Menunjukkan item yang dapat diklik */
+    padding: 10px; /* Padding untuk memperluas area klik */
+    box-sizing: border-box; /* Memasukkan padding dalam lebar/tinggi */
+    border-radius: 10px; /* Memastikan tombol memiliki sudut membulat */
+    margin-top: 50px;
+    transition: background-color 0.3s ease; /* Transisi warna latar belakang yang halus */
+}
+
+.riwayat_kunjungan:hover {
+    background-color: #7DAEA8; /* Warna saat dihover */
+}
+
+.riwayat {
+    width: 50px; /* Ukuran gambar pengguna */
+    height: 50px; /* Ukuran gambar pengguna */
+    margin-bottom: 10px; /* Ruang antara gambar dan teks */
+}
+
+.riwayat_kunjungan p {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif; /* Gaya font */
+    font-weight: normal; /* Teks non-bold */
+    color: black; /* Warna teks */
+    text-align: center;
+    font-size: 20px; /* Sesuaikan ukuran sesuai kebutuhan */
+    line-height: 1.2; /* Sesuaikan line-height sesuai kebutuhan */
+}
+
+

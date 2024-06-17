@@ -6,9 +6,9 @@ import klinikdipo from "../images/klinikdipo.png";
 
 const Layanan = () => {
   return (
-    <div className='container'>
+    <div className='layanan_container'>
       <Navbar />
-      <h1 className="center_text">Layanan Kami</h1>
+      <h1 className="layanan_kami">Layanan Kami</h1>
       <div className="klinik_dipo">
         <img src={klinikdipo} alt='Klinik Diponegoro' className='klinik_dipo' />
       </div>

@@ -10,7 +10,7 @@ const Home = () => {
   return (
     <div className="container">
       <Navbar />
-      <h1 className="center_text">Tentang Kami</h1>
+      <h1 className="tentang_kami">Tentang Kami</h1>
       <div className="klinik_dipo">
         <img src={klinikdipo} alt="Klinik Diponegoro" className="klinik_dipo" />
       </div>

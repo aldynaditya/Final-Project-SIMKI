@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 // keebijakan privasi
 const KebijakanPrivasi = () => {
     return (
-        <div className="container">
+        <div className="privasi_container">
             <Navbar />
             <h1 className="judul">Kebijakan Privasi</h1>
             <div className="desc">
