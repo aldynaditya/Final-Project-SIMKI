@@ -88,6 +88,7 @@ const DataPasien = db.define('data_pasien', {
     userId: {
         type: DataTypes.UUID,
         allowNull: true,
+        defaultValue: null
     },
 },{
     timestamps: true,

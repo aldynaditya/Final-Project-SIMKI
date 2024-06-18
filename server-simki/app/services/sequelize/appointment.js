@@ -3,6 +3,7 @@ const Appointment = require('../../api/v1/appointment/model');
 const Schedule = require('../../api/v1/schedule/model');
 const Pasien = require('../../api/v1/pasien/model');
 const DataPasien = require('../../api/v1/dataPasien/model');
+const EMRPasien = require('../../api/v1/emrPasien/model');
 const UserKlinik = require('../../api/v1/userKlinik/model');
 const { getDayOfWeek } = require('../../utils/ConvertDatetoDay');
 const { BadRequestError, NotFoundError } = require('../../errors');
@@ -112,6 +113,17 @@ const updateAppointment = async (req) => {
     
     if (!check) throw new NotFoundError(`Tidak ada Appointment dengan id :  ${id}`);
     
+    // Jika status 'diterima', tambahkan data ke EMRPasien
+    if (status === 'diterima') {
+        await Appointment.update(
+            { status, keterangan },
+            { where: { uuid: id }}
+        );
+        const emrData = await EMRPasien.create({ appointmentId: id });
+        return emrData;
+    }
+
+    // Jika status tidak 'diterima', update Appointment
     const result = await Appointment.update(
         { status, keterangan },
         { where: { uuid: id }}
