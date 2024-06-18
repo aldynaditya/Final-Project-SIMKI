@@ -9,10 +9,12 @@ const app = express();
 
 // ini untuk sync database
 
-// const DataPasien = require('./app/api/v1/dataPasien/model');
+const DataPasien = require('./app/api/v1/dataPasien/model');
 const Appointment = require('./app/api/v1/appointment/model');
-// const Schedule = require('./app/api/v1/schedule/model');
-// const Pasien = require('./app/api/v1/pasien/model');
+const Schedule = require('./app/api/v1/schedule/model');
+const Pasien = require('./app/api/v1/pasien/model');
+const emrpasien = require('./app/api/v1/emrPasien/model');
+const episode = require('./app/api/v1/episode/model');
 
 // db.sync().then(() => {
 //     console.log('Database synchronized');
@@ -23,7 +25,16 @@ const Appointment = require('./app/api/v1/appointment/model');
 //     await db.sync({force:true}); 
 // })();
 // (async()=>{
+//     await Pasien.sync({ force: true }); 
+// })();
+// (async()=>{
 //     await Appointment.sync({ force: true }); 
+// })();
+// (async()=>{
+//     await DataPasien.sync({ force: true }); 
+// })();
+// (async()=>{
+//     await Schedule.sync({ force: true }); 
 // })();
 
 //router
@@ -35,6 +46,7 @@ const pasienRouter = require('./app/api/v1/pasien/router');
 const scheduleRouter = require('./app/api/v1/schedule/router');
 const appointmentRouter = require('./app/api/v1/appointment/router');
 const datapasienRouter = require('./app/api/v1/dataPasien/router');
+const emrpasienRouter = require('./app/api/v1/emrPasien/router');
 
 const v1 = '/api/v1';
 
@@ -63,6 +75,7 @@ app.use(`${v1}/cms`, itemRouter);
 app.use(`${v1}/cms`, scheduleRouter);
 app.use(`${v1}/cms`, appointmentRouter);
 app.use(`${v1}/cms`, datapasienRouter);
+app.use(`${v1}/cms`, emrpasienRouter);
 app.use(`${v1}`, pasienRouter);
 
 
