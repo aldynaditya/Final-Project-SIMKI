@@ -1,12 +1,16 @@
-body {
+/* RiwayatKunjungan.css */
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
     font-family: 'Open Sans', sans-serif;
 }
 
 .riwayat_kunjungan_container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 20px;
+    min-height: 100vh;
 }
 
 .text_riwayat {
@@ -15,38 +19,54 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-left: 50px;
+    padding: 20px 0;
+}
+
+.tabel_riwayat_kunjungan {
+    width: 100%;
+    flex: 1;
+    padding: 0 20px;
 }
 
 .tabel_riwayat_kunjungan table {
-    width: 100%; /* Menyesuaikan lebar tabel */
-    border-collapse: collapse; /* Menghapus ruang antara garis-garis tabel */
+    width: 100%;
+    border-collapse: collapse;
 }
 
 .tabel_riwayat_kunjungan th, .tabel_riwayat_kunjungan td {
-    border: 1px solid #ccc; /* Garis batas abu-abu untuk elemen tabel */
+    border: 1px solid #ccc;
     padding: 8px;
     text-align: center;
-    min-width: 250px; /* Menetapkan lebar minimum untuk elemen tabel */
+    min-width: 250px;
 }
 
 .tabel_riwayat_kunjungan th {
-    background-color: #f2f2f2; /* Warna latar belakang untuk header tabel */
+    background-color: #f2f2f2;
 }
 
-.tombol_selengkapnya{
-    background-color: #145149; /* Warna hijau */
-    color: white; /* Warna teks putih */
-    width: 120px; /* Lebar tetap */
-    height: 35px; /* Tinggi tetap */
-    border: none; /* Tanpa garis pinggir */
-    border-radius: 5px; /* Opsional: sudut membulat */
-    font-size: 16px; /* Opsional: ukuran font */
-    cursor: pointer; /* Penunjuk untuk menunjukkan bahwa tombol dapat diklik */
-    text-align: center; /* Mengatur teks agar rata tengah secara horizontal */
-    line-height: 35px; /* Mengatur teks agar rata tengah secara vertikal berdasarkan tinggi tombol */
-    display: inline-block; /* Memastikan tombol berperilaku seperti elemen blok namun tetap inline */
+.tombol_selengkapnya {
+    background-color: #145149;
+    color: white;
+    width: 120px;
+    height: 35px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 35px;
+    display: inline-block;
 }
 
 .tombol_selengkapnya:hover {
-    background-color: #7DAEA8; /* Warna hijau sedikit lebih gelap saat mengapung */
+    background-color: #7DAEA8;
+}
+
+footer {
+    background-color: #f1f1f1;
+    width: 100%;
+    padding: 10px 0;
+    box-sizing: border-box;
+    text-align: center;
+    margin-top: auto; /* memastikan footer tetap di bawah */
 }

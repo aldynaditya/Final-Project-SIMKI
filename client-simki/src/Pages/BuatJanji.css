@@ -1,0 +1,95 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+}
+
+.BuatJanji_container {
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Ini memungkinkan kontainer utama mengisi ruang yang tersedia */
+}
+
+.text_buatjanji {
+    margin: 150px 0 50px 0;
+}
+
+.form_container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+}
+
+.form_group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-radius: 10px;
+}
+
+.form_container select, 
+.form_container input[type="date"], 
+.form_container input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background-color: #fff;
+    color: #333;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.keluhan {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+.keluhan input {
+    width: 100%; /* Menyamakan lebar dengan kolom input lainnya */
+    height: 200px; /* Meningkatkan tinggi kolom input */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-size: 20px;
+    text-align: left;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.klik_buatjanji {
+    background-color: #145149;
+    color: white;
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 30px;
+    display: inline-block;
+    margin-bottom: 150px;
+}
+
+.klik_buatjanji:hover {
+    background-color: #7DAEA8;
+}
+
+.footer {
+    background-color: #145149;
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+}
