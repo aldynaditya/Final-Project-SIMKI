@@ -37,12 +37,7 @@ const Appointment = db.define('appointment', {
         allowNull: false,
         defaultValue: '',
     },
-    userId: {   //ini id untuk yang daftar manual
-        type: DataTypes.UUID,
-        allowNull: true,
-        defaultValue: null
-    },
-    pasienId: {  //ini id untuk yang daftar secara online
+    pasienId: {
         type: DataTypes.UUID,
         allowNull: true,
         defaultValue: null
@@ -56,9 +51,7 @@ const Appointment = db.define('appointment', {
     tableName: 'appointment'
 });
 
-Appointment.belongsTo(Pasien, { foreignKey: 'pasienId', targetKey: 'uuid' });
-
-Appointment.belongsTo(DataPasien, { as: 'manualDataPasien', foreignKey: 'userId', targetKey: 'uuid' });
+Appointment.belongsTo(DataPasien, { as: 'datapasien', foreignKey: 'pasienId', targetKey: 'uuid' });
 
 Appointment.belongsTo(Schedule, { foreignKey: 'scheduleId', targetKey: 'uuid' });
 

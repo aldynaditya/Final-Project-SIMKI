@@ -1,7 +1,5 @@
-const { Op } = require('sequelize');
 const Appointment = require('../../api/v1/appointment/model');
 const Schedule = require('../../api/v1/schedule/model');
-const Pasien = require('../../api/v1/pasien/model');
 const DataPasien = require('../../api/v1/dataPasien/model');
 const EMRPasien = require('../../api/v1/emrPasien/model');
 const UserKlinik = require('../../api/v1/userKlinik/model');
@@ -12,16 +10,8 @@ const getAllAppointment = async (req) => {
     const appointment = await Appointment.findAll({
         include: [
             {
-                model: Pasien,
-                attributes: { exclude: ['password', 'role', 'status', 'otp', 'createdAt', 'updatedAt'] },
-                include: {
-                    model: DataPasien,
-                    attributes: ['nik', 'nama_lengkap', 'tempat_lahir', 'tanggal_lahir', 'jenis_kelamin', 'gol_darah', 'suku_bangsa', 'alamat']
-                }
-            },
-            {
                 model: DataPasien,
-                as: 'manualDataPasien',
+                as: 'datapasien',
                 attributes: ['nik', 'nama_lengkap', 'tempat_lahir', 'tanggal_lahir', 'jenis_kelamin', 'gol_darah', 'suku_bangsa', 'alamat']
             },
             {
@@ -91,7 +81,7 @@ const createAppointment = async (req) => {
     const result = await Appointment.create({
         tanggal,
         keluhan,
-        userId: dataPasien.uuid,
+        pasienId: dataPasien.uuid,
         scheduleId: schedule.uuid
     });
 
