@@ -10,7 +10,8 @@ import HalamanPasien from './Pages/HalamanPasien';
 import Profile from './Pages/Profile';
 import RiwayatKunjungan from './Pages/RiwayatKunjungan';
 import BuatJanji from './Pages/BuatJanji';
-import DetailKujungan from './Pages/DetailKunjungan';
+import DetailKunjungan from './Pages/DetailKunjungan';
+import QuestionnairePopup from './Pages/QuestionnairePopup';
 
 
 function App() {
@@ -26,7 +27,8 @@ function App() {
       <Route path="/profile" element={<Profile />} />
       <Route path="/riwayat-kunjungan" element={<RiwayatKunjungan />} />
       <Route path="/buat-janji" element={<BuatJanji />} />
-      <Route path="/detail-kunjungan" element={<DetailKujungan />} />
+      <Route path="/detail-kunjungan" element={<DetailKunjungan />} />
+      <Route path="/questionnaire-popup" element={<QuestionnairePopup />} />
     </Routes>
   );
 }

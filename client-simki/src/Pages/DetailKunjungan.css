@@ -1,0 +1,92 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%; /* Menjamin tinggi minimal 100% dari viewport */
+    font-family: 'Open Sans', sans-serif;
+
+}
+
+.detail_kunjungan_container {
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Membiarkan kontainer ini mengambil ruang yang tersisa */
+}
+
+.text_detail {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.form_container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.form_field {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form_field > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.form_field span {
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.form_field input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.obat_pasien input, .tindakan_pasien input {
+    height: 70px;
+}
+
+.footer {
+    background-color: #145149;
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+    color: white;
+    position: relative;
+    bottom: 0;
+    left: 0;
+}
+
+.kuisioner {
+    background-color: #145149;
+    color: white;
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 30px;
+    display: inline-block;
+    margin-bottom: 150px;
+}
+
+.kuisioner:hover {
+    background-color: #7DAEA8;
+}
+

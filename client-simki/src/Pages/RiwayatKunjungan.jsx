@@ -1,7 +1,7 @@
 import React from "react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import { useNavigate } from 'react-router-dom';
+import Navbar from "../components/Navbar";  
+import Footer from "../components/Footer";  
+import { useNavigate } from 'react-router-dom';  
 import './RiwayatKunjungan.css';
 
 const RiwayatKunjungan = () => {
@@ -26,15 +26,15 @@ const RiwayatKunjungan = () => {
                             <th>Dokter</th>
                             <th>Poli</th>
                             <th>Keterangan</th>
-                            <th>    </th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>    </td>
-                            <td>    </td>
-                            <td>    </td>
-                            <td>    </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <td><button className="tombol_selengkapnya" onClick={handleSelengkapnya}>Selengkapnya</button></td>
                         </tr>
                     </tbody>
