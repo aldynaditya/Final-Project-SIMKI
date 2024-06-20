@@ -11,72 +11,50 @@ const {
     UnauthorizedError 
 } = require('../../errors');
 
-const getAllEMRPasien = async (req, res, next) => {
-    let emrPasienData;
+const getAllEMRPasien = async ( req ) => {
+    const { role, name } = req.user;
+    const query = req.query;
 
-    if (req.user.role === 'dokter') {
-        emrPasienData = await EMRPasien.findAll({
-            include: [
-                {
-                    model: Appointment,
-                    include: [
-                        {
-                            model: Schedule,
-                            include: {
-                                model: UserKlinik,
-                                as: 'user_klinik',
-                                where: {
-                                    name: req.user.name
-                                }
-                            }
-                        },
-                        {
-                            model: Pasien,
-                            attributes: { exclude: ['password', 'role', 'status', 'otp', 'createdAt', 'updatedAt'] },
-                            include: {
-                                model: DataPasien,
-                            }
-                        },
-                        {
-                            model: DataPasien,
-                            as: 'manualDataPasien',
-                        }
-                    ]
-                }
-            ],
-            where: {
-                '$appointment.schedule.user_klinik.name$': req.user.name // Filter by doctor's name
-            }
-        });
-    } else if (req.user.role === 'perawat') {
-        emrPasienData = await EMRPasien.findAll({
-            include: [
-                {
-                    model: Appointment,
-                    include: [
-                        {
-                            model: Schedule,
-                            include: {
-                                model: UserKlinik,
-                                as: 'user_klinik',
-                            }
-                        },
-                        {
-                            model: Pasien,
-                            attributes: { exclude: ['password', 'role', 'status', 'otp', 'createdAt', 'updatedAt'] },
-                            include: {
-                                model: DataPasien,
-                            }
-                        },
-                        {
-                            model: DataPasien,
-                            as: 'manualDataPasien',
-                        }
-                    ]
-                }
-            ]
-        });
+    let whereClause = {};
+    if (role === 'dokter') {
+        whereClause = {
+            '$appointment.schedule.user_klinik.name$': name,
+            ...query,
+        };
+    } else if (role === 'perawat') {
+        whereClause = { ...query };
+    } else {
+        throw new UnauthorizedError('User role is not authorized to fetch EMRPasien.');
     }
+
+    const emrPasienData = await EMRPasien.findAll({
+        include: [
+            {
+                model: Appointment,
+                include: [
+                    {
+                        model: Schedule,
+                        include: {
+                            model: UserKlinik,
+                            as: 'user_klinik',
+                        }
+                    },
+                    {
+                        model: Pasien,
+                        attributes: { exclude: ['password', 'role', 'status', 'otp', 'createdAt', 'updatedAt'] },
+                        include: {
+                            model: DataPasien,
+                        }
+                    },
+                    {
+                        model: DataPasien,
+                        as: 'manualDataPasien',
+                    }
+                ]
+            }
+        ],
+        where: whereClause
+    });
 
     const result = emrPasienData.map(emr => {
         const appointment = emr.appointment;
@@ -98,6 +76,92 @@ const getAllEMRPasien = async (req, res, next) => {
     return result;
 };
 
+const createVitalSignbyPerawat = async ( req ) => {
+    const emrPasienId = req.params.id;
+    const { riwayatPenyakit, subjective, TD, indeks, detak, suhu, napas, objective, assessment, plan } = req.body;
+
+    const result = await Episode.create({
+        emrPasienId,
+        riwayatPenyakit,
+        subjective,
+        TD,
+        indeks,
+        detak,
+        suhu,
+        napas,
+        objective,
+        assessment,
+        plan,
+    });
+
+    return result;
+}
+
+const updateEpisode = async ( req ) => {
+    const { id } = req.params;
+    const { riwayatPenyakit, subjective, objective, assessment, plan } = req.body;
+
+    const previousEpisode = await Episode.findByPk(id);
+    if (!previousEpisode) {
+        throw new Error('Previous episode not found');
+    }
+
+    const result = await Episode.update({
+            riwayatPenyakit,
+            subjective,
+            objective,
+            assessment,
+            plan,
+        },
+        { where: { uuid: id } } // Atur kondisi where menggunakan uuid
+    );
+
+    return result;
+}
+
+const createEpisode = async ( req ) => {
+    const emrPasienId = req.params.id;
+    const { riwayatPenyakit, subjective, TD, indeks, detak, suhu, napas, objective, assessment, plan } = req.body;
+
+    const result = await Episode.create({
+        emrPasienId,
+        riwayatPenyakit,
+        subjective,
+        TD,
+        indeks,
+        detak,
+        suhu,
+        napas,
+        objective,
+        assessment,
+        plan,
+    });
+
+    return result;
+}
+
+const updateOrder = async ( req ) => {
+    const { id } = req.params;
+    const { tindakan } = req.body;
+
+    const previousEpisode = await Episode.findByPk(id);
+    if (!previousEpisode) {
+        throw new Error('Previous episode not found');
+    }
+
+    const result = await Episode.update({
+            tindakan
+        },
+        { where: { uuid: id } } // Atur kondisi where menggunakan uuid
+    );
+
+    return result;
+}
+
 module.exports = {
     getAllEMRPasien,
+    createVitalSignbyPerawat,
+    updateEpisode,
+    createEpisode,
+    updateOrder
 };
