@@ -9,12 +9,15 @@ const app = express();
 
 // ini untuk sync database
 
-// const DataPasien = require('./app/api/v1/dataPasien/model');
-// const Appointment = require('./app/api/v1/appointment/model');
-// const Schedule = require('./app/api/v1/schedule/model');
-// const Pasien = require('./app/api/v1/pasien/model');
-// const emrpasien = require('./app/api/v1/emrPasien/model');
+const DataPasien = require('./app/api/v1/dataPasien/model');
+const Appointment = require('./app/api/v1/appointment/model');
+const Schedule = require('./app/api/v1/schedule/model');
+const Pasien = require('./app/api/v1/pasien/model');
+const emrpasien = require('./app/api/v1/emrPasien/model');
 const episode = require('./app/api/v1/episode/model');
+const UserKlinik = require('./app/api/v1/userKlinik/model');
+const superuser = require('./app/api/v1/superUser/model');
+const pasien = require('./app/api/v1/pasien/model');
 
 // db.sync().then(() => {
 //     console.log('Database synchronized');
@@ -22,7 +25,7 @@ const episode = require('./app/api/v1/episode/model');
 //     console.error('Database synchronization error:', err);
 // });
 // (async()=>{
-//     await db.sync({force:true}); 
+//     await db.sync({force:true, match: /.(?<!super_user|user_klinik|pasien|data_pasien)$/}); 
 // })();
 // (async()=>{
 //     await episode.sync({ force: true }); 
@@ -31,7 +34,7 @@ const episode = require('./app/api/v1/episode/model');
 //     await Appointment.sync({ force: true }); 
 // })();
 // (async()=>{
-//     await DataPasien.sync({ force: true }); 
+//     await Pasien.sync({ force: true }); 
 // })();
 // (async()=>{
 //     await Schedule.sync({ force: true }); 

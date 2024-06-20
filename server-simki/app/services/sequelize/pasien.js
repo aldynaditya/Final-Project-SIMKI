@@ -1,4 +1,5 @@
 const Pasien = require('../../api/v1/pasien/model');
+const DataPasien = require('../../api/v1/dataPasien/model');
 const Schedule = require('../../api/v1/schedule/model');
 const UserKlinik = require('../../api/v1/userKlinik/model');
 const Appointment = require('../../api/v1/appointment/model');
@@ -7,10 +8,12 @@ const {
     NotFoundError,
     UnauthorizedError,
 } = require('../../errors');
-const { createTokenPasien, createJWT } = require('../../utils');
+const { 
+    createTokenPasien, 
+    createJWT 
+} = require('../../utils');
 const { otpMail } = require('../mail');
 const { getDayOfWeek } = require('../../utils/ConvertDatetoDay');
-const DataPasien = require('../../api/v1/dataPasien/model');
 
 const signupPasien = async (req) => {
     const { nik, nama_lengkap, tempat_lahir, tanggal_lahir, jenis_kelamin, gol_darah, suku_bangsa, alamat, email, password } = req.body;
@@ -109,9 +112,14 @@ const getpasienAppointments = async (req) => {
     const user = req.pasien;
 
     const result = await Appointment.findAll({
-        where: { pasienId: user.id },
         attributes: ['tanggal', 'keluhan', 'status', 'keterangan'],
         include: [
+            {
+                model: DataPasien,
+                as: 'datapasien',
+                attributes: [],
+                where: { userId: user.id }
+            },
             {
                 model: Schedule, // Include the Schedule model
                 attributes: ['hari', 'poli'], // Specify the attributes you want to include
@@ -172,12 +180,26 @@ const createAppointment = async (req, res) => {
     const result = await Appointment.create({
         tanggal,
         keluhan,
-        pasienId,
+        pasienId: dataPasien.uuid,
         dataPasienId: dataPasien.uuid,
         scheduleId: schedule.uuid
     });
 
     return result;
+};
+
+const getDataPasien = async (req) => {
+    const { id: pasienId } = req.pasien;
+
+    const dataPasien = await DataPasien.findOne({
+        where: { userId: pasienId }
+    });
+
+    if (!dataPasien) {
+        throw new NotFoundError('Data Pasien tidak ditemukan');
+    }
+
+    return dataPasien;
 };
 
 const updateDataPasien = async (req) => {
@@ -214,6 +236,7 @@ module.exports = {
     signupPasien,
     activatePasien,
     signinPasien,
+    getDataPasien,
     updateDataPasien,
     createAppointment,
     getpasienAppointments
