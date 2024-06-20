@@ -9,7 +9,7 @@ const Episode = db.define('episode', {
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         validate: {
-            notEmpty: true,
+            notEmpty: false,
         },
     },
     emrPasienId: {
@@ -22,44 +22,53 @@ const Episode = db.define('episode', {
     },
     riwayatPenyakit: {
         type: DataTypes.TEXT,
-        allowNull: true,
+        defaultValue: "-",
+        allowNull: false,
     },
     subjective: {
         type: DataTypes.TEXT,
-        allowNull: true,
+        defaultValue: "-",
+        allowNull: false,
     },
     TD: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
     },
     indeks: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
     },
     detak: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
     },
     suhu: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
     },
     napas: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
     },
     objective: {
         type: DataTypes.TEXT,
-        allowNull: true,
+        defaultValue: "-",
+        allowNull: false,
     },
     assessment: {
         type: DataTypes.TEXT,
-        allowNull: true,
+        defaultValue: "-",
+        allowNull: false,
     },
     plan: {
         type: DataTypes.TEXT,
-        allowNull: true,
+        defaultValue: "-",
+        allowNull: false,
     },
+    tindakan: {
+        type: DataTypes.ENUM( 'none', 'obat', 'prosedur', 'surat' ),
+        defaultValue: 'none',
+    }
 }, {
     tableName: 'episode',
 });

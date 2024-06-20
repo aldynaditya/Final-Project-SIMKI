@@ -9,11 +9,11 @@ const app = express();
 
 // ini untuk sync database
 
-const DataPasien = require('./app/api/v1/dataPasien/model');
-const Appointment = require('./app/api/v1/appointment/model');
-const Schedule = require('./app/api/v1/schedule/model');
-const Pasien = require('./app/api/v1/pasien/model');
-const emrpasien = require('./app/api/v1/emrPasien/model');
+// const DataPasien = require('./app/api/v1/dataPasien/model');
+// const Appointment = require('./app/api/v1/appointment/model');
+// const Schedule = require('./app/api/v1/schedule/model');
+// const Pasien = require('./app/api/v1/pasien/model');
+// const emrpasien = require('./app/api/v1/emrPasien/model');
 const episode = require('./app/api/v1/episode/model');
 
 // db.sync().then(() => {
@@ -25,7 +25,7 @@ const episode = require('./app/api/v1/episode/model');
 //     await db.sync({force:true}); 
 // })();
 // (async()=>{
-//     await Pasien.sync({ force: true }); 
+//     await episode.sync({ force: true }); 
 // })();
 // (async()=>{
 //     await Appointment.sync({ force: true }); 
