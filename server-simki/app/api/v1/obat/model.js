@@ -52,8 +52,8 @@ const Obat = db.define('obat', {
             notEmpty: true,
         }
     },
-    createdBy: {
-        type: DataTypes.STRING,
+    userId: {
+        type: DataTypes.UUID,
         allowNull: false,
     }  
 }, {
@@ -62,9 +62,9 @@ const Obat = db.define('obat', {
 });
 
 Obat.belongsTo(UserKlinik, {
-    foreignKey: 'createdBy',
-    targetKey: 'name',
-    as: 'creator'
+    foreignKey: 'userId',
+    targetKey: 'uuid',
+    as: 'user'
 });
 
 module.exports = Obat;

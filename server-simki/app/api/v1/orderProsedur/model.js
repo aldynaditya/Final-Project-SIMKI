@@ -1,8 +1,8 @@
 const db = require('../../../db/index');
 const { DataTypes } = require('sequelize');
-const UserKlinik = require('../userKlinik/model');
+const Item = require('../item/model');
 
-const Item = db.define('item', {
+const OrderProsedur = db.define('order_prosedur', {
     uuid:{
         type: DataTypes.UUID,
         primaryKey: true,
@@ -12,51 +12,41 @@ const Item = db.define('item', {
             notEmpty: true
         }
     },
-    nama_item:{
-        type: DataTypes. STRING,
-        allowNull: false,
-        validate: {
-            notEmpty: true,
-            len : [3,100]
-        }
-    },
-    kode_item:{
-        type: DataTypes. STRING,
-        allowNull: false,
-        unique: {
-            msg: 'Kode sudah digunakan',
-        },
-        validate: {
-            notEmpty: true,
-        }
-    },
-    harga_satuan_item:{
-        type: DataTypes. INTEGER,
+    kuantitas:{
+        type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
             notEmpty: true,
         }
     },
-    stok:{
-        type: DataTypes. INTEGER,
+    dosis:{
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
             notEmpty: true,
         }
     },
-    userId: {
+    catatan:{
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+            notEmpty: true,
+        }
+    },
+    itemId: {
         type: DataTypes.UUID,
         allowNull: false,
     }  
 }, {
     timestamps: true,
-    tableName: 'item'
+    tableName: 'order_prosedur'
 });
 
-Item.belongsTo(UserKlinik, {
-    foreignKey: 'userId',
+
+OrderProsedur.belongsTo(Item, {
+    foreignKey: 'itemId',
     targetKey: 'uuid',
-    as: 'user'
+    as: 'dataitem'
 });
 
-module.exports = Item;
+module.exports = OrderProsedur;
