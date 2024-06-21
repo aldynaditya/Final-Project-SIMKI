@@ -1,8 +1,8 @@
 const db = require('../../../db/index');
 const { DataTypes } = require('sequelize');
-const UserKlinik = require('../userKlinik/model');
+const UserKlinik = require('../userKlinik/model')
 
-const Item = db.define('item', {
+const SuratSakit = db.define('surat_sakit', {
     uuid:{
         type: DataTypes.UUID,
         primaryKey: true,
@@ -12,51 +12,48 @@ const Item = db.define('item', {
             notEmpty: true
         }
     },
-    nama_item:{
-        type: DataTypes. STRING,
-        allowNull: false,
-        validate: {
-            notEmpty: true,
-            len : [3,100]
-        }
-    },
-    kode_item:{
-        type: DataTypes. STRING,
-        allowNull: false,
-        unique: {
-            msg: 'Kode sudah digunakan',
-        },
-        validate: {
-            notEmpty: true,
-        }
-    },
-    harga_satuan_item:{
-        type: DataTypes. INTEGER,
+    umur:{
+        type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
             notEmpty: true,
         }
     },
-    stok:{
-        type: DataTypes. INTEGER,
+    pekerjaan:{
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
             notEmpty: true,
         }
+    },
+    diagnosis:{
+        type: DataTypes.TEXT,
+        allowNull: false,
+        validate: {
+            notEmpty: true,
+        }
+    },
+    periodeStart: {
+        type: DataTypes.DATE,
+        allowNull: false
+    },
+    periodeEnd: {
+        type: DataTypes.DATE,
+        allowNull: false
     },
     userId: {
         type: DataTypes.UUID,
         allowNull: false,
-    }  
+    }   
 }, {
     timestamps: true,
-    tableName: 'item'
+    tableName: 'surat_sakit'
 });
 
-Item.belongsTo(UserKlinik, {
+SuratSakit.belongsTo(UserKlinik, {
     foreignKey: 'userId',
     targetKey: 'uuid',
     as: 'user'
 });
 
-module.exports = Item;
+module.exports = SuratSakit;

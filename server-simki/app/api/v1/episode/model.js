@@ -1,6 +1,9 @@
 const db = require('../../../db/index');
 const { DataTypes } = require('sequelize');
 const EMRPasien = require('../emrPasien/model');
+const OrderObat = require('../orderObat/model');
+const OrderProsedur = require('../orderProsedur/model');
+const OrderSurat = require('../orderSurat/model');
 
 const Episode = db.define('episode', {
     uuid: {
@@ -68,12 +71,39 @@ const Episode = db.define('episode', {
     tindakan: {
         type: DataTypes.ENUM( 'none', 'obat', 'prosedur', 'surat' ),
         defaultValue: 'none',
-    }
+    },
+    obatId: {
+        type: DataTypes.UUID,
+        allowNull: true,
+        references: {
+            model: OrderObat, // model untuk obat
+            key: 'uuid',
+        },
+    },
+    prosedurId: {
+        type: DataTypes.UUID,
+        allowNull: true,
+        references: {
+            model: OrderProsedur, // model untuk prosedur
+            key: 'uuid',
+        },
+    },
+    suratId: {
+        type: DataTypes.UUID,
+        allowNull: true,
+        references: {
+            model: OrderSurat, // model untuk surat
+            key: 'uuid',
+        },
+    },
 }, {
     tableName: 'episode',
 });
 
 Episode.belongsTo(EMRPasien, { foreignKey: 'emrPasienId' });
 EMRPasien.hasMany(Episode, { foreignKey: 'emrPasienId' });
+Episode.belongsTo(OrderObat, { foreignKey: 'obatId' });
+Episode.belongsTo(OrderProsedur, { foreignKey: 'prosedurId' });
+Episode.belongsTo(OrderSurat, { foreignKey: 'suratId' });
 
 module.exports = Episode;

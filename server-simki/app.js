@@ -18,6 +18,15 @@ const episode = require('./app/api/v1/episode/model');
 const UserKlinik = require('./app/api/v1/userKlinik/model');
 const superuser = require('./app/api/v1/superUser/model');
 const pasien = require('./app/api/v1/pasien/model');
+const Obat = require('./app/api/v1/obat/model');
+const Item = require('./app/api/v1/item/model');
+const SuratSakit = require('./app/api/v1/suratSakit/model');
+const SuratRujukan = require('./app/api/v1/suratRujukan/model');
+const OrderObat = require('./app/api/v1/orderObat/model');
+const OrderSurat = require('./app/api/v1/orderSurat/model');
+const OrderProsedur = require('./app/api/v1/orderProsedur/model');
+const Transaksi = require('./app/api/v1/transaksi/model');
+
 
 // db.sync().then(() => {
 //     console.log('Database synchronized');
@@ -25,7 +34,7 @@ const pasien = require('./app/api/v1/pasien/model');
 //     console.error('Database synchronization error:', err);
 // });
 // (async()=>{
-//     await db.sync({force:true, match: /.(?<!super_user|user_klinik|pasien|data_pasien)$/}); 
+//     await db.sync({force:true}); 
 // })();
 // (async()=>{
 //     await episode.sync({ force: true }); 
@@ -37,7 +46,25 @@ const pasien = require('./app/api/v1/pasien/model');
 //     await Pasien.sync({ force: true }); 
 // })();
 // (async()=>{
-//     await Schedule.sync({ force: true }); 
+//     await SuratSakit.sync({ force: true }); 
+// })();
+// (async()=>{
+//     await SuratRujukan.sync({ force: true }); 
+// })();
+// (async()=>{
+//     await OrderSurat.sync({ force: true }); 
+// })();
+// (async()=>{
+//     await OrderObat.sync({ force: true }); 
+// })();
+// (async()=>{
+//     await OrderProsedur.sync({ force: true }); 
+// })();
+// (async()=>{
+//     await Obat.sync({ force: true }); 
+// })();
+// (async()=>{
+//     await Item.sync({ force: true }); 
 // })();
 
 //router
