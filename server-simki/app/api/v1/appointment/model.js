@@ -32,6 +32,10 @@ const Appointment = db.define('appointment', {
         type: DataTypes.ENUM('diterima', 'ditolak','diproses'),
         defaultValue: 'diproses',
     },
+    penjamin: {
+        type: DataTypes.ENUM('BPJS', 'NON BPJS'),
+        defaultValue: 'BPJS',
+    },
     keterangan: {
         type: DataTypes.STRING,
         allowNull: false,

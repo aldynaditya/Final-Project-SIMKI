@@ -117,7 +117,6 @@ const getpasienAppointments = async (req) => {
             {
                 model: DataPasien,
                 as: 'datapasien',
-                attributes: [],
                 where: { userId: user.id }
             },
             {
@@ -138,6 +137,7 @@ const getpasienAppointments = async (req) => {
             nama_dokter: appointment.schedule ? appointment.schedule.user_klinik.name : null,
             poli: appointment.schedule ? appointment.schedule.poli : null,
             keterangan: appointment.keterangan,
+            penjamin: appointment.penjamin,
             status: appointment.status,
 
         };
@@ -147,7 +147,7 @@ const getpasienAppointments = async (req) => {
 };
 
 const createAppointment = async (req, res) => {
-    const { tanggal, keluhan, dokter, poli } = req.body;
+    const { tanggal, keluhan, penjamin, dokter, poli } = req.body;
     const { id: pasienId } = req.pasien;
     const dayOfWeek = getDayOfWeek(tanggal);
 
@@ -180,6 +180,7 @@ const createAppointment = async (req, res) => {
     const result = await Appointment.create({
         tanggal,
         keluhan,
+        penjamin,
         pasienId: dataPasien.uuid,
         dataPasienId: dataPasien.uuid,
         scheduleId: schedule.uuid
