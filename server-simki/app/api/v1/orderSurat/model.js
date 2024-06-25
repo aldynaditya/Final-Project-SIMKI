@@ -2,6 +2,7 @@ const db = require('../../../db/index');
 const { DataTypes } = require('sequelize');
 const SuratSakit = require('../suratSakit/model');
 const SuratRujukan = require('../suratRujukan/model');
+const Episode = require('../episode/model');
 
 const OrderSurat = db.define('order_surat', {
     uuid:{
@@ -62,6 +63,10 @@ const OrderSurat = db.define('order_surat', {
     suratrujukanId: {
         type: DataTypes.UUID,
         allowNull: false,
+    },
+    episodeId: {
+        type: DataTypes.UUID,
+        allowNull: false,
     }   
 }, {
     timestamps: true,
@@ -79,6 +84,12 @@ OrderSurat.belongsTo(SuratRujukan, {
     foreignKey: 'suratrujukanId',
     targetKey: 'uuid',
     as: 'suratrujukan'
+});
+
+OrderSurat.belongsTo(Episode, {
+    foreignKey: 'episodeId',
+    targetKey: 'uuid',
+    as: 'episode'
 });
 
 module.exports = OrderSurat;

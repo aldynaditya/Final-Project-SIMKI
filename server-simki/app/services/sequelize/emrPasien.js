@@ -90,9 +90,7 @@ const updateEpisode = async ( req ) => {
     const { riwayatPenyakit, subjective, objective, assessment, plan } = req.body;
 
     const previousEpisode = await Episode.findByPk(id);
-    if (!previousEpisode) {
-        throw new Error('Previous episode not found');
-    }
+    if (!previousEpisode) throw new NotFoundError('Previous episode not found');
 
     const result = await Episode.update({
             riwayatPenyakit,
@@ -133,14 +131,12 @@ const updateOrder = async ( req ) => {
     const { tindakan } = req.body;
 
     const previousEpisode = await Episode.findByPk(id);
-    if (!previousEpisode) {
-        throw new Error('Previous episode not found');
-    }
+    if (!previousEpisode) throw new NotFoundError('Previous episode not found');
 
     const result = await Episode.update({
             tindakan
         },
-        { where: { uuid: id } } // Atur kondisi where menggunakan uuid
+        { where: { uuid: id } }
     );
 
     return result;

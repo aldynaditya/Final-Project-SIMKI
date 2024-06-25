@@ -1,19 +1,35 @@
-const { Op } = require('sequelize');
 const Obat = require('../../api/v1/obat/model');
+const UserKlinik = require('../../api/v1/userKlinik/model');
 const { BadRequestError, NotFoundError } = require('../../errors');
 
 const getAllObat = async (req) => {
-    const result = await Obat.findAll(req.body);
+    const obat = await Obat.findAll({
+        include: [{
+            model: UserKlinik,
+            as: 'user',
+            attributes: ['name']
+        }]
+    });
+
+    const result = obat.map(obat => {
+        return {
+            nama_obat: obat.nama_obat,
+            kode_obat: obat.kode_obat,
+            harga_obat: obat.harga_satuan_obat,
+            jenis_obat: obat.satuan,
+            stok_obat: obat.stok,
+            createdBy: obat.user.name
+        };
+    });
 
     return result;
 };
 
 const createObat = async (req) => {
     const {nama_obat, kode_obat, harga_satuan_obat, satuan, stok } = req.body;
-    const superuser = req.user.superuser;
-    const createdBy = req.user.name;
+    const userId = req.user.id;
 
-    const check = await Obat.findOne({ where: { nama_obat } });
+    const check = await Obat.findOne({ where: { kode_obat } });
     if (check) throw new BadRequestError('Obat telah terdaftar');
 
     const result = await Obat.create({
@@ -22,8 +38,7 @@ const createObat = async (req) => {
         harga_satuan_obat: harga_satuan_obat,
         satuan: satuan,
         stok: stok,
-        superuser,
-        createdBy
+        userId
     });
 
     return result
@@ -41,15 +56,6 @@ const getOneObat = async (req) => {
 const updateObat = async (req) => {
     const { id } = req.params;
     const { nama_obat, kode_obat, harga_satuan_obat, satuan, stok } = req.body;
-
-    const check = await Obat.findOne({
-        where: {
-            nama_obat,
-            uuid: { [Op.ne]: id },
-        },
-    });
-
-    if (check) throw new BadRequestError('Nama duplikat');
     
     const result = await Obat.update(
         { nama_obat, kode_obat, harga_satuan_obat, satuan, stok },
