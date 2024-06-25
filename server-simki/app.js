@@ -8,7 +8,6 @@ const db = require('./app/db');
 const app = express();
 
 // ini untuk sync database
-
 const DataPasien = require('./app/api/v1/dataPasien/model');
 const Appointment = require('./app/api/v1/appointment/model');
 const Schedule = require('./app/api/v1/schedule/model');
@@ -35,36 +34,6 @@ const Transaksi = require('./app/api/v1/transaksi/model');
 // });
 // (async()=>{
 //     await db.sync({force:true}); 
-// })();
-// (async()=>{
-//     await episode.sync({ force: true }); 
-// })();
-// (async()=>{
-//     await Appointment.sync({ force: true }); 
-// })();
-// (async()=>{
-//     await Pasien.sync({ force: true }); 
-// })();
-// (async()=>{
-//     await SuratSakit.sync({ force: true }); 
-// })();
-// (async()=>{
-//     await SuratRujukan.sync({ force: true }); 
-// })();
-// (async()=>{
-//     await OrderSurat.sync({ force: true }); 
-// })();
-// (async()=>{
-//     await OrderObat.sync({ force: true }); 
-// })();
-// (async()=>{
-//     await OrderProsedur.sync({ force: true }); 
-// })();
-// (async()=>{
-//     await Obat.sync({ force: true }); 
-// })();
-// (async()=>{
-//     await Item.sync({ force: true }); 
 // })();
 
 //router

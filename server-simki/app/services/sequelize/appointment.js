@@ -36,6 +36,7 @@ const getAllAppointment = async (req) => {
             poli: appointment.schedule ? appointment.schedule.poli : null,
             tanggal: appointment.tanggal,
             keluhan: appointment.keluhan,
+            penjamin: appointment.penjamin,
             status: appointment.status,
             keterangan: appointment.keterangan,
         };
@@ -45,7 +46,7 @@ const getAllAppointment = async (req) => {
 };
 
 const createAppointment = async (req) => {
-    const { dokter, poli, tanggal, keluhan, nik } = req.body;
+    const { dokter, poli, tanggal, keluhan, nik, penjamin } = req.body;
 
     let dataPasien = await DataPasien.findOne({
         where: { nik }
@@ -81,15 +82,13 @@ const createAppointment = async (req) => {
     const result = await Appointment.create({
         tanggal,
         keluhan,
+        penjamin,
         pasienId: dataPasien.uuid,
         scheduleId: schedule.uuid
     });
 
     return result;
 };
-
-
-
 
 const updateAppointment = async (req) => {
     const { id } = req.params;

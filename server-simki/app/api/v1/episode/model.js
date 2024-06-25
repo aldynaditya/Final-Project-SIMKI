@@ -23,6 +23,11 @@ const Episode = db.define('episode', {
             key: 'noEMR',
         },
     },
+    alergi: {
+        type: DataTypes.STRING,
+        defaultValue: "-",
+        allowNull: false,
+    },
     riwayatPenyakit: {
         type: DataTypes.TEXT,
         defaultValue: "-",
