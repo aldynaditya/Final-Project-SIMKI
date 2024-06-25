@@ -46,6 +46,7 @@ const scheduleRouter = require('./app/api/v1/schedule/router');
 const appointmentRouter = require('./app/api/v1/appointment/router');
 const datapasienRouter = require('./app/api/v1/dataPasien/router');
 const emrpasienRouter = require('./app/api/v1/emrPasien/router');
+const orderRouter = require('./app/api/v1/order/router');
 
 const v1 = '/api/v1';
 
@@ -75,6 +76,7 @@ app.use(`${v1}/cms`, scheduleRouter);
 app.use(`${v1}/cms`, appointmentRouter);
 app.use(`${v1}/cms`, datapasienRouter);
 app.use(`${v1}/cms`, emrpasienRouter);
+app.use(`${v1}/cms`, orderRouter);
 app.use(`${v1}`, pasienRouter);
 
 

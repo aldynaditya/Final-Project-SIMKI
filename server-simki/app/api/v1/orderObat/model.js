@@ -1,6 +1,8 @@
 const db = require('../../../db/index');
 const { DataTypes } = require('sequelize');
 const Obat = require('../obat/model');
+const Episode = require('../episode/model');
+
 
 const OrderObat = db.define('order_obat', {
     uuid:{
@@ -40,7 +42,11 @@ const OrderObat = db.define('order_obat', {
     obatId: {
         type: DataTypes.UUID,
         allowNull: false,
-    }  
+    },
+    episodeId: {
+        type: DataTypes.UUID,
+        allowNull: false,
+    }
 }, {
     timestamps: true,
     tableName: 'order_obat'
@@ -51,6 +57,12 @@ OrderObat.belongsTo(Obat, {
     foreignKey: 'obatId',
     targetKey: 'uuid',
     as: 'dataobat'
+});
+
+OrderObat.belongsTo(Episode, {
+    foreignKey: 'episodeId',
+    targetKey: 'uuid',
+    as: 'episode'
 });
 
 module.exports = OrderObat;
