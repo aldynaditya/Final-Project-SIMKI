@@ -6,7 +6,7 @@ const Schedule = require('../../api/v1/schedule/model');
 const UserKlinik = require('../../api/v1/userKlinik/model');
 const Transaksi = require('../../api/v1/transaksi/model');
 const OrderObat = require('../../api/v1/orderObat/model');
-const OrderProsedur = require('../../api/v1/orderObat/model');
+const OrderProsedur = require('../../api/v1/orderProsedur/model');
 const OrderSurat = require('../../api/v1/orderSurat/model');
 const SuratSakit = require('../../api/v1/suratSakit/model');
 const SuratRujukan = require('../../api/v1/suratRujukan/model');
@@ -45,6 +45,87 @@ const createOrderObat = async (req) => {
     return result;
 }
 
+const createOrderItem = async (req) => {
+    const { id } = req.params;
+    const { namaItem, kuantitas, dosis, catatan } = req.body;
+
+    const episode = await Episode.findByPk(id);
+    if (!episode) throw new NotFoundError('Episode tidak ditemukan');
+
+    const item = await Item.findOne({ where: { nama_item: namaItem } });
+    if (!item) throw new NotFoundError('Item tidak ditemukan');
+
+    if (kuantitas > item.stok) throw new BadRequestError('Stok item tidak mencukupi');
+
+    const result = await OrderProsedur.create({
+        episodeId: episode.uuid,
+        itemId: item.uuid, // Pastikan itemId diatur dengan item.uuid
+        kuantitas,
+        dosis,
+        catatan,
+    });
+
+    await Item.update({ stok: item.stok - kuantitas }, { where: { uuid: item.uuid } });
+
+    return result;
+}
+
+const createOrderSuratSakit = async (req) => {
+    const { id } = req.params;
+    const { umur, pekerjaan, diagnosis, periodeStart, periodeEnd } = req.body;
+
+    const episode = await Episode.findByPk(id);
+    if (!episode) throw new NotFoundError('Episode tidak ditemukan');
+
+    const result = await SuratSakit.create({
+        umur,
+        pekerjaan,
+        diagnosis,
+        periodeStart,
+        periodeEnd,
+        userId: req.user.id, // Sesuaikan dengan logika aplikasi Anda
+    });
+
+    await OrderSurat.create({
+        episodeId: episode.uuid,
+        suratsakitId: result.uuid,
+        jenisSurat: 'sakit', // Hardcode atau gunakan data dari req.body
+        versiSurat: '1.0', // Contoh versi surat, sesuaikan dengan kebutuhan
+    });
+
+    return result;
+}
+
+const createOrderSuratRujukan = async (req) => {
+    const { id } = req.params;
+    const { tujuan, tempat_tujuan, diagnosis, tindakan, keterangan } = req.body;
+
+    const episode = await Episode.findByPk(id);
+    if (!episode) throw new NotFoundError('Episode tidak ditemukan');
+
+    const result = await SuratRujukan.create({
+        tujuan,
+        tempat_tujuan,
+        diagnosis,
+        tindakan,
+        keterangan,
+    });
+
+    await OrderSurat.create({
+        episodeId: episode.uuid,
+        suratrujukanId: result.uuid,
+        jenisSurat: 'rujukan',
+        versiSurat: '1.0',
+    });
+
+    return result;
+}
+
+
+
 module.exports = {
     createOrderObat,
+    createOrderItem,
+    createOrderSuratRujukan,
+    createOrderSuratSakit
 };

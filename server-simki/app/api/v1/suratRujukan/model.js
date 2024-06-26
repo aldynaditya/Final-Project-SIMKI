@@ -11,14 +11,14 @@ const SuratRujukan = db.define('surat_rujukan', {
             notEmpty: true
         }
     },
-    umur:{
-        type: DataTypes.INTEGER,
+    tujuan:{
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
             notEmpty: true,
         }
     },
-    pekerjaan:{
+    tempat_tujuan:{
         type: DataTypes.STRING,
         allowNull: false,
         validate: {

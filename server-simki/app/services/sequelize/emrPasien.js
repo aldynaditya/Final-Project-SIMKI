@@ -126,20 +126,24 @@ const createEpisode = async ( req ) => {
     return result;
 }
 
-const updateOrder = async ( req ) => {
+const updateOrder = async (req) => {
     const { id } = req.params;
     const { tindakan } = req.body;
 
     const previousEpisode = await Episode.findByPk(id);
     if (!previousEpisode) throw new NotFoundError('Previous episode not found');
 
-    const result = await Episode.update({
-            tindakan
-        },
-        { where: { uuid: id } }
-    );
+    // Menghapus nilai "none" dari episode sebelumnya jika ada
+    const filteredTindakan = previousEpisode.tindakan.filter(item => item !== 'none');
 
-    return result;
+    // Menghapus duplikat dan menggabungkan dengan nilai tindakan baru
+    const updatedTindakan = [...new Set([...filteredTindakan, ...tindakan])];
+
+    await previousEpisode.update({
+        tindakan: updatedTindakan
+    });
+
+    return previousEpisode;
 }
 
 module.exports = {

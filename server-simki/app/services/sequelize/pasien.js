@@ -112,7 +112,6 @@ const getpasienAppointments = async (req) => {
     const user = req.pasien;
 
     const result = await Appointment.findAll({
-        attributes: ['tanggal', 'keluhan', 'status', 'keterangan'],
         include: [
             {
                 model: DataPasien,
