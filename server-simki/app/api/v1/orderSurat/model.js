@@ -14,27 +14,6 @@ const OrderSurat = db.define('order_surat', {
             notEmpty: true
         }
     },
-    kuantitas:{
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-            notEmpty: true,
-        }
-    },
-    dosis:{
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            notEmpty: true,
-        }
-    },
-    catatan:{
-        type: DataTypes.TEXT,
-        allowNull: false,
-        validate: {
-            notEmpty: true,
-        }
-    },
     jenisSurat:{
         type: DataTypes.ENUM( 'sakit','rujukan' ),
         allownull: false,

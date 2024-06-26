@@ -33,7 +33,7 @@ const Transaksi = require('./app/api/v1/transaksi/model');
 //     console.error('Database synchronization error:', err);
 // });
 // (async()=>{
-//     await db.sync({force:true}); 
+//     await SuratRujukan.sync({force:true}); 
 // })();
 
 //router
@@ -46,7 +46,9 @@ const scheduleRouter = require('./app/api/v1/schedule/router');
 const appointmentRouter = require('./app/api/v1/appointment/router');
 const datapasienRouter = require('./app/api/v1/dataPasien/router');
 const emrpasienRouter = require('./app/api/v1/emrPasien/router');
-const orderRouter = require('./app/api/v1/order/router');
+const orderobatRouter = require('./app/api/v1/orderObat/router');
+const orderprosedurRouter = require('./app/api/v1/orderProsedur/router');
+const ordersuratRouter = require('./app/api/v1/orderSurat/router');
 
 const v1 = '/api/v1';
 
@@ -76,7 +78,9 @@ app.use(`${v1}/cms`, scheduleRouter);
 app.use(`${v1}/cms`, appointmentRouter);
 app.use(`${v1}/cms`, datapasienRouter);
 app.use(`${v1}/cms`, emrpasienRouter);
-app.use(`${v1}/cms`, orderRouter);
+app.use(`${v1}/cms`, orderobatRouter);
+app.use(`${v1}/cms`, orderprosedurRouter);
+app.use(`${v1}/cms`, ordersuratRouter);
 app.use(`${v1}`, pasienRouter);
 
 

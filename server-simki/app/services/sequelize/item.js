@@ -1,16 +1,32 @@
-const { Op } = require('sequelize');
 const Item = require('../../api/v1/item/model');
+const UserKlinik = require('../../api/v1/userKlinik/model');
 const { BadRequestError, NotFoundError } = require('../../errors');
 
 const getAllItem = async (req) => {
-    const result = await Item.findAll(req.body);
+    const item = await Item.findAll({
+        include: [{
+            model: UserKlinik,
+            as: 'user',
+            attributes: ['name']
+        }]
+    });
+
+    const result = item.map(item => {
+        return {
+            nama_item: item.nama_item,
+            kode_item: item.kode_item,
+            harga_item: item.harga_satuan_item,
+            stok_item: item.stok,
+            createdBy: item.user.name
+        };
+    });
 
     return result;
 };
 
 const createItem = async (req) => {
     const {nama_item, kode_item, harga_satuan_item, stok } = req.body;
-    const createdBy = req.user.name;
+    const userId = req.user.id;
 
     const check = await Item.findOne({ where: { nama_item } });
     if (check) throw new BadRequestError('Item telah terdaftar');
@@ -20,7 +36,7 @@ const createItem = async (req) => {
         kode_item: kode_item,
         harga_satuan_item: harga_satuan_item,
         stok: stok,
-        createdBy
+        userId
     });
 
     return result
@@ -38,15 +54,6 @@ const getOneItem = async (req) => {
 const updateItem = async (req) => {
     const { id } = req.params;
     const { nama_item, kode_item, harga_satuan_item, stok } = req.body;
-
-    const check = await Item.findOne({
-        where: {
-            nama_item,
-            uuid: { [Op.ne]: id },
-        },
-    });
-
-    if (check) throw new BadRequestError('Nama duplikat');
     
     const result = await Item.update(
         { nama_item, kode_item, harga_satuan_item, stok },

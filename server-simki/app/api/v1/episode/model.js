@@ -71,8 +71,16 @@ const Episode = db.define('episode', {
         allowNull: false,
     },
     tindakan: {
-        type: DataTypes.ENUM( 'none', 'obat', 'prosedur', 'surat' ),
-        defaultValue: 'none',
+        type: DataTypes.TEXT,
+        defaultValue: '["none"]',
+        get() {
+            const rawValue = this.getDataValue('tindakan');
+            return JSON.parse(rawValue);
+        },
+        set(value) {
+            this.setDataValue('tindakan', JSON.stringify(value));
+        },
+        allowNull: false,
     }
 }, {
     tableName: 'episode',
