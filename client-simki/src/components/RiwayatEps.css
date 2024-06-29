@@ -1,0 +1,93 @@
+/* CSS umum untuk halaman */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.h2-riwayat-eps-rsp{
+    margin-top: 30px;
+    margin-left: 70px;
+}
+
+.tabel-eps-rsp table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: center;  /* Pusatkan teks secara horizontal */
+}
+
+.tabel-eps-rsp th, .tabel-eps-rsp td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: center;  /* Pusatkan teks secara horizontal */
+    vertical-align: center;  /* Pusatkan teks secara vertikal */
+}
+
+.tabel-eps-rsp th {
+    background-color: #f2f2f2;
+    cursor: pointer;
+}
+
+.tabel-eps-rsp tr {
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.2s ease;
+}
+
+.tabel-eps-rsp tr:hover {
+    background-color: #f1f1f1;
+}
+
+.kolom-tgl-eps-rsp{
+    display: flex;
+    flex-direction: column;
+}
+
+.tgl-eps-rsp{
+    text-align: left;
+}
+.lihat-emr-rsp{
+    background-color: #7DAEA8;
+    color: white;
+    width: 80px;
+    height: 35px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 35px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.lihat-emr-rsp:hover {
+    background-color: #1E7E72;
+}
+
+.dr-eps-rsp{
+    margin-bottom: 10px;
+}
+
+.kolom-soap-eps-rsp{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.s-eps-rsp, .o-eps-rsp, .a-eps-rsp, .p-eps-rsp, .tindakan-eps-rsp{
+    border-radius: 5px;
+    width: 100%;
+    height: 50px;
+    padding: 10px;
+    font-size: 16px;
+}
+

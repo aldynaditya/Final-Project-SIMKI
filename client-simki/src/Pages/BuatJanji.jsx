@@ -9,6 +9,7 @@ const BuatJanji = () => {
     };
     const [selectedPoli, setSelectedPoli] = useState('');
     const [doctors, setDoctors] = useState([]);
+    const [penjamin, setPenjamin] = useState('');
 
     const handlePoliChange = (event) => {
         const selectedPoli = event.target.value;
@@ -66,11 +67,20 @@ const BuatJanji = () => {
                     <input type="date" id="tanggal" />
                 </div>
 
+                <div className='form_group'>
+                    <label htmlFor="penjamin">Penjamin :</label>
+                    <select id="penjamin" value={penjamin} onChange={(e) => setPenjamin(e.target.value)}>
+                        <option value="umum">Umum</option>
+                        <option value="asuransi">Asuransi</option>
+                        <option value="bpjs">BPJS</option>
+                    </select>
+                </div>
+
                 <div className='keluhan'>
                     <input type="text" placeholder="Keluhan Umum" />
                 </div>
 
-                <button className='klik_buatjanji'onClick={handleBuatJanji}>Buat Janji</button>
+                <button className='klik_buatjanji' onClick={handleBuatJanji}>Buat Janji</button>
             </div>
             <Footer />
         </div>

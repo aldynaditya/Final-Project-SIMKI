@@ -1,0 +1,28 @@
+.search-bar-container {
+    display: flex;
+    align-items: center;
+    background-color: #d3d3d3;
+    border-radius: 5px;
+    padding: 5px;
+    width: 500px;
+    margin-left: 70px;  /* Menempatkan di ujung kanan */
+}
+
+.search-bar-input {
+    border: none;
+    outline: none;
+    background: none;
+    padding: 5px;
+    flex: 1;
+    font-size: 18px;
+}
+.Pencarian{
+    color: black;
+}
+
+.search-bar-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 5px;
+}

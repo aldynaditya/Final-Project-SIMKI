@@ -1,0 +1,28 @@
+.navbar_private_container {
+  background-color: #145149;
+  display: flex;
+  align-items: center; /* Sejajarkan gambar secara vertikal */
+  padding: 10px; /* Tambahkan padding untuk estetika */
+}
+
+.logo_private_container {
+  display: flex;
+  align-items: center;
+}
+
+.logo_simki {
+  width: 75px; /* Lebar gambar logo Simki */
+  height: auto; /* Biarkan tinggi mengikuti proporsi */
+  margin-right: 40px; /* Jarak 40px dengan logo klinik */
+}
+
+.logo_klinik {
+  width: 75px;
+  margin-right: 15px; /* Adds right margin for spacing between logos */
+}
+
+/* Undip */
+.undip {
+  width: 60px;
+  margin-right: 70px;
+}

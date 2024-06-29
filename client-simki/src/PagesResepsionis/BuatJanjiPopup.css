@@ -1,0 +1,67 @@
+html, body {
+    font-family: 'Open Sans', sans-serif;
+}
+.popup-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.popup-content {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 500px; /* Adjust width as needed */
+    max-width: 90%; /* Ensure it doesn't exceed the viewport width */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: fit-content;
+}
+
+.text-popup-buatjanji {
+    font-size: 24px;
+    margin-bottom: 20px;
+    margin-top: 0%;
+}
+
+.popup-content form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.popup-content label {
+    width: 100%;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.popup-content input,
+.popup-content select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+.popup-content button {
+    padding: 10px 20px;
+    background-color: #004d40;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-buatjanji:hover {
+    background-color: #7DAEA8;
+}
