@@ -96,6 +96,7 @@ nav ul li a {
   color: #FBFBFB; /* White text color */
   text-decoration: none; /* Removes underline */
   font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
 }
 
 /* Hover state for navigation items */

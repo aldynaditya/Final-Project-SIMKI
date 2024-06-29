@@ -20,6 +20,7 @@ const Navbar = () => {
         <img src={logoklinik} alt='Logo Klinik' className='logo_klinik' />
         <img src={undip} alt='Undip' className='undip' />
       </div>
+      
       <div className="contact_container">
         <div className="contact_info">
           <img src={phone} alt='Phone' className='phone' />

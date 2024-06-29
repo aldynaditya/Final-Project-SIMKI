@@ -1,16 +1,13 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import App from './App'; // Impor komponen utama Anda
-import './index.css'; // Impor gaya Anda
+import { createRoot } from 'react-dom/client';
+import App from './App';
+import './index.css';
 
+const container = document.getElementById('root');
+const root = createRoot(container);
 
-
-ReactDOM.render(
+root.render(
   <React.StrictMode>
-    <BrowserRouter> {/* Konteks Router Tunggal */}
-      <App /> {/* Komponen utama Anda */}
-    </BrowserRouter>
-  </React.StrictMode>,
-  document.getElementById('root') // Ini harus menjadi elemen di HTML tempat React dimuat
+    <App />
+  </React.StrictMode>
 );

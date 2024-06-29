@@ -1,21 +1,19 @@
 // Profile.js
 import React from 'react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import './profile.css';
+import NavbarPrivate from '../components/NavbarPrivate';
+import FooterPrivate from '../components/FooterPrivate';
+import HeaderRsp from './HeaderRsp';
+import './IdentitasPasien.css';
 import profil from '../images/profil.png';
 
-const Profile = () => {
-    const handleSimpan = () => {
-        // Logika untuk menangani submit di sini
-        alert('Biodata Tersimpan');
-    };
+const IdentitasPasien = () => {
 
     return (
-        <div className='profile_container'>
-            <Navbar />
+        <div className='identitas_pasien_container'>
+            <NavbarPrivate />
+            <HeaderRsp />
             <div className="content">
-                <h1 className='text_profil'>Profil</h1>
+                <h1 className='text_identitas_pasien'>Identitas Pasien</h1>
                 <div className="foto_biodata">
                     <div className="foto_profile">
                         <img src={profil} alt='Profil' className='profil' />
@@ -44,19 +42,13 @@ const Profile = () => {
                             <div className='email'>
                                 <input type="email" placeholder="Email" />
                             </div>
-                            <div className='password'>
-                                <input type="password" placeholder="Kata Sandi" />
-                            </div>
-                            <div className="simpan-container">
-                                <div className='simpan' onClick={handleSimpan}>Simpan</div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <Footer />
+            <FooterPrivate />
         </div>
     );
 };
 
-export default Profile;
+export default IdentitasPasien;

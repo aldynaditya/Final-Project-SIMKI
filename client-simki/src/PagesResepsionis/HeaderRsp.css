@@ -1,0 +1,106 @@
+.headerrsp-container {
+    display: flex;
+    justify-content: space-between; /* Menempatkan elemen di ujung kiri dan kanan */
+    align-items: center; /* Sejajarkan secara vertikal */
+    padding: 10px; /* Atur padding sesuai kebutuhan */
+    background-color: #D9D9D9;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.profil_resepsionis {
+    width: 64px;
+    height: 64px;
+    margin-left: 30px;
+}
+
+.info-resepsionis {
+    display: flex;
+    align-items: center; /* Sejajarkan teks secara vertikal */
+}
+
+.nama_resepsionis {
+    font-size: 16px; /* Sesuaikan dengan ukuran yang diinginkan */
+    margin-left: 20px; /* Jarak antara teks dan gambar profil */
+    margin-right: 100px;
+}
+
+.datetime-container {
+    margin-left: 50px;
+}
+
+.stopwatch {
+    color: black;
+    margin-top: 10px;
+}
+
+.button-container-resepsionis {
+    display: flex;
+    align-items: center; /* Sejajarkan tombol secara vertikal */
+    gap: 50px; 
+    margin-right: 50px;
+}
+
+.menu-dropdown-resepsionis {
+    position: relative; /* Untuk menempatkan dropdown di bawah tombol */
+}
+
+.dropdown-resepsionis {
+    position: absolute;
+    top: 50px; /* Posisi dropdown di bawah tombol */
+    width: 150px;
+    left: 0;
+    background-color: #7DAEA8;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+.dropdown-resepsionis ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown-resepsionis li {
+    padding: 10px 20px;
+    cursor: pointer;
+    color: black;
+}
+
+.dropdown-resepsionis li:hover {
+    background-color: #1E7E72;
+}
+
+.tombol_menu_container, .tombol_keluar {
+    background-color: #7DAEA8;
+    color: black;
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 10px; /* Lengkungan sudut 10px */
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Pusatkan item secara vertikal */
+    margin-top: 20px; /* Tambahkan margin atas untuk memberi jarak dari input fields */
+    position: relative; /* Diperlukan untuk memposisikan ikon */
+}
+
+.tombol_menu_container:hover, .tombol_keluar:hover {
+    background-color: #1E7E72;
+}
+
+.icon_dropdown {
+    position: absolute;
+    right: 10px; /* Sesuaikan sesuai kebutuhan */
+    pointer-events: none; /* Pastikan ikon tidak mengganggu klik tombol */
+    display: flex;
+    align-items: center; /* Pusatkan ikon secara vertikal */
+}
+
+.text_menu {
+    flex-grow: 1; /* Pastikan teks mengambil sisa ruang */
+    text-align: left; /* Pusatkan teks */
+    margin-left: 10px;
+}

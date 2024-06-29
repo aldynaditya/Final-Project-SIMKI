@@ -5,7 +5,7 @@ import email from '../images/email.png';
 import pass from '../images/pass.png';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
-import simki from '../images/simki.png';
+import simki_login from '../images/simki login.png';
 
 const Login = () => {
   const [action, setAction] = useState("Login");
@@ -25,7 +25,7 @@ const Login = () => {
       <Navbar />
       <h1 className='text'>{action}</h1>
       <div className='logo-container'>
-        <img src={simki} alt="Simki" className='simki' />
+        <img src={simki_login} alt="Simki" className='simki' />
         <div className='simki-text'>
           <p>Selamat Datang di Sistem Kami</p>
           <p>Silakan masuk untuk melanjutkan</p>

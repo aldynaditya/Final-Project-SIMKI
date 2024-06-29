@@ -1,0 +1,153 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.pasien-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.navbar-header-wrapper {
+    flex: 0 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 80px;
+}
+
+.pasien-resepsionis-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.content-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Memastikan konten mengisi ruang yang ada */
+}
+
+.header-pasien-resepsionis {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 70px;
+    margin-top: 20px;
+}
+
+.text_pasien_resepsionis {
+    margin: 0;
+}
+
+.search-bar-container {
+    display: flex;
+    align-items: center;
+    background-color: #d3d3d3;
+    border-radius: 5px;
+    padding: 5px;
+    width: 350px;
+    margin-left: auto;  /* Menempatkan di ujung kanan */
+}
+
+.search-bar-input {
+    border: none;
+    outline: none;
+    background: none;
+    padding: 5px;
+    flex: 1;
+    font-size: 18px;
+}
+
+.search-bar-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.tabel_pasien_resepsionis {
+    margin: 20px;
+    flex: 1;
+}
+
+.tabel_pasien_resepsionis table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: center;  /* Pusatkan teks secara horizontal */
+}
+
+.tabel_pasien_resepsionis th, .tabel_pasien_resepsionis td {
+    padding: 8px;
+    border-bottom: 1px solid black;
+    text-align: center;  /* Pusatkan teks secara horizontal */
+    vertical-align: middle;  /* Pusatkan teks secara vertikal */
+}
+
+.tabel_pasien_resepsionis th {
+    background-color: #f2f2f2;
+    cursor: pointer;
+}
+
+.tabel_pasien_resepsionis tr {
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.2s ease;
+}
+
+.tabel_pasien_resepsionis tr:hover {
+    background-color: #f1f1f1;
+}
+
+.identitas-pasien {
+    background-color: #145149;
+    color: white;
+    width: 80px;
+    height: 35px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 35px;
+    display: inline-block;
+    margin-right: 20px; /* Add margin to the right */
+}
+
+.emr-resepsionis {
+    background-color: #145149;
+    color: white;
+    width: 80px;
+    height: 35px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 35px;
+    display: inline-block;
+}
+
+.identitas-pasien:hover, .emr-resepsionis:hover {
+    background-color: #7DAEA8;
+}
+
+
+footer {
+    width: 100%;
+    flex-shrink: 0;
+    background: #f2f2f2; /* Tambahkan warna latar belakang jika diperlukan */
+    padding: 10px 0; /* Tambahkan padding agar terlihat lebih baik */
+}

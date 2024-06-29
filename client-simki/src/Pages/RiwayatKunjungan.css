@@ -23,25 +23,37 @@ body, html {
 }
 
 .tabel_riwayat_kunjungan {
-    width: 100%;
+    margin: 20px;
     flex: 1;
-    padding: 0 20px;
 }
 
 .tabel_riwayat_kunjungan table {
     width: 100%;
     border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: center;  /* Pusatkan teks secara horizontal */
 }
 
 .tabel_riwayat_kunjungan th, .tabel_riwayat_kunjungan td {
-    border: 1px solid #ccc;
     padding: 8px;
-    text-align: center;
-    min-width: 250px;
+    border-bottom: 1px solid black;
+    text-align: center;  /* Pusatkan teks secara horizontal */
+    vertical-align: middle;  /* Pusatkan teks secara vertikal */
 }
 
 .tabel_riwayat_kunjungan th {
     background-color: #f2f2f2;
+    cursor: pointer;
+}
+
+.tabel_riwayat_kunjungan tr {
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.2s ease;
+}
+
+.tabel_riwayat_kunjungan tr:hover {
+    background-color: #f1f1f1;
 }
 
 .tombol_selengkapnya {

@@ -1,0 +1,269 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.text-riwayat-episode{
+    margin: 0;
+    text-align: left;
+    margin-left: 70px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.kolom-detail-eps {
+    margin-top: 50px;
+    margin-left: 70px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+    font-size: 16px;
+}
+
+.text-tgl-detail{
+    margin-right: 70px;
+    font-size: 16px;
+}
+.kolom-tgl-detail{
+    border-radius: 5px;
+    width: 560px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+.text-penjamin-detail{
+    margin-right: 60px;
+    font-size: 16px;
+}
+
+.kolom-penjamin-detail, .kolom-pemeriksa-detail{
+    border-radius: 5px;
+    width: 560px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+.text-pemeriksa-detail{
+    margin-right: 50px;
+    font-size: 16px;
+}
+
+.text-poli-detail{
+    margin-right: 97px;
+    font-size: 16px;
+}
+.kolom-poli-detail{
+    border-radius: 5px;
+    width: 562px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.text-penyakit-detail{
+    font-size: 16px;
+}
+.kolom-penyakit-detail{
+    border-radius: 5px;
+    width: 560px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.text-subjektif-detail{
+    margin-right: 60px;
+    font-size: 16px;
+}
+.kolom-subjektif-detail{
+    border-radius: 5px;
+    width: 560px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.vital-detail{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.text-vital-detail{
+    margin-right: 35px;
+}
+
+.isian-detail-eps{
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+}
+
+.atas-vital-detail{
+    display: flex;
+    flex-direction: row;
+    column-gap: 30px;
+}
+.bawah-vital-detail{
+    display: flex;
+    flex-direction: row;
+    column-gap: 30px;
+}
+
+.text-td-detail{
+    margin-right: 40px;
+    font-size: 16px;
+}
+.kolom-td-detail{
+    border-radius: 5px;
+    width: 200px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.text-suhu-detail{
+    margin-right: 20px;
+    font-size: 16px;
+}
+.kolom-suhu-detail{
+    border-radius: 5px;
+    width: 190px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.text-indeks-detail{
+    margin-right: 15px;
+    font-size: 16px;
+}
+.kolom-indeks-detail{
+    border-radius: 5px;
+    width: 200px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.text-napas-detail{
+    margin-right: 12px;
+    font-size: 16px;
+}
+.kolom-napas-detail{
+    border-radius: 5px;
+    width: 190px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.text-detak-detail{
+    margin-right: 20px;
+    font-size: 16px;
+}
+.kolom-detak-detail{
+    border-radius: 5px;
+    width: 200px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.text-objektif-detail{
+    margin-right: 70px;
+    font-size: 16px;
+}
+.kolom-objektif-detail{
+    border-radius: 5px;
+    width: 560px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.kolom-diagnosis-detail{
+    border-radius: 5px;
+    width: 560px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+.text-diagnosis-detail{
+    margin-right: 50px;
+    font-size: 16px;
+}
+
+.text-plan-detail{
+    margin-right: 90px;
+    font-size: 16px;
+}
+.kolom-plan-detail{
+    border-radius: 5px;
+    width: 562px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.text-tindakan-detail{
+    margin-right: 60px;
+    font-size: 16px;
+}
+.kolom-tindakan-detail{
+    border-radius: 5px;
+    width: 560px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.button-detail{
+    margin-left: 70px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.cetak-surat, .hasil-kuisioner{
+    background-color: #7DAEA8;
+    color: black;
+    width: 120px;
+    height: 30px;
+    border: none;
+    border-radius: 10px; /* Lengkungan sudut 10px */
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Pusatkan item secara vertikal */
+    margin-top: 20px; /* Tambahkan margin atas untuk memberi jarak dari input fields */
+    position: relative; /* Diperlukan untuk memposisikan ikon */
+}
+
+.hasil-kuisioner{
+    background-color: #7DAEA8;
+    color: black;
+    width: 150px;
+    height: 30px;
+    border: none;
+    border-radius: 10px; /* Lengkungan sudut 10px */
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Pusatkan item secara vertikal */
+    margin-top: 20px; /* Tambahkan margin atas untuk memberi jarak dari input fields */
+    position: relative; /* Diperlukan untuk memposisikan ikon */
+}
+.cetak-surat:hover, .hasil-kuisioner:hover {
+    background-color: #1E7E72;
+}

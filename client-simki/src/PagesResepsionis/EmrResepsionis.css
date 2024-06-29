@@ -1,0 +1,91 @@
+/* CSS umum untuk halaman */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.emr-resepsionis-container {
+    flex: 1;
+}
+
+.text-emr-resepsionis {
+    margin: 0;
+    text-align: left;
+    margin-left: 70px;
+    margin-top: 50px;
+}
+
+.kolom-emr-resepsionis {
+    margin-top: 50px;
+    margin-left: 70px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Menambahkan jarak antar kolom */
+}
+
+.no-emr-rsp, .nama-pasien-rsp, .tgl-lahir-rsp, .gender-emr-rsp, .goldar-emr-rsp, .alergi-rsp {
+    margin-bottom: 5px;
+}
+
+.gender-goldar-rsp{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.text-nemr-rsp{
+    margin-right: 60px;
+
+}
+
+.kolom-nemr-rsp{
+    border-radius: 5px;
+    width: 560px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.text-npasien-rsp, .text-ttl-rsp{
+    margin-right: 30px;
+}
+
+.kolom-npasien-rsp, .kolom-ttl-rsp{
+    border-radius: 5px;
+    width: 560px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.text-gender-rsp, .text-goldar-rsp{
+    margin-right: 25px;
+}
+
+.kolom-gender-rsp, .kolom-goldar-rsp{
+    border-radius: 5px;
+    width: 200px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.text-alergi-rsp{
+    margin-right: 85px;
+}
+
+.kolom-alergi-rsp{
+    border-radius: 5px;
+    width: 560px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
