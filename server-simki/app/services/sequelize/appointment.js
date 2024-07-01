@@ -3,7 +3,7 @@ const Schedule = require('../../api/v1/schedule/model');
 const DataPasien = require('../../api/v1/dataPasien/model');
 const EMRPasien = require('../../api/v1/emrPasien/model');
 const UserKlinik = require('../../api/v1/userKlinik/model');
-const { getDayOfWeek } = require('../../utils/ConvertDatetoDay');
+const { getDayOfWeek } = require('../../utils');
 const { BadRequestError, NotFoundError } = require('../../errors');
 
 const getAllAppointment = async (req) => {

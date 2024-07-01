@@ -33,7 +33,7 @@ const Transaksi = require('./app/api/v1/transaksi/model');
 //     console.error('Database synchronization error:', err);
 // });
 // (async()=>{
-//     await SuratRujukan.sync({force:true}); 
+//     await Transaksi.sync({force:true}); 
 // })();
 
 //router
@@ -49,6 +49,7 @@ const emrpasienRouter = require('./app/api/v1/emrPasien/router');
 const orderobatRouter = require('./app/api/v1/orderObat/router');
 const orderprosedurRouter = require('./app/api/v1/orderProsedur/router');
 const ordersuratRouter = require('./app/api/v1/orderSurat/router');
+const transaksiRouter = require('./app/api/v1/transaksi/router');
 
 const v1 = '/api/v1';
 
@@ -81,6 +82,7 @@ app.use(`${v1}/cms`, emrpasienRouter);
 app.use(`${v1}/cms`, orderobatRouter);
 app.use(`${v1}/cms`, orderprosedurRouter);
 app.use(`${v1}/cms`, ordersuratRouter);
+app.use(`${v1}/cms`, transaksiRouter);
 app.use(`${v1}`, pasienRouter);
 
 

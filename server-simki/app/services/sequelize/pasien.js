@@ -10,10 +10,10 @@ const {
 } = require('../../errors');
 const { 
     createTokenPasien, 
-    createJWT 
+    createJWT,
+    getDayOfWeek
 } = require('../../utils');
 const { otpMail } = require('../mail');
-const { getDayOfWeek } = require('../../utils/ConvertDatetoDay');
 
 const signupPasien = async (req) => {
     const { nik, nama_lengkap, tempat_lahir, tanggal_lahir, jenis_kelamin, gol_darah, suku_bangsa, alamat, email, password } = req.body;
