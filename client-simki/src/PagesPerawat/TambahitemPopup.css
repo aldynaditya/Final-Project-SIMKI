@@ -1,0 +1,124 @@
+.tambahitem-popup-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #D9D9D9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tambahitem-popup-content {
+    background: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    width: 600px; /* Increased width */
+    position: relative;
+}
+
+.cancel-x {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    text-decoration: none;
+    color: #000;
+}
+
+.text-tambahitem-popup {
+    font-size: 24px;
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+.kolom-tambah-item {
+    margin-top: 50px;
+    margin-left: 70px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 16px;
+}
+.nama-item {
+    display: flex;
+}
+.text-nama-item {
+    margin-right: 53px;
+    font-size: 16px;
+}
+.kolom-nama-item {
+    border-radius: 5px;
+    width: 300px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.text-kode-item {
+    margin-right: 55px;
+    font-size: 16px;
+}
+.kolom-kode-item {
+    border-radius: 5px;
+    width: 300px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.text-harga-item {
+    margin-right: 27px;
+    font-size: 16px;
+}
+.kolom-harga-item {
+    border-radius: 5px;
+    width: 300px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.text-satuan-item {
+    margin-right: 75px;
+    font-size: 16px;
+}
+.kolom-satuan-item {
+    border-radius: 5px;
+    width: 300px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.text-stok-item {
+    margin-right: 25px;
+    font-size: 16px;
+}
+.kolom-stok-item {
+    border-radius: 5px;
+    width: 300px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.tambah-item-container {
+    display: flex;
+    justify-content: center; /* Center the button horizontally */
+    margin-top: 20px;
+}
+
+.simpan-item {
+    padding: 10px;
+    background-color: #A4A4A4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 150px;
+}
+
+.simpan-item:hover {
+    background-color: #343838;
+}

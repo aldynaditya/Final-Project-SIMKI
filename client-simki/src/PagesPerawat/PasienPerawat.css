@@ -1,0 +1,17 @@
+.emr-perawat {
+    background-color: #145149;
+    color: white;
+    width: 80px;
+    height: 35px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 35px;
+    display: inline-block;
+}
+
+.emr-perawat:hover {
+    background-color: #7DAEA8;
+}

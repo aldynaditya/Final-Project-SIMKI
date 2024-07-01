@@ -12,6 +12,16 @@ const RiwayatKunjungan = () => {
         navigate('/detail-kunjungan');
     };
 
+    const rows = Array.from({ length: 20 }, (_, index) => (
+        <tr key={index}>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><button className="tombol_selengkapnya" onClick={handleSelengkapnya}>Selengkapnya</button></td>
+        </tr>
+    ));
+
     return (
         <div className="riwayat_kunjungan_container">
             <Navbar />
@@ -30,13 +40,7 @@ const RiwayatKunjungan = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><button className="tombol_selengkapnya" onClick={handleSelengkapnya}>Selengkapnya</button></td>
-                        </tr>
+                        {rows}
                     </tbody>
                 </table>
             </div>

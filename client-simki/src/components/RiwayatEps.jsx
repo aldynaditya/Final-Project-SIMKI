@@ -7,7 +7,7 @@ const RiwayatEpisode = () => {
     const navigate = useNavigate();
 
     const LihatDetailEps = () => {
-        navigate('/detail-eps-resepsionis');
+        navigate('/detail-episode');
     };
 
     return (
