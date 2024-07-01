@@ -43,6 +43,10 @@ const OrderObat = db.define('order_obat', {
         type: DataTypes.UUID,
         allowNull: false,
     },
+    invoiceNumber: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     episodeId: {
         type: DataTypes.UUID,
         allowNull: false,

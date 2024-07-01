@@ -6,7 +6,7 @@ const OrderProsedur = require('../orderProsedur/model');
 const UserKlinik = require('../userKlinik/model');
 
 const Transaksi = db.define('transaksi', {
-    noFaktur:{
+    uuid:{
         type: DataTypes.UUID,
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4,
@@ -14,6 +14,11 @@ const Transaksi = db.define('transaksi', {
         validate: {
             notEmpty: true
         }
+    },
+    invoiceNumber: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
     },
     metodeBayar:{
         type: DataTypes.ENUM( 'cash','bank' ),
@@ -32,6 +37,13 @@ const Transaksi = db.define('transaksi', {
             notEmpty: true,
         }
     },
+    total:{
+        type: DataTypes.DECIMAL,
+        allowNull: false,
+        validate: {
+            notEmpty: true,
+        }
+    },
     keterangan:{
         type: DataTypes.STRING,
         allowNull: false,
@@ -45,15 +57,15 @@ const Transaksi = db.define('transaksi', {
     },
     orderobatId: {
         type: DataTypes.UUID,
-        allowNull: false,
+        allowNull: true,
     },
     ordersuratId: {
         type: DataTypes.UUID,
-        allowNull: false,
+        allowNull: true,
     },
     orderprosedurId: {
         type: DataTypes.UUID,
-        allowNull: false,
+        allowNull: true,
     },
     userId: {
         type: DataTypes.UUID,

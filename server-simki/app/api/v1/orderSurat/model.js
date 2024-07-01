@@ -43,6 +43,10 @@ const OrderSurat = db.define('order_surat', {
         type: DataTypes.UUID,
         allowNull: false,
     },
+    invoiceNumber: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     episodeId: {
         type: DataTypes.UUID,
         allowNull: false,
