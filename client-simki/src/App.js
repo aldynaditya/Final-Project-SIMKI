@@ -23,6 +23,12 @@ import PasienResepsionis from './PagesResepsionis/PasienResepsionis';
 import DetailEpsResep from './PagesResepsionis/DetailEpsResep';
 import CetakSuratPopup from './PagesResepsionis/CetakSuratPopup';
 import HasilKuisionerPopup from './PagesDokter/HasilKuisionerPopup';
+import Perawat from './PagesPerawat/Perawat';
+import JadwalDokter from './PagesPerawat/JadwalDokter';
+import EmrPerawat from './PagesPerawat/EmrPerawat';
+import PasienPerawat from './PagesPerawat/PasienPerawat';
+import KelolaItem from './PagesPerawat/KelolaItem';
+import TambahItemPopup from './PagesPerawat/TambahitemPopup';
 
 
 
@@ -54,6 +60,12 @@ function App() {
         <Route path="/detail-episode" element={<DetailEpsResep />} />
         <Route path="/cetaksurat-popup" element={<CetakSuratPopup />} />
         <Route path="/hasilkuisioner-popup" element={<HasilKuisionerPopup />} />
+        <Route path="/perawat" element={<Perawat />} />
+        <Route path="/jadwal-dokter" element={<JadwalDokter />} />
+        <Route path="/emr-perawat" element={<EmrPerawat />} />
+        <Route path="/pasien-perawat" element={<PasienPerawat />} />
+        <Route path="/kelola-item" element={<KelolaItem />} />
+        <Route path="/tambahitem-popup" element={<TambahItemPopup />} />
       </Routes>
     </Router>
   );
