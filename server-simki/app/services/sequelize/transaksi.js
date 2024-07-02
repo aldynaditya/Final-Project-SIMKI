@@ -1,9 +1,4 @@
-const EMRPasien = require('../../api/v1/emrPasien/model');
-const Appointment = require('../../api/v1/appointment/model');
-const DataPasien = require('../../api/v1/dataPasien/model');
 const Episode = require('../../api/v1/episode/model');
-const Schedule = require('../../api/v1/schedule/model');
-const UserKlinik = require('../../api/v1/userKlinik/model');
 const Transaksi = require('../../api/v1/transaksi/model');
 const OrderObat = require('../../api/v1/orderObat/model');
 const OrderProsedur = require('../../api/v1/orderProsedur/model');
@@ -17,70 +12,164 @@ const {
     NotFoundError, 
     UnauthorizedError 
 } = require('../../errors');
+const { generateInvoiceNumber } = require('../../utils');
 
-const getOrdersByInvoice = async (req, res) => {
-    const { invoiceNumber } = req.params;
-
-    // Check if any transaction already exists for the given invoiceNumber
-    const existingTransaction = await Transaksi.findOne({ where: { invoiceNumber } });
-    if (existingTransaction) throw new BadRequestError ('Orders already processed in a transaction.');
-
-    // Fetch orders by invoiceNumber
-    const orderObats = await OrderObat.findAll({ where: { invoiceNumber } });
-    const orderProsedurs = await OrderProsedur.findAll({ where: { invoiceNumber } });
-    const orderSurats = await OrderSurat.findAll({ where: { invoiceNumber } });
-
-    if (orderObats.length === 0 && orderProsedurs.length === 0 && orderSurats.length === 0) throw new NotFoundError( 'No orders found for this invoice number.' );
-
-    return ({
-        orderObats,
-        orderProsedurs,
-        orderSurats
+const getAllOrders = async (req, res) => {
+    const episodes = await Episode.findAll({
+        where: { status: 'in process' },
+        include: [
+            // {
+            //     model: DataPasien,
+            //     attributes: ['nama_pasien']
+            // },
+            // {
+            //     model: UserKlinik,
+            //     attributes: ['nama_dokter']
+            // }
+        ],
+        attributes: ['uuid', 'status']
     });
+
+    const orders = episodes.map(episode => ({
+        episodeId: episode.uuid,
+        // namaPasien: episode.DataPasien.nama_pasien,
+        status: episode.status
+    }));
+
+    return orders;
+};
+
+const getOrderDetails = async (req, res) => {
+    const { id } = req.params;
+
+    const episode = await Episode.findByPk(id, {
+        include: [
+            {
+                model: OrderObat,
+                include: [Obat]
+            },
+            {
+                model: OrderProsedur,
+                include: [Item]
+            },
+            {
+                model: OrderSurat,
+                include: [
+                    { model: SuratSakit },
+                    { model: SuratRujukan }
+                ]
+            },
+            // {
+            //     model: DataPasien,
+            //     attributes: ['nama_pasien']
+            // },
+            // {
+            //     model: UserKlinik,
+            //     attributes: ['nama_dokter']
+            // }
+        ]
+    });
+
+    if (!episode) throw new NotFoundError('Episode tidak ditemukan');
+
+    const orderDetails = {
+        episodeId: episode.uuid,
+        // namaPasien: episode.DataPasien.nama_pasien,
+        // namaDokter: episode.UserKlinik.nama_dokter,
+        status: episode.status,
+        orderObats: episode.OrderObats.map(order => ({
+            namaObat: order.Obat.nama_obat,
+            kuantitas: order.kuantitas,
+            dosis: order.dosis,
+            catatan: order.catatan,
+            total: order.total
+        })),
+        orderProsedurs: episode.OrderProsedurs.map(order => ({
+            namaItem: order.Item.nama_item,
+            kuantitas: order.kuantitas,
+            dosis: order.dosis,
+            catatan: order.catatan,
+            total: order.total
+        })),
+        orderSurats: episode.OrderSurats.map(order => ({
+            jenisSurat: order.jenisSurat,
+            versiSurat: order.versiSurat,
+            total: order.total
+        }))
+    };
+
+    return orderDetails;
 };
 
 const createTransaction = async (req) => {
-    const { invoiceNumber } = req.params; 
-    const { metodeBayar, diskon, keterangan } = req.body;
+    const { id } = req.params;
+    const { metodeBayar, diskon, keterangan, orderobatId,  } = req.body;
 
+    // Ensure episodeId exists in each type of order
     const ordersObat = await OrderObat.findAll({
-        where: { invoiceNumber },
+        where: { episodeId: id },
         include: {
             model: Obat,
             as: 'dataobat',
         }
     });
     const ordersProsedur = await OrderProsedur.findAll({
-        where: { invoiceNumber },
-        include: { 
+        where: { episodeId: id },
+        include: {
             model: Item,
             as: 'dataitem',
         }
     });
-    const ordersSurat = await OrderSurat.findAll({ where: { invoiceNumber } });
+    const ordersSurat = await OrderSurat.findAll({
+        where: { episodeId: id },
+        include: [
+            {
+                model: SuratSakit,
+                as: 'suratsakit',
+            },
+            {
+                model: SuratRujukan,
+                as: 'suratrujukan',
+            },
+        ]
+    });
 
-    const totalObat = ordersObat.length ?ordersObat.reduce((sum, order) => sum + (order.kuantitas * order.harga_satuan_obat), 0) : 0;
-    const totalProsedur = ordersProsedur.length ?ordersProsedur.reduce((sum, order) => sum + (order.kuantitas * order.harga_satuan_item), 0): 0;
+    if (!ordersObat.length && !ordersProsedur.length && !ordersSurat.length) {
+        throw new NotFoundError('No orders found for the provided episodeId');
+    }
 
-    const total = totalObat + totalProsedur - diskon;
+    const invoiceNumber = await generateInvoiceNumber(id);
 
-    const transaction = await Transaksi.create({
-        invoiceNumber,
+    // Calculate total cost from all orders
+    let total = 0;
+    ordersObat.forEach(order => total += parseFloat(order.total));
+    ordersProsedur.forEach(order => total += parseFloat(order.total));
+    ordersSurat.forEach(order => total += parseFloat(order.total));
+
+    const totalAfterDiscount = total - (total * (diskon / 100));
+
+    // Create transaction record
+    const transaksi = await Transaksi.create({
+        episodeId: id,
         metodeBayar,
         diskon,
         keterangan,
-        total,
-        status: 'in process',
-        userId: req.user.id,
-        orderobatId: ordersObat.length ? ordersObat[0].uuid : null,
-        orderprosedurId: ordersProsedur.length ? ordersProsedur[0].uuid : null,
-        ordersuratId: ordersSurat.length ? ordersSurat[0].uuid : null,
+        total: totalAfterDiscount,
+        invoiceNumber,
+        orderobatId:ordersObat.uuid,
+        orderprosedurId:ordersProsedur.uuid,
+        ordersuratId:ordersSurat .uuid,
+        userId: req.user.id
     });
 
-    return transaction;
+    // Update episode status
+    await Episode.update({ status: 'process by cashier' }, { where: { uuid: id } });
+
+    return transaksi;
 };
 
 module.exports = {
-    getOrdersByInvoice,
+    getAllOrders,
+    getOrderDetails,
     createTransaction
 }

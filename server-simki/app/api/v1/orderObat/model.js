@@ -35,17 +35,16 @@ const OrderObat = db.define('order_obat', {
             notEmpty: true,
         }
     },
-    status: {
-        type: DataTypes.ENUM('belum disetujui', 'diproses','sudah disetujui'),
-        defaultValue: 'diproses',
+    total:{
+        type: DataTypes.DECIMAL,
+        allowNull: false,
+        validate: {
+            notEmpty: true,
+        }
     },
     obatId: {
         type: DataTypes.UUID,
         allowNull: false,
-    },
-    invoiceNumber: {
-        type: DataTypes.STRING,
-        allowNull: false
     },
     episodeId: {
         type: DataTypes.UUID,

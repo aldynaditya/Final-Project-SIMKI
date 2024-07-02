@@ -12,12 +12,7 @@ const SuratSakit = require('../../api/v1/suratSakit/model');
 const SuratRujukan = require('../../api/v1/suratRujukan/model');
 const Obat = require('../../api/v1/obat/model');
 const Item = require('../../api/v1/item/model');
-const { 
-    BadRequestError, 
-    NotFoundError, 
-    UnauthorizedError 
-} = require('../../errors');
-const { generateInvoiceNumber } = require('../../utils');
+const { BadRequestError, NotFoundError, UnauthorizedError } = require('../../errors');
 
 const createOrderObat = async (req) => {
     const { id } = req.params;
@@ -26,8 +21,7 @@ const createOrderObat = async (req) => {
     const episode = await Episode.findByPk(id);
     if (!episode) throw new NotFoundError('Episode tidak ditemukan');
 
-    const invoiceNumber = await generateInvoiceNumber(id);
-
+    let totalOrder = 0;
     const results = [];
 
     for (const item of obatItems) {
@@ -46,28 +40,28 @@ const createOrderObat = async (req) => {
             kuantitas,
             dosis,
             catatan,
-            invoiceNumber
+            total: kuantitas * obat.harga_satuan_obat
         });
 
         await Obat.update({ stok: obat.stok - kuantitas }, { where: { uuid: obat.uuid } });
 
+        totalOrder += result.total;
         results.push(result);
     }
 
-    return results;
+    await Episode.update({ status: 'in process' }, { where: { uuid: episode.uuid } });
+
+    return { results, totalOrder };
 };
-
-
 
 const createOrderItem = async (req) => {
     const { id } = req.params;
-    const { itemItems } = req.body; // itemItems is an array of { namaItem, kuantitas, dosis, catatan }
+    const { itemItems } = req.body;
 
     const episode = await Episode.findByPk(id);
     if (!episode) throw new NotFoundError('Episode tidak ditemukan');
 
-    const invoiceNumber = await generateInvoiceNumber(id);
-
+    let totalOrder = 0;
     const results = [];
 
     for (const item of itemItems) {
@@ -84,74 +78,82 @@ const createOrderItem = async (req) => {
             kuantitas,
             dosis,
             catatan,
-            invoiceNumber
+            total: kuantitas * itemRecord.harga_satuan_item
         });
 
         await Item.update({ stok: itemRecord.stok - kuantitas }, { where: { uuid: itemRecord.uuid } });
 
+        totalOrder += result.total;
         results.push(result);
     }
 
-    return results;
+    await Episode.update({ status: 'in process' }, { where: { uuid: episode.uuid } });
+
+    return { results, totalOrder };
 };
 
+const createOrderSuratSakit = async (req) => {
+    const { id } = req.params;
+    const { umur, pekerjaan, diagnosis, periodeStart, periodeEnd } = req.body;
 
-// const createOrderSuratSakit = async (req) => {
-//     const { id } = req.params;
-//     const { umur, pekerjaan, diagnosis, periodeStart, periodeEnd } = req.body;
+    const episode = await Episode.findByPk(id);
+    if (!episode) throw new NotFoundError('Episode tidak ditemukan');
 
-//     const episode = await Episode.findByPk(id);
-//     if (!episode) throw new NotFoundError('Episode tidak ditemukan');
+    const result = await SuratSakit.create({
+        umur,
+        pekerjaan,
+        diagnosis,
+        periodeStart,
+        periodeEnd,
+        userId: req.user.id
+    });
 
-//     const result = await SuratSakit.create({
-//         umur,
-//         pekerjaan,
-//         diagnosis,
-//         periodeStart,
-//         periodeEnd,
-//         userId: req.user.id, // Sesuaikan dengan logika aplikasi Anda
-//     });
+    await OrderSurat.create({
+        episodeId: episode.uuid,
+        suratsakitId: result.uuid,
+        jenisSurat: 'sakit',
+        versiSurat: '1.0',
+        total: 0 // Assuming there's no cost for this type of order
+    });
 
-//     await OrderSurat.create({
-//         episodeId: episode.uuid,
-//         suratsakitId: result.uuid,
-//         jenisSurat: 'sakit', // Hardcode atau gunakan data dari req.body
-//         versiSurat: '1.0', // Contoh versi surat, sesuaikan dengan kebutuhan
-//     });
+    await Episode.update({ status: 'in process' }, { where: { uuid: episode.uuid } });
 
-//     return result;
-// }
+    return result;
+};
 
-// const createOrderSuratRujukan = async (req) => {
-//     const { id } = req.params;
-//     const { tujuan, tempat_tujuan, diagnosis, tindakan, keterangan } = req.body;
+const createOrderSuratRujukan = async (req) => {
+    const { id } = req.params;
+    const { tujuan, tempat_tujuan, diagnosis, tindakan, keterangan } = req.body;
 
-//     const episode = await Episode.findByPk(id);
-//     if (!episode) throw new NotFoundError('Episode tidak ditemukan');
+    const episode = await Episode.findByPk(id);
+    if (!episode) throw new NotFoundError('Episode tidak ditemukan');
 
-//     const result = await SuratRujukan.create({
-//         tujuan,
-//         tempat_tujuan,
-//         diagnosis,
-//         tindakan,
-//         keterangan,
-//     });
+    const result = await SuratRujukan.create({
+        tujuan,
+        tempat_tujuan,
+        diagnosis,
+        tindakan,
+        keterangan
+    });
 
-//     await OrderSurat.create({
-//         episodeId: episode.uuid,
-//         suratrujukanId: result.uuid,
-//         jenisSurat: 'rujukan',
-//         versiSurat: '1.0',
-//     });
+    await OrderSurat.create({
+        episodeId: episode.uuid,
+        suratrujukanId: result.uuid,
+        jenisSurat: 'rujukan',
+        versiSurat: '1.0',
+        total: 0 // Assuming there's no cost for this type of order
+    });
 
-//     return result;
-// }
+    await Episode.update({ status: 'in process' }, { where: { uuid: episode.uuid } });
+
+    return result;
+};
 
 
 
 module.exports = {
     createOrderObat,
     createOrderItem,
-    // createOrderSuratRujukan,
-    // createOrderSuratSakit
+    createOrderSuratRujukan,
+    createOrderSuratSakit,
 };

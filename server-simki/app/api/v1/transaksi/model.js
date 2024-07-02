@@ -31,7 +31,7 @@ const Transaksi = db.define('transaksi', {
         },
     },
     diskon:{
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL,
         allowNull: false,
         validate: {
             notEmpty: true,
@@ -50,10 +50,6 @@ const Transaksi = db.define('transaksi', {
         validate: {
             notEmpty: true,
         }
-    },
-    status: {
-        type: DataTypes.ENUM('updated','not confirm', 'in process','confirm'),
-        defaultValue: 'in process',
     },
     orderobatId: {
         type: DataTypes.UUID,

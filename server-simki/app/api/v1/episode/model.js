@@ -81,7 +81,11 @@ const Episode = db.define('episode', {
             this.setDataValue('tindakan', JSON.stringify(value));
         },
         allowNull: false,
-    }
+    },
+    status: {
+        type: DataTypes.ENUM( 'in process','process by cashier','done' ),
+        defaultValue: 'in process',
+    },
 }, {
     tableName: 'episode',
 });

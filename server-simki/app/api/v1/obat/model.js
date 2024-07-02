@@ -31,7 +31,7 @@ const Obat = db.define('obat', {
         }
     },
     harga_satuan_obat:{
-        type: DataTypes. INTEGER,
+        type: DataTypes.DECIMAL,
         allowNull: false,
         validate: {
             notEmpty: true,
