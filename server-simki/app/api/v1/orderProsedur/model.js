@@ -34,13 +34,16 @@ const OrderProsedur = db.define('order_prosedur', {
             notEmpty: true,
         }
     },
+    total:{
+        type: DataTypes.DECIMAL,
+        allowNull: false,
+        validate: {
+            notEmpty: true,
+        }
+    },
     itemId: {
         type: DataTypes.UUID,
         allowNull: false,
-    },
-    invoiceNumber: {
-        type: DataTypes.STRING,
-        allowNull: false
     },
     episodeId: {
         type: DataTypes.UUID,

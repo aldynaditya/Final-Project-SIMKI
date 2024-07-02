@@ -31,7 +31,7 @@ const Item = db.define('item', {
         }
     },
     harga_satuan_item:{
-        type: DataTypes. INTEGER,
+        type: DataTypes.DECIMAL,
         allowNull: false,
         validate: {
             notEmpty: true,

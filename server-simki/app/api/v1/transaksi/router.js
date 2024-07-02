@@ -9,7 +9,8 @@ const {
     authorizeRoles
 } = require('../../../middleware/auth');
 
-router.get('/orders/:invoiceNumber',authenticateUser, authorizeRoles('superuser','kasir'), index);
-router.post('/transaction/:invoiceNumber',authenticateUser, authorizeRoles('superuser','kasir'), create);
+router.get('/orders',authenticateUser, authorizeRoles('superuser','kasir'), index);
+router.get('/orders/:id',authenticateUser, authorizeRoles('superuser','kasir'), index);
+router.post('/transaction/:id',authenticateUser, authorizeRoles('superuser','kasir'), create);
 
 module.exports = router;
