@@ -4,7 +4,8 @@ const {
     createVitalSignbyPerawat,
     updateEpisode,
     createEpisode,
-    updateOrder
+    updateAction,
+    finishOrder
 } = require('../../../services/sequelize/emrPasien');
 
 const index = async (req, res, next) => {
@@ -55,9 +56,21 @@ const episode = async (req, res, next) => {
     }
 };
 
+const action = async (req, res, next) => {
+    try {
+        const result = await updateAction(req);
+
+    res.status(StatusCodes.OK).json({
+        data: result,
+    });
+    } catch (err) {
+        next(err);
+    }
+};
+
 const order = async (req, res, next) => {
     try {
-        const result = await updateOrder(req);
+        const result = await finishOrder(req);
 
     res.status(StatusCodes.OK).json({
         data: result,
@@ -73,5 +86,6 @@ module.exports = {
     vitalsign,
     followupepisode,
     episode,
+    action,
     order
 }

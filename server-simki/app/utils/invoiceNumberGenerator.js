@@ -1,12 +1,12 @@
 const { Op } = require('sequelize');
-const Transaksi = require('../api/v1/transaksi/model');
+const Episode = require('../api/v1/episode/model');
 
 const generateInvoiceNumber = async () => {
     const today = new Date();
     const dateStr = today.toISOString().split('T')[0].replace(/-/g, ''); // Format: YYYYMMDD
 
     // Fetch the latest invoice number for today
-    const lastTransaksi = await Transaksi.findOne({
+    const lastEpisode = await Episode.findOne({
         where: {
             invoiceNumber: {
                 [Op.like]: `INV${dateStr}%`
@@ -16,9 +16,9 @@ const generateInvoiceNumber = async () => {
     });
 
     let newInvoiceNumber;
-    if (lastTransaksi) {
+    if (lastEpisode) {
         // Extract the numeric part of the last invoice number
-        const lastInvoiceNumber = lastTransaksi.invoiceNumber;
+        const lastInvoiceNumber = lastEpisode.invoiceNumber;
         const lastIncrement = parseInt(lastInvoiceNumber.slice(-6), 10);
         const newIncrement = (lastIncrement + 1).toString().padStart(6, '0');
         newInvoiceNumber = `INV${dateStr}${newIncrement}`;

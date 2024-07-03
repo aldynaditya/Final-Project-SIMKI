@@ -3,12 +3,21 @@ const Appointment = require('../../api/v1/appointment/model');
 const DataPasien = require('../../api/v1/dataPasien/model');
 const Episode = require('../../api/v1/episode/model');
 const Schedule = require('../../api/v1/schedule/model');
+const Transaksi = require('../../api/v1/transaksi/model');
 const UserKlinik = require('../../api/v1/userKlinik/model');
+const OrderObat = require('../../api/v1/orderObat/model');
+const OrderProsedur = require('../../api/v1/orderProsedur/model');
+const OrderSurat = require('../../api/v1/orderSurat/model');
+const SuratSakit = require('../../api/v1/suratSakit/model');
+const SuratRujukan = require('../../api/v1/suratRujukan/model');
+const Obat = require('../../api/v1/obat/model');
+const Item = require('../../api/v1/item/model');
 const { 
     BadRequestError, 
     NotFoundError, 
     UnauthorizedError 
 } = require('../../errors');
+const { generateInvoiceNumber } = require('../../utils');
 
 const getAllEMRPasien = async ( req ) => {
     const { role, name } = req.user;
@@ -68,6 +77,8 @@ const createVitalSignbyPerawat = async ( req ) => {
     const emrPasienId = req.params.id;
     const { riwayatPenyakit, subjective, TD, indeks, detak, suhu, napas, objective, assessment, plan } = req.body;
 
+    const invoiceNumber = await generateInvoiceNumber(emrPasienId);
+
     const result = await Episode.create({
         emrPasienId,
         riwayatPenyakit,
@@ -80,6 +91,7 @@ const createVitalSignbyPerawat = async ( req ) => {
         objective,
         assessment,
         plan,
+        invoiceNumber
     });
 
     return result;
@@ -109,6 +121,8 @@ const createEpisode = async ( req ) => {
     const emrPasienId = req.params.id;
     const { riwayatPenyakit, subjective, TD, indeks, detak, suhu, napas, objective, assessment, plan } = req.body;
 
+    const invoiceNumber = await generateInvoiceNumber(emrPasienId);
+
     const result = await Episode.create({
         emrPasienId,
         riwayatPenyakit,
@@ -121,12 +135,13 @@ const createEpisode = async ( req ) => {
         objective,
         assessment,
         plan,
+        invoiceNumber
     });
 
     return result;
 }
 
-const updateOrder = async (req) => {
+const updateAction = async (req) => {
     const { id } = req.params;
     const { tindakan } = req.body;
 
@@ -146,10 +161,63 @@ const updateOrder = async (req) => {
     return previousEpisode;
 }
 
+const finishOrder = async (req) => {
+    const { id } = req.params;
+
+    // Ensure episodeId exists in each type of order
+    const ordersObat = await OrderObat.findAll({
+        where: { episodeId: id },
+        include: {
+            model: Obat,
+            as: 'dataobat',
+        }
+    });
+    const ordersProsedur = await OrderProsedur.findAll({
+        where: { episodeId: id },
+        include: {
+            model: Item,
+            as: 'dataitem',
+        }
+    });
+    const ordersSurat = await OrderSurat.findAll({
+        where: { episodeId: id },
+        include: [
+            {
+                model: SuratSakit,
+                as: 'suratsakit',
+            },
+            {
+                model: SuratRujukan,
+                as: 'suratrujukan',
+            },
+        ]
+    });
+
+    if (!ordersObat.length && !ordersProsedur.length && !ordersSurat.length) {
+        throw new NotFoundError('No orders found for the provided episodeId');
+    }
+
+    // Calculate total cost from all orders
+    let total = 0;
+    ordersObat.forEach(order => total += parseFloat(order.total));
+    ordersProsedur.forEach(order => total += parseFloat(order.total));
+    ordersSurat.forEach(order => total += parseFloat(order.total));
+
+    // Create transaction record
+    const transaksi = await Transaksi.create({
+        episodeId: id,
+        total,
+        userId: req.user.id
+    });
+
+    return transaksi;
+};
+
 module.exports = {
     getAllEMRPasien,
     createVitalSignbyPerawat,
     updateEpisode,
     createEpisode,
-    updateOrder
+    updateAction,
+    finishOrder
 };

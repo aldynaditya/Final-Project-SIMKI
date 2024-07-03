@@ -15,41 +15,29 @@ const Transaksi = db.define('transaksi', {
             notEmpty: true
         }
     },
-    invoiceNumber: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
-    },
     metodeBayar:{
-        type: DataTypes.ENUM( 'cash','bank' ),
+        type: DataTypes.ENUM( 'cash','bank','none' ),
         allownull: false,
-        validate: {
-            isIn: {
-                args: [[ 'cash','bank' ]],
-                msg: 'Pilihan tidak valid',
-            },
-        },
+        defaultValue: 'none',
     },
     diskon:{
         type: DataTypes.DECIMAL,
         allowNull: false,
-        validate: {
-            notEmpty: true,
-        }
+        defaultValue: 0,
     },
     total:{
         type: DataTypes.DECIMAL,
         allowNull: false,
-        validate: {
-            notEmpty: true,
-        }
+        defaultValue: 0,
     },
     keterangan:{
         type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-            notEmpty: true,
-        }
+        defaultValue: '-'
+    },
+    status: {
+        type: DataTypes.ENUM( 'Awaiting Payment','Completed' ),
+        defaultValue: 'Awaiting Payment',
     },
     orderobatId: {
         type: DataTypes.UUID,

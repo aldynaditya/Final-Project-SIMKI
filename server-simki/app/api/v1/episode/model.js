@@ -82,10 +82,11 @@ const Episode = db.define('episode', {
         },
         allowNull: false,
     },
-    status: {
-        type: DataTypes.ENUM( 'in process','process by cashier','done' ),
-        defaultValue: 'in process',
-    },
+    invoiceNumber: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+    }
 }, {
     tableName: 'episode',
 });
