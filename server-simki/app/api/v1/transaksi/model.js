@@ -3,6 +3,7 @@ const { DataTypes } = require('sequelize');
 const OrderObat = require('../orderObat/model');
 const OrderSurat = require('../orderSurat/model');
 const OrderProsedur = require('../orderProsedur/model');
+const Episode = require('../episode/model');
 const UserKlinik = require('../userKlinik/model');
 
 const Transaksi = db.define('transaksi', {
@@ -51,6 +52,10 @@ const Transaksi = db.define('transaksi', {
         type: DataTypes.UUID,
         allowNull: true,
     },
+    episodeId: {
+        type: DataTypes.UUID,
+        allowNull: false,
+    }, 
     userId: {
         type: DataTypes.UUID,
         allowNull: false,
@@ -77,6 +82,12 @@ Transaksi.belongsTo(OrderProsedur, {
     foreignKey: 'orderprosedurId',
     targetKey: 'uuid',
     as: 'orderprosedur'
+});
+
+Transaksi.belongsTo(Episode, {
+    foreignKey: 'episodeId',
+    targetKey: 'uuid',
+    as: 'episode'
 });
 
 Transaksi.belongsTo(UserKlinik, {

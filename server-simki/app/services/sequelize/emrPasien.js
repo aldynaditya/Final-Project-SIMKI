@@ -65,8 +65,8 @@ const getAllEMRPasien = async ( req ) => {
             tanggal_lahir: appointment.datapasien.tanggal_lahir,
             jenis_kelamin: appointment.datapasien.jenis_kelamin,
             gol_darah: appointment.datapasien.gol_darah,
-            pemeriksa: appointment.schedule ? appointment.schedule.user_klinik.name : null,
-            poli: appointment.schedule ? appointment.schedule.poli : null
+            pemeriksa: appointment.schedule.user_klinik.name,
+            poli: appointment.schedule.poli
         };
     });
 
@@ -111,7 +111,7 @@ const updateEpisode = async ( req ) => {
             assessment,
             plan,
         },
-        { where: { uuid: id } } // Atur kondisi where menggunakan uuid
+        { where: { uuid: id } }
     );
 
     return result;
@@ -163,8 +163,6 @@ const updateAction = async (req) => {
 
 const finishOrder = async (req) => {
     const { id } = req.params;
-
-    // Ensure episodeId exists in each type of order
     const ordersObat = await OrderObat.findAll({
         where: { episodeId: id },
         include: {
@@ -197,13 +195,11 @@ const finishOrder = async (req) => {
         throw new NotFoundError('No orders found for the provided episodeId');
     }
 
-    // Calculate total cost from all orders
     let total = 0;
     ordersObat.forEach(order => total += parseFloat(order.total));
     ordersProsedur.forEach(order => total += parseFloat(order.total));
     ordersSurat.forEach(order => total += parseFloat(order.total));
 
-    // Create transaction record
     const transaksi = await Transaksi.create({
         episodeId: id,
         total,
