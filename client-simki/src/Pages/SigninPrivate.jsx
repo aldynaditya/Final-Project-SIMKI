@@ -5,23 +5,22 @@ import logoklinik from '../images/logoklinik.png';
 import undip from '../images/undip.png';
 
 const Signin_Private = () => {
-    const [waktuSaatIni, setWaktuSaatIni] = useState(new Date());
+    const [startTime] = useState(new Date());
     const [elapsedTime, setElapsedTime] = useState({ minutes: 0, seconds: 0 });
 
     useEffect(() => {
         const updateStopwatch = () => {
-            let minutes = Math.floor((Date.now() - waktuSaatIni.getTime()) / 1000 / 60);
-            let seconds = Math.floor((Date.now() - waktuSaatIni.getTime()) / 1000) % 60;
+            const now = new Date();
+            const diff = now - startTime;
+            const minutes = Math.floor(diff / 1000 / 60);
+            const seconds = Math.floor(diff / 1000) % 60;
             setElapsedTime({ minutes, seconds });
         };
 
-        const timer = setInterval(() => {
-            setWaktuSaatIni(new Date());
-            updateStopwatch();
-        }, 1000);
+        const timer = setInterval(updateStopwatch, 1000);
 
         return () => clearInterval(timer);
-    }, [waktuSaatIni]);
+    }, [startTime]);
 
     const formatWaktu = (tanggal) => {
         const optionsDate = { 
@@ -43,7 +42,7 @@ const Signin_Private = () => {
             <nav className='navbar_signin_nakes'>
                 <div className="konten-navbar">
                     <div className="tanggal">
-                        {formatWaktu(waktuSaatIni)}
+                        {formatWaktu(startTime)}
                     </div>
                     <div className="stopwatch_signin">
                         Time {elapsedTime.minutes.toLocaleString('en-US', { minimumIntegerDigits: 2 })}:{elapsedTime.seconds.toLocaleString('en-US', { minimumIntegerDigits: 2 })}

@@ -1,0 +1,38 @@
+.simpan-entri-baru {
+    background-color: #145149;
+    color: white;
+    width: 80px;
+    height: 35px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 35px;
+    display: inline-block;
+    margin-left: 70px;
+    margin-top: 30px;
+}
+
+.simpan-entri-baru:hover {
+    background-color: #7DAEA8;
+}
+
+.dropdown-entri-baru {
+    margin-left: 20px;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #7DAEA8;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-entri-baru:hover {
+    background-color: #5A9080;
+}
+
+.text-tindakan-entri-baru{
+    margin-right: 38px;
+}

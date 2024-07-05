@@ -1,42 +1,35 @@
 import React, { useState } from "react";
 import NavbarPrivate from '../components/NavbarPrivate';
 import FooterPrivate from '../components/FooterPrivate';
-import '../PagesResepsionis/PasienResepsionis.css';
-import HeaderNrs from './HeaderNrs';
-import SearchBar from "../components/SearchBar"; 
-import './PasienPerawat.css'; 
-import { useNavigate } from 'react-router-dom';
+import './Notifikasi.css';
+import HeaderDokter from './HeaderDokter';
+import SearchBar from "../components/SearchBar";
 
-const PasienPerawat= () => {
+const Notifikasi = () => {
     const [rows] = useState(Array.from({ length: 20 }));
-    const navigate = useNavigate();
-
-    const EmrPerawat = () => {
-        navigate('/emr-perawat');
-    };
 
     return (
-        <div className="pasien-resepsionis-wrapper">
-            <div className="navbar-header-wrapper">
+        <div className="notifikasi-wrapper">
+            <div className="navbar-header-notifikasi">
                 <NavbarPrivate />
-                <HeaderNrs />
+                <HeaderDokter />
             </div>
-            <div className="pasien-resepsionis-container">
-                <div className="pasien-wrapper">
-                    <div className="header-pasien-resepsionis">
-                        <h1 className="text_pasien_resepsionis">Pasien</h1>
+            <div className="notifikasi-container">
+                <div className="content-wrapper-notifikasi">
+                    <div className="header-notifikasi">
+                        <h1 className="text_notifikasi">Notifikasi</h1>
                         <SearchBar />
                     </div>
-                    <div className="tabel_pasien_resepsionis">
+                    <div className="tabel_notifikasi">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>No. EMR</th>
+                                    <th>No EMR</th>
                                     <th>Nama Pasien</th>
-                                    <th>Tanggal Lahir</th>
-                                    <th>Jenis Kelamin</th>
-                                    <th>Aksi</th>
+                                    <th>Keterangan</th>
+                                    <th>Tanggal</th>
                                     <th>Status</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -46,10 +39,8 @@ const PasienPerawat= () => {
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td>
-                                            <button className="emr-perawat" onClick={EmrPerawat}>EMR</button>
-                                        </td>
                                         <td></td>
+                                        <td><div className="ket_aksi">Terima</div></td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -62,4 +53,4 @@ const PasienPerawat= () => {
     );
 };
 
-export default PasienPerawat;
+export default Notifikasi;

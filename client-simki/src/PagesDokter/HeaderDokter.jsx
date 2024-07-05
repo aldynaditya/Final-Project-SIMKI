@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './HeaderNrs.css';
+import './HeaderDokter.css';
 import profil from "../images/profil.png";
 import dropdown from "../images/dropdown.png";
 
-const HeaderNrs = () => {
+const HeaderDokter = () => {
     const navigate = useNavigate();
     const dropdownRef = useRef(null);
 
@@ -66,17 +66,17 @@ const HeaderNrs = () => {
         setDropdownVisible(false);
     };
 
-    const Menuperawat = [
-        { name: "Jadwal Dokter", path: "/jadwal-dokter" },
-        { name: "Pasien", path: "/pasien-perawat" },
-        { name: "Kelola Item", path: "/kelola-item" }
+    const Menudokter = [
+        { name: "Jadwal Dokter", path: "/schedule-dokter" },
+        { name: "Pasien", path: "/pasien-dokter" },
+        { name: "Notifikasi", path: "/notifikasi-dokter" }
     ];
 
     return (
-        <header className='headernrs-container'>
-            <div className='info-perawat'>
-                <img src={profil} alt='Profil' className='profil_perawat' />
-                <span className='nama_perawat'>Nama Akun Perawat</span>
+        <header className='headerdokter-container'>
+            <div className='info-dokter'>
+                <img src={profil} alt='Profil' className='profil_dokter' />
+                <span className='nama_dokter'>Nama Akun Dokter</span>
                 <div className='datetime-container'>
                     <div className='date'>Tanggal {currentTime.getDate()}/{currentTime.getMonth() + 1}/{currentTime.getFullYear()}</div>
                     <div className='stopwatch'>
@@ -87,16 +87,16 @@ const HeaderNrs = () => {
                     </div>
                 </div>
             </div>
-            <div className='button-container-perawat'>
-                <div className='menu-dropdown-perawat'>
-                    <button className='tombol_menu_perawat_container' onClick={handleMenu}>
-                        <p className='text_menu_perawat' style={{ marginRight: '10px' }}>Menu</p>
-                        <img src={dropdown} alt='Dropdown' className='icon_dropdown_perawat' style={{ width: '20px', height: '20px' }} />
+            <div className='button-container-dokter'>
+                <div className='menu-dropdown-dokter'>
+                    <button className='tombol_menu_dokter_container' onClick={handleMenu}>
+                        <p className='text_menu_dokter' style={{ marginRight: '10px' }}>Menu</p>
+                        <img src={dropdown} alt='Dropdown' className='icon_dropdown_dokter' style={{ width: '20px', height: '20px' }} />
                     </button>
                     {dropdownVisible && (
-                        <div className="dropdown-perawat" ref={dropdownRef}>
+                        <div className="dropdown-dokter" ref={dropdownRef}>
                             <ul>
-                                {Menuperawat.map((menu) => (
+                                {Menudokter.map((menu) => (
                                     <li key={menu.name} onClick={() => navigateTo(menu.path)}>{menu.name}</li>
                                 ))}
                             </ul>
@@ -109,4 +109,4 @@ const HeaderNrs = () => {
     );
 };
 
-export default HeaderNrs;
+export default HeaderDokter;

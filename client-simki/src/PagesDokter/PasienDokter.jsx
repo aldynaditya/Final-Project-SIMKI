@@ -2,24 +2,24 @@ import React, { useState } from "react";
 import NavbarPrivate from '../components/NavbarPrivate';
 import FooterPrivate from '../components/FooterPrivate';
 import '../PagesResepsionis/PasienResepsionis.css';
-import HeaderNrs from './HeaderNrs';
+import HeaderDokter from './HeaderDokter';
 import SearchBar from "../components/SearchBar"; 
-import './PasienPerawat.css'; 
+import './PasienDokter.css'; 
 import { useNavigate } from 'react-router-dom';
 
-const PasienPerawat= () => {
+const PasienDokter= () => {
     const [rows] = useState(Array.from({ length: 20 }));
     const navigate = useNavigate();
 
-    const EmrPerawat = () => {
-        navigate('/emr-perawat');
+    const EmrDokter = () => {
+        navigate('/emr-dokter');
     };
 
     return (
         <div className="pasien-resepsionis-wrapper">
             <div className="navbar-header-wrapper">
                 <NavbarPrivate />
-                <HeaderNrs />
+                <HeaderDokter />
             </div>
             <div className="pasien-resepsionis-container">
                 <div className="pasien-wrapper">
@@ -47,7 +47,7 @@ const PasienPerawat= () => {
                                         <td></td>
                                         <td></td>
                                         <td>
-                                            <button className="emr-perawat" onClick={EmrPerawat}>EMR</button>
+                                            <button className="emr-dokter" onClick={EmrDokter}>EMR</button>
                                         </td>
                                         <td></td>
                                     </tr>
@@ -62,4 +62,4 @@ const PasienPerawat= () => {
     );
 };
 
-export default PasienPerawat;
+export default PasienDokter;

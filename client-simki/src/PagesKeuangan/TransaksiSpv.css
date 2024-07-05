@@ -1,0 +1,126 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.transaksi-keuangan-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.header-transaksi-keuangan {
+    flex: 0 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 80px;
+}
+
+.transaksi-keuangan-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.content-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Memastikan konten mengisi ruang yang ada */
+}
+
+.header-transaksi-keuangan {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 70px;
+    margin-top: 40px;
+}
+
+.text_transaksi-keuangan {
+    margin: 0;
+    margin-right: 600px;
+}
+
+.text-periode-surat {
+    margin-right: 10px;
+    font-size: 16px;
+}
+.kolom-periode-surat {
+    border-radius: 5px;
+    width: 140px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.text-hingga-surat {
+    margin-right: 10px;
+    font-size: 16px;
+}
+.kolom-hingga-surat {
+    border-radius: 5px;
+    width: 140px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.tabel_transaksi-keuangan {
+    margin: 20px;
+    flex: 1;
+}
+
+.tabel_transaksi-keuangan table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: center;  /* Pusatkan teks secara horizontal */
+}
+
+.tabel_transaksi-keuangan th, .tabel_transaksi-keuangan td {
+    padding: 8px;
+    border-bottom: 1px solid black;
+    text-align: center;  /* Pusatkan teks secara horizontal */
+    vertical-align: middle;  /* Pusatkan teks secara vertikal */
+}
+
+.tabel_transaksi-keuangan th {
+    background-color: #f2f2f2;
+    cursor: pointer;
+}
+
+.tabel_transaksi-keuangan tr {
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.2s ease;
+}
+
+.tabel_transaksi-keuangan tr:hover {
+    background-color: #f1f1f1;
+}
+
+.tabel_transaksi-keuangan .detail-faktur-cell {
+    display: flex;
+    justify-content: center; /* Pusatkan secara horizontal */
+    align-items: center;     /* Pusatkan secara vertikal */
+}
+
+
+footer {
+    width: 100%;
+    flex-shrink: 0;
+    background: #f2f2f2; /* Tambahkan warna latar belakang jika diperlukan */
+    padding: 10px 0; /* Tambahkan padding agar terlihat lebih baik */
+}

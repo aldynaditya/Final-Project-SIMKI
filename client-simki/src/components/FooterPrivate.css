@@ -1,20 +1,25 @@
+.footer_private_container {
+  background-color: #145149;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* Align items to the right */
+  width: 100%;
+  margin-top: auto; /* This ensures the footer stays at the bottom */
+}
+
 .footer_copyright_private {
-    display: flex;
-    justify-content: space-between; /* Agar tulisan berada di ujung kiri dan kanan footer */
-    align-items: center; /* Sejajarkan secara vertikal */
-    width: 100%;
-    margin-top: 10px;
-    background-color: #145149;
-    height: 50px;
-    padding: 0 20px; /* Padding untuk memberi ruang di pinggir kanan dan kiri */
-  }
-  
-  .footer_copyright_private p {
-    font-size: 13px;
-    line-height: 15px;
-    color: rgb(255, 255, 255);
-    text-align: right; /* Posisikan teks ke kanan */
-    margin: 0;
-    flex: 1; /* Memberi fleksibilitas untuk membesarkan bagian kanan */
-  }
-  
+  display: flex;
+  justify-content: flex-end; /* Align content to the right */
+  align-items: center; /* Vertically center the text */
+  width: 100%;
+  padding: 0 20px;
+}
+
+.footer_copyright_private p {
+  font-size: 13px;
+  line-height: 15px;
+  color: #ffffff;
+  text-align: right; /* Align text to the right */
+  margin: 0;
+}

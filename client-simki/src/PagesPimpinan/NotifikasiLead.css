@@ -11,32 +11,20 @@ body {
     min-height: 100vh;
 }
 
-.page-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-.content-wrap {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.antrian-wrapper {
+.notif-pimpinan-wrapper {
     display: flex;
     flex-direction: column;
     flex: 1;
 }
 
-.navbar-antrian {
+.navbar-header-notif-pimpinan {
     flex: 0 0 auto;
     width: 100%;
     display: flex;
     flex-direction: column;
 }
 
-.antrian-container {
+.notif-pimpinan-container {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -44,52 +32,22 @@ body {
     margin-top: 80px;
 }
 
-.content-wrapper-antrian {
+.content-wrapper-notif-pimpinan {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-between; /* Memastikan konten mengisi ruang yang ada */
 }
 
-.header-antrian {
+.header-notif-pimpinan {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 20px 70px;
-    margin-top: 20px;
 }
 
-.header-antrian-action {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    z-index: 1;
-}
-
-.text_antrian {
+.text_notif-pimpinan {
     margin: 0;
-    flex-grow: 1;
-    text-align: left;
-}
-
-.tombol_buatjanji {
-    background-color: #145149;
-    color: white;
-    width: 100px;
-    height: 30px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    text-align: center;
-    line-height: 30px;
-    display: inline-block;
-    z-index: 2;
-    margin-right: 50px;
-}
-
-.tombol_buatjanji:hover {
-    background-color: #7DAEA8;
 }
 
 .search-bar-container {
@@ -98,9 +56,8 @@ body {
     background-color: #d3d3d3;
     border-radius: 5px;
     padding: 5px;
-    width: 200px;
-    margin-left: auto;
-    z-index: 1;
+    width: 400px;
+    margin-left: 50px;  /* Menempatkan di ujung kanan */
 }
 
 .search-bar-input {
@@ -119,41 +76,42 @@ body {
     padding: 5px;
 }
 
-.tabel_antrian {
+.tabel_notif-pimpinan {
     margin: 20px;
     flex: 1;
 }
 
-.tabel_antrian table {
+.tabel_notif-pimpinan table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
     font-size: 18px;
-    text-align: center;
+    text-align: center;  /* Pusatkan teks secara horizontal */
 }
 
-.tabel_antrian th, .tabel_antrian td {
+.tabel_notif-pimpinan th, .tabel_notif-pimpinan td {
     padding: 8px;
     border-bottom: 1px solid black;
-    text-align: center;
-    vertical-align: middle;
+    text-align: center;  /* Pusatkan teks secara horizontal */
+    vertical-align: middle;  /* Pusatkan teks secara vertikal */
 }
 
-.tabel_antrian th {
+.tabel_notif-pimpinan th {
     background-color: #f2f2f2;
     cursor: pointer;
 }
 
-.tabel_antrian tr {
+.tabel_notif-pimpinan tr {
     border-bottom: 1px solid #ddd;
     transition: background-color 0.2s ease;
 }
 
-.tabel_antrian tr:hover {
+.tabel_notif-pimpinan tr:hover {
     background-color: #f1f1f1;
 }
 
-.ket_aksi {
+
+.ket_terima {
     background-color: #1E7E72;
     color: white;
     width: 80px;
@@ -164,7 +122,7 @@ body {
     text-align: center;
     line-height: 30px;
     display: inline-block;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif; /* Mengatur font ke Open Sans */
 }
 
 .loader {
@@ -174,12 +132,9 @@ body {
     color: #666;
 }
 
-.footerprivate-antrian {
+footer {
     width: 100%;
-    background: #f2f2f2;
-    padding: 10px 0;
-}
-
-.dropdown-menu {
-    z-index: 10;
+    flex-shrink: 0;
+    background: #f2f2f2; /* Tambahkan warna latar belakang jika diperlukan */
+    padding: 10px 0; /* Tambahkan padding agar terlihat lebih baik */
 }

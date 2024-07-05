@@ -1,0 +1,227 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.order-obat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.text-order-obat {
+    text-align: left;
+    margin-left: 50px;
+    margin-top: 100px;
+    margin-bottom: 30px;
+}
+
+.kolom-order-obat {
+    margin-top: 20px;
+    margin-left: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Menambahkan jarak antar kolom */
+    border-radius: 5px;
+}
+
+.baris-satu {
+    display: flex;
+    align-items: center; /* Menambahkan ini untuk meratakan secara vertikal */
+}
+
+.nemr-order-obat{
+    margin-right: 400px;
+}
+.text-nemr-obat{
+    margin-right: 60px;
+    font-size: 16px;
+}
+.kolom-nemr-obat{
+    border-radius: 5px;
+    width: 300px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.text-nama-obat{
+    margin-right: 60px;
+    font-size: 16px;
+}
+.kolom-nama-obat{
+    border-radius: 5px;
+    width: 300px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+
+.baris-dua {
+    display: flex;
+    align-items: center; /* Menambahkan ini untuk meratakan secara vertikal */
+}
+
+.tanggal-order-obat{
+    margin-right: 400px;
+}
+.text-tanggal-obat{
+    margin-right: 67px;
+    font-size: 16px;
+}
+.kolom-tanggal-obat{
+    border-radius: 5px;
+    width: 300px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.text-nfaktur-obat{
+    margin-right: 60px;
+    font-size: 16px;
+}
+.kolom-nfaktur-obat{
+    border-radius: 5px;
+    width: 300px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.baris-tiga {
+    display: flex;
+    align-items: center; /* Menambahkan ini untuk meratakan secara vertikal */
+}
+
+.jam-order-obat{
+    margin-right: 400px;
+}
+.text-jam-obat{
+    margin-right: 90px;
+    font-size: 16px;
+}
+.kolom-jam-obat{
+    border-radius: 5px;
+    width: 300px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.text-poli-obat{
+    margin-right: 134px;
+    font-size: 16px;
+}
+.kolom-poli-obat{
+    border-radius: 5px;
+    width: 300px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.text-pemeriksa-obat{
+    margin-right: 45px;
+    font-size: 16px;
+}
+.kolom-pemeriksa-obat{
+    border-radius: 5px;
+    width: 300px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.input-order-obat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 50px;
+    row-gap: 50px;
+}
+
+.searchbar-obat {
+    width: 350px;
+}
+
+.template-dropdown {
+    width: 20%;
+    margin-left: 610px;
+    margin-right: 155px;
+
+}
+
+.kolom-template {
+    border-radius: 5px;
+    width: 350px;
+    height: 50px;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #D3D3D3;
+    border: none;
+}
+
+.tabel-order-obat {
+    margin: 20px;
+    flex: 1;
+    margin-top: 70px;
+}
+
+.tabel-order-obat table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: center;  /* Pusatkan teks secara horizontal */
+}
+
+.tabel-order-obat th, .tabel-order-obat td {
+    padding: 8px;
+    border-bottom: 1px solid black;
+    text-align: center;  /* Pusatkan teks secara horizontal */
+    vertical-align: middle;  /* Pusatkan teks secara vertikal */
+}
+
+.tabel-order-obat th {
+    background-color: #f2f2f2;
+    cursor: pointer;
+}
+
+.tabel-order-obat tr {
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.2s ease;
+}
+
+.tabel-order-obat tr:hover {
+    background-color: #f1f1f1;
+}
+
+.simpan-obat {
+    background-color: #145149;
+    color: white;
+    width: 80px;
+    height: 35px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 35px;
+    display: inline-block;
+    margin-left: 50px;
+    margin-bottom: 100px;
+}
+
+.simpan-obat:hover {
+    background-color: #7DAEA8;
+}

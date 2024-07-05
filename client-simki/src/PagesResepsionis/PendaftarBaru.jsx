@@ -3,7 +3,7 @@ import NavbarPrivate from '../components/NavbarPrivate';
 import FooterPrivate from '../components/FooterPrivate';
 import './PendaftarBaru.css';
 import HeaderRsp from './HeaderRsp';
-import SearchBar from "../components/searchbar";  // Pastikan nama komponen dan path sesuai
+import SearchBar from "../components/SearchBar"; 
 
 const PendaftarBaru = () => {
     const [rows] = useState(Array.from({ length: 20 }));

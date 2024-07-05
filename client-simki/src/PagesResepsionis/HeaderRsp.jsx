@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './HeaderRsp.css';
 import profil from "../images/profil.png";
@@ -6,30 +6,30 @@ import dropdown from "../images/dropdown.png";
 
 const HeaderRsp = () => {
     const navigate = useNavigate();
+    const dropdownRef = useRef(null);
 
     const [currentTime, setCurrentTime] = useState(new Date());
     const [stopwatchTime, setStopwatchTime] = useState({ hours: 0, minutes: 0, seconds: 0 });
-    const [startTime, setStartTime] = useState(new Date());
+    const [startTime, setStartTime] = useState(() => new Date());
     const [dropdownVisible, setDropdownVisible] = useState(false);
 
-    const updateStopwatch = () => {
+    const updateStopwatch = useCallback(() => {
         const now = new Date();
         const diff = now.getTime() - startTime.getTime();
         const hours = Math.floor(diff / (1000 * 60 * 60));
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
         setStopwatchTime({ hours, minutes, seconds });
-    };
+    }, [startTime]);
 
     useEffect(() => {
-        setStartTime(new Date());
         const timer = setInterval(() => {
             setCurrentTime(new Date());
             updateStopwatch();
         }, 1000);
 
         return () => clearInterval(timer);
-    }, []);
+    }, [updateStopwatch]);
 
     const formatTwoDigits = (num) => {
         return num < 10 ? `0${num}` : num;
@@ -38,6 +38,24 @@ const HeaderRsp = () => {
     const handleMenu = () => {
         setDropdownVisible(!dropdownVisible);
     };
+
+    const handleClickOutside = (event) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+            setDropdownVisible(false);
+        }
+    };
+
+    useEffect(() => {
+        if (dropdownVisible) {
+            document.addEventListener('mousedown', handleClickOutside);
+        } else {
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [dropdownVisible]);
 
     const SigninPrivate = () => {
         navigate('/signin-private');
@@ -77,7 +95,7 @@ const HeaderRsp = () => {
                         <img src={dropdown} alt='Dropdown' className='icon_dropdown' style={{ width: '20px', height: '20px' }} />
                     </button>
                     {dropdownVisible && (
-                        <div className="dropdown-resepsionis">
+                        <div className="dropdown-resepsionis" ref={dropdownRef}>
                             <ul>
                                 {MenuResepsionis.map((menu) => (
                                     <li key={menu.name} onClick={() => navigateTo(menu.path)}>{menu.name}</li>

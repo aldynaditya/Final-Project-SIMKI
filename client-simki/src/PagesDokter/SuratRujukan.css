@@ -1,4 +1,4 @@
-.cetaksurat-popup-container {
+.suratrujukan-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -10,7 +10,7 @@
     align-items: center;
 }
 
-.cetaksurat-popup-content {
+.suratrujukan-content {
     background: #f0f0f0;
     padding: 20px;
     border-radius: 10px;
@@ -26,13 +26,13 @@
     color: #000;
 }
 
-.text-cetaksurat-popup {
+.text-suratrujukan {
     font-size: 24px;
     margin-bottom: 20px;
     margin-top: 30px;
 }
 
-.kolom-cetak-surat {
+.kolom-surat-rujukan {
     margin-top: 50px;
     margin-left: 70px;
     display: flex;
@@ -41,79 +41,89 @@
     font-size: 16px;
 }
 
-.text-umur-cetaksurat {
-    margin-right: 53px;
-    font-size: 16px;
-}
-.kolom-umur-cetaksurat {
-    border-radius: 5px;
-    width: 360px;
-    height: 30px;
-    padding: 10px;
-    font-size: 16px;
-}
-
-.text-job-surat {
-    margin-right: 20px;
-    font-size: 16px;
-}
-.kolom-job-surat {
-    border-radius: 5px;
-    width: 360px;
-    height: 30px;
-    padding: 10px;
-    font-size: 16px;
-}
-
-.text-diagnosis-surat {
-    margin-right: 20px;
-    font-size: 16px;
-}
-.kolom-diagnosis-surat {
-    border-radius: 5px;
-    width: 360px;
-    height: 30px;
-    padding: 10px;
-    font-size: 16px;
-}
-
-.kadaluarsa-surat {
+.tujuan-rujukan {
     display: flex;
-    flex-direction: row;
-    gap: 10px;
+    flex-direction: column;
 }
-
-.text-periode-surat {
-    margin-right: 35px;
+.text-tujuan-rujukan {
+    margin-right: 80px;
     font-size: 16px;
 }
-.kolom-periode-surat {
+.kolom-tujuan-rujukan {
     border-radius: 5px;
-    width: 140px;
+    width: 400px;
     height: 30px;
     padding: 10px;
     font-size: 16px;
 }
 
-.text-hingga-surat {
-    margin-right: 10px;
+.tempat-rujukan {
+    display: flex;
+    flex-direction: column;
+}
+.text-tempat-rujukan {
+    margin-right: 21px;
     font-size: 16px;
 }
-.kolom-hingga-surat {
+.kolom-tempat-rujukan {
     border-radius: 5px;
-    width: 140px;
+    width: 400px;
     height: 30px;
     padding: 10px;
     font-size: 16px;
 }
 
-.perubahan-surat-container {
+.diagnosis-rujukan {
+    display: flex;
+    flex-direction: column;
+}
+.text-diagnosis-rujukan {
+    margin-right: 55px;
+    font-size: 16px;
+}
+.kolom-diagnosis-rujukan{
+    border-radius: 5px;
+    width: 400px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.text-tindakan-rujukan {
+    margin-right: 75px;
+    font-size: 16px;
+}
+.kolom-tindakan-rujukan {
+    border-radius: 5px;
+    width: 400px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.keterangan-rujukan {
+    display: flex;
+    flex-direction: column;
+}
+.text-keterangan-rujukan {
+    margin-right: 25px;
+    font-size: 16px;
+}
+.kolom-keterangan-rujukan {
+    border-radius: 5px;
+    width: 400px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.button-surat-rujukan {
     display: flex;
     justify-content: center; /* Center the button horizontally */
     margin-top: 20px;
 }
 
-.perubahan-surat {
+.simpan-rujukan {
     padding: 10px;
     background-color: #145149;
     color: white;
@@ -125,6 +135,6 @@
     letter-spacing: 3px;
 }
 
-.perubahan-surat:hover {
+.simpan-rujukan:hover {
     background-color: #7DAEA8;
 }

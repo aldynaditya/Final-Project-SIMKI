@@ -1,0 +1,19 @@
+.simpan-prosedur {
+    background-color: #145149;
+    color: white;
+    width: 80px;
+    height: 35px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 35px;
+    display: inline-block;
+    margin-left: 50px;
+    margin-bottom: 100px;
+}
+
+.simpan-prosedur:hover {
+    background-color: #7DAEA8;
+}
