@@ -3,18 +3,17 @@ import NavbarPrivate from '../components/NavbarPrivate';
 import FooterPrivate from '../components/FooterPrivate';
 import './PasienResepsionis.css';
 import HeaderRsp from './HeaderRsp';
-import SearchBar from "../components/searchbar";  // Pastikan nama komponen dan path sesuai
-import { useNavigate } from 'react-router-dom';
+import SearchBar from "../components/SearchBar";  // Pastikan nama komponen dan path sesuai
 
-const PasienResepsionis= () => {
+const PasienResepsionis = () => {
     const [rows] = useState(Array.from({ length: 20 }));
-    const navigate = useNavigate();
 
     const IdentitasPasien = () => {
-        navigate('/identitas-pasien');
+        window.open('/identitas-pasien', '_blank');
     };
+
     const EmrResepsionis = () => {
-        navigate('/emr-resepsionis');
+        window.open('/emr-resepsionis', '_blank');
     };
 
     return (

@@ -29,6 +29,28 @@ import EmrPerawat from './PagesPerawat/EmrPerawat';
 import PasienPerawat from './PagesPerawat/PasienPerawat';
 import KelolaItem from './PagesPerawat/KelolaItem';
 import TambahItemPopup from './PagesPerawat/TambahitemPopup';
+import Dokter from './PagesDokter/Dokter';
+import PasienDokter from './PagesDokter/PasienDokter';
+import NotifikasiDokter from './PagesDokter/Notifikasi';
+import ScheduleDr from './PagesDokter/ScheduleDr';
+import EmrDokter from './PagesDokter/EmrDokter';
+import EntriMasuk from './PagesDokter/EntriMasuk';
+import IsiCppt from './PagesDokter/IsiCppt';
+import EntriBaru from './PagesDokter/EntriBaru';
+import OrderObat from './PagesDokter/OrderObat';
+import OrderProsedur from './PagesDokter/OrderProsedur';
+import OrderSurat from './PagesDokter/OrderSurat';
+import SuratRujukan from './PagesDokter/SuratRujukan';
+import SuratSakit from './PagesDokter/SuratSakit';
+import Farmasi from './PagesFarmasi/Farmasi';
+import OrderMasuk from './PagesFarmasi/OrderMasuk';
+import KelolaObat from './PagesFarmasi/KelolaObat';
+import TambahObat from './PagesFarmasi/TambahObat';
+import TransaksiKasir from './PagesKasir/TransaksiKasir';
+import DetailFaktur from './PagesKasir/DetailFaktur';
+import TransaksiKeuangan from './PagesKeuangan/TransaksiSpv';
+import NotifikasiKeuangan from './PagesKeuangan/NotifikasiSpv';
+import NotifikasiPimpinan from './PagesPimpinan/NotifikasiLead';
 
 
 
@@ -66,6 +88,28 @@ function App() {
         <Route path="/pasien-perawat" element={<PasienPerawat />} />
         <Route path="/kelola-item" element={<KelolaItem />} />
         <Route path="/tambahitem-popup" element={<TambahItemPopup />} />
+        <Route path="/dokter" element={<Dokter />} />
+        <Route path="/pasien-dokter" element={<PasienDokter />} />
+        <Route path="/notifikasi-dokter" element={<NotifikasiDokter/>} />
+        <Route path="/schedule-dokter" element={<ScheduleDr/>} />
+        <Route path="/emr-dokter" element={<EmrDokter />} />
+        <Route path="/entri-masuk" element={<EntriMasuk />} />
+        <Route path="/isi-cppt" element={<IsiCppt />} />
+        <Route path="/entri-baru" element={<EntriBaru />} />
+        <Route path="/order-obat" element={<OrderObat />} />
+        <Route path="/order-prosedur" element={<OrderProsedur />} />
+        <Route path="/order-surat" element={<OrderSurat />} />
+        <Route path="/surat-rujukan" element={<SuratRujukan />} />
+        <Route path="/surat-sakit" element={<SuratSakit />} />
+        <Route path="/farmasi" element={<Farmasi />} />
+        <Route path="/order-masuk" element={<OrderMasuk />} />
+        <Route path="/kelola-obat" element={<KelolaObat />} />
+        <Route path="/tambah-obat" element={<TambahObat />} />
+        <Route path="/transaksi-kasir" element={<TransaksiKasir />} />
+        <Route path="/detail-faktur" element={<DetailFaktur />} />
+        <Route path="/transaksi-keuangan" element={<TransaksiKeuangan />} />
+        <Route path="/notifikasi-keuangan" element={<NotifikasiKeuangan />} />
+        <Route path="/notifikasi-pimpinan" element={<NotifikasiPimpinan />} />
       </Routes>
     </Router>
   );

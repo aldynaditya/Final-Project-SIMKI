@@ -111,14 +111,16 @@
 
 .simpan-item {
     padding: 10px;
-    background-color: #A4A4A4;
+    background-color: #145149;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     width: 150px;
+    font-weight: bold;
+    letter-spacing: 3px;
 }
 
 .simpan-item:hover {
-    background-color: #343838;
+    background-color: #7DAEA8;
 }

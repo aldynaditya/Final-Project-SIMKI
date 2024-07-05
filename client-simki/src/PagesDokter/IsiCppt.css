@@ -1,4 +1,4 @@
-.cetaksurat-popup-container {
+.isicppt-popup-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -8,9 +8,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: 'Open Sans', sans-serif;
 }
 
-.cetaksurat-popup-content {
+.isicppt-popup-content {
     background: #f0f0f0;
     padding: 20px;
     border-radius: 10px;
@@ -26,13 +27,13 @@
     color: #000;
 }
 
-.text-cetaksurat-popup {
+.text-isicppt-popup {
     font-size: 24px;
     margin-bottom: 20px;
     margin-top: 30px;
 }
 
-.kolom-cetak-surat {
+.kolom-isi-cppt {
     margin-top: 50px;
     margin-left: 70px;
     display: flex;
@@ -40,80 +41,112 @@
     gap: 10px;
     font-size: 16px;
 }
-
-.text-umur-cetaksurat {
-    margin-right: 53px;
-    font-size: 16px;
-}
-.kolom-umur-cetaksurat {
-    border-radius: 5px;
-    width: 360px;
-    height: 30px;
-    padding: 10px;
-    font-size: 16px;
-}
-
-.text-job-surat {
-    margin-right: 20px;
-    font-size: 16px;
-}
-.kolom-job-surat {
-    border-radius: 5px;
-    width: 360px;
-    height: 30px;
-    padding: 10px;
-    font-size: 16px;
-}
-
-.text-diagnosis-surat {
-    margin-right: 20px;
-    font-size: 16px;
-}
-.kolom-diagnosis-surat {
-    border-radius: 5px;
-    width: 360px;
-    height: 30px;
-    padding: 10px;
-    font-size: 16px;
-}
-
-.kadaluarsa-surat {
+.pemeriksa-cppt {
     display: flex;
-    flex-direction: row;
-    gap: 10px;
 }
-
-.text-periode-surat {
-    margin-right: 35px;
+.text-pemeriksa-cppt {
+    margin-right: 68px;
     font-size: 16px;
 }
-.kolom-periode-surat {
+.kolom-pemeriksa-cppt {
     border-radius: 5px;
-    width: 140px;
+    width: 300px;
     height: 30px;
     padding: 10px;
     font-size: 16px;
 }
 
-.text-hingga-surat {
-    margin-right: 10px;
+.text-penyakit-cppt {
+    margin-right: 20px;
     font-size: 16px;
 }
-.kolom-hingga-surat {
+.kolom-penyakit-cppt {
     border-radius: 5px;
-    width: 140px;
+    width: 300px;
     height: 30px;
     padding: 10px;
     font-size: 16px;
 }
 
-.perubahan-surat-container {
+.text-subjektif-cppt {
+    margin-right: 85px;
+    font-size: 16px;
+}
+.kolom-subjektif-cppt {
+    border-radius: 5px;
+    width: 300px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.text-objektif-cppt {
+    margin-right: 87px;
+    font-size: 16px;
+}
+.kolom-objektif-cppt {
+    border-radius: 5px;
+    width: 300px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.text-diagnosis-cppt {
+    margin-right: 70px;
+    font-size: 16px;
+}
+.kolom-diagnosis-cppt {
+    border-radius: 5px;
+    width: 300px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.text-plan-cppt {
+    margin-right: 109px;
+    font-size: 16px;
+}
+.kolom-plan-cppt {
+    border-radius: 5px;
+    width: 300px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.tindakan-cppt{
+    display: flex;
+}
+
+.text-tindakan-cppt{
+    margin-right: 55px;
+    font-size: 16px;
+}
+.dropdown-tindakan-cppt {
+    margin-left: 20px;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #7DAEA8;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-tindakan-cppt:hover {
+    background-color: #5A9080;
+}
+
+
+.simpan-cppt-container {
     display: flex;
     justify-content: center; /* Center the button horizontally */
     margin-top: 20px;
 }
 
-.perubahan-surat {
+.simpan-cppt {
     padding: 10px;
     background-color: #145149;
     color: white;
@@ -125,6 +158,6 @@
     letter-spacing: 3px;
 }
 
-.perubahan-surat:hover {
+.simpan-cppt:hover {
     background-color: #7DAEA8;
 }

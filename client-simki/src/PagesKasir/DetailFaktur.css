@@ -1,4 +1,4 @@
-.cetaksurat-popup-container {
+.detail-faktur-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -10,7 +10,7 @@
     align-items: center;
 }
 
-.cetaksurat-popup-content {
+.detail-faktur-content {
     background: #f0f0f0;
     padding: 20px;
     border-radius: 10px;
@@ -26,13 +26,13 @@
     color: #000;
 }
 
-.text-cetaksurat-popup {
+.text-detail-faktur {
     font-size: 24px;
     margin-bottom: 20px;
     margin-top: 30px;
 }
 
-.kolom-cetak-surat {
+.kolom-detail-faktur {
     margin-top: 50px;
     margin-left: 70px;
     display: flex;
@@ -41,79 +41,95 @@
     font-size: 16px;
 }
 
-.text-umur-cetaksurat {
-    margin-right: 53px;
-    font-size: 16px;
-}
-.kolom-umur-cetaksurat {
-    border-radius: 5px;
-    width: 360px;
-    height: 30px;
-    padding: 10px;
-    font-size: 16px;
-}
-
-.text-job-surat {
-    margin-right: 20px;
-    font-size: 16px;
-}
-.kolom-job-surat {
-    border-radius: 5px;
-    width: 360px;
-    height: 30px;
-    padding: 10px;
-    font-size: 16px;
-}
-
-.text-diagnosis-surat {
-    margin-right: 20px;
-    font-size: 16px;
-}
-.kolom-diagnosis-surat {
-    border-radius: 5px;
-    width: 360px;
-    height: 30px;
-    padding: 10px;
-    font-size: 16px;
-}
-
-.kadaluarsa-surat {
+.penjamin-faktur {
     display: flex;
-    flex-direction: row;
-    gap: 10px;
 }
-
-.text-periode-surat {
-    margin-right: 35px;
+.text-penjamin-faktur{
+    margin-right: 100px;
     font-size: 16px;
 }
-.kolom-periode-surat {
+
+
+.text-metode-pembayaran {
+    margin-right: 17px;
+    font-size: 16px;
+}
+.kolom-metode-pembayaran {
     border-radius: 5px;
-    width: 140px;
+    width: 300px;
     height: 30px;
     padding: 10px;
     font-size: 16px;
 }
 
-.text-hingga-surat {
-    margin-right: 10px;
+.dropdown-pembayaran {
+    margin-left: 20px;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #7DAEA8;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.dropdown-pembayaran:hover {
+    background-color: #5A9080;
+}
+
+.dropdown-penjamin {
+    margin-left: 20px;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #7DAEA8;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.dropdown-penjamin:hover {
+    background-color: #5A9080;
+}
+
+
+.text-diskon-faktur {
+    margin-right: 135px;
     font-size: 16px;
 }
-.kolom-hingga-surat {
+.kolom-diskon-faktur {
     border-radius: 5px;
-    width: 140px;
+    width: 250px;
     height: 30px;
     padding: 10px;
     font-size: 16px;
 }
 
-.perubahan-surat-container {
+.text-keterangan-faktur {
+    margin-right: 100px;
+    font-size: 16px;
+}
+.kolom-keterangan-faktur {
+    border-radius: 5px;
+    width: 250px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.tambah-item-container {
     display: flex;
     justify-content: center; /* Center the button horizontally */
     margin-top: 20px;
 }
 
-.perubahan-surat {
+
+.simpan-faktur-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.simpan-faktur{
     padding: 10px;
     background-color: #145149;
     color: white;
@@ -123,8 +139,9 @@
     width: 150px;
     font-weight: bold;
     letter-spacing: 3px;
+    display: flex;
 }
 
-.perubahan-surat:hover {
+.simpan-faktur:hover {
     background-color: #7DAEA8;
 }

@@ -1,0 +1,71 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.dokter-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content-dokter {
+    flex: 1; /* Memastikan main-content mengisi ruang yang tersedia */
+    display: flex;
+    flex-direction: column;
+}
+
+.text_dokter {
+    text-align: left;
+    margin-top: 80px;
+    margin-left: 70px;
+}
+
+.klik_dokter {
+    display: flex;
+    justify-content: center; /* Memusatkan elemen di tengah */
+    padding: 20px;
+    gap: 100px; /* Mengurangi jarak antar elemen */
+    margin-bottom: 100px;
+    margin-top: 80px;
+}
+
+.klik_dokter > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 200px; /* Lebar kotak button */
+    height: 150px; /* Tinggi kotak button */
+    background-color: #C6E6E1;
+    border: 1px solid #C6E6E1;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.klik_dokter > div:hover {
+    background-color: #7DAEA8;
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px; /* Jarak antara gambar dan teks */
+}
+
+.footer {
+    background-color: #145149;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+}

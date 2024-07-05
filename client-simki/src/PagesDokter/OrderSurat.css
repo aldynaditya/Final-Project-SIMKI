@@ -1,0 +1,25 @@
+.button-order-surat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 20px; /* Adds vertical spacing between buttons */
+    margin-right: 130px;
+}
+
+.surat-rujukan,
+.surat-sakit {
+    width: 150px; /* Adjust width as needed */
+    padding: 10px;
+    margin: 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #145149;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.surat-rujukan:hover,
+.surat-sakit:hover {
+    background-color: #7DAEA8;
+}
