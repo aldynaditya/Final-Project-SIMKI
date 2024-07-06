@@ -8,7 +8,7 @@ const getAllSchedule = async (req) => {
         include: {
             model: UserKlinik,
             as: 'user_klinik',
-            attributes: ['name'],
+            attributes: ['nama'],
             where: { role: 'dokter' },
             required: true 
         }
@@ -30,7 +30,7 @@ const createSchedule = async (req) => {
     const { hari, poli, status, namaDokter } = req.body;
     const dokter = await UserKlinik.findOne({
         where: {
-            name: namaDokter,
+            nama: namaDokter,
             role: 'dokter'
         }
     });
@@ -42,7 +42,7 @@ const createSchedule = async (req) => {
         hari,
         poli,
         status,
-        userklinikId: dokter.uuid
+        userKlinikId: dokter.uuid
     });
 
     return result;

@@ -1,9 +1,8 @@
 const db = require('../../../db/index'); // Sesuaikan path ke instance Sequelize Anda
 const argon2 = require('argon2');
 const { DataTypes } = require('sequelize');
-const SuperUser = require('../superUser/model');
 
-const UserKlinik = db.define('user_klinik', {
+const UserKlinik = db.define('userKlinik', {
     uuid:{
         type: DataTypes.UUID,
         primaryKey: true,
@@ -13,7 +12,7 @@ const UserKlinik = db.define('user_klinik', {
             notEmpty: true
         }
     },
-    name: {
+    nama: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
@@ -50,11 +49,7 @@ const UserKlinik = db.define('user_klinik', {
                 msg: 'Role tidak valid',
             },
         },
-    },
-    superuser: {
-        type: DataTypes.UUID,
-        allowNull: false,
-    },
+    }
 }, {
     hooks: {
         beforeCreate: async (user) => {
@@ -66,15 +61,12 @@ const UserKlinik = db.define('user_klinik', {
             }
         },
     },
-    tableName: 'user_klinik'
+    tableName: 'userKlinik'
 });
 
 UserKlinik.prototype.comparePassword = async function (candidatePassword) {
     return await argon2.verify(this.password, candidatePassword);
 };
-
-SuperUser.hasMany(UserKlinik, { foreignKey: 'superuser' });
-UserKlinik.belongsTo(SuperUser, { foreignKey: 'superuser' });
 
 module.exports = UserKlinik;
 

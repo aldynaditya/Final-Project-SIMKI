@@ -17,7 +17,7 @@ const {
     UnauthorizedError 
 } = require('../../errors');
 
-const getAllOrders = async (req, res) => {
+const getAllOrders = async () => {
     const order = await Transaksi.findAll({
         include: [
             {
@@ -44,9 +44,10 @@ const getAllOrders = async (req, res) => {
 
     const result = order.map(transaksi => {
         const episode = transaksi.episode;
-        const emr = episode.emr_pasien;
+        const emr = episode.emrPasien;
         const appointment = emr.appointment;
         const datapasien = appointment.datapasien;
+
         return{
             noInvoice: episode.invoiceNumber,
             tanggal: appointment.tanggal,
@@ -55,14 +56,14 @@ const getAllOrders = async (req, res) => {
             penjamin: appointment.penjamin,
             metodeBayar: transaksi.metodeBayar,
             total: transaksi.total,
-            petugas: transaksi.user.name
+            petugas: transaksi.user.nama
         }
     });
 
-    return result
+    return result;
 };
 
-const getOrderDetails = async (req, res) => {
+const getOrderDetails = async (req) => {
     const { id } = req.params;
 
     const transaksi = await Transaksi.findOne({ where: { uuid: id }});

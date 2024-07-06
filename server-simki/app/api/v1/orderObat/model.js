@@ -4,7 +4,7 @@ const Obat = require('../obat/model');
 const Episode = require('../episode/model');
 
 
-const OrderObat = db.define('order_obat', {
+const OrderObat = db.define('orderObat', {
     uuid:{
         type: DataTypes.UUID,
         primaryKey: true,
@@ -42,6 +42,10 @@ const OrderObat = db.define('order_obat', {
             notEmpty: true,
         }
     },
+    status: {
+        type: DataTypes.ENUM( 'in process','accepted' ),
+        defaultValue: 'in process',
+    },
     obatId: {
         type: DataTypes.UUID,
         allowNull: false,
@@ -52,7 +56,7 @@ const OrderObat = db.define('order_obat', {
     }
 }, {
     timestamps: true,
-    tableName: 'order_obat'
+    tableName: 'orderObat'
 });
 
 

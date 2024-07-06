@@ -7,7 +7,7 @@ const getAllObat = async (req) => {
         include: [{
             model: UserKlinik,
             as: 'user',
-            attributes: ['name']
+            attributes: ['nama']
         }]
     });
 
@@ -18,7 +18,7 @@ const getAllObat = async (req) => {
             harga_obat: obat.harga_satuan_obat,
             jenis_obat: obat.satuan,
             stok_obat: obat.stok,
-            createdBy: obat.user.name
+            createdBy: obat.user.nama
         };
     });
 

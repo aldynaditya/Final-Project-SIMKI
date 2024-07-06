@@ -19,7 +19,7 @@ const getAllAppointment = async (req) => {
                 attributes: ['hari', 'poli'],
                 include: {
                     model: UserKlinik,
-                    attributes: ['name'],
+                    attributes: ['nama'],
                     as: 'user_klinik'
                 },
             },
@@ -27,13 +27,13 @@ const getAllAppointment = async (req) => {
     });
 
     const result = appointment.map(appointment => {
-        const pasienData = appointment.pasien ? appointment.pasien.data_pasien : null;
-        const manualData = appointment.manualDataPasien || {};
+        const datapasien = appointment.datapasien;
+        const schedule = appointment.schedule;
 
         return {
-            nama_lengkap: pasienData ? pasienData.nama_lengkap : manualData.nama_lengkap,
-            nama_dokter: appointment.schedule ? appointment.schedule.user_klinik.name : null,
-            poli: appointment.schedule ? appointment.schedule.poli : null,
+            nama_lengkap: datapasien.nama_lengkap,
+            nama_dokter: schedule.user_klinik.nama,
+            poli: schedule.poli,
             tanggal: appointment.tanggal,
             keluhan: appointment.keluhan,
             penjamin: appointment.penjamin,
@@ -68,9 +68,9 @@ const createAppointment = async (req) => {
                 model: UserKlinik,
                 as: 'user_klinik',
                 where: {
-                    name: dokter,
+                    nama: dokter,
                 },
-                attributes: ['name'],
+                attributes: ['nama'],
             },
         ],
     });

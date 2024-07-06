@@ -20,13 +20,13 @@ const {
 const { generateInvoiceNumber } = require('../../utils');
 
 const getAllEMRPasien = async ( req ) => {
-    const { role, name } = req.user;
+    const { role, nama } = req.user;
     const query = req.query;
 
     let whereClause = {};
     if (role === 'dokter') {
         whereClause = {
-            '$appointment.schedule.user_klinik.name$': name,
+            '$appointment.schedule.user_klinik.nama$': nama,
             ...query,
         };
     } else if (role === 'perawat') {
@@ -39,6 +39,7 @@ const getAllEMRPasien = async ( req ) => {
         include: [
             {
                 model: Appointment,
+                as: 'appointment',
                 include: [
                     {
                         model: DataPasien,
@@ -46,6 +47,7 @@ const getAllEMRPasien = async ( req ) => {
                     },
                     {
                         model: Schedule,
+                        as: 'schedule',
                         include: {
                             model: UserKlinik,
                             as: 'user_klinik',
@@ -65,7 +67,7 @@ const getAllEMRPasien = async ( req ) => {
             tanggal_lahir: appointment.datapasien.tanggal_lahir,
             jenis_kelamin: appointment.datapasien.jenis_kelamin,
             gol_darah: appointment.datapasien.gol_darah,
-            pemeriksa: appointment.schedule.user_klinik.name,
+            pemeriksa: appointment.schedule.user_klinik.nama,
             poli: appointment.schedule.poli
         };
     });

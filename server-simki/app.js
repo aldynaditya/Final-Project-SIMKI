@@ -15,7 +15,6 @@ const Pasien = require('./app/api/v1/pasien/model');
 const emrpasien = require('./app/api/v1/emrPasien/model');
 const episode = require('./app/api/v1/episode/model');
 const UserKlinik = require('./app/api/v1/userKlinik/model');
-const superuser = require('./app/api/v1/superUser/model');
 const pasien = require('./app/api/v1/pasien/model');
 const Obat = require('./app/api/v1/obat/model');
 const Item = require('./app/api/v1/item/model');
@@ -33,11 +32,11 @@ const Transaksi = require('./app/api/v1/transaksi/model');
 //     console.error('Database synchronization error:', err);
 // });
 // (async()=>{
-//     await Transaksi.sync({force:true}); 
+//     await db.sync({force:true}); 
 // })();
 
 //router
-const SuperUserRouter = require('./app/api/v1/superUser/router');
+const userklinikRouter = require('./app/api/v1/userKlinik/router');
 const authRouter = require('./app/api/v1/auth/router');
 const obatRouter = require('./app/api/v1/obat/router');
 const itemRouter = require('./app/api/v1/item/router');
@@ -71,7 +70,7 @@ app.get('/', (req, res) => {
 });
 
 //use router
-app.use(`${v1}/cms`, SuperUserRouter);
+app.use(`${v1}/cms`, userklinikRouter);
 app.use(`${v1}/cms`, authRouter);
 app.use(`${v1}/cms`, obatRouter);
 app.use(`${v1}/cms`, itemRouter);

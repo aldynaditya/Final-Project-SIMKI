@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 const Item = require('../item/model');
 const Episode = require('../episode/model');
 
-const OrderProsedur = db.define('order_prosedur', {
+const OrderProsedur = db.define('orderProsedur', {
     uuid:{
         type: DataTypes.UUID,
         primaryKey: true,
@@ -51,7 +51,7 @@ const OrderProsedur = db.define('order_prosedur', {
     }  
 }, {
     timestamps: true,
-    tableName: 'order_prosedur'
+    tableName: 'orderProsedur'
 });
 
 

@@ -19,9 +19,8 @@ const authenticateUser = async (req, res, next) => {
         req.user = {
             email: payload.email,
             role: payload.role,
-            name: payload.name,
+            nama: payload.nama,
             id: payload.userId,
-            superuser: payload.superuser,
         };
         next();
     } catch (error) {
@@ -49,7 +48,7 @@ const authenticatePasien = async (req, res, next) => {
         req.pasien = {
             email: payload.email,
             role: payload.role,
-            name: payload.name,
+            nama: payload.nama,
             id: payload.pasienId,
         };
         next();
