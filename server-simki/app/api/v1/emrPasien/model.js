@@ -2,7 +2,7 @@ const db = require('../../../db/index');
 const { DataTypes } = require('sequelize');
 const Appointment = require('../appointment/model');
 
-const EMRPasien = db.define('emr_pasien', {
+const EMRPasien = db.define('emrPasien', {
     noEMR: {
         type: DataTypes.UUID,
         primaryKey: true,
@@ -21,7 +21,7 @@ const EMRPasien = db.define('emr_pasien', {
         },
     },
 }, {
-    tableName: 'emr_pasien',
+    tableName: 'emrPasien',
 });
 
 EMRPasien.belongsTo(Appointment, { foreignKey: 'appointmentId' });

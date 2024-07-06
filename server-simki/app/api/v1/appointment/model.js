@@ -1,6 +1,5 @@
 const db = require('../../../db/index');
 const { DataTypes } = require('sequelize');
-const Pasien = require('../pasien/model');
 const Schedule = require('../schedule/model');
 const DataPasien = require('../dataPasien/model');
 
@@ -57,6 +56,6 @@ const Appointment = db.define('appointment', {
 
 Appointment.belongsTo(DataPasien, { as: 'datapasien', foreignKey: 'pasienId', targetKey: 'uuid' });
 
-Appointment.belongsTo(Schedule, { foreignKey: 'scheduleId', targetKey: 'uuid' });
+Appointment.belongsTo(Schedule, { as: 'schedule',foreignKey: 'scheduleId', targetKey: 'uuid' });
 
 module.exports = Appointment;

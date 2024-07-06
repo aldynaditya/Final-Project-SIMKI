@@ -36,7 +36,7 @@ const Schedule = db.define('schedule', {
         type: DataTypes.ENUM( 'ada', 'tidak ada' ),
         defaultValue: 'tidak ada',
     },
-    userklinikId: {
+    userKlinikId: {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
@@ -49,7 +49,7 @@ const Schedule = db.define('schedule', {
     tableName: 'schedule'
 });
 
-UserKlinik.hasMany(Schedule, { foreignKey: 'userklinikId' });
-Schedule.belongsTo(UserKlinik, { as: 'user_klinik', foreignKey: 'userklinikId' });
+UserKlinik.hasMany(Schedule, { foreignKey: 'userKlinikId' });
+Schedule.belongsTo(UserKlinik, { as: 'user_klinik', foreignKey: 'userKlinikId' });
 
 module.exports = Schedule;

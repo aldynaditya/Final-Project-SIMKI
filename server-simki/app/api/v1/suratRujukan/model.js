@@ -1,7 +1,7 @@
 const db = require('../../../db/index');
 const { DataTypes } = require('sequelize');
 
-const SuratRujukan = db.define('surat_rujukan', {
+const SuratRujukan = db.define('suratRujukan', {
     uuid:{
         type: DataTypes.UUID,
         primaryKey: true,
@@ -48,7 +48,7 @@ const SuratRujukan = db.define('surat_rujukan', {
     }  
 }, {
     timestamps: true,
-    tableName: 'surat_rujukan'
+    tableName: 'suratRujukan'
 });
 
 module.exports = SuratRujukan;

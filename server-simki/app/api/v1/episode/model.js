@@ -25,7 +25,7 @@ const Episode = db.define('episode', {
         defaultValue: "-",
         allowNull: false,
     },
-    riwayatPenyakit: {
+    riwayat_penyakit: {
         type: DataTypes.TEXT,
         defaultValue: "-",
         allowNull: false,

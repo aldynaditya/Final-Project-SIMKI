@@ -4,7 +4,7 @@ const SuratSakit = require('../suratSakit/model');
 const SuratRujukan = require('../suratRujukan/model');
 const Episode = require('../episode/model');
 
-const OrderSurat = db.define('order_surat', {
+const OrderSurat = db.define('orderSurat', {
     uuid:{
         type: DataTypes.UUID,
         primaryKey: true,
@@ -14,7 +14,7 @@ const OrderSurat = db.define('order_surat', {
             notEmpty: true
         }
     },
-    jenisSurat:{
+    jenis_surat:{
         type: DataTypes.ENUM( 'sakit','rujukan' ),
         allownull: false,
         validate: {
@@ -24,7 +24,7 @@ const OrderSurat = db.define('order_surat', {
             },
         },
     },
-    versiSurat:{
+    versi_surat:{
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
@@ -35,11 +35,11 @@ const OrderSurat = db.define('order_surat', {
         type: DataTypes.ENUM('updated','not confirm', 'in process','confirm'),
         defaultValue: 'in process',
     },
-    suratsakitId: {
+    suratSakitId: {
         type: DataTypes.UUID,
         allowNull: false,
     },
-    suratrujukanId: {
+    suratRujukanId: {
         type: DataTypes.UUID,
         allowNull: false,
     },
@@ -49,18 +49,18 @@ const OrderSurat = db.define('order_surat', {
     }   
 }, {
     timestamps: true,
-    tableName: 'order_surat'
+    tableName: 'orderSurat'
 });
 
 
 OrderSurat.belongsTo(SuratSakit, {
-    foreignKey: 'suratsakitId',
+    foreignKey: 'suratSakitId',
     targetKey: 'uuid',
     as: 'suratsakit'
 });
 
 OrderSurat.belongsTo(SuratRujukan, {
-    foreignKey: 'suratrujukanId',
+    foreignKey: 'suratRujukanId',
     targetKey: 'uuid',
     as: 'suratrujukan'
 });

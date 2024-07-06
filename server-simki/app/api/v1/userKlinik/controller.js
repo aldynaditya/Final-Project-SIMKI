@@ -1,22 +1,9 @@
 const { 
-    createSuperUser,
     createUsers,
     getAllUserKlinik, 
     deleteUserKlinik
 } = require('../../../services/sequelize/userKlinik');
 const { StatusCodes } = require('http-status-codes');
-
-const createCMSsuperuser = async (req, res, next) => {
-    try {
-        const result = await createSuperUser(req);
-        
-        res.status(StatusCodes.CREATED).json({
-            data: result,
-        });
-    } catch (err) {
-        next(err);
-    }
-};
 
 const createCMSusers = async (req, res, next) => {
     try {
@@ -55,7 +42,6 @@ const deleteCMSusers = async (req, res, next) => {
 };
 
 module.exports = {  
-    createCMSsuperuser,
     createCMSusers,
     getCMSusers,
     deleteCMSusers 

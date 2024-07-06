@@ -2,7 +2,7 @@ const db = require('../../../db/index'); // Sesuaikan path ke instance Sequelize
 const { DataTypes } = require('sequelize');
 const Pasien = require('../pasien/model');
 
-const DataPasien = db.define('data_pasien', {
+const DataPasien = db.define('dataPasien', {
     uuid:{
         type: DataTypes.UUID,
         primaryKey: true,
@@ -92,7 +92,7 @@ const DataPasien = db.define('data_pasien', {
     },
 },{
     timestamps: true,
-    tableName: 'data_pasien'
+    tableName: 'dataPasien'
 });
 
 Pasien.hasOne(DataPasien, { foreignKey: 'userId' });

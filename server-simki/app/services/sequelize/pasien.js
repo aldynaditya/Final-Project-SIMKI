@@ -123,7 +123,7 @@ const getpasienAppointments = async (req) => {
                 attributes: ['hari', 'poli'], // Specify the attributes you want to include
                 include: {
                     model: UserKlinik,
-                    attributes: ['name'], // Include doctor's name
+                    attributes: ['nama'], // Include doctor's name
                     as: 'user_klinik' // Use the alias for UserKlinik model
                 },
             },
@@ -161,9 +161,9 @@ const createAppointment = async (req, res) => {
                 model: UserKlinik,
                 as: 'user_klinik',
                 where: {
-                    name: dokter,
+                    nama: dokter,
                 },
-                attributes: ['name'],
+                attributes: ['nama'],
             },
         ],
     });

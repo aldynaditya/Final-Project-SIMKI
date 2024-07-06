@@ -39,6 +39,7 @@ const createOrderObat = async (req) => {
             obatId: obat.uuid,
             kuantitas,
             dosis,
+            status: 'in process',
             catatan,
             total: kuantitas * obat.harga_satuan_obat
         });
@@ -49,10 +50,70 @@ const createOrderObat = async (req) => {
         results.push(result);
     }
 
-    await Episode.update({ status: 'in process' }, { where: { uuid: episode.uuid } });
-
     return { results, totalOrder };
 };
+
+const getOrderDetailInformation = async() => {
+
+}
+
+const getALlOrderObatbyFarmasi = async() => {
+    const orderObat = await OrderObat.findAll({
+        include: [
+            {
+                model: Episode,
+                as: 'episode',
+                include: {
+                    model: EMRPasien,
+                    include: {
+                        model: Appointment,
+                        include: [{
+                            model: DataPasien,
+                            as: 'datapasien',
+                            attributes: ['nama_lengkap']
+                        },
+                        {
+                            model: Schedule,
+                            include: {
+                                model: UserKlinik,
+                                as: 'user_klinik',
+                            }
+                        }]
+                    }
+                }
+            },
+            {
+                model: Obat,
+                as: 'dataobat'
+            }
+        ]
+    });
+
+    const result = orderObat.map(orderobat => {
+        const dataobat = orderobat.dataobat;
+        const episode = orderobat.episode;
+        const emr = episode.emr_pasien;
+        const appointment = emr.appointment;
+        const datapasien = appointment.datapasien;
+        const schedule = appointment.schedule;
+        
+        return{
+            noInvoice: episode.invoiceNumber,
+            dateAndTime: orderobat.createdAt,
+            noEMR: emr.noEMR,
+            namaPasien: datapasien.nama_lengkap,
+            namaDokter: schedule.user_klinik.name,
+            poli: schedule.poli,
+            obat: dataobat.nama_obat,
+            kuantitas: orderobat.kuantitas,
+            dosis: orderobat.dosis,
+            catatan: orderobat.catatan,
+            status: orderobat.status
+        }
+    });
+
+    return result;
+}
 
 const createOrderItem = async (req) => {
     const { id } = req.params;
@@ -111,12 +172,11 @@ const createOrderSuratSakit = async (req) => {
     await OrderSurat.create({
         episodeId: episode.uuid,
         suratsakitId: result.uuid,
+        status: 'confirm',
         jenisSurat: 'sakit',
         versiSurat: '1.0',
-        total: 0 // Assuming there's no cost for this type of order
+        total: 0
     });
-
-    await Episode.update({ status: 'in process' }, { where: { uuid: episode.uuid } });
 
     return result;
 };
@@ -139,6 +199,7 @@ const createOrderSuratRujukan = async (req) => {
     await OrderSurat.create({
         episodeId: episode.uuid,
         suratrujukanId: result.uuid,
+        status: 'confirm',
         jenisSurat: 'rujukan',
         versiSurat: '1.0',
         total: 0 // Assuming there's no cost for this type of order
@@ -153,6 +214,7 @@ const createOrderSuratRujukan = async (req) => {
 
 module.exports = {
     createOrderObat,
+    getALlOrderObatbyFarmasi,
     createOrderItem,
     createOrderSuratRujukan,
     createOrderSuratSakit,

@@ -2,7 +2,7 @@ const db = require('../../../db/index');
 const { DataTypes } = require('sequelize');
 const UserKlinik = require('../userKlinik/model')
 
-const SuratSakit = db.define('surat_sakit', {
+const SuratSakit = db.define('suratSakit', {
     uuid:{
         type: DataTypes.UUID,
         primaryKey: true,
@@ -33,11 +33,11 @@ const SuratSakit = db.define('surat_sakit', {
             notEmpty: true,
         }
     },
-    periodeStart: {
+    periode_start: {
         type: DataTypes.DATE,
         allowNull: false
     },
-    periodeEnd: {
+    periode_end: {
         type: DataTypes.DATE,
         allowNull: false
     },
@@ -47,7 +47,7 @@ const SuratSakit = db.define('surat_sakit', {
     }   
 }, {
     timestamps: true,
-    tableName: 'surat_sakit'
+    tableName: 'suratSakit'
 });
 
 SuratSakit.belongsTo(UserKlinik, {

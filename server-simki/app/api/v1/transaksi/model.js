@@ -16,7 +16,7 @@ const Transaksi = db.define('transaksi', {
             notEmpty: true
         }
     },
-    metodeBayar:{
+    metode_bayar:{
         type: DataTypes.ENUM( 'cash','bank','none' ),
         allownull: false,
         defaultValue: 'none',
@@ -40,15 +40,15 @@ const Transaksi = db.define('transaksi', {
         type: DataTypes.ENUM( 'Awaiting Payment','Completed' ),
         defaultValue: 'Awaiting Payment',
     },
-    orderobatId: {
+    orderObatId: {
         type: DataTypes.UUID,
         allowNull: true,
     },
-    ordersuratId: {
+    orderSuratId: {
         type: DataTypes.UUID,
         allowNull: true,
     },
-    orderprosedurId: {
+    orderProsedurId: {
         type: DataTypes.UUID,
         allowNull: true,
     },
@@ -67,19 +67,19 @@ const Transaksi = db.define('transaksi', {
 
 
 Transaksi.belongsTo(OrderSurat, {
-    foreignKey: 'ordersuratId',
+    foreignKey: 'orderSuratId',
     targetKey: 'uuid',
     as: 'ordersurat'
 });
 
 Transaksi.belongsTo(OrderObat, {
-    foreignKey: 'orderobatId',
+    foreignKey: 'orderObatId',
     targetKey: 'uuid',
     as: 'orderobat'
 });
 
 Transaksi.belongsTo(OrderProsedur, {
-    foreignKey: 'orderprosedurId',
+    foreignKey: 'orderProsedurId',
     targetKey: 'uuid',
     as: 'orderprosedur'
 });

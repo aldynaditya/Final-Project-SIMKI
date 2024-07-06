@@ -7,7 +7,7 @@ const getAllItem = async (req) => {
         include: [{
             model: UserKlinik,
             as: 'user',
-            attributes: ['name']
+            attributes: ['nama']
         }]
     });
 
@@ -17,7 +17,7 @@ const getAllItem = async (req) => {
             kode_item: item.kode_item,
             harga_item: item.harga_satuan_item,
             stok_item: item.stok,
-            createdBy: item.user.name
+            createdBy: item.user.nama
         };
     });
 
