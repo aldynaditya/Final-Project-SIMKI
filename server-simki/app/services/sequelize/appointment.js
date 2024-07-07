@@ -15,7 +15,8 @@ const getAllAppointment = async (req) => {
                 attributes: ['nik', 'nama_lengkap', 'tempat_lahir', 'tanggal_lahir', 'jenis_kelamin', 'gol_darah', 'suku_bangsa', 'alamat']
             },
             {
-                model: Schedule, 
+                model: Schedule,
+                as: 'schedule', 
                 attributes: ['hari', 'poli'],
                 include: {
                     model: UserKlinik,

@@ -9,7 +9,7 @@ const createTokenUser = (user) => {
 
 const createTokenPasien = (pasien) => {
     return {
-        name: pasien.nama_lengkap,
+        nama: pasien.nama_lengkap,
         pasienId: pasien.uuid,
         role: pasien.role,
         email: pasien.email,

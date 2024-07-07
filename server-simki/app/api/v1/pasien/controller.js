@@ -6,7 +6,9 @@ const {
     updateDataPasien,
     getDataPasien,
     createAppointment,
-    getpasienAppointments
+    getpasienAppointments,
+    getAllVisitHistory,
+    getDetailVisitHistory
 } = require('../../../services/sequelize/pasien');
 const { StatusCodes } = require('http-status-codes');
 
@@ -94,6 +96,30 @@ const detail = async (req, res, next) => {
     }
 };
 
+const history = async (req, res, next) => {
+    try {
+        const result = await getAllVisitHistory(req);
+
+    res.status(StatusCodes.OK).json({
+        data: result,
+    })
+    } catch (err) {
+        next(err);
+    }
+}
+
+const detailHistory = async (req, res, next) => {
+    try {
+        const result = await getDetailVisitHistory(req);
+
+    res.status(StatusCodes.OK).json({
+        data: result,
+    })
+    } catch (err) {
+        next(err);
+    }
+}
+
 module.exports = {
     signup,
     activeAccount,
@@ -101,5 +127,7 @@ module.exports = {
     update,
     detail,
     makeAppointment,
-    getmyAppointment
+    getmyAppointment,
+    history,
+    detailHistory
 }
