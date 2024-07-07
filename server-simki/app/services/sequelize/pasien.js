@@ -3,6 +3,8 @@ const DataPasien = require('../../api/v1/dataPasien/model');
 const Schedule = require('../../api/v1/schedule/model');
 const UserKlinik = require('../../api/v1/userKlinik/model');
 const Appointment = require('../../api/v1/appointment/model');
+const EMRPasien = require('../../api/v1/emrPasien/model');
+const Episode = require('../../api/v1/episode/model');
 const {
     BadRequestError,
     NotFoundError,
@@ -119,12 +121,13 @@ const getpasienAppointments = async (req) => {
                 where: { userId: user.id }
             },
             {
-                model: Schedule, // Include the Schedule model
-                attributes: ['hari', 'poli'], // Specify the attributes you want to include
+                model: Schedule,
+                as: 'schedule',
+                attributes: ['hari', 'poli'],
                 include: {
                     model: UserKlinik,
-                    attributes: ['nama'], // Include doctor's name
-                    as: 'user_klinik' // Use the alias for UserKlinik model
+                    attributes: ['nama'],
+                    as: 'user_klinik'
                 },
             },
         ]
@@ -231,6 +234,56 @@ const updateDataPasien = async (req) => {
     return updatedDataPasien;
 };
 
+const getAllVisitHistory = async (req) =>  {
+    const { role, pasienId } = req.pasien;
+    const query = req.query;
+
+    if (role !== 'pasien') {
+        throw new UnauthorizedError('User role is not authorized to fetch EMRPasien.');
+    }
+
+    let whereClause = {
+        '$EMRPasien.appointment.datapasien.pasien.uuid$': pasienId,
+        ...query,
+    };
+
+    const history = await Episode.findAll({
+        include: [
+            {
+                model: EMRPasien,
+                include:
+                {
+                    model: Appointment,
+                    as: 'appointment',
+                    include: [
+                        {
+                            model: DataPasien,
+                            as: 'datapasien',
+                            include: {
+                                model: Pasien
+                            }
+                        },
+                        {
+                            model: Schedule,
+                            as: 'schedule',
+                            include: {
+                                model: UserKlinik,
+                                as: 'user_klinik',
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        where: whereClause
+    });
+
+    return history;
+};
+
+const getDetailVisitHistory = async (req) =>  {
+
+};
 
 module.exports = {
     signupPasien,
@@ -239,5 +292,7 @@ module.exports = {
     getDataPasien,
     updateDataPasien,
     createAppointment,
-    getpasienAppointments
+    getpasienAppointments,
+    getAllVisitHistory,
+    getDetailVisitHistory
 };
