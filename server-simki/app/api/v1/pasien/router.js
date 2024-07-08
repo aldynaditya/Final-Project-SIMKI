@@ -25,6 +25,6 @@ router.patch('/pasien',authenticatePasien, update);
 router.post('/appointment', authenticatePasien, makeAppointment);
 router.get('/appointment', authenticatePasien, getmyAppointment);
 router.get('/visit-history', authenticatePasien, history);
-router.get('/visit-details', authenticatePasien, detailHistory);
+router.get('/visit-details/:id', authenticatePasien, detailHistory);
 
 module.exports = router;
