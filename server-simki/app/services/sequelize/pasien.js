@@ -5,6 +5,13 @@ const UserKlinik = require('../../api/v1/userKlinik/model');
 const Appointment = require('../../api/v1/appointment/model');
 const EMRPasien = require('../../api/v1/emrPasien/model');
 const Episode = require('../../api/v1/episode/model');
+const OrderObat = require('../../api/v1/orderObat/model');
+const OrderProsedur = require('../../api/v1/orderProsedur/model');
+const OrderSurat = require('../../api/v1/orderSurat/model');
+const Obat = require('../../api/v1/obat/model');
+const Item = require('../../api/v1/item/model');
+const SuratSakit = require('../../api/v1/suratSakit/model');
+const SuratRujukan = require('../../api/v1/suratRujukan/model');
 const {
     BadRequestError,
     NotFoundError,
@@ -150,7 +157,7 @@ const getpasienAppointments = async (req) => {
 
 const createAppointment = async (req, res) => {
     const { tanggal, keluhan, penjamin, dokter, poli } = req.body;
-    const { id: pasienId } = req.pasien;
+    const { pasienId } = req.pasien;
     const dayOfWeek = getDayOfWeek(tanggal);
 
     const schedule = await Schedule.findOne({
@@ -239,7 +246,7 @@ const getAllVisitHistory = async (req) =>  {
     const query = req.query;
 
     if (role !== 'pasien') {
-        throw new UnauthorizedError('User role is not authorized to fetch EMRPasien.');
+        throw new UnauthorizedError('Akses Ditolak');
     }
 
     let whereClause = {
@@ -278,11 +285,164 @@ const getAllVisitHistory = async (req) =>  {
         where: whereClause
     });
 
-    return history;
+    const result = history.map(episode => {
+        const history = episode.emrPasien.appointment;
+        
+        return{
+            id: episode.uuid,
+            tanggal: history.tanggal,
+            dokter: history.schedule.user_klinik.nama,
+            poli: history.schedule.poli,
+            keterangan: history.keterangan,
+        }
+    });
+
+    return result;
 };
 
 const getDetailVisitHistory = async (req) =>  {
+    const { role, pasienId } = req.pasien;
+    const { id } = req.params;
 
+    if (role !== 'pasien') {
+        throw new UnauthorizedError('Akses Ditolak');
+    }
+
+    let whereClause = {
+        uuid: id,
+        '$EMRPasien.appointment.datapasien.pasien.uuid$': pasienId
+    };
+
+    const history = await Episode.findOne({
+        include: [
+            {
+                model: EMRPasien,
+                include:
+                {
+                    model: Appointment,
+                    as: 'appointment',
+                    include: [
+                        {
+                            model: DataPasien,
+                            as: 'datapasien',
+                            include: {
+                                model: Pasien
+                            }
+                        },
+                        {
+                            model: Schedule,
+                            as: 'schedule',
+                            include: {
+                                model: UserKlinik,
+                                as: 'user_klinik',
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        where: whereClause
+    });
+
+    if (!history) {
+        throw new NotFoundError('Detail tidak ditemukan');
+    }
+
+    const historyDetail = history.emrPasien.appointment;
+    const episodeId = history.uuid;
+
+    const ordersObat = await OrderObat.findAll({
+        where: { episodeId },
+        include: [
+            {
+                model: Episode,
+                as: 'episode',
+                include: {
+                    model: EMRPasien,
+                    include: {
+                        model: Appointment,
+                        include: {
+                            model: DataPasien,
+                            as: 'datapasien',
+                            attributes: ['nama_lengkap']
+                        }
+                    }
+                }
+            },
+            {
+                model: Obat,
+                as: 'dataobat'
+            }
+        ]
+    });
+
+    const ordersSurat = await OrderSurat.findAll({
+        where: { episodeId },
+        include: [
+            {
+                model: Episode,
+                as: 'episode',
+                include: {
+                    model: EMRPasien,
+                    include: {
+                        model: Appointment,
+                        include: {
+                            model: DataPasien,
+                            as: 'datapasien',
+                            attributes: ['nama_lengkap']
+                        }
+                    }
+                }
+            },
+            {
+                model: SuratSakit,
+                as: 'suratsakit'
+            },
+            {
+                model: SuratRujukan,
+                as: 'suratrujukan'
+            }
+        ]
+    });
+
+    const ordersProsedur = await OrderProsedur.findAll({
+        where: { episodeId },
+        include: [
+            {
+                model: Episode,
+                as: 'episode',
+                include: {
+                    model: EMRPasien,
+                    include: {
+                        model: Appointment,
+                        include: {
+                            model: DataPasien,
+                            as: 'datapasien',
+                            attributes: ['nama_lengkap']
+                        }
+                    }
+                }
+            },
+            {
+                model: Item,
+                as: 'dataitem'
+            }
+        ]
+    });
+
+    const result = {
+        tanggal: historyDetail.tanggal,
+        dokter: historyDetail.schedule.user_klinik.nama,
+        poli: historyDetail.schedule.poli,
+        tindakan: history.tindakan,
+        orders: {
+            obat: ordersObat.map(order => order.dataobat.nama_obat),
+            surat: ordersSurat,
+            prosedur: ordersProsedur
+        }
+    };
+
+    return result;
 };
 
 module.exports = {

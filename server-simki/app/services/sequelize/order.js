@@ -14,6 +14,8 @@ const Obat = require('../../api/v1/obat/model');
 const Item = require('../../api/v1/item/model');
 const { BadRequestError, NotFoundError, UnauthorizedError } = require('../../errors');
 
+
+
 const createOrderObat = async (req) => {
     const { id } = req.params;
     const { obatItems } = req.body;
@@ -50,12 +52,77 @@ const createOrderObat = async (req) => {
         results.push(result);
     }
 
-    return { results, totalOrder };
+    const detailedResults = await OrderObat.findAll({
+        where: {
+            uuid: results.map(result => result.uuid)
+        },
+        include: [
+            {
+                model: Obat,
+                as: 'dataobat',
+                attributes: ['nama_obat','kode_obat','satuan','harga_satuan_obat',]
+            }
+        ]
+    });
+
+    return {
+        totalOrder,
+        orders: detailedResults
+    };
 };
 
-const getOrderDetailInformation = async() => {
+const getOrderDetailInformation = async(req) => {
+    const { id } = req.params;
 
-}
+    const episode = await Episode.findOne({
+        include: [
+            {
+                model: EMRPasien,
+                include:
+                {
+                    model: Appointment,
+                    as: 'appointment',
+                    include: [
+                        {
+                            model: DataPasien,
+                            as: 'datapasien',
+                        },
+                        {
+                            model: Schedule,
+                            as: 'schedule',
+                            include: {
+                                model: UserKlinik,
+                                as: 'user_klinik',
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        where: { uuid: id}
+    });
+
+    if (!episode) {
+        throw new NotFoundError('Detail tidak ditemukan');
+    }
+
+    const emr = episode.emrPasien
+    const detail = emr.appointment;
+    const datapasien = detail.datapasien;
+
+    const result = {
+        noEMR: emr.noEMR,
+        tanggal: detail.tanggal,
+        jam: episode.createdAt,
+        pemeriksa: detail.schedule.user_klinik.nama,
+        namaPasien: datapasien.nama_lengkap,
+        nomorFaktur: episode.invoiceNumber,
+        poli: detail.schedule.poli,
+    };
+
+    return result;
+};
+
 
 const getALlOrderObatbyFarmasi = async() => {
     const orderObat = await OrderObat.findAll({
@@ -74,6 +141,7 @@ const getALlOrderObatbyFarmasi = async() => {
                         },
                         {
                             model: Schedule,
+                            as: 'schedule',
                             include: {
                                 model: UserKlinik,
                                 as: 'user_klinik',
@@ -92,7 +160,7 @@ const getALlOrderObatbyFarmasi = async() => {
     const result = orderObat.map(orderobat => {
         const dataobat = orderobat.dataobat;
         const episode = orderobat.episode;
-        const emr = episode.emr_pasien;
+        const emr = episode.emrPasien;
         const appointment = emr.appointment;
         const datapasien = appointment.datapasien;
         const schedule = appointment.schedule;
@@ -148,9 +216,23 @@ const createOrderItem = async (req) => {
         results.push(result);
     }
 
-    await Episode.update({ status: 'in process' }, { where: { uuid: episode.uuid } });
+    const detailedResults = await OrderProsedur.findAll({
+        where: {
+            uuid: results.map(result => result.uuid)
+        },
+        include: [
+            {
+                model: Item,
+                as: 'dataitem',
+                attributes: ['nama_item','kode_item','satuan','harga_satuan_item']
+            }
+        ]
+    });
 
-    return { results, totalOrder };
+    return {
+        totalOrder,
+        orders: detailedResults
+    };
 };
 
 const createOrderSuratSakit = async (req) => {
@@ -215,6 +297,7 @@ const createOrderSuratRujukan = async (req) => {
 module.exports = {
     createOrderObat,
     getALlOrderObatbyFarmasi,
+    getOrderDetailInformation,
     createOrderItem,
     createOrderSuratRujukan,
     createOrderSuratSakit,
