@@ -348,7 +348,6 @@ const getDetailVisitHistory = async (req) =>  {
         throw new NotFoundError('Detail tidak ditemukan');
     }
 
-    const historyDetail = history.emrPasien.appointment;
     const episodeId = history.uuid;
 
     const ordersObat = await OrderObat.findAll({
@@ -372,35 +371,6 @@ const getDetailVisitHistory = async (req) =>  {
             {
                 model: Obat,
                 as: 'dataobat'
-            }
-        ]
-    });
-
-    const ordersSurat = await OrderSurat.findAll({
-        where: { episodeId },
-        include: [
-            {
-                model: Episode,
-                as: 'episode',
-                include: {
-                    model: EMRPasien,
-                    include: {
-                        model: Appointment,
-                        include: {
-                            model: DataPasien,
-                            as: 'datapasien',
-                            attributes: ['nama_lengkap']
-                        }
-                    }
-                }
-            },
-            {
-                model: SuratSakit,
-                as: 'suratsakit'
-            },
-            {
-                model: SuratRujukan,
-                as: 'suratrujukan'
             }
         ]
     });
@@ -430,16 +400,18 @@ const getDetailVisitHistory = async (req) =>  {
         ]
     });
 
+    const historyDetail = history.emrPasien.appointment;
+
     const result = {
         tanggal: historyDetail.tanggal,
         dokter: historyDetail.schedule.user_klinik.nama,
         poli: historyDetail.schedule.poli,
-        tindakan: history.tindakan,
+        diagnosis: history.assessment,
         orders: {
             obat: ordersObat.map(order => order.dataobat.nama_obat),
-            surat: ordersSurat,
-            prosedur: ordersProsedur
-        }
+            prosedur: ordersProsedur.map(order => order.dataitem.nama_item),
+        },
+        tindakan: history.plan
     };
 
     return result;

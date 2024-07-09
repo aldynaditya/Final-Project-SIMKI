@@ -12,9 +12,13 @@ const {
 const {
     generateInvoiceNumber
 } = require('./invoiceNumberGenerator');
+const {
+    getNextVersion
+} = require('./letterVersion')
 
 module.exports = {
     getDayOfWeek,
+    getNextVersion,
     generateInvoiceNumber,
     createJWT,
     isTokenValid,
