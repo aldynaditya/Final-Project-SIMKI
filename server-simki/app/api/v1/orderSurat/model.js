@@ -27,9 +27,7 @@ const OrderSurat = db.define('orderSurat', {
     versi_surat:{
         type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-            notEmpty: true,
-        }
+        defaultValue: 'v1.0'
     },
     status: {
         type: DataTypes.ENUM('updated','not confirm', 'in process','confirm'),
@@ -37,11 +35,11 @@ const OrderSurat = db.define('orderSurat', {
     },
     suratSakitId: {
         type: DataTypes.UUID,
-        allowNull: false,
+        allowNull: true,
     },
     suratRujukanId: {
         type: DataTypes.UUID,
-        allowNull: false,
+        allowNull: true,
     },
     episodeId: {
         type: DataTypes.UUID,

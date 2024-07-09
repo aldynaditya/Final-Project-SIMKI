@@ -12,7 +12,12 @@ const SuratSakit = require('../../api/v1/suratSakit/model');
 const SuratRujukan = require('../../api/v1/suratRujukan/model');
 const Obat = require('../../api/v1/obat/model');
 const Item = require('../../api/v1/item/model');
-const { BadRequestError, NotFoundError, UnauthorizedError } = require('../../errors');
+const { 
+    BadRequestError, 
+    NotFoundError, 
+    UnauthorizedError 
+} = require('../../errors');
+const { getNextVersion } = require('../../utils');
 
 
 
@@ -123,7 +128,6 @@ const getOrderDetailInformation = async(req) => {
     return result;
 };
 
-
 const getALlOrderObatbyFarmasi = async() => {
     const orderObat = await OrderObat.findAll({
         include: [
@@ -224,7 +228,7 @@ const createOrderItem = async (req) => {
             {
                 model: Item,
                 as: 'dataitem',
-                attributes: ['nama_item','kode_item','satuan','harga_satuan_item']
+                attributes: ['nama_item','kode_item','harga_satuan_item']
             }
         ]
     });
@@ -237,30 +241,47 @@ const createOrderItem = async (req) => {
 
 const createOrderSuratSakit = async (req) => {
     const { id } = req.params;
-    const { umur, pekerjaan, diagnosis, periodeStart, periodeEnd } = req.body;
+    const { umur, pekerjaan, diagnosis, periode_start, periode_end } = req.body;
 
     const episode = await Episode.findByPk(id);
     if (!episode) throw new NotFoundError('Episode tidak ditemukan');
 
-    const result = await SuratSakit.create({
+    const suratSakit = await SuratSakit.create({
         umur,
         pekerjaan,
         diagnosis,
-        periodeStart,
-        periodeEnd,
+        periode_start,
+        periode_end,
         userId: req.user.id
     });
 
-    await OrderSurat.create({
+    console.log('SuratSakit created:', suratSakit.uuid);
+
+    const versi_surat = await getNextVersion(SuratSakit, 'suratsakitId', suratSakit.uuid);
+
+    const orderSurat = await OrderSurat.create({
         episodeId: episode.uuid,
-        suratsakitId: result.uuid,
+        suratSakitId: suratSakit.uuid,
         status: 'confirm',
-        jenisSurat: 'sakit',
-        versiSurat: '1.0',
+        jenis_surat: 'sakit',
+        versi_surat,
         total: 0
     });
 
-    return result;
+    console.log('OrderSurat created:', orderSurat);
+
+    const ordersuratWithDetails = await OrderSurat.findByPk(orderSurat.uuid, {
+        include: [
+            { 
+                model: SuratSakit, 
+                as: 'suratsakit' 
+            },
+        ]
+    });
+
+    return {
+        orderSurat: ordersuratWithDetails
+    };
 };
 
 const createOrderSuratRujukan = async (req) => {
@@ -278,19 +299,20 @@ const createOrderSuratRujukan = async (req) => {
         keterangan
     });
 
+    const versiSurat = await getNextVersion(SuratRujukan, 'suratrujukanId', result.uuid);
+
     await OrderSurat.create({
         episodeId: episode.uuid,
         suratrujukanId: result.uuid,
         status: 'confirm',
         jenisSurat: 'rujukan',
-        versiSurat: '1.0',
-        total: 0 // Assuming there's no cost for this type of order
+        versiSurat,
+        total: 0 
     });
-
-    await Episode.update({ status: 'in process' }, { where: { uuid: episode.uuid } });
 
     return result;
 };
+
 
 
 

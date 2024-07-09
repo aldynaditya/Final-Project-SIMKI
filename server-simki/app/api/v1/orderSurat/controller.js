@@ -1,7 +1,8 @@
 const { StatusCodes } = require('http-status-codes');
 const { 
     createOrderSuratRujukan,
-    createOrderSuratSakit
+    createOrderSuratSakit,
+    updateSuratSakit
 } = require('../../../services/sequelize/order');
 
 const ordersuratsakit = async (req, res, next) => {
@@ -28,7 +29,20 @@ const ordersuratrujukan = async (req, res, next) => {
     }
 };
 
+const updatesuratsakit = async (req, res, next) => {
+    try {
+        const result = await updateSuratSakit(req);
+        
+        res.status(StatusCodes.CREATED).json({
+            data: result,
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
 module.exports = {
     ordersuratrujukan,
-    ordersuratsakit
+    ordersuratsakit,
+    updatesuratsakit
 };
