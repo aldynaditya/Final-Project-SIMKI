@@ -92,27 +92,6 @@ const getOrderDetails = async (req) => {
         ]
     });
 
-    const ordersSurat = await OrderSurat.findAll({
-        where: { episodeId },
-        include: [
-            {
-                model: Episode,
-                as: 'episode',
-                include: {
-                    model: EMRPasien,
-                    include: {
-                        model: Appointment,
-                        include: {
-                            model: DataPasien,
-                            as: 'datapasien',
-                            attributes: ['nama_lengkap']
-                        }
-                    }
-                }
-            }
-        ]
-    });
-
     const ordersProsedur = await OrderProsedur.findAll({
         where: { episodeId },
         include: [
@@ -135,14 +114,15 @@ const getOrderDetails = async (req) => {
     });
 
     const result = {
+        transaksi,
         ordersObat,
-        ordersSurat,
         ordersProsedur
     };
 
     return result;
 };
 
+// ini masih perlu perbaikan, karena klo ada dua macam order masih ga bisa jumlahin
 const updateTransaction = async (req) => {
     const { id } = req.params;
     const { metodeBayar, diskon, keterangan } = req.body;

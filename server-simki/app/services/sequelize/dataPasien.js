@@ -32,9 +32,33 @@ const createDataPasien = async (req) => {
 
 const getOneDataPasien = async (req) => {
     const { id } = req.params;
-    const result = await DataPasien.findOne({ where: {uuid: id} });
+    const { name, nik } = req.body;
 
-    if (!result) throw new NotFoundError(`Tidak ada DataPasien dengan id :  ${id}`);
+    const whereCondition = [];
+
+    if (id) {
+        whereCondition.push({ uuid: id });
+    }
+
+    if (name) {
+        whereCondition.push({ nama_lengkap: { [Op.like]: `%${name}%` } });
+    }
+
+    if (nik) {
+        whereCondition.push({ nik: { [Op.like]: `%${nik}%` } });
+    }
+
+    if (whereCondition.length === 0) {
+        throw new Error('At least one search parameter must be provided');
+    }
+
+    const result = await DataPasien.findOne({
+        where: {
+            [Op.or]: whereCondition
+        }
+    });
+
+    if (!result) throw new NotFoundError(`Tidak ada DataPasien dengan id/nama/nik yang sesuai`);
 
     return result;
 };
