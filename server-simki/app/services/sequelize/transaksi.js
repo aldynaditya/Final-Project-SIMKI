@@ -125,7 +125,7 @@ const getOrderDetails = async (req) => {
 // ini masih perlu perbaikan, karena klo ada dua macam order masih ga bisa jumlahin
 const updateTransaction = async (req) => {
     const { id } = req.params;
-    const { metodeBayar, diskon, keterangan } = req.body;
+    const { metode_bayar, diskon, keterangan } = req.body;
 
     const transaction = await Transaksi.findByPk(id);
     if (!transaction) throw new NotFoundError('Transaction not found');
@@ -133,7 +133,7 @@ const updateTransaction = async (req) => {
     const totalAfterDiscount = transaction.total - (transaction.total * (diskon / 100));
 
     const transaksi = await Transaksi.update({
-        metodeBayar,
+        metode_bayar,
         diskon,
         keterangan,
         total: totalAfterDiscount,

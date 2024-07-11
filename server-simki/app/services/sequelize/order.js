@@ -14,8 +14,7 @@ const Obat = require('../../api/v1/obat/model');
 const Item = require('../../api/v1/item/model');
 const { 
     BadRequestError, 
-    NotFoundError, 
-    UnauthorizedError 
+    NotFoundError,
 } = require('../../errors');
 const { getNextVersion } = require('../../utils');
 

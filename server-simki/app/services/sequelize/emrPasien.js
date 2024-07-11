@@ -32,6 +32,8 @@ const getAllEMRPasien = async ( req ) => {
         };
     } else if (role === 'perawat') {
         whereClause = { ...query };
+    } else if (role === 'resepsionis') {
+        whereClause = { ...query };
     } else {
         throw new UnauthorizedError('User role is not authorized to fetch EMRPasien.');
     }

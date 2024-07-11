@@ -15,11 +15,15 @@ const {
 const {
     getNextVersion
 } = require('./letterVersion')
+const {
+    generateNoEMR
+} = require('./emrNumber')
 
 module.exports = {
     getDayOfWeek,
     getNextVersion,
     generateInvoiceNumber,
+    generateNoEMR,
     createJWT,
     isTokenValid,
     createTokenUser,
