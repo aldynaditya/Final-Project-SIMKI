@@ -1,11 +1,13 @@
 const { StatusCodes } = require('http-status-codes');
 const { 
     getAllEMRPasien,
+    getAllMedicalRecord,
     createVitalSignbyPerawat,
     updateEpisode,
     createEpisode,
     updateAction,
-    finishOrder
+    finishOrder,
+    findOneMedicalRecord
 } = require('../../../services/sequelize/emrPasien');
 
 const index = async (req, res, next) => {
@@ -80,9 +82,35 @@ const order = async (req, res, next) => {
     }
 };
 
+const indexformedicalrecord = async (req, res, next) => {
+    try {
+        const result = await getAllMedicalRecord(req);
+
+    res.status(StatusCodes.OK).json({
+        data: result,
+    });
+    } catch (err) {
+        next(err);
+    }
+};
+
+const findformedicalrecord = async (req, res, next) => {
+    try {
+        const result = await findOneMedicalRecord(req);
+
+    res.status(StatusCodes.OK).json({
+        data: result,
+    });
+    } catch (err) {
+        next(err);
+    }
+};
+
 
 module.exports = {
     index,
+    indexformedicalrecord,
+    findformedicalrecord,
     vitalsign,
     followupepisode,
     episode,

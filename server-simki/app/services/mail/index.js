@@ -13,14 +13,15 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-const otpMail = async (email, data) => {
+const otpMail = async (email, data, templateName = 'activation') => {
     try {
-        let template = fs.readFileSync('app/views/email/otp.html', 'utf8');
+        let templatePath = `app/views/email/${templateName}.html`;
+        let template = fs.readFileSync(templatePath, 'utf8');
 
         let message = {
             from: gmail,
             to: email,
-            subject: 'Otp for registration is: ',
+            subject: templateName === 'otp' ? 'Otp for registration' : 'Password Reset Request',
             html: Mustache.render(template, data),
         };
 

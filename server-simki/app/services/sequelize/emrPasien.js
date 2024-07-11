@@ -200,8 +200,125 @@ const finishOrder = async (req) => {
     return transaksi;
 };
 
+const getAllMedicalRecord = async (req) => {
+    const { id: noEMR } = req.params;
+
+    const emr = await EMRPasien.findAll({
+        where: { noEMR },
+        include: [
+            {
+                model: Appointment,
+                as: 'appointment',
+                include: [
+                    {
+                        model: DataPasien,
+                        as: 'datapasien',
+                    },
+                    {
+                        model: Schedule,
+                        as: 'schedule',
+                        include: {
+                            model: UserKlinik,
+                            as: 'user_klinik',
+                        }
+                    }
+                ]
+            },
+            {
+                model: Episode
+            }
+        ],
+    });
+
+    if (emr.length === 0) {
+        throw new NotFoundError(`Tidak ada rekam medis dengan noEMR: ${noEMR}`);
+    }
+
+    const result = emr.map(emr => {
+        const appointment = emr.appointment;
+        const episode= emr.episodes[0]
+        return {
+            tanggal: appointment.tanggal,
+            pemeriksa: appointment.schedule.user_klinik.nama,
+            subjective: episode.subjective,
+            objective: episode.objective,
+            assessment: episode.assessment,
+            plan: episode.plan,
+            tindakan: episode.tindakan,
+        };
+    });
+
+    return result;
+};
+
+const findOneMedicalRecord = async (req) => {
+    const { id: uuid } = req.params;
+
+    const emr = await EMRPasien.findOne({
+        where: { uuid },
+        include: [
+            {
+                model: Appointment,
+                as: 'appointment',
+                include: [
+                    {
+                        model: DataPasien,
+                        as: 'datapasien',
+                    },
+                    {
+                        model: Schedule,
+                        as: 'schedule',
+                        include: {
+                            model: UserKlinik,
+                            as: 'user_klinik',
+                        }
+                    }
+                ]
+            },
+            {
+                model: Episode
+            }
+        ],
+    });
+
+    if (!emr) {
+        throw new NotFoundError(`Tidak ada rekam medis dengan uuid: ${uuid}`);
+    }
+
+    const appointment = emr.appointment;
+    const episode = emr.episodes[0]; // Ambil episode pertama, bisa disesuaikan sesuai kebutuhan
+
+    const result = {
+        noEMR: emr.noEMR,
+        nama_pasien: appointment.datapasien.nama_lengkap,
+        tanggal_lahir: appointment.datapasien.tanggal_lahir,
+        jenis_kelamin: appointment.datapasien.jenis_kelamin,
+        gol_darah: appointment.datapasien.gol_darah,
+        alergi: episode.alergi,
+        tangga: appointment.tanggal,
+        penjamin: appointment.penjamin,
+        pemeriksa: appointment.schedule.user_klinik.nama,
+        poli: appointment.schedule.poli,
+        riwayatPenyakit: episode.riwayatpenyakit,
+        subjective: episode.subjective,
+        td: episode.TD,
+        indeks: episode.indeks,
+        detak: episode.detak,
+        suhu: episode.suhu,
+        napas: episode.napas,
+        objective: episode.objective,
+        assessment: episode.assessment,
+        plan: episode.plan,
+        tindakan: episode.tindakan,
+    };
+
+    return result;
+};
+
 module.exports = {
     getAllEMRPasien,
+    getAllMedicalRecord,
+    findOneMedicalRecord,
     createVitalSignbyPerawat,
     updateEpisode,
     createEpisode,

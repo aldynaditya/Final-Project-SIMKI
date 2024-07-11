@@ -16,7 +16,21 @@ const createTokenPasien = (pasien) => {
     };
 };
 
+const createTokenPassword = (pasien) => {
+    return {
+        pasienId: pasien.uuid,
+        email: pasien.email,
+        password: pasien.password,
+        role: pasien.role,
+        status: pasien.status,
+        otp: pasien.otp,
+        createdAt: pasien.createdAt,
+        updatedAt: pasien.updatedAt
+    };
+};
+
 module.exports = { 
     createTokenUser, 
-    createTokenPasien
+    createTokenPasien,
+    createTokenPassword
 };
