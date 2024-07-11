@@ -291,7 +291,7 @@ const createOrderSuratRujukan = async (req) => {
     const episode = await Episode.findByPk(id);
     if (!episode) throw new NotFoundError('Episode tidak ditemukan');
 
-    const result = await SuratRujukan.create({
+    const suratRujukan = await SuratRujukan.create({
         tujuan,
         tempat_tujuan,
         diagnosis,
@@ -299,18 +299,27 @@ const createOrderSuratRujukan = async (req) => {
         keterangan
     });
 
-    const versiSurat = await getNextVersion(SuratRujukan, 'suratrujukanId', result.uuid);
-
-    await OrderSurat.create({
+    const orderSurat = await OrderSurat.create({
         episodeId: episode.uuid,
-        suratrujukanId: result.uuid,
+        suratRujukanId: suratRujukan.uuid,
         status: 'confirm',
-        jenisSurat: 'rujukan',
-        versiSurat,
-        total: 0 
+        jenis_surat: 'rujukan',
+        versi_surat: 'v1.0',
+        total: 0
     });
 
-    return result;
+    const ordersuratWithDetails = await OrderSurat.findByPk(orderSurat.uuid, {
+        include: [
+            { 
+                model: SuratRujukan, 
+                as: 'suratrujukan' 
+            },
+        ]
+    });
+
+    return {
+        orderSurat: ordersuratWithDetails
+    };
 };
 
 

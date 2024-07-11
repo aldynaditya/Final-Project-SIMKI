@@ -18,6 +18,7 @@ const {
     UnauthorizedError 
 } = require('../../errors');
 const { generateInvoiceNumber } = require('../../utils');
+const validTindakanValues = ['obat', 'prosedur', 'surat'];
 
 const getAllEMRPasien = async ( req ) => {
     const { role, nama } = req.user;
@@ -147,13 +148,13 @@ const updateAction = async (req) => {
     const { id } = req.params;
     const { tindakan } = req.body;
 
+    if (!Array.isArray(tindakan) || tindakan.some(item => !validTindakanValues.includes(item))) throw new BadRequestError(`the values is wrong`);
+
     const previousEpisode = await Episode.findByPk(id);
     if (!previousEpisode) throw new NotFoundError('Previous episode not found');
 
-    // Menghapus nilai "none" dari episode sebelumnya jika ada
     const filteredTindakan = previousEpisode.tindakan.filter(item => item !== 'none');
 
-    // Menghapus duplikat dan menggabungkan dengan nilai tindakan baru
     const updatedTindakan = [...new Set([...filteredTindakan, ...tindakan])];
 
     await previousEpisode.update({
@@ -179,19 +180,6 @@ const finishOrder = async (req) => {
             as: 'dataitem',
         }
     });
-    const ordersSurat = await OrderSurat.findAll({
-        where: { episodeId: id },
-        include: [
-            {
-                model: SuratSakit,
-                as: 'suratsakit',
-            },
-            {
-                model: SuratRujukan,
-                as: 'suratrujukan',
-            },
-        ]
-    });
 
     if (!ordersObat.length && !ordersProsedur.length && !ordersSurat.length) {
         throw new NotFoundError('No orders found for the provided episodeId');
@@ -200,7 +188,6 @@ const finishOrder = async (req) => {
     let total = 0;
     ordersObat.forEach(order => total += parseFloat(order.total));
     ordersProsedur.forEach(order => total += parseFloat(order.total));
-    ordersSurat.forEach(order => total += parseFloat(order.total));
 
     const transaksi = await Transaksi.create({
         episodeId: id,
