@@ -2,11 +2,13 @@ const express = require('express');
 const router = express.Router();
 const { 
     index, 
+    indexformedicalrecord,
     vitalsign,
     episode,
     followupepisode,
     action,
     order,
+    findformedicalrecord,
 } = require('./controller');
 const { 
     authenticateUser, 
@@ -19,6 +21,8 @@ router.post('/emr/:id/doctor/new', authenticateUser, authorizeRoles('dokter'), e
 router.patch('/emr/:id/doctor/follow-up', authenticateUser, authorizeRoles('dokter'), followupepisode);
 router.patch('/emr/:id/update-action', authenticateUser, authorizeRoles('dokter'), action);
 router.post('/emr/:id/finish-order', authenticateUser, authorizeRoles('dokter'), order);
+router.get('/medical-records/:id', authenticateUser, authorizeRoles('dokter'), indexformedicalrecord);
+router.get('/medical-record/:id', authenticateUser, authorizeRoles('dokter'), findformedicalrecord);
 
 
 module.exports = router;

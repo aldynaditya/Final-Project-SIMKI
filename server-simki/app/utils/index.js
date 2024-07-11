@@ -5,6 +5,7 @@ const {
 const {
     createTokenUser,
     createTokenPasien,
+    createTokenPassword,
 } = require('./createTokenUser');
 const {
     getDayOfWeek
@@ -28,4 +29,5 @@ module.exports = {
     isTokenValid,
     createTokenUser,
     createTokenPasien,
+    createTokenPassword
 };

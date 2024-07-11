@@ -8,7 +8,9 @@ const {
     createAppointment,
     getpasienAppointments,
     getAllVisitHistory,
-    getDetailVisitHistory
+    getDetailVisitHistory,
+    sendResetPasswordEmail,
+    resetPassword
 } = require('../../../services/sequelize/pasien');
 const { StatusCodes } = require('http-status-codes');
 
@@ -47,6 +49,30 @@ const signin = async (req, res, next) => {
         next(err);
     }
 };
+
+const forgotpassword = async (req, res, next) => {
+    try {
+        const result = await sendResetPasswordEmail(req);
+
+    res.status(StatusCodes.OK).json({
+        data: result,
+    })
+    } catch (err) {
+        next(err);
+    }
+}
+
+const resetpassword = async (req, res, next) => {
+    try {
+        const result = await resetPassword(req);
+
+    res.status(StatusCodes.OK).json({
+        data: result,
+    })
+    } catch (err) {
+        next(err);
+    }
+}
 
 const getmyAppointment = async (req, res, next) => {
     try {
@@ -124,6 +150,8 @@ module.exports = {
     signup,
     activeAccount,
     signin,
+    forgotpassword,
+    resetpassword,
     update,
     detail,
     makeAppointment,

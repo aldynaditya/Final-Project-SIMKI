@@ -18,7 +18,9 @@ const {
     UnauthorizedError,
 } = require('../../errors');
 const { 
-    createTokenPasien, 
+    createTokenPasien,
+    createTokenPassword,
+    isTokenValid, 
     createJWT,
     getDayOfWeek
 } = require('../../utils');
@@ -63,7 +65,8 @@ const signupPasien = async (req) => {
         });
     }
 
-    await otpMail(email, result);
+    const data = { otp: result.otp };
+    await otpMail(email, data, 'otp');
 
     delete result.dataValues.password;
     delete result.dataValues.otp;
@@ -117,6 +120,53 @@ const signinPasien = async (req) => {
     return token;
 };
 
+const sendResetPasswordEmail = async (req, res) => {
+    const { email } = req.body;
+
+    const user = await Pasien.findOne({ where: { email } });
+
+    if (!user) throw new NotFoundError('Partisipan belum terdaftar');
+
+    const token = createJWT({ payload: createTokenPassword(user) });
+
+    const resetUrl = `http://localhost:9000/reset-password?token=${token}`; // Use localhost for testing
+
+    const data = { resetUrl };
+
+    await otpMail(email, data, 'reset-password'); // Specify the template for reset password
+
+    return { message: 'Password reset email sent', resetUrl };
+};
+
+const resetPassword = async (req) => {
+    const { token, newPassword, confirmPassword } = req.body;
+
+    // Verifikasi bahwa password baru cocok dengan konfirmasi password
+    if (newPassword !== confirmPassword) {
+        throw new BadRequestError('Password tidak cocok');
+    }
+
+    let payload;
+    try {
+        payload = isTokenValid({ token });
+    } catch (error) {
+        throw new BadRequestError('Token tidak valid atau telah kedaluwarsa');
+    }
+
+    const { email } = payload;
+
+    const user = await Pasien.findOne({ where: { email } });
+
+    if (!user) {
+        throw new NotFoundError('Partisipan tidak ditemukan');
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    return { message: 'Password berhasil diubah' };
+};
+
 const getpasienAppointments = async (req) => {
     const user = req.pasien;
 
@@ -125,7 +175,7 @@ const getpasienAppointments = async (req) => {
             {
                 model: DataPasien,
                 as: 'datapasien',
-                where: { userId: user.id }
+                where: { userId: user.pasienId }
             },
             {
                 model: Schedule,
@@ -199,7 +249,7 @@ const createAppointment = async (req, res) => {
 };
 
 const getDataPasien = async (req) => {
-    const { id: pasienId } = req.pasien;
+    const { pasienId } = req.pasien;
 
     const dataPasien = await DataPasien.findOne({
         where: { userId: pasienId }
@@ -214,7 +264,7 @@ const getDataPasien = async (req) => {
 
 const updateDataPasien = async (req) => {
     const { nik, nama_lengkap, tempat_lahir, tanggal_lahir, jenis_kelamin, gol_darah, suku_bangsa, alamat } = req.body;
-    const { id: pasienId } = req.pasien;
+    const { pasienId } = req.pasien;
 
     const [updatedRows] = await DataPasien.update(
         {
@@ -421,6 +471,8 @@ module.exports = {
     signupPasien,
     activatePasien,
     signinPasien,
+    sendResetPasswordEmail,
+    resetPassword,
     getDataPasien,
     updateDataPasien,
     createAppointment,
