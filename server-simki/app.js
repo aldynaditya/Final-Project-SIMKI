@@ -13,7 +13,7 @@ const Appointment = require('./app/api/v1/appointment/model');
 const Schedule = require('./app/api/v1/schedule/model');
 const Pasien = require('./app/api/v1/pasien/model');
 const emrpasien = require('./app/api/v1/emrPasien/model');
-const episode = require('./app/api/v1/episode/model');
+const Episode = require('./app/api/v1/episode/model');
 const UserKlinik = require('./app/api/v1/userKlinik/model');
 const pasien = require('./app/api/v1/pasien/model');
 const Obat = require('./app/api/v1/obat/model');
@@ -31,8 +31,12 @@ const Transaksi = require('./app/api/v1/transaksi/model');
 // }).catch(err => {
 //     console.error('Database synchronization error:', err);
 // });
+
 // (async()=>{
-//     await OrderSurat.sync({force:true}); 
+//     await Transaksi.sync({force:true}); 
+// })();
+// (async()=>{
+//     await Transaksi.sync({force:true}); 
 // })();
 
 //router

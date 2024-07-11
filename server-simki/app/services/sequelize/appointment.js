@@ -3,7 +3,10 @@ const Schedule = require('../../api/v1/schedule/model');
 const DataPasien = require('../../api/v1/dataPasien/model');
 const EMRPasien = require('../../api/v1/emrPasien/model');
 const UserKlinik = require('../../api/v1/userKlinik/model');
-const { getDayOfWeek } = require('../../utils');
+const { 
+    getDayOfWeek,
+    generateNoEMR
+} = require('../../utils');
 const { BadRequestError, NotFoundError } = require('../../errors');
 
 const getAllAppointment = async (req) => {
@@ -88,80 +91,63 @@ const createAppointment = async (req) => {
         scheduleId: schedule.uuid
     });
 
-    const detailedResults = await Appointment.findAll({
-        where: {
-            uuid: result.uuid
-        },
-        include: [
-            {
-                model: DataPasien,
-                as: 'datapasien',
-                attributes: ['nik', 'nama_lengkap', 'tempat_lahir', 'tanggal_lahir', 'jenis_kelamin', 'gol_darah', 'suku_bangsa', 'alamat']
-            },
-            {
-                model: Schedule,
-                as: 'schedule', 
-                attributes: ['hari', 'poli'],
-                include: {
-                    model: UserKlinik,
-                    attributes: ['nama'],
-                    as: 'user_klinik'
-                },
-            },
-        ]
-    });
-
-    const queue = detailedResults.map(appointment => {
-        const datapasien = appointment.datapasien;
-        const schedule = appointment.schedule;
-
-        return {
-            nama_lengkap: datapasien.nama_lengkap,
-            nama_dokter: schedule.user_klinik.nama,
-            poli: schedule.poli,
-            tanggal: appointment.tanggal,
-            keluhan: appointment.keluhan,
-            penjamin: appointment.penjamin,
-            status: appointment.status,
-            keterangan: appointment.keterangan,
-        };
-    });
-
-    return {
-        result,
-        dataAntrian: queue
-    };
+    return result;
 };
 
 const updateAppointment = async (req) => {
     const { id } = req.params;
     const { status, keterangan } = req.body;
 
-    const check = await Appointment.findOne({
+    const appointment = await Appointment.findOne({
         where: {
             uuid: id,
         },
     });
-    
-    if (!check) throw new NotFoundError(`Tidak ada Appointment dengan id :  ${id}`);
-    
-    // Jika status 'diterima', tambahkan data ke EMRPasien
+
+    if (!appointment) {
+        throw new NotFoundError(`Tidak ada Appointment dengan id : ${id}`);
+    }
+
     if (status === 'diterima') {
+        let emrData;
+        let noEMR;
+
+        if (appointment.pasienId) {
+            const existingEMR = await EMRPasien.findOne({
+                where: {
+                    pasienId: appointment.pasienId,
+                },
+            });
+
+            if (existingEMR) {
+                noEMR = existingEMR.noEMR;
+            } else {
+                noEMR = generateNoEMR();
+            }
+
+            emrData = await EMRPasien.create({
+                appointmentId: id,
+                noEMR: noEMR,
+                pasienId: appointment.pasienId,
+            });
+        } else {
+            throw new Error('PasienId is not set in the appointment');
+        }
+
         await Appointment.update(
             { status, keterangan },
             { where: { uuid: id }}
         );
-        const emrData = await EMRPasien.create({ appointmentId: id });
+
         return emrData;
+    } else {
+        const result = await Appointment.update(
+            { status, keterangan },
+            { where: { uuid: id }}
+        );
+        
+        return result;
     }
-
-    // Jika status tidak 'diterima', update Appointment
-    const result = await Appointment.update(
-        { status, keterangan },
-        { where: { uuid: id }}
-    );
-
-    return result;
 };
 
 module.exports = {

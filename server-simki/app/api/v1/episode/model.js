@@ -17,7 +17,7 @@ const Episode = db.define('episode', {
         allowNull: false,
         references: {
             model: EMRPasien,
-            key: 'noEMR',
+            key: 'uuid',
         },
     },
     alergi: {
@@ -70,7 +70,6 @@ const Episode = db.define('episode', {
         defaultValue: "-",
         allowNull: false,
     },
-    // ini perlu disesuaikan lagi jadi nilai array yang dimasukkan hanya 3 macam yaitu (obat, prosedur, surat)
     tindakan: {
         type: DataTypes.TEXT,
         defaultValue: '["none"]',
