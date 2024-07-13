@@ -1,16 +1,26 @@
 const db = require('../../../db/index');
 const { DataTypes } = require('sequelize');
-const Transaksi = require('../transaksi/model');
 const UserKlinik = require('../userKlinik/model');
 
 const Laporan = db.define('laporan', {
-    noLaporan:{
+    uuid: {
         type: DataTypes.UUID,
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         validate: {
             notEmpty: true
+        }
+    },
+    tanggal: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    },
+    no_laporan: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            notEmpty: true,
         }
     },
     periode:{
@@ -20,35 +30,26 @@ const Laporan = db.define('laporan', {
             notEmpty: true,
         }
     },
-    keterangan:{
+    keterangan: {
         type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-            notEmpty: true,
-        }
+        defaultValue: 'v1.0'
     },
     status: {
-        type: DataTypes.ENUM('updated','not confirm', 'in process','confirm'),
+        type: DataTypes.ENUM('rejected','in process', 'accepted'),
         defaultValue: 'in process',
-    },
-    transaksiId: {
-        type: DataTypes.UUID,
-        allowNull: false,
     },
     userId: {
         type: DataTypes.UUID,
         allowNull: false,
+    },
+    file_path: {
+        type: DataTypes.STRING,
+        allowNull: true,
     }  
 }, {
     timestamps: true,
-    tableName: 'transaksi'
-});
-
-
-Laporan.belongsTo(Transaksi, {
-    foreignKey: 'transaksiId',
-    targetKey: 'uuid',
-    as: 'transaksi'
+    tableName: 'laporan'
 });
 
 Laporan.belongsTo(UserKlinik, {
