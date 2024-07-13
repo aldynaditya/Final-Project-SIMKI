@@ -16,6 +16,7 @@ const {
     NotFoundError, 
     UnauthorizedError 
 } = require('../../errors');
+const { Op } = require('sequelize');
 
 const getAllOrders = async () => {
     const order = await Transaksi.findAll({
@@ -25,6 +26,7 @@ const getAllOrders = async () => {
                 as: 'episode',
                 include: {
                     model: EMRPasien,
+                    as: 'emrpasien',
                     include: {
                         model: Appointment,
                         include: {
@@ -44,7 +46,7 @@ const getAllOrders = async () => {
 
     const result = order.map(transaksi => {
         const episode = transaksi.episode;
-        const emr = episode.emrPasien;
+        const emr = episode.emrpasien;
         const appointment = emr.appointment;
         const datapasien = appointment.datapasien;
 
@@ -55,6 +57,7 @@ const getAllOrders = async () => {
             namaPasien: datapasien.nama_lengkap,
             penjamin: appointment.penjamin,
             metodeBayar: transaksi.metodeBayar,
+            status: transaksi.status,
             total: transaksi.total,
             petugas: transaksi.user.nama
         }
@@ -147,8 +150,64 @@ const updateTransaction = async (req) => {
     return transaksi;
 };
 
+const filterAllTransactionByPeriod = async (req) => {
+    const { startDate, endDate } = req.query;
+
+    const transaksi = await Transaksi.findAll({
+        where: {
+            createdAt: {
+                [Op.between]: [startDate, endDate]
+            },
+            status: 'Completed'
+        },
+        include: [
+            {
+                model: Episode,
+                as: 'episode',
+                include: {
+                    model: EMRPasien,
+                    as: 'emrpasien',
+                    include: {
+                        model: Appointment,
+                        include: {
+                            model: DataPasien,
+                            as: 'datapasien',
+                            attributes: ['nama_lengkap']
+                        }
+                    }
+                }
+            },
+            {
+                model: UserKlinik,
+                as: 'user',
+            }
+        ]
+    });
+
+    const result = transaksi.map(transaksi => {
+        const episode = transaksi.episode;
+        const emr = episode.emrpasien;
+        const appointment = emr.appointment;
+        const datapasien = appointment.datapasien;
+
+        return{
+            noInvoice: episode.invoiceNumber,
+            tanggal: appointment.tanggal,
+            noEMR: emr.noEMR,
+            namaPasien: datapasien.nama_lengkap,
+            penjamin: appointment.penjamin,
+            metodeBayar: transaksi.metodeBayar,
+            total: transaksi.total,
+            petugas: transaksi.user.nama
+        }
+    });
+
+    return result;
+};
+
 module.exports = {
     getAllOrders,
     getOrderDetails,
-    updateTransaction
+    updateTransaction,
+    filterAllTransactionByPeriod
 }

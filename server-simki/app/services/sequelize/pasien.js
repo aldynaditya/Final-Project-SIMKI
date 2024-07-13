@@ -308,6 +308,7 @@ const getAllVisitHistory = async (req) =>  {
         include: [
             {
                 model: EMRPasien,
+                as: 'emrpasien',
                 include:
                 {
                     model: Appointment,
@@ -336,7 +337,7 @@ const getAllVisitHistory = async (req) =>  {
     });
 
     const result = history.map(episode => {
-        const history = episode.emrPasien.appointment;
+        const history = episode.emrpasien.appointment;
         
         return{
             id: episode.uuid,
@@ -367,6 +368,7 @@ const getDetailVisitHistory = async (req) =>  {
         include: [
             {
                 model: EMRPasien,
+                as: 'emrpasien',
                 include:
                 {
                     model: Appointment,
@@ -408,6 +410,7 @@ const getDetailVisitHistory = async (req) =>  {
                 as: 'episode',
                 include: {
                     model: EMRPasien,
+                    as: 'emrpasien',
                     include: {
                         model: Appointment,
                         include: {
@@ -433,6 +436,7 @@ const getDetailVisitHistory = async (req) =>  {
                 as: 'episode',
                 include: {
                     model: EMRPasien,
+                    as: 'emrpasien',
                     include: {
                         model: Appointment,
                         include: {
@@ -450,7 +454,7 @@ const getDetailVisitHistory = async (req) =>  {
         ]
     });
 
-    const historyDetail = history.emrPasien.appointment;
+    const historyDetail = history.emrpasien.appointment;
 
     const result = {
         tanggal: historyDetail.tanggal,
