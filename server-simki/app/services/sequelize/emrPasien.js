@@ -183,7 +183,7 @@ const finishOrder = async (req) => {
         }
     });
 
-    if (!ordersObat.length && !ordersProsedur.length && !ordersSurat.length) {
+    if (!ordersObat.length && !ordersProsedur.length) {
         throw new NotFoundError('No orders found for the provided episodeId');
     }
 
@@ -196,6 +196,21 @@ const finishOrder = async (req) => {
         total,
         userId: req.user.id
     });
+
+    const episode = await Episode.findOne({
+        where: { uuid: id },
+    });
+
+    if (!episode) {
+        throw new NotFoundError('episode tidak ditemukan');
+    }
+
+    const emrpasienId = episode.emrPasienId;
+
+    await EMRPasien.update({ 
+        status: 'finished',
+        finishedAt: new Date(),
+    }, { where: { uuid: emrpasienId } });
 
     return transaksi;
 };

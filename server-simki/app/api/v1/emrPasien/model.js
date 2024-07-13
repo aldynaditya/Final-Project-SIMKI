@@ -32,6 +32,16 @@ const EMRPasien = db.define('emrPasien', {
             model: DataPasien,
             key: 'uuid',
         },
+    },
+    status: {
+        type: DataTypes.ENUM,
+        values: ['active', 'finished'],
+        defaultValue: 'active',
+        allowNull: false,
+    },
+    finishedAt: {
+        type: DataTypes.DATE,
+        allowNull: true,
     }
 }, {
     tableName: 'emrPasien',
