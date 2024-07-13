@@ -26,6 +26,7 @@ const OrderProsedur = require('./app/api/v1/orderProsedur/model');
 const Transaksi = require('./app/api/v1/transaksi/model');
 const Question = require('./app/api/v1/kuisioner/question/model');
 const Response = require('./app/api/v1/kuisioner/responses/model');
+const Laporan = require('./app/api/v1/laporan/model');
 
 
 // db.sync().then(() => {
@@ -37,9 +38,7 @@ const Response = require('./app/api/v1/kuisioner/responses/model');
 // (async()=>{
 //     await Transaksi.sync({force:true}); 
 // })();
-// (async()=>{
-//     await Response.sync({force:true}); 
-// })();
+
 
 //router
 const userklinikRouter = require('./app/api/v1/userKlinik/router');
@@ -58,6 +57,7 @@ const orderprosedurRouter = require('./app/api/v1/orderProsedur/router');
 const ordersuratRouter = require('./app/api/v1/orderSurat/router');
 const transaksiRouter = require('./app/api/v1/transaksi/router');
 const kuisionerRouter = require('./app/api/v1/kuisioner/router');
+const laporanRouter = require('./app/api/v1/laporan/router');
 
 const v1 = '/api/v1';
 
@@ -94,6 +94,7 @@ app.use(`${v1}/cms`, orderprosedurRouter);
 app.use(`${v1}/cms`, ordersuratRouter);
 app.use(`${v1}/cms`, transaksiRouter);
 app.use(`${v1}/cms`, kuisionerRouter);
+app.use(`${v1}/cms`, laporanRouter);
 app.use(`${v1}`, pasienRouter);
 
 
