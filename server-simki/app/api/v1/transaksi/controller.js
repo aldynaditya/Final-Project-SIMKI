@@ -2,7 +2,8 @@ const { StatusCodes } = require('http-status-codes');
 const { 
     getAllOrders,
     getOrderDetails, 
-    updateTransaction
+    updateTransaction,
+    filterAllTransactionByPeriod
 } = require('../../../services/sequelize/transaksi');
 
 const index = async (req, res, next) => {
@@ -41,8 +42,21 @@ const update = async (req, res, next) => {
     }
 };
 
+const indexByPeriod = async (req, res, next) => {
+    try {
+        const result = await filterAllTransactionByPeriod(req);
+        
+        res.status(StatusCodes.CREATED).json({
+            data: result,
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
 module.exports = {
     index,
     find,
-    update
+    update,
+    indexByPeriod
 };
