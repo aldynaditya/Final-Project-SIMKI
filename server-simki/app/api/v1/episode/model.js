@@ -91,7 +91,7 @@ const Episode = db.define('episode', {
     tableName: 'episode',
 });
 
-Episode.belongsTo(EMRPasien, { foreignKey: 'emrPasienId' });
+Episode.belongsTo(EMRPasien, { foreignKey: 'emrPasienId', as: 'emrpasien' });
 EMRPasien.hasMany(Episode, { foreignKey: 'emrPasienId' });
 
 module.exports = Episode;
