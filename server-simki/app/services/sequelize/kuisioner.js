@@ -18,33 +18,6 @@ const createQuestion = async (req) => {
     return result
 };
 
-const submitResponses = async (req) => {
-    const { id } = req.params;
-    const { responses } = req.body;
-
-    const episode = await Episode.findOne({
-        where: {uuid: id},
-    });
-
-    if (!episode) {
-        throw new NotFoundError('Detail tidak ditemukan');
-    }
-
-    const emrpasienId = episode.emrPasienId
-
-    const result = await Promise.all(
-        responses.map(response =>
-            Response.create({
-                answer: response.answer,
-                questionId: response.questionId,
-                emrpasienId: emrpasienId,
-            })
-        )
-    );
-
-    return result
-};
-
 const getResponsesByPatientId = async (req) => {
     const { id: uuid } = req.params;
 
@@ -70,6 +43,5 @@ const getResponsesByPatientId = async (req) => {
 module.exports = {
     getAllQuestions,
     createQuestion,
-    getResponsesByPatientId,
-    submitResponses
+    getResponsesByPatientId
 };

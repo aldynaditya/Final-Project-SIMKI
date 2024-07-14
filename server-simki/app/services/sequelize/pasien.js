@@ -12,6 +12,8 @@ const Obat = require('../../api/v1/obat/model');
 const Item = require('../../api/v1/item/model');
 const SuratSakit = require('../../api/v1/suratSakit/model');
 const SuratRujukan = require('../../api/v1/suratRujukan/model');
+const Response = require('../../api/v1/kuisioner/responses/model');
+const Question = require('../../api/v1/kuisioner/question/model');
 const {
     BadRequestError,
     NotFoundError,
@@ -359,7 +361,7 @@ const getDetailVisitHistory = async (req) =>  {
         throw new UnauthorizedError('Akses Ditolak');
     }
 
-    let whereClause = {
+    const whereClause = {
         uuid: id,
         '$EMRPasien.appointment.datapasien.pasien.uuid$': pasienId
     };
@@ -402,57 +404,58 @@ const getDetailVisitHistory = async (req) =>  {
 
     const episodeId = history.uuid;
 
-    const ordersObat = await OrderObat.findAll({
-        where: { episodeId },
-        include: [
-            {
-                model: Episode,
-                as: 'episode',
-                include: {
-                    model: EMRPasien,
-                    as: 'emrpasien',
+    const [ordersObat, ordersProsedur] = await Promise.all([
+        OrderObat.findAll({
+            where: { episodeId },
+            include: [
+                {
+                    model: Episode,
+                    as: 'episode',
                     include: {
-                        model: Appointment,
+                        model: EMRPasien,
+                        as: 'emrpasien',
                         include: {
-                            model: DataPasien,
-                            as: 'datapasien',
-                            attributes: ['nama_lengkap']
+                            model: Appointment,
+                            include: {
+                                model: DataPasien,
+                                as: 'datapasien',
+                                attributes: ['nama_lengkap']
+                            }
                         }
                     }
+                },
+                {
+                    model: Obat,
+                    as: 'dataobat'
                 }
-            },
-            {
-                model: Obat,
-                as: 'dataobat'
-            }
-        ]
-    });
-
-    const ordersProsedur = await OrderProsedur.findAll({
-        where: { episodeId },
-        include: [
-            {
-                model: Episode,
-                as: 'episode',
-                include: {
-                    model: EMRPasien,
-                    as: 'emrpasien',
+            ]
+        }),
+        OrderProsedur.findAll({
+            where: { episodeId },
+            include: [
+                {
+                    model: Episode,
+                    as: 'episode',
                     include: {
-                        model: Appointment,
+                        model: EMRPasien,
+                        as: 'emrpasien',
                         include: {
-                            model: DataPasien,
-                            as: 'datapasien',
-                            attributes: ['nama_lengkap']
+                            model: Appointment,
+                            include: {
+                                model: DataPasien,
+                                as: 'datapasien',
+                                attributes: ['nama_lengkap']
+                            }
                         }
                     }
+                },
+                {
+                    model: Item,
+                    as: 'dataitem'
                 }
-            },
-            {
-                model: Item,
-                as: 'dataitem'
-            }
-        ]
-    });
+            ]
+        })
+    ]);
 
     const historyDetail = history.emrpasien.appointment;
 
@@ -471,6 +474,34 @@ const getDetailVisitHistory = async (req) =>  {
     return result;
 };
 
+
+const submitResponses = async (req) => {
+    const { id } = req.params;
+    const { responses } = req.body;
+
+    const episode = await Episode.findOne({
+        where: {uuid: id},
+    });
+
+    if (!episode) {
+        throw new NotFoundError('Detail tidak ditemukan');
+    }
+
+    const emrpasienId = episode.emrPasienId
+
+    const result = await Promise.all(
+        responses.map(response =>
+            Response.create({
+                answer: response.answer,
+                questionId: response.questionId,
+                emrpasienId: emrpasienId,
+            })
+        )
+    );
+
+    return result
+};
+
 module.exports = {
     signupPasien,
     activatePasien,
@@ -482,5 +513,6 @@ module.exports = {
     createAppointment,
     getpasienAppointments,
     getAllVisitHistory,
-    getDetailVisitHistory
+    getDetailVisitHistory,
+    submitResponses
 };

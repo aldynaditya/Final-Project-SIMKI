@@ -18,8 +18,6 @@ const {
 } = require('../../errors');
 const { getNextVersion } = require('../../utils');
 
-
-
 const createOrderObat = async (req) => {
     const { id } = req.params;
     const { obatItems } = req.body;
@@ -27,17 +25,13 @@ const createOrderObat = async (req) => {
     const episode = await Episode.findByPk(id);
     if (!episode) throw new NotFoundError('Episode tidak ditemukan');
 
-    let totalOrder = 0;
-    const results = [];
-
-    for (const item of obatItems) {
+    const results = await Promise.all(obatItems.map(async (item) => {
         const { namaObat, kuantitas, dosis, catatan } = item;
 
         const obat = await Obat.findOne({ where: { nama_obat: namaObat } });
         if (!obat) throw new NotFoundError('Obat tidak ditemukan');
 
         if (obat.stok === 0) throw new BadRequestError('Stok obat habis');
-
         if (kuantitas > obat.stok) throw new BadRequestError('Stok obat tidak mencukupi');
 
         const result = await OrderObat.create({
@@ -52,9 +46,10 @@ const createOrderObat = async (req) => {
 
         await Obat.update({ stok: obat.stok - kuantitas }, { where: { uuid: obat.uuid } });
 
-        totalOrder += result.total;
-        results.push(result);
-    }
+        return result;
+    }));
+
+    const totalOrder = results.reduce((acc, curr) => acc + curr.total, 0);
 
     const detailedResults = await OrderObat.findAll({
         where: {
@@ -64,7 +59,7 @@ const createOrderObat = async (req) => {
             {
                 model: Obat,
                 as: 'dataobat',
-                attributes: ['nama_obat','kode_obat','satuan','harga_satuan_obat',]
+                attributes: ['nama_obat', 'kode_obat', 'satuan', 'harga_satuan_obat']
             }
         ]
     });
@@ -75,6 +70,7 @@ const createOrderObat = async (req) => {
     };
 };
 
+
 const getOrderDetailInformation = async(req) => {
     const { id } = req.params;
 
@@ -82,6 +78,7 @@ const getOrderDetailInformation = async(req) => {
         include: [
             {
                 model: EMRPasien,
+                as: 'emrpasien',
                 include:
                 {
                     model: Appointment,
@@ -110,7 +107,7 @@ const getOrderDetailInformation = async(req) => {
         throw new NotFoundError('Detail tidak ditemukan');
     }
 
-    const emr = episode.emrPasien
+    const emr = episode.emrpasien
     const detail = emr.appointment;
     const datapasien = detail.datapasien;
 
@@ -135,6 +132,7 @@ const getALlOrderObatbyFarmasi = async() => {
                 as: 'episode',
                 include: {
                     model: EMRPasien,
+                    as: 'emrpasien',
                     include: {
                         model: Appointment,
                         include: [{
@@ -163,7 +161,7 @@ const getALlOrderObatbyFarmasi = async() => {
     const result = orderObat.map(orderobat => {
         const dataobat = orderobat.dataobat;
         const episode = orderobat.episode;
-        const emr = episode.emrPasien;
+        const emr = episode.emrpasien;
         const appointment = emr.appointment;
         const datapasien = appointment.datapasien;
         const schedule = appointment.schedule;
@@ -193,10 +191,7 @@ const createOrderItem = async (req) => {
     const episode = await Episode.findByPk(id);
     if (!episode) throw new NotFoundError('Episode tidak ditemukan');
 
-    let totalOrder = 0;
-    const results = [];
-
-    for (const item of itemItems) {
+    const results = await Promise.all(itemItems.map(async (item) => {
         const { namaItem, kuantitas, dosis, catatan } = item;
 
         const itemRecord = await Item.findOne({ where: { nama_item: namaItem } });
@@ -215,9 +210,10 @@ const createOrderItem = async (req) => {
 
         await Item.update({ stok: itemRecord.stok - kuantitas }, { where: { uuid: itemRecord.uuid } });
 
-        totalOrder += result.total;
-        results.push(result);
-    }
+        return result;
+    }));
+
+    const totalOrder = results.reduce((acc, curr) => acc + curr.total, 0);
 
     const detailedResults = await OrderProsedur.findAll({
         where: {
@@ -227,7 +223,7 @@ const createOrderItem = async (req) => {
             {
                 model: Item,
                 as: 'dataitem',
-                attributes: ['nama_item','kode_item','harga_satuan_item']
+                attributes: ['nama_item', 'kode_item', 'harga_satuan_item']
             }
         ]
     });
@@ -237,6 +233,7 @@ const createOrderItem = async (req) => {
         orders: detailedResults
     };
 };
+
 
 const createOrderSuratSakit = async (req) => {
     const { id } = req.params;
@@ -251,7 +248,7 @@ const createOrderSuratSakit = async (req) => {
         diagnosis,
         periode_start,
         periode_end,
-        userId: req.user.id
+        userKlinikId: req.user.id
     });
 
     console.log('SuratSakit created:', suratSakit.uuid);

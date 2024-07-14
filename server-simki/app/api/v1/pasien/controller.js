@@ -10,7 +10,8 @@ const {
     getAllVisitHistory,
     getDetailVisitHistory,
     sendResetPasswordEmail,
-    resetPassword
+    resetPassword,
+    submitResponses
 } = require('../../../services/sequelize/pasien');
 const { StatusCodes } = require('http-status-codes');
 
@@ -146,6 +147,18 @@ const detailHistory = async (req, res, next) => {
     }
 }
 
+const submit = async (req, res, next) => {
+    try {
+        const result = await submitResponses(req);
+
+        res.status(StatusCodes.OK).json({
+            data: result,
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
 module.exports = {
     signup,
     activeAccount,
@@ -157,5 +170,6 @@ module.exports = {
     makeAppointment,
     getmyAppointment,
     history,
-    detailHistory
+    detailHistory,
+    submit
 }

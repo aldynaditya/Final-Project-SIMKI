@@ -56,7 +56,7 @@ const Transaksi = db.define('transaksi', {
         type: DataTypes.UUID,
         allowNull: false,
     }, 
-    userId: {
+    userKlinikId: {
         type: DataTypes.UUID,
         allowNull: false,
     }  
@@ -91,7 +91,7 @@ Transaksi.belongsTo(Episode, {
 });
 
 Transaksi.belongsTo(UserKlinik, {
-    foreignKey: 'userId',
+    foreignKey: 'userKlinikId',
     targetKey: 'uuid',
     as: 'user'
 });

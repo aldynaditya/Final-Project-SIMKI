@@ -70,62 +70,100 @@ const getOrderDetails = async (req) => {
     const { id } = req.params;
 
     const transaksi = await Transaksi.findOne({ where: { uuid: id }});
-
     if (!transaksi) throw new NotFoundError('Transaction not found');
 
-    const episodeId = transaksi.episodeId
-    const ordersObat = await OrderObat.findAll({
-        where: { episodeId },
-        include: [
-            {
-                model: Episode,
-                as: 'episode',
-                include: {
-                    model: EMRPasien,
-                    include: {
-                        model: Appointment,
-                        include: {
-                            model: DataPasien,
-                            as: 'datapasien',
-                            attributes: ['nama_lengkap']
-                        }
-                    }
-                }
-            }
-        ]
-    });
+    const episodeId = transaksi.episodeId;
 
-    const ordersProsedur = await OrderProsedur.findAll({
-        where: { episodeId },
-        include: [
-            {
-                model: Episode,
-                as: 'episode',
-                include: {
-                    model: EMRPasien,
-                    include: {
-                        model: Appointment,
-                        include: {
-                            model: DataPasien,
-                            as: 'datapasien',
-                            attributes: ['nama_lengkap']
-                        }
-                    }
+    const [ordersObat, ordersProsedur] = await Promise.all([
+        OrderObat.findAll({
+            where: { episodeId },
+            include: [
+                // {
+                //     model: Episode,
+                //     as: 'episode',
+                //     include: {
+                //         model: EMRPasien,
+                //         as: 'emrpasien',
+                //         include: {
+                //             model: Appointment,
+                //             include: {
+                //                 model: DataPasien,
+                //                 as: 'datapasien',
+                //                 attributes: ['nama_lengkap']
+                //             }
+                //         }
+                //     }
+                // }
+                {
+                    model: Obat,
+                    as: 'dataobat'
                 }
-            }
-        ]
-    });
+            ]
+        }),
+        OrderProsedur.findAll({
+            where: { episodeId },
+            include: [
+                // {
+                //     model: Episode,
+                //     as: 'episode',
+                //     include: {
+                //         model: EMRPasien,
+                //         as: 'emrpasien',
+                //         include: {
+                //             model: Appointment,
+                //             include: {
+                //                 model: DataPasien,
+                //                 as: 'datapasien',
+                //                 attributes: ['nama_lengkap']
+                //             }
+                //         }
+                //     }
+                // }
+                {
+                    model: Item,
+                    as: 'dataitem'
+                }
+            ]
+        })
+    ]);
 
     const result = {
-        transaksi,
-        ordersObat,
-        ordersProsedur
+        transaksi: {
+            uuid: transaksi.uuid,
+            episodeId: transaksi.episodeId,
+            total: transaksi.total,
+            metodeBayar: transaksi.metodeBayar,
+            status: transaksi.status,
+            userKlinikId: transaksi.userKlinikId,
+            createdAt: transaksi.createdAt
+        },
+        ordersObat: ordersObat.map(order => ({
+            uuid: order.uuid,
+            kuantitas: order.kuantitas,
+            dosis: order.dosis,
+            catatan: order.catatan,
+            total: order.total,
+            obat: {
+                nama: order.dataobat.nama_obat,
+                kode: order.dataobat.kode_obat
+            }
+        })),
+        ordersProsedur: ordersProsedur.map(order => ({
+            uuid: order.uuid,
+            kuantitas: order.kuantitas,
+            dosis: order.dosis,
+            catatan: order.catatan,
+            total: order.total,
+            item: {
+                nama: order.dataitem.nama_item,
+                kode: order.dataitem.kode_item
+            }
+        }))
     };
 
     return result;
 };
 
-// ini masih perlu perbaikan, karena klo ada dua macam order masih ga bisa jumlahin
 const updateTransaction = async (req) => {
     const { id } = req.params;
     const { metode_bayar, diskon, keterangan } = req.body;
@@ -141,7 +179,7 @@ const updateTransaction = async (req) => {
         keterangan,
         total: totalAfterDiscount,
         status: 'Completed',
-        userId: req.user.id
+        userKlinikId: req.user.id
     }, {
         where: { uuid: id },
         returning: true
@@ -153,10 +191,12 @@ const updateTransaction = async (req) => {
 const filterAllTransactionByPeriod = async (req) => {
     const { startDate, endDate } = req.query;
 
+    const adjustedEndDate = new Date(new Date(endDate).getTime() + 24 * 60 * 60 * 1000);
+
     const transaksi = await Transaksi.findAll({
         where: {
             createdAt: {
-                [Op.between]: [startDate, endDate]
+                [Op.between]: [new Date(startDate), adjustedEndDate]
             },
             status: 'Completed'
         },
@@ -192,7 +232,7 @@ const filterAllTransactionByPeriod = async (req) => {
 
         return{
             noInvoice: episode.invoiceNumber,
-            tanggal: appointment.tanggal,
+            tanggal: transaksi.createdAt,
             noEMR: emr.noEMR,
             namaPasien: datapasien.nama_lengkap,
             penjamin: appointment.penjamin,

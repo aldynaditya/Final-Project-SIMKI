@@ -44,7 +44,7 @@ const Item = db.define('item', {
             notEmpty: true,
         }
     },
-    userId: {
+    userKlinikId: {
         type: DataTypes.UUID,
         allowNull: false,
     }  
@@ -54,7 +54,7 @@ const Item = db.define('item', {
 });
 
 Item.belongsTo(UserKlinik, {
-    foreignKey: 'userId',
+    foreignKey: 'userKlinikId',
     targetKey: 'uuid',
     as: 'user'
 });

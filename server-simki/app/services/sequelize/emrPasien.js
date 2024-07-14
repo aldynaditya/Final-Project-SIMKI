@@ -168,33 +168,34 @@ const updateAction = async (req) => {
 
 const finishOrder = async (req) => {
     const { id } = req.params;
-    const ordersObat = await OrderObat.findAll({
-        where: { episodeId: id },
-        include: {
-            model: Obat,
-            as: 'dataobat',
-        }
-    });
-    const ordersProsedur = await OrderProsedur.findAll({
-        where: { episodeId: id },
-        include: {
-            model: Item,
-            as: 'dataitem',
-        }
-    });
+
+    const [ordersObat, ordersProsedur] = await Promise.all([
+        OrderObat.findAll({
+            where: { episodeId: id },
+            include: {
+                model: Obat,
+                as: 'dataobat',
+            }
+        }),
+        OrderProsedur.findAll({
+            where: { episodeId: id },
+            include: {
+                model: Item,
+                as: 'dataitem',
+            }
+        })
+    ]);
 
     if (!ordersObat.length && !ordersProsedur.length) {
         throw new NotFoundError('No orders found for the provided episodeId');
     }
 
-    let total = 0;
-    ordersObat.forEach(order => total += parseFloat(order.total));
-    ordersProsedur.forEach(order => total += parseFloat(order.total));
+    const total = [...ordersObat, ...ordersProsedur].reduce((acc, order) => acc + parseFloat(order.total), 0);
 
     const transaksi = await Transaksi.create({
         episodeId: id,
         total,
-        userId: req.user.id
+        userKlinikId: req.user.id
     });
 
     const episode = await Episode.findOne({
@@ -202,7 +203,7 @@ const finishOrder = async (req) => {
     });
 
     if (!episode) {
-        throw new NotFoundError('episode tidak ditemukan');
+        throw new NotFoundError('Episode tidak ditemukan');
     }
 
     const emrpasienId = episode.emrPasienId;
@@ -214,6 +215,7 @@ const finishOrder = async (req) => {
 
     return transaksi;
 };
+
 
 const getAllMedicalRecord = async (req) => {
     const { id: noEMR } = req.params;

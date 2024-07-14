@@ -52,7 +52,7 @@ const Obat = db.define('obat', {
             notEmpty: true,
         }
     },
-    userId: {
+    userKlinikId: {
         type: DataTypes.UUID,
         allowNull: false,
     }  
@@ -62,7 +62,7 @@ const Obat = db.define('obat', {
 });
 
 Obat.belongsTo(UserKlinik, {
-    foreignKey: 'userId',
+    foreignKey: 'userKlinikId',
     targetKey: 'uuid',
     as: 'user'
 });

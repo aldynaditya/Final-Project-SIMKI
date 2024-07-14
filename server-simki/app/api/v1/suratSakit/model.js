@@ -41,7 +41,7 @@ const SuratSakit = db.define('suratSakit', {
         type: DataTypes.DATE,
         allowNull: false
     },
-    userId: {
+    userKlinikId: {
         type: DataTypes.UUID,
         allowNull: false,
     }   
@@ -51,7 +51,7 @@ const SuratSakit = db.define('suratSakit', {
 });
 
 SuratSakit.belongsTo(UserKlinik, {
-    foreignKey: 'userId',
+    foreignKey: 'userKlinikId',
     targetKey: 'uuid',
     as: 'user'
 });
