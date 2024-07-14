@@ -8,7 +8,6 @@ const HeaderKasir = () => {
 
     const [currentTime, setCurrentTime] = useState(new Date());
     const [stopwatchTime, setStopwatchTime] = useState({ hours: 0, minutes: 0, seconds: 0 });
-    const [dropdownVisible, setDropdownVisible] = useState(false);
     const startTime = useRef(new Date());
 
     const updateStopwatch = () => {
@@ -29,14 +28,11 @@ const HeaderKasir = () => {
         return () => clearInterval(timer);
     }, []);
 
-    const formatTwoDigits = (num) => {
-        return num < 10 ? `0${num}` : num;
-    };
+    const formatTwoDigits = (num) => (num < 10 ? `0${num}` : num);
 
     const SigninPrivate = () => {
         navigate('/signin-private');
     };
-
 
     return (
         <header className='headerkasir-container'>
@@ -44,7 +40,9 @@ const HeaderKasir = () => {
                 <img src={profil} alt='Profil' className='profil_kasir' />
                 <span className='nama_kasir'>Nama Akun Kasir</span>
                 <div className='datetime-container'>
-                    <div className='date'>Tanggal {currentTime.getDate()}/{currentTime.getMonth() + 1}/{currentTime.getFullYear()}</div>
+                    <div className='date'>
+                        Tanggal {formatTwoDigits(currentTime.getDate())}/{formatTwoDigits(currentTime.getMonth() + 1)}/{currentTime.getFullYear()}
+                    </div>
                     <div className='stopwatch'>
                         <span>Time Stamp </span>
                         <span>{formatTwoDigits(stopwatchTime.hours)}:</span>
