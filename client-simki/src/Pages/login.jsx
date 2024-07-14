@@ -50,7 +50,7 @@ const Login = () => {
           Daftar
         </div>
         <div
-          className={`submit ${action === 'Login' ? 'filled' : 'gray'}`}
+          className={`submit  ${action === 'Login' ? 'filled' : 'gray'}`}
           onClick={() => handleActionClick("Login")}
         >
           Login

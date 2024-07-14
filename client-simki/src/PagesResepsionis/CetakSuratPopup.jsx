@@ -39,10 +39,10 @@ const CetakSuratPopup = () => {
                         <span className='text-diagnosis-surat'>Diagnosis :</span>
                         <input type='text' className='kolom-diagnosis-surat'></input>
                     </div>
-                    <div className='kadaluarsa-surat'>
+                    <div className='kadaluarsa-extendsurat'>
                         <div className='periode-surat'>
-                            <span className='text-periode-surat'>Periode :</span>
-                            <input type='date' className='kolom-periode-surat'></input>
+                            <span className='text-periode-extendsurat'>Periode :</span>
+                            <input type='date' className='kolom-periode-extendsurat'></input>
                         </div>
                         <div className='hingga-surat'>
                             <span className='text-hingga-surat'>Hingga :</span>

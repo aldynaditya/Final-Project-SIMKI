@@ -1,6 +1,6 @@
 // src/components/Footer.js
 import React from "react";
-import { Link } from "react-router-dom";  // Pastikan Link diimpor dari react-router-dom
+import { Link } from "react-router-dom";
 import './footer.css';
 import instagram from "../images/instagram.png";
 import wa from "../images/wa.png";
@@ -12,7 +12,7 @@ const Footer = () => {
         <div className="sb__footer-links">
           <div className="sb__footer-links-div">
             <h4>LAINNYA</h4>
-            <Link to="/KebijakanPrivasi">
+            <Link to="/kebijakan-privasi">
               <p>Kebijakan Privasi</p>
             </Link>
           </div>

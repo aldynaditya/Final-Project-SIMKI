@@ -142,39 +142,32 @@ html, body {
     font-size: 16px;
 }
 
-.input-order-obat {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 20px 50px;
-    row-gap: 50px;
-}
-
-.searchbar-obat {
-    width: 350px;
-}
-
-.template-dropdown {
-    width: 20%;
-    margin-left: 610px;
-    margin-right: 155px;
-
-}
-
-.kolom-template {
-    border-radius: 5px;
-    width: 350px;
-    height: 50px;
-    padding: 10px;
-    font-size: 16px;
-    background-color: #D3D3D3;
+ .tambah-obat-dokter{
+    justify-content: flex-start;
+    background-color: #145149;
+    color: white;
+    width: 110px;
+    height: 30px;
     border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 30px;
+    display: inline-block;
+    z-index: 2;
+    margin-top: 50px;
+    margin-left: 50px;
+ }
+
+.tambah-obat-dokter:hover {
+ background-color: #7DAEA8;
 }
 
 .tabel-order-obat {
     margin: 20px;
     flex: 1;
-    margin-top: 70px;
+    margin-top: 30px;
 }
 
 .tabel-order-obat table {

@@ -118,8 +118,14 @@ body {
     align-items: center;     /* Pusatkan secara vertikal */
 }
 
-.detail-faktur {
-    background-color: #145149;
+.detail-faktur-cell{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.detail-faktur, .cetak-transaksi {
+    background-color: #1E7E72;
     color: white;
     width: 80px;
     height: 35px;
@@ -132,7 +138,7 @@ body {
     display: inline-block;
 }
 
-.detail-faktur:hover {
+.detail-faktur:hover, .cetak-transaksi:hover {
     background-color: #7DAEA8;
 }
 

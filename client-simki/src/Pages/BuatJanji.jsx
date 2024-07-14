@@ -7,9 +7,11 @@ const BuatJanji = () => {
     const handleBuatJanji = () => {
         alert('Janji Anda Sedang Kami Proses');
     };
+
     const [selectedPoli, setSelectedPoli] = useState('');
     const [doctors, setDoctors] = useState([]);
     const [penjamin, setPenjamin] = useState('');
+    const [time, setTime] = useState(''); // State untuk menyimpan waktu
 
     const handlePoliChange = (event) => {
         const selectedPoli = event.target.value;
@@ -65,6 +67,11 @@ const BuatJanji = () => {
                 <div className='form_group'>
                     <label htmlFor="tanggal">Tanggal :</label>
                     <input type="date" id="tanggal" />
+                </div>
+
+                <div className='form_group'>
+                    <label htmlFor="jam">Jam :</label>
+                    <input type="time" id="jam" value={time} onChange={(e) => setTime(e.target.value)} />
                 </div>
 
                 <div className='form_group'>

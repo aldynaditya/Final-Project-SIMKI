@@ -110,8 +110,14 @@ body {
     background-color: #f1f1f1;
 }
 
+.notif-laporan-cell{
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 10px;
+   
+}
 
-.ket_terima {
+.ket_terima, .laporan-pimpinan {
     background-color: #1E7E72;
     color: white;
     width: 80px;
@@ -123,6 +129,15 @@ body {
     line-height: 30px;
     display: inline-block;
     font-family: 'Open Sans', sans-serif; /* Mengatur font ke Open Sans */
+}
+
+.laporan-pimpinan {
+    background-color: #1E7E72; /* Samakan warna latar belakang dengan .ket_terima */
+    font-size: 14px; /* Samakan ukuran font dengan .ket_terima */
+}
+
+.laporan-pimpinan:hover{
+    background-color: #7DAEA8;
 }
 
 .loader {

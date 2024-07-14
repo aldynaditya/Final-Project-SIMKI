@@ -4,10 +4,29 @@ import search from "../images/search.png";
 
 const SearchBar = () => {
     const handleSearch = () => {
-        // Logika untuk pencarian
-        const query = document.querySelector('.search-bar-input').value;
-        console.log("Mencari nama: ", query);
-        // Tambahkan logika pencarian sesuai kebutuhan Anda
+        // Mendapatkan query dari input
+        const query = document.querySelector('.search-bar-input').value.toLowerCase();
+        console.log("Mencari: ", query);
+        
+        // Mendapatkan semua baris dalam tabel
+        const rows = document.querySelectorAll('table tbody tr');
+        
+        rows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            let rowContainsQuery = false;
+            
+            cells.forEach(cell => {
+                if (cell.textContent.toLowerCase().includes(query)) {
+                    rowContainsQuery = true;
+                }
+            });
+            
+            if (rowContainsQuery) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
     };
 
     return (

@@ -13,6 +13,10 @@ const EntriBaru = () => {
         alert('Data Tersimpan');
     };
 
+    const SelesaikanOrder = () => {
+        alert('Order Tersimpan'); 
+    };
+
     const DropdownOrder = (event) => {
         const selectedOption = event.target.value;
         if (selectedOption) {
@@ -132,6 +136,7 @@ const EntriBaru = () => {
             </div>
             <div className='button-entri-baru'>
                 <button className="simpan-entri-baru" onClick={SimpanEntriBaru}>Simpan</button>
+                <button className="selesaikan-order-baru" onClick={SelesaikanOrder}>Selesaikan Order</button>
             </div>
             <RiwayatEpisode />
             <FooterPrivate />

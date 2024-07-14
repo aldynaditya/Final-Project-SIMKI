@@ -4,9 +4,15 @@ import FooterPrivate from '../components/FooterPrivate';  // Pastikan jalurnya b
 import './NotifikasiLead.css';
 import HeaderPimpinan from './HeaderLead';  // Pastikan jalurnya benar
 import SearchBar from '../components/SearchBar';  // Pastikan jalurnya benar
+import { useNavigate } from 'react-router-dom'; 
 
 const NotifikasiPimpinan = () => {
     const [rows] = useState(Array.from({ length: 10 }));
+    const navigate = useNavigate();
+
+    const LihatLaporan = () => {
+        navigate('/notifikasi-pimpinan');
+    };
 
     return (
         <div className="notif-pimpinan-wrapper">
@@ -40,7 +46,10 @@ const NotifikasiPimpinan = () => {
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td><div className="ket_terima">Terima</div></td>
+                                        <td className="notif-laporan-cell" >
+                                            <div className="ket_terima">Terima</div>
+                                            <button className="laporan-pimpinan" onClick={LihatLaporan}>Lihat</button>
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>

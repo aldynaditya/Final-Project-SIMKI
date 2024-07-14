@@ -1,4 +1,4 @@
-.isicppt-popup-container {
+.tambahlaporan-popup-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -8,10 +8,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Open Sans', sans-serif;
 }
 
-.isicppt-popup-content {
+.tambahlaporan-popup-content {
     background: #f0f0f0;
     padding: 20px;
     border-radius: 10px;
@@ -27,13 +26,13 @@
     color: #000;
 }
 
-.text-isicppt-popup {
+.text-tambahlaporan-popup {
     font-size: 24px;
     margin-bottom: 20px;
     margin-top: 30px;
 }
 
-.kolom-isi-cppt {
+.kolom-tambah-laporan {
     margin-top: 50px;
     margin-left: 70px;
     display: flex;
@@ -41,14 +40,14 @@
     gap: 10px;
     font-size: 16px;
 }
-.pemeriksa-cppt {
+.tgl-laporan {
     display: flex;
 }
-.text-pemeriksa-cppt {
-    margin-right: 68px;
+.text-tgl-laporan {
+    margin-right: 86px;
     font-size: 16px;
 }
-.kolom-pemeriksa-cppt {
+.kolom-tgl-laporan {
     border-radius: 5px;
     width: 300px;
     height: 30px;
@@ -56,109 +55,66 @@
     font-size: 16px;
 }
 
-.text-penyakit-cppt {
-    margin-right: 20px;
-    font-size: 16px;
-}
-.kolom-penyakit-cppt {
-    border-radius: 5px;
-    width: 300px;
-    height: 30px;
-    padding: 10px;
-    font-size: 16px;
-}
-
-.text-subjektif-cppt {
-    margin-right: 85px;
-    font-size: 16px;
-}
-.kolom-subjektif-cppt {
-    border-radius: 5px;
-    width: 300px;
-    height: 30px;
-    padding: 10px;
-    font-size: 16px;
-}
-
-.text-objektif-cppt {
-    margin-right: 87px;
-    font-size: 16px;
-}
-.kolom-objektif-cppt {
-    border-radius: 5px;
-    width: 300px;
-    height: 30px;
-    padding: 10px;
-    font-size: 16px;
-}
-
-.text-diagnosis-cppt {
-    margin-right: 70px;
-    font-size: 16px;
-}
-.kolom-diagnosis-cppt {
-    border-radius: 5px;
-    width: 300px;
-    height: 30px;
-    padding: 10px;
-    font-size: 16px;
-}
-
-.text-plan-cppt {
-    margin-right: 109px;
-    font-size: 16px;
-}
-.kolom-plan-cppt {
-    border-radius: 5px;
-    width: 300px;
-    height: 30px;
-    padding: 10px;
-    font-size: 16px;
-}
-
-.tindakan-cppt{
-    display: flex;
-}
-
-.text-tindakan-cppt{
+.text-no-laporan {
     margin-right: 55px;
     font-size: 16px;
 }
-.dropdown-tindakan-cppt {
-    margin-left: 20px;
+.kolom-no-laporan {
     border-radius: 5px;
+    width: 300px;
+    height: 30px;
     padding: 10px;
     font-size: 16px;
-    background-color: #7DAEA8;
-    color: white;
-    border: none;
-    cursor: pointer;
 }
 
-.dropdown-tindakan-cppt:hover {
-    background-color: #5A9080;
+.text-periode-laporan {
+    margin-right: 85px;
+    font-size: 16px;
+}
+.kolom-periode-laporan {
+    border-radius: 5px;
+    width: 300px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+.unggah-laporan{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 30px;
+}
+.text-unggah-laporan {
+    margin-right: 20px;
+    font-size: 16px;
+}
+.kolom-unggah-laporan {
+    border-radius: 5px;
+    width: 300px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+    border: #000;
 }
 
 
-.simpan-cppt-container {
+.tambah-laporan-container {
     display: flex;
     justify-content: center; /* Center the button horizontally */
     margin-top: 20px;
-    gap: 40px;
 }
 
-.simpan-cppt, .selesaikan-order {
+.tambah-laporan {
     padding: 10px;
     background-color: #145149;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    width: 150px;
+    width: 250px;
     font-weight: bold;
     letter-spacing: 3px;
 }
 
-.simpan-cppt:hover, .selesaikan-order:hover {
+.tambah-laporan:hover {
     background-color: #7DAEA8;
 }

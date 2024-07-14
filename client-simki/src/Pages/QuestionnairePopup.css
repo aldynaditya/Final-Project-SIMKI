@@ -8,20 +8,35 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .questionnaire_content {
     background: white;
-    padding: 20px;
+    padding: 30px;
     border-radius: 10px;
     text-align: center;
+    max-width: 500px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #ccc; /* Slight grey border */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.questionnaire_header {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    margin-bottom: 20px;
+    font-size: 16px;
 }
 
 .options {
     display: flex;
-    justify-content: space-around;
+    justify-content: center; /* Center align the options */
     margin: 20px 0;
-    gap: 30px; /* Menambahkan jarak antar container */
+    gap: 20px; /* Adding space between options */
 }
 
 .option_container {
@@ -29,7 +44,7 @@
     flex-direction: column;
     align-items: center;
     cursor: pointer;
-    margin: 0 15px; /* Menambahkan margin untuk jarak antar container */
+    transition: transform 0.3s ease;
 }
 
 .option_circle {
@@ -37,15 +52,26 @@
     height: 40px;
     border: 2px solid #ccc;
     border-radius: 50%;
-    margin-bottom: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+.option_label {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #000;
+}
+
 .option_container.selected .option_circle {
     background: #d1e7dd;
     border-color: #0f5132;
+}
+
+.legend {
+    text-align: left;
+    font-size: 14px;
+    margin: 20px 0;
 }
 
 .next_button {
@@ -56,4 +82,5 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    align-self: flex-end;
 }

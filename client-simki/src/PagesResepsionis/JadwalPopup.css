@@ -1,4 +1,4 @@
-.isicppt-popup-container {
+.tambah-jadwal-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -8,10 +8,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Open Sans', sans-serif;
 }
 
-.isicppt-popup-content {
+.tambah-jadwal-content {
     background: #f0f0f0;
     padding: 20px;
     border-radius: 10px;
@@ -27,13 +26,13 @@
     color: #000;
 }
 
-.text-isicppt-popup {
+.text-tambah-jadwal{
     font-size: 24px;
     margin-bottom: 20px;
     margin-top: 30px;
 }
 
-.kolom-isi-cppt {
+.kolom-dokter-jadwal {
     margin-top: 50px;
     margin-left: 70px;
     display: flex;
@@ -41,14 +40,12 @@
     gap: 10px;
     font-size: 16px;
 }
-.pemeriksa-cppt {
-    display: flex;
-}
-.text-pemeriksa-cppt {
-    margin-right: 68px;
+
+.text-ndokter-tambahjadwal {
+    margin-right: 53px;
     font-size: 16px;
 }
-.kolom-pemeriksa-cppt {
+.kolom-ndokter-tambahjadwal {
     border-radius: 5px;
     width: 300px;
     height: 30px;
@@ -56,11 +53,11 @@
     font-size: 16px;
 }
 
-.text-penyakit-cppt {
-    margin-right: 20px;
+.text-poli-tambahjadwal {
+    margin-right: 120px;
     font-size: 16px;
 }
-.kolom-penyakit-cppt {
+.kolom-poli-tambahjadwal {
     border-radius: 5px;
     width: 300px;
     height: 30px;
@@ -68,11 +65,11 @@
     font-size: 16px;
 }
 
-.text-subjektif-cppt {
-    margin-right: 85px;
+.text-hari-tambahjadwal {
+    margin-right: 120px;
     font-size: 16px;
 }
-.kolom-subjektif-cppt {
+.kolom-hari-tambahjadwal {
     border-radius: 5px;
     width: 300px;
     height: 30px;
@@ -80,74 +77,26 @@
     font-size: 16px;
 }
 
-.text-objektif-cppt {
-    margin-right: 87px;
+
+.text-jam-tambahjadwal {
+    margin-right: 120px;
     font-size: 16px;
 }
-.kolom-objektif-cppt {
+.kolom-jam-tambahjadwal {
     border-radius: 5px;
-    width: 300px;
+    width: 140px;
     height: 30px;
     padding: 10px;
     font-size: 16px;
 }
 
-.text-diagnosis-cppt {
-    margin-right: 70px;
-    font-size: 16px;
-}
-.kolom-diagnosis-cppt {
-    border-radius: 5px;
-    width: 300px;
-    height: 30px;
-    padding: 10px;
-    font-size: 16px;
-}
-
-.text-plan-cppt {
-    margin-right: 109px;
-    font-size: 16px;
-}
-.kolom-plan-cppt {
-    border-radius: 5px;
-    width: 300px;
-    height: 30px;
-    padding: 10px;
-    font-size: 16px;
-}
-
-.tindakan-cppt{
-    display: flex;
-}
-
-.text-tindakan-cppt{
-    margin-right: 55px;
-    font-size: 16px;
-}
-.dropdown-tindakan-cppt {
-    margin-left: 20px;
-    border-radius: 5px;
-    padding: 10px;
-    font-size: 16px;
-    background-color: #7DAEA8;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-.dropdown-tindakan-cppt:hover {
-    background-color: #5A9080;
-}
-
-
-.simpan-cppt-container {
+.tambahjadwal-container {
     display: flex;
     justify-content: center; /* Center the button horizontally */
     margin-top: 20px;
-    gap: 40px;
 }
 
-.simpan-cppt, .selesaikan-order {
+.button-tambahjadwal {
     padding: 10px;
     background-color: #145149;
     color: white;
@@ -159,6 +108,6 @@
     letter-spacing: 3px;
 }
 
-.simpan-cppt:hover, .selesaikan-order:hover {
+.button-tambahjadwal:hover {
     background-color: #7DAEA8;
 }
