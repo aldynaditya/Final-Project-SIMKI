@@ -3,8 +3,10 @@ import NavbarPrivate from '../components/NavbarPrivate';
 import FooterPrivate from '../components/FooterPrivate';
 import './TransaksiKasir.css';
 import HeaderKasir from './HeaderKasir';
-import SearchBar from "../components/SearchBar";
+import SearchBar from '../components/SearchBar'; // Corrected import statement
 import { useNavigate } from 'react-router-dom'; 
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 const TransaksiKasir = () => {
     const [rows] = useState(Array.from({ length: 20 }));
@@ -12,6 +14,43 @@ const TransaksiKasir = () => {
 
     const DetailFaktur = () => {
         navigate('/detail-faktur');
+    };
+
+    const CetakTransaksi = (index) => {
+        const element = document.getElementById(`row-${index}`);
+        const cloneTable = document.createElement('table');
+        const cloneThead = document.querySelector('.tabel_transaksi thead').cloneNode(true);
+        const cloneRow = element.cloneNode(true);
+
+        // Remove action column from cloned header and row
+        cloneThead.querySelectorAll('th')[9].remove();
+        cloneRow.querySelectorAll('td')[9].remove();
+
+        // Append header and row to the cloned table
+        cloneTable.appendChild(cloneThead);
+        cloneTable.appendChild(cloneRow);
+
+        // Style adjustments for better readability in PDF
+        cloneTable.style.fontSize = '12px';
+        cloneTable.style.borderCollapse = 'collapse';
+        cloneTable.querySelectorAll('th, td').forEach(cell => {
+            cell.style.padding = '4px';
+            cell.style.border = '1px solid #ddd';
+        });
+
+        document.body.appendChild(cloneTable);
+
+        html2canvas(cloneTable).then(canvas => {
+            document.body.removeChild(cloneTable);
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('landscape', 'mm', [215, 40]); // Set size to 215x75 mm
+            const imgProps = pdf.getImageProperties(imgData);
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            pdf.save("struk_transaksi.pdf");
+        });
     };
 
     return (
@@ -44,7 +83,7 @@ const TransaksiKasir = () => {
                             </thead>
                             <tbody>
                                 {rows.map((_, index) => (
-                                    <tr key={index}>
+                                    <tr key={index} id={`row-${index}`}>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -56,6 +95,7 @@ const TransaksiKasir = () => {
                                         <td></td>
                                         <td className="detail-faktur-cell">
                                             <button className="detail-faktur" onClick={DetailFaktur}>Detail Faktur</button>
+                                            <button className="cetak-transaksi" onClick={() => CetakTransaksi(index)}>Cetak</button>
                                         </td>
                                     </tr>
                                 ))}

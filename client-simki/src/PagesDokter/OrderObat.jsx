@@ -2,11 +2,18 @@ import React, { useState } from 'react';
 import NavbarPrivate from '../components/NavbarPrivate';
 import FooterPrivate from '../components/FooterPrivate';
 import HeaderDokter from './HeaderDokter';
-import SearchBar from "../components/SearchBar";
+import { useNavigate } from 'react-router-dom';
 import './OrderObat.css';
 
 const OrderObat = () => {
     const [rows] = useState(Array.from({ length: 7 }));
+
+    const navigate = useNavigate();
+
+    const handleTambahObat = () => {
+        navigate('/tambahobat-dokter');
+    };
+
     const SimpanObat = () => {
         alert('Data Tersimpan'); 
     };
@@ -53,15 +60,7 @@ const OrderObat = () => {
                 </div>
             </div>
             <div className='input-order-obat'>
-                <SearchBar className="searchbar-obat" />
-                <div className='template-dropdown'>
-                    <select className='kolom-template'>
-                        <option value=''>Template</option>
-                        <option value='sakit-a'>Sakit A</option>
-                        <option value='sakit-b'>Sakit B</option>
-                        <option value='sakit-c'>Sakit C</option>
-                    </select>
-                </div>
+                <button className='tambah-obat-dokter' onClick={handleTambahObat}>Tambah Obat</button>
             </div>
             <div className="tabel-order-obat">
                 <table>

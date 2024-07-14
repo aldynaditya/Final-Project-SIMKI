@@ -50,6 +50,26 @@ body {
     margin: 0;
 }
 
+.upload-laporan {
+    background-color: #145149;
+    color: white;
+    width: 180px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 30px;
+    display: inline-block;
+    z-index: 2;
+    margin-left: 480px;
+}
+
+.upload-laporan:hover {
+    background-color: #7DAEA8;
+}
+
 .search-bar-container {
     display: flex;
     align-items: center;
@@ -57,7 +77,7 @@ body {
     border-radius: 5px;
     padding: 5px;
     width: 400px;
-    margin-left: 50px;  /* Menempatkan di ujung kanan */
+    margin-left: 0px;
 }
 
 .search-bar-input {

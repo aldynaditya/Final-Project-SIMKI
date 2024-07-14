@@ -1,4 +1,4 @@
-.cetaksurat-popup-container {
+.tambahobatdr-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -10,7 +10,7 @@
     align-items: center;
 }
 
-.cetaksurat-popup-content {
+.tambahobatdr-content {
     background: #f0f0f0;
     padding: 20px;
     border-radius: 10px;
@@ -26,13 +26,13 @@
     color: #000;
 }
 
-.text-cetaksurat-popup {
+.text-tambahobatdr {
     font-size: 24px;
     margin-bottom: 20px;
     margin-top: 30px;
 }
 
-.kolom-cetak-surat {
+.kolom-tambah-dokter {
     margin-top: 50px;
     margin-left: 70px;
     display: flex;
@@ -40,80 +40,58 @@
     gap: 10px;
     font-size: 16px;
 }
-
-.text-umur-cetaksurat {
-    margin-right: 53px;
-    font-size: 16px;
-}
-.kolom-umur-cetaksurat {
-    border-radius: 5px;
-    width: 360px;
-    height: 30px;
-    padding: 10px;
-    font-size: 16px;
-}
-
-.text-job-surat {
-    margin-right: 20px;
-    font-size: 16px;
-}
-.kolom-job-surat {
-    border-radius: 5px;
-    width: 360px;
-    height: 30px;
-    padding: 10px;
-    font-size: 16px;
-}
-
-.text-diagnosis-surat {
-    margin-right: 20px;
-    font-size: 16px;
-}
-.kolom-diagnosis-surat {
-    border-radius: 5px;
-    width: 360px;
-    height: 30px;
-    padding: 10px;
-    font-size: 16px;
-}
-
-.kadaluarsa-extendsurat {
+.nama-obat-dokter {
     display: flex;
-    flex-direction: row;
-    gap: 10px;
+    align-items: center;
 }
-
-.text-periode-extendsurat {
-    margin-right: 30px;
+.text-obat-dokter {
+    margin-right: 40px;
     font-size: 16px;
 }
-.kolom-periode-extendsurat {
+
+.text-kuantitas-dokter {
+    margin-right: 50px;
+    font-size: 16px;
+}
+.kolom-kuantitas-dokter {
     border-radius: 5px;
-    width: 140px;
+    width: 300px;
     height: 30px;
     padding: 10px;
     font-size: 16px;
 }
 
-.text-hingga-surat {
-    margin-right: 10px;
+.text-dosis-dokter {
+    margin-right: 75px;
     font-size: 16px;
 }
-.kolom-hingga-surat {
+.kolom-dosis-dokter {
     border-radius: 5px;
-    width: 140px;
+    width: 300px;
     height: 30px;
     padding: 10px;
     font-size: 16px;
 }
 
-.perubahan-surat-container {
+.text-catatan-dokter {
+    margin-right: 60px;
+    font-size: 16px;
+}
+.kolom-catatan-dokter {
+    border-radius: 5px;
+    width: 300px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.tambah-dokter-container {
     display: flex;
     justify-content: center; /* Center the button horizontally */
     margin-top: 20px;
 }
 
-.perubahan-surat {
+.simpan-dokter {
     padding: 10px;
     background-color: #145149;
     color: white;
@@ -125,6 +103,32 @@
     letter-spacing: 3px;
 }
 
-.perubahan-surat:hover {
+.simpan-dokter:hover {
     background-color: #7DAEA8;
+}
+
+/* Styling for the search bar */
+.search-bar-obat-container {
+    display: flex;
+    align-items: center;
+    background-color: #d3d3d3;
+    border-radius: 5px;
+    padding: 5px;
+    width: 300px;
+}
+
+.search-bar-obat-input {
+    border: none;
+    outline: none;
+    background: none;
+    padding: 5px;
+    flex: 1;
+    font-size: 16px;
+}
+
+.search-bar-obat-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 5px;
 }

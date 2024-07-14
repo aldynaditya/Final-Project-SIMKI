@@ -1,3 +1,10 @@
+.button-entri-baru {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 60px;
+}
+
 .simpan-entri-baru {
     background-color: #145149;
     color: white;
@@ -14,7 +21,22 @@
     margin-top: 30px;
 }
 
-.simpan-entri-baru:hover {
+.selesaikan-order-baru{
+    background-color: #145149;
+    color: white;
+    width: 150px;
+    height: 35px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 35px;
+    display: inline-block;
+    margin-top: 30px;
+}
+
+.simpan-entri-baru:hover, .selesaikan-order-baru:hover {
     background-color: #7DAEA8;
 }
 
@@ -23,7 +45,7 @@
     border-radius: 5px;
     padding: 10px;
     font-size: 16px;
-    background-color: #7DAEA8;
+    background-color: #1E7E72;
     color: white;
     border: none;
     cursor: pointer;

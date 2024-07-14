@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';  // Pastikan useNavigate diimpor
 import NavbarPrivate from '../components/NavbarPrivate';  // Pastikan jalurnya benar
 import FooterPrivate from '../components/FooterPrivate';  // Pastikan jalurnya benar
 import './NotifikasiSpv.css';
@@ -7,6 +8,11 @@ import SearchBar from '../components/SearchBar';  // Pastikan jalurnya benar
 
 const NotifikasiKeuangan = () => {
     const [rows] = useState(Array.from({ length: 10 }));
+    const navigate = useNavigate();
+
+    const UnggahLaporan = () => {
+        navigate('/laporan-popup');
+    };
 
     return (
         <div className="notif-keuangan-wrapper">
@@ -18,6 +24,7 @@ const NotifikasiKeuangan = () => {
                 <div className="content-wrapper-notif-keuangan">
                     <div className="header-notif-keuangan">
                         <h1 className="text_notif-keuangan">Notifikasi</h1>
+                        <button className='upload-laporan' onClick={UnggahLaporan}>Unggah Laporan</button>
                         <SearchBar />
                     </div>
                     <div className="tabel_notif-keuangan">

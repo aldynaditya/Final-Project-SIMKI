@@ -22,6 +22,8 @@ import EmrResepsionis from './PagesResepsionis/EmrResepsionis';
 import PasienResepsionis from './PagesResepsionis/PasienResepsionis';
 import DetailEpsResep from './PagesResepsionis/DetailEpsResep';
 import CetakSuratPopup from './PagesResepsionis/CetakSuratPopup';
+import KelolaJadwal from './PagesResepsionis/KelolaJadwal';
+import JadwalPopup from './PagesResepsionis/JadwalPopup';
 import HasilKuisionerPopup from './PagesDokter/HasilKuisionerPopup';
 import Perawat from './PagesPerawat/Perawat';
 import JadwalDokter from './PagesPerawat/JadwalDokter';
@@ -42,6 +44,8 @@ import OrderProsedur from './PagesDokter/OrderProsedur';
 import OrderSurat from './PagesDokter/OrderSurat';
 import SuratRujukan from './PagesDokter/SuratRujukan';
 import SuratSakit from './PagesDokter/SuratSakit';
+import TambahObatDr from './PagesDokter/TambahObatDr';
+import TambahProsedur from './PagesDokter/TambahProsedur';
 import Farmasi from './PagesFarmasi/Farmasi';
 import OrderMasuk from './PagesFarmasi/OrderMasuk';
 import KelolaObat from './PagesFarmasi/KelolaObat';
@@ -51,6 +55,8 @@ import DetailFaktur from './PagesKasir/DetailFaktur';
 import TransaksiKeuangan from './PagesKeuangan/TransaksiSpv';
 import NotifikasiKeuangan from './PagesKeuangan/NotifikasiSpv';
 import NotifikasiPimpinan from './PagesPimpinan/NotifikasiLead';
+import UploadLaporan from './PagesKeuangan/UploadLaporan';
+
 
 
 
@@ -81,6 +87,8 @@ function App() {
         <Route path="/pasien-resepsionis" element={<PasienResepsionis />} />
         <Route path="/detail-episode" element={<DetailEpsResep />} />
         <Route path="/cetaksurat-popup" element={<CetakSuratPopup />} />
+        <Route path="/kelola-jadwal" element={<KelolaJadwal />} />
+        <Route path="/jadwal-popup" element={<JadwalPopup />} />
         <Route path="/hasilkuisioner-popup" element={<HasilKuisionerPopup />} />
         <Route path="/perawat" element={<Perawat />} />
         <Route path="/jadwal-dokter" element={<JadwalDokter />} />
@@ -110,6 +118,9 @@ function App() {
         <Route path="/transaksi-keuangan" element={<TransaksiKeuangan />} />
         <Route path="/notifikasi-keuangan" element={<NotifikasiKeuangan />} />
         <Route path="/notifikasi-pimpinan" element={<NotifikasiPimpinan />} />
+        <Route path="/tambahobat-dokter" element={<TambahObatDr />} />
+        <Route path="/tambah-prosedur" element={<TambahProsedur />} />
+        <Route path="/laporan-popup" element={<UploadLaporan />} />
       </Routes>
     </Router>
   );

@@ -8,45 +8,45 @@ const HeaderKeuangan = () => {
     const navigate = useNavigate();
     const dropdownRef = useRef(null);
 
-    const [currentTime, setCurrentTime] = useState(new Date());
-    const [stopwatchTime, setStopwatchTime] = useState({ hours: 0, minutes: 0, seconds: 0 });
-    const [dropdownVisible, setDropdownVisible] = useState(false);
-    const startTime = useRef(new Date());
+    const [waktuSekarang, setWaktuSekarang] = useState(new Date());
+    const [waktuStopwatch, setWaktuStopwatch] = useState({ jam: 0, menit: 0, detik: 0 });
+    const [dropdownTerlihat, setDropdownTerlihat] = useState(false);
+    const waktuMulai = useRef(new Date());
 
     const updateStopwatch = () => {
-        const now = new Date();
-        const diff = now.getTime() - startTime.current.getTime();
-        const hours = Math.floor(diff / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-        setStopwatchTime({ hours, minutes, seconds });
+        const sekarang = new Date();
+        const selisih = sekarang.getTime() - waktuMulai.current.getTime();
+        const jam = Math.floor(selisih / (1000 * 60 * 60));
+        const menit = Math.floor((selisih % (1000 * 60 * 60)) / (1000 * 60));
+        const detik = Math.floor((selisih % (1000 * 60)) / 1000);
+        setWaktuStopwatch({ jam, menit, detik });
     };
 
     useEffect(() => {
         const timer = setInterval(() => {
-            setCurrentTime(new Date());
+            setWaktuSekarang(new Date());
             updateStopwatch();
         }, 1000);
 
         return () => clearInterval(timer);
     }, []);
 
-    const formatTwoDigits = (num) => {
+    const formatDuaDigit = (num) => {
         return num < 10 ? `0${num}` : num;
     };
 
     const handleMenu = () => {
-        setDropdownVisible(!dropdownVisible);
+        setDropdownTerlihat(!dropdownTerlihat);
     };
 
     const handleClickOutside = (event) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-            setDropdownVisible(false);
+            setDropdownTerlihat(false);
         }
     };
 
     useEffect(() => {
-        if (dropdownVisible) {
+        if (dropdownTerlihat) {
             document.addEventListener('mousedown', handleClickOutside);
         } else {
             document.removeEventListener('mousedown', handleClickOutside);
@@ -55,7 +55,7 @@ const HeaderKeuangan = () => {
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, [dropdownVisible]);
+    }, [dropdownTerlihat]);
 
     const SigninPrivate = () => {
         navigate('/signin-private');
@@ -63,10 +63,10 @@ const HeaderKeuangan = () => {
 
     const navigateTo = (path) => {
         navigate(path);
-        setDropdownVisible(false);
+        setDropdownTerlihat(false);
     };
 
-    const Menukeuangan = [
+    const MenuKeuangan = [
         { name: "Transaksi", path: "/transaksi-keuangan" },
         { name: "Notifikasi", path: "/notifikasi-keuangan" }
     ];
@@ -77,12 +77,12 @@ const HeaderKeuangan = () => {
                 <img src={profil} alt='Profil' className='profil_keuangan' />
                 <span className='nama_keuangan'>Nama Akun SPV Keuangan</span>
                 <div className='datetime-container'>
-                    <div className='date'>Tanggal {currentTime.getDate()}/{currentTime.getMonth() + 1}/{currentTime.getFullYear()}</div>
+                    <div className='date'>Tanggal {waktuSekarang.getDate()}/{waktuSekarang.getMonth() + 1}/{waktuSekarang.getFullYear()}</div>
                     <div className='stopwatch'>
                         <span>Time Stamp </span>
-                        <span>{formatTwoDigits(stopwatchTime.hours)}:</span>
-                        <span>{formatTwoDigits(stopwatchTime.minutes)}:</span>
-                        <span>{formatTwoDigits(stopwatchTime.seconds)}</span>
+                        <span>{formatDuaDigit(waktuStopwatch.jam)}:</span>
+                        <span>{formatDuaDigit(waktuStopwatch.menit)}:</span>
+                        <span>{formatDuaDigit(waktuStopwatch.detik)}</span>
                     </div>
                 </div>
             </div>
@@ -92,10 +92,10 @@ const HeaderKeuangan = () => {
                         <p className='text_menu_keuangan' style={{ marginRight: '10px' }}>Menu</p>
                         <img src={dropdown} alt='Dropdown' className='icon_dropdown_keuangan' style={{ width: '20px', height: '20px' }} />
                     </button>
-                    {dropdownVisible && (
+                    {dropdownTerlihat && (
                         <div className="dropdown-keuangan" ref={dropdownRef}>
                             <ul>
-                                {Menukeuangan.map((menu) => (
+                                {MenuKeuangan.map((menu) => (
                                     <li key={menu.name} onClick={() => navigateTo(menu.path)}>{menu.name}</li>
                                 ))}
                             </ul>

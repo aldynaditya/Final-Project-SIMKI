@@ -16,6 +16,10 @@ const IsiCppt = () => {
         navigate('/entri-masuk'); 
     };
 
+    const SelesaikanOrder = () => {
+        navigate('/entri-masuk'); 
+    };
+
     const DropdownOrder = (event) => {
         const selectedOption = event.target.value;
         if (selectedOption) {
@@ -71,6 +75,7 @@ const IsiCppt = () => {
                 </div>
                 <div className='simpan-cppt-container'>
                     <button className="simpan-cppt" onClick={SimpanCppt}>Simpan</button>
+                    <button className="selesaikan-order" onClick={SelesaikanOrder}>Selesaikan Order</button>
                 </div>
             </div>
         </div>

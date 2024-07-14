@@ -3,10 +3,38 @@ import NavbarPrivate from '../components/NavbarPrivate';
 import FooterPrivate from '../components/FooterPrivate';
 import './TransaksiSpv.css';
 import HeaderKeuangan from './HeaderSpv';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 const TransaksiKeuangan = () => {
     const [rows] = useState(Array.from({ length: 20 }));
 
+    const BuatLaporan = () => {
+        const element = document.querySelector('.tabel_transaksi-keuangan');
+        const button = document.querySelector('.buat-laporan');
+        button.classList.add('clicked');
+
+        html2canvas(element).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('landscape', 'mm', 'a4'); // Landscape A4
+
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = pdf.internal.pageSize.getHeight();
+            const imgProps = pdf.getImageProperties(imgData);
+            const imgWidth = pdfWidth - 40; // 20 mm margin on each side
+            const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+            const xOffset = (pdfWidth - imgWidth) / 2;
+            const yOffset = (pdfHeight - imgHeight) / 2;
+
+            pdf.addImage(imgData, 'PNG', xOffset, yOffset, imgWidth, imgHeight);
+            pdf.save("laporan_transaksi.pdf");
+
+            // Remove the class after some time or after the PDF is generated
+            setTimeout(() => {
+                button.classList.remove('clicked');
+            }, 200);
+        });
+    };
 
     return (
         <div className="transaksi-keuangan-wrapper">
@@ -57,6 +85,7 @@ const TransaksiKeuangan = () => {
                             </tbody>
                         </table>
                     </div>
+                    <button className="buat-laporan" onClick={BuatLaporan}>Buat Laporan</button>
                 </div>
             </div>
             <FooterPrivate />

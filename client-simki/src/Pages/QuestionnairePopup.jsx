@@ -32,6 +32,9 @@ const QuestionnairePopup = ({ onClose }) => {
     return (
         <div className="questionnaire_popup">
             <div className="questionnaire_content">
+                <div className="questionnaire_header">
+                    <span>{currentQuestion + 1}/{questions.length}</span>
+                </div>
                 <h2>{questions[currentQuestion]}</h2>
                 <div className="options">
                     {options.map((option, index) => (
@@ -40,12 +43,19 @@ const QuestionnairePopup = ({ onClose }) => {
                             className={`option_container ${answers[currentQuestion] === option ? 'selected' : ''}`}
                             onClick={() => handleAnswer(index)}
                         >
-                            <div className="option_circle"></div>
-                            <span>{option}</span>
+                            <div className="option_circle" style={{ transform: `scale(${0.6 + index * 0.2})` }}></div>
+                            <span className="option_label">{option}</span>
                         </div>
                     ))}
                 </div>
-                <button className="next_button" onClick={handleNext}>Next</button>
+                <div className="legend">
+                    <p>1 = Sangat Tidak Setuju</p>
+                    <p>2 = Tidak Setuju</p>
+                    <p>3 = Tidak Kedua-duanya</p>
+                    <p>4 = Setuju</p>
+                    <p>5 = Sangat Setuju</p>
+                </div>
+                <button className="next_button" onClick={handleNext}>Next </button>
             </div>
         </div>
     );
