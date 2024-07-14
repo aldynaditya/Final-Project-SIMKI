@@ -24,6 +24,7 @@ const getAllSuratSakit = async (req, res) => {
                 as: 'episode',
                 include: {
                     model: EMRPasien,
+                    as: 'emrpasien',
                     include: {
                         model: Appointment,
                         include: {
@@ -41,19 +42,21 @@ const getAllSuratSakit = async (req, res) => {
         ]
     });
 
-    const result = notifikasi.map(notifikasi => {
-        const emr = notifikasi.episode.emrPasien;
-        const datapasien = emr.appointment.datapasien;
-        const suratsakit = notifikasi.suratsakit;
+    const result = notifikasi
+        .filter(notifikasi => notifikasi.suratsakit !== null)
+        .map(notifikasi => {
+            const emr = notifikasi.episode.emrpasien;
+            const datapasien = emr.appointment.datapasien;
+            const suratsakit = notifikasi.suratsakit;
 
-        return{
-            noEMR: emr.noEMR,
-            namaPasien: datapasien.nama_lengkap,
-            tanggal: notifikasi.updatedAt,
-            status: notifikasi.status,
-            idsuratsakit: suratsakit.uuid
-        }
-    });
+            return{
+                noEMR: emr.noEMR,
+                namaPasien: datapasien.nama_lengkap,
+                tanggal: notifikasi.updatedAt,
+                status: notifikasi.status,
+                idsuratsakit: suratsakit.uuid
+            }
+        });
 
     return result;
 };

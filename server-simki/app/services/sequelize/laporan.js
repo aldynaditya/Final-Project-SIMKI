@@ -22,7 +22,7 @@ const createLaporan = async (req, res) => {
         periode,
         keterangan: version,
         tanggal: new Date(),
-        userId: req.user.id
+        userKlinikId: req.user.id
     });
 
     // Save file info to the database

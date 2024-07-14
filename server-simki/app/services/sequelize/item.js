@@ -26,7 +26,7 @@ const getAllItem = async (req) => {
 
 const createItem = async (req) => {
     const {nama_item, kode_item, harga_satuan_item, stok } = req.body;
-    const userId = req.user.id;
+    const userKlinikId = req.user.id;
 
     const check = await Item.findOne({ where: { nama_item } });
     if (check) throw new BadRequestError('Item telah terdaftar');
@@ -36,7 +36,7 @@ const createItem = async (req) => {
         kode_item: kode_item,
         harga_satuan_item: harga_satuan_item,
         stok: stok,
-        userId
+        userKlinikId
     });
 
     return result

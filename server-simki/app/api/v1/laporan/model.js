@@ -39,7 +39,7 @@ const Laporan = db.define('laporan', {
         type: DataTypes.ENUM('rejected','in process', 'accepted'),
         defaultValue: 'in process',
     },
-    userId: {
+    userKlinikId: {
         type: DataTypes.UUID,
         allowNull: false,
     },

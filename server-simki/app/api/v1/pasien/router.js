@@ -11,12 +11,15 @@ const {
     history,
     detailHistory,
     forgotpassword,
-    resetpassword
+    resetpassword,
+    submit
 } = require('./controller');
 
 const {
     authenticatePasien,
 } = require('../../../middleware/auth');
+
+const checkEMRStatus = require('../../../middleware/checkEMRStatus');
 
 
 router.post('/auth/signup', signup);
@@ -30,6 +33,7 @@ router.post('/appointment', authenticatePasien, makeAppointment);
 router.get('/appointment', authenticatePasien, getmyAppointment);
 router.get('/visit-history', authenticatePasien, history);
 router.get('/visit-details/:id', authenticatePasien, detailHistory);
+router.post('/responses/:id', authenticatePasien, checkEMRStatus, submit);
 
 
 module.exports = router;
