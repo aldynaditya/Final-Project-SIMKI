@@ -3,8 +3,68 @@ import '../../Style/Pasien/SigninPrivate.css';
 import simki_login from '../../images/simki login.png';
 import logoklinik from '../../images/logoklinik.png';
 import undip from '../../images/undip.png';
+import { postData } from '../../utils/fetch';
+import { useDispatch } from 'react-redux';
+import { userLogin } from '../../redux/auth/actions';
+import Modal from 'react-modal';
+import { useNavigate } from 'react-router-dom';
+import { getRolePath } from '../../utils/navigateHelper';
+
+Modal.setAppElement('#root');
 
 const Signin_Private = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [form, setForm] = useState({
+        email: '',
+        password: '',
+    });
+
+    const [alert, setAlert] = useState({
+        status: false,
+        message: '',
+        type: '',
+    });
+
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async () => {
+        setIsLoading(true);
+
+        try {
+            const res = await postData(`/cms/auth/signin`, form);
+
+            if (res?.data?.data) {
+                const { token, role } = res.data.data;
+                dispatch(userLogin(token, role));
+
+                setIsLoading(false);
+
+                // Use the utility function to get the path based on the role
+                const path = getRolePath(role);
+                navigate(path);
+            } else {
+                throw new Error(res?.response?.data?.msg || 'Internal server error');
+            }
+        } catch (err) {
+            console.log("Error response:", err);
+            setIsLoading(false);
+            setAlert({
+                status: true,
+                message: err.message,
+                type: 'danger',
+            });
+        }
+    };
+
+    const closeModal = () => {
+        setAlert({ status: false, message: '', type: '' });
+    };
+
     const [currentTime, setCurrentTime] = useState(new Date());
 
     useEffect(() => {
@@ -32,10 +92,6 @@ const Signin_Private = () => {
         return tanggal.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
     };
 
-    const handleSignIn = () => {
-        // Tambahkan logika untuk sign in di sini
-    };
-
     return (
         <div className='kontainer-signin'>
             <nav className='navbar_signin_nakes'>
@@ -47,23 +103,39 @@ const Signin_Private = () => {
                         Time {formatJam(currentTime)}
                     </div>
                 </div>
-            </nav>
-            <div className="content">
-                <h1 className="text_sign_in">Sign In</h1>
-                <div className="logo_simki_private">
-                    <img src={simki_login} alt="Simki" className="simki" />
+                </nav>
+            <h1 className="text_sign_in">Sign In</h1>
+            <div className="logo_simki_private">
+                <img src={simki_login} alt="Simki" className="simki" />
+            </div>
+            <div className="input-container">
+                <div className="input-email">
+                    <input 
+                        type='email' 
+                        name='email' 
+                        placeholder='Email' 
+                        value={form.email}
+                        onChange={handleChange} 
+                    />
                 </div>
-                <div className="input-container">
-                    <div className="input-email">
-                        <input type='email' placeholder='Email' />
-                    </div>
-                    <div className="input-password">
-                        <input type='password' placeholder='Password' />
-                    </div>
+                <div className="input-password">
+                    <input 
+                        type='password' 
+                        name='password' 
+                        placeholder='Password' 
+                        value={form.password}
+                        onChange={handleChange} 
+                    />
                 </div>
-                <div className="button-container">
-                    <button className='klik_sign_in' onClick={handleSignIn}>Sign In</button>
-                </div>
+            </div>
+            <div className="button-container">
+                <button 
+                    className='klik_sign_in' 
+                    onClick={handleSubmit}
+                    disabled={isLoading}
+                >
+                    {isLoading ? 'Loading...' : 'Sign In'}
+                </button>
             </div>
             <footer className="footer_signin_nakes">
                 <div className="logo_footer">
@@ -74,6 +146,20 @@ const Signin_Private = () => {
                     <p>© copyright {new Date().getFullYear()} Universitas Diponegoro. All rights reserved.</p>
                 </div>
             </footer>
+
+            {/* Modal for displaying error messages */}
+            <Modal
+                isOpen={alert.status}
+                onRequestClose={closeModal}
+                contentLabel="Error Message"
+                className="Modal"
+                overlayClassName="Overlay"
+            >
+                <div className="modal-content">
+                    <p>{alert.message}</p>
+                    <button onClick={closeModal}>Close</button>
+                </div>
+            </Modal>
         </div>
     );
 };

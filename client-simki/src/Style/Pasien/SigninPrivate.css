@@ -21,7 +21,7 @@ html, body {
     align-items: center; /* Mengatur posisi vertikal elemen di tengah */
     padding: 10px; /* Padding untuk memberi ruang di sekitar elemen */
     background-color: #145149; /* Warna latar belakang navbar */
-    height: 50px;
+    height: 0px;
     font-family: 'Open Sans', sans-serif; /* Menggunakan font Open Sans untuk seluruh navbar */
     position: relative; /* Menambahkan posisi relatif untuk penggunaan posisi absolut pada anak elemen */
 }
@@ -155,4 +155,58 @@ html, body {
     color: rgb(255, 255, 255);
     text-align: center;
     margin: 0;
+}
+
+.Modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 300px;
+    max-width: 80%;
+    z-index: 1000;
+}
+
+.Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-content h2 {
+    margin: 0 0 10px 0;
+}
+
+.modal-content p {
+    margin: 0 0 20px 0;
+}
+
+.modal-content button {
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal-content button:hover {
+    background: #0056b3;
 }
