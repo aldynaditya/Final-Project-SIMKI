@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import NavbarPrivate from '../../components/NavbarPrivate';
 import FooterPrivate from '../../components/FooterPrivate';
-import HeaderDokter from './HeaderDokter';
+import Header from '../../components/Header';
 import { useNavigate } from 'react-router-dom';
 import '../../Style/Dokter/OrderObat.css';
 
@@ -17,11 +17,17 @@ const OrderObat = () => {
     const SimpanObat = () => {
         alert('Data Tersimpan'); 
     };
+
+    const Menudokter = [
+        { name: "Jadwal Dokter", path: "/schedule-dokter" },
+        { name: "Pasien", path: "/pasien-dokter" },
+        { name: "Notifikasi", path: "/notifikasi-dokter" }
+      ];
+
     return (
         <div className='order-obat-container'>
             <NavbarPrivate />
-            <HeaderDokter />
-
+            <Header accountName="Nama Akun Dokter" menuItems={Menudokter} />
             <h1 className='text-order-obat'>Order Obat</h1>
             <div className='kolom-order-obat'>
                 <div className='baris-satu'>

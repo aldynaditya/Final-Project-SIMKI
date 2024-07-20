@@ -2,14 +2,22 @@ import React from "react";
 import NavbarPrivate from '../../components/NavbarPrivate';
 import FooterPrivate from '../../components/FooterPrivate';
 import '../../Style/Perawat/JadwalDokter.css';
-import HeaderNrs from './HeaderNrs'; // Perbaiki impor HeaderNrs
+import Header from '../../components/Header'; 
 
 const JadwalDokter = () => {
+
+    const Menuperawat = [
+        { name: "Jadwal perawat", path: "/jadwal-perawat" },
+        { name: "Pasien", path: "/pasien-perawat" },
+        { name: "Kelola Item", path: "/kelola-item" }
+      ];
+
+
     return (
         <div className="jadwal-dokter-wrapper">
             <div className="navbar-header-jadwal">
                 <NavbarPrivate />
-                <HeaderNrs />
+                <Header accountName="Nama Akun Perawat" menuItems={Menuperawat} />
             </div>
             <div className="jadwal-dokter-container">
                 <div className="content-wrapper-jadwal">

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import NavbarPrivate from '../../components/NavbarPrivate';
 import FooterPrivate from '../../components/FooterPrivate';
 import RiwayatEpisode from '../../components/RiwayatEps';
-import HeaderRsp from './HeaderRsp';
+import Header from '../../components/Header';
 import '../../Style/Resepsionis/EmrResepsionis.css';
 import '../../Style/Resepsionis/DetailEpsResep.css';
 
@@ -18,10 +18,17 @@ const DetailEpisode = () => {
         navigate('/hasilkuisioner-popup');
     };
 
+    const MenuResepsionis = [
+        { name: "Pendaftar Baru", path: "/pendaftar-baru" },
+        { name: "Antrian", path: "/antrian" },
+        { name: "Pasien", path: "/pasien-resepsionis" },
+        { name: "Kelola Jadwal", path: "/kelola-jadwal" }
+    ];
+
     return (
         <div className='emr-resepsionis-container'>
             <NavbarPrivate />
-            <HeaderRsp />
+            <Header accountName="Nama Akun Resepsionis" menuItems={MenuResepsionis} />
             <h1 className='text-emr-resepsionis'>EMR Pasien</h1>
             <div className='kolom-emr-resepsionis'>
                 <div className='no-emr-rsp'>

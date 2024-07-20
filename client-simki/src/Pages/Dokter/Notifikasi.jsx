@@ -2,17 +2,23 @@ import React, { useState } from "react";
 import NavbarPrivate from '../../components/NavbarPrivate';
 import FooterPrivate from '../../components/FooterPrivate';
 import '../../Style/Dokter/Notifikasi.css';
-import HeaderDokter from './HeaderDokter';
+import Header from '../../components/Header';
 import SearchBar from "../../components/SearchBar";
 
 const Notifikasi = () => {
     const [rows] = useState(Array.from({ length: 20 }));
 
+    const Menudokter = [
+        { name: "Jadwal Dokter", path: "/schedule-dokter" },
+        { name: "Pasien", path: "/pasien-dokter" },
+        { name: "Notifikasi", path: "/notifikasi-dokter" }
+      ];
+
     return (
         <div className="notifikasi-wrapper">
             <div className="navbar-header-notifikasi">
                 <NavbarPrivate />
-                <HeaderDokter />
+                <Header accountName="Nama Akun Dokter" menuItems={Menudokter} />
             </div>
             <div className="notifikasi-container">
                 <div className="content-wrapper-notifikasi">

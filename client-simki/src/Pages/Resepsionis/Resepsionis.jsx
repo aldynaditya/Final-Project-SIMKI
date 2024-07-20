@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import NavbarPrivate from '../../components/NavbarPrivate';
 import FooterPrivate from '../../components/FooterPrivate';
 import '../../Style/Resepsionis/Resepsionis.css';
-import HeaderRsp from './HeaderRsp';
+import Header from '../../components/Header';
 import list from "../../images/list.png";
 import antrian from "../../images/antrian.png";
 import user from "../../images/user.png";
@@ -28,11 +28,18 @@ const Resepsionis = () => {
     navigate('/kelola-jadwal');
   };
 
+  const MenuResepsionis = [
+    { name: "Pendaftar Baru", path: "/pendaftar-baru" },
+    { name: "Antrian", path: "/antrian" },
+    { name: "Pasien", path: "/pasien-resepsionis" },
+    { name: "Kelola Jadwal", path: "/kelola-jadwal" }
+  ];
+
   return (
     <div className='resepsionis-container'>
       <NavbarPrivate />
       <div className='main-content-resepsionis'>
-        <HeaderRsp />
+      <Header accountName="Nama Akun Resepsionis" menuItems={MenuResepsionis} />
         <h1 className='text_resepsionis'>Dashboard</h1>
         <div className="klik_resepsionis">
           <div className='pendaftar-baru' onClick={handlePendaftarBaru}>

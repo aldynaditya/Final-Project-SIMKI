@@ -2,16 +2,23 @@
 import React from 'react';
 import NavbarPrivate from '../../components/NavbarPrivate';
 import FooterPrivate from '../../components/FooterPrivate';
-import HeaderRsp from './HeaderRsp';
+import Header from '../../components/Header';
 import '../../Style/Resepsionis/IdentitasPasien.css';
 
 
 const IdentitasPasien = () => {
 
+    const MenuResepsionis = [
+        { name: "Pendaftar Baru", path: "/pendaftar-baru" },
+        { name: "Antrian", path: "/antrian" },
+        { name: "Pasien", path: "/pasien-resepsionis" },
+        { name: "Kelola Jadwal", path: "/kelola-jadwal" }
+    ];
+
     return (
         <div className='identitas_pasien_container'>
             <NavbarPrivate />
-            <HeaderRsp />
+            <Header accountName="Nama Akun Resepsionis" menuItems={MenuResepsionis} />
             <div className="content-identitas-pasien">
                 <h1 className='text_identitas_pasien'>Identitas Pasien</h1>
                 <div className='biodata-pasien-perawat'>
