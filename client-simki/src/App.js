@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
 import Home from './Pages/Pasien/Home';
 import Layanan from './Pages/Pasien/layanan';
 import Login from './Pages/Pasien/login';
@@ -56,12 +57,16 @@ import TransaksiKeuangan from './Pages/Keuangan/TransaksiSpv';
 import NotifikasiKeuangan from './Pages/Keuangan/NotifikasiSpv';
 import NotifikasiPimpinan from './Pages/Pimpinan/NotifikasiLead';
 import UploadLaporan from './Pages/Keuangan/UploadLaporan';
+import { listen } from './redux/listener';
 
 
 
 
 
 function App() {
+  useEffect(() => {
+    listen();
+  }, []);
   return (
     <Router>
       <Routes>
