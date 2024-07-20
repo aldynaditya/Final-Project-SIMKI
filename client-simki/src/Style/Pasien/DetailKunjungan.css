@@ -1,0 +1,177 @@
+/* Atur html dan body untuk menghilangkan margin dan padding serta mengatur tinggi */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Menjamin tinggi minimal 100% dari viewport */
+}
+
+/* Kontainer utama */
+.detail_kunjungan_container {
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Membiarkan kontainer ini mengambil ruang yang tersisa */
+}
+
+/* Judul halaman */
+.text_detail {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center; /* Pusatkan judul untuk tampilan yang lebih baik di layar kecil dan besar */
+}
+
+/* Kontainer formulir */
+.form_container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Formulir field */
+.form_field {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form_field > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.form_field span {
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.form_field input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.obat_pasien input, .tindakan_pasien input {
+    height: 70px; /* Tinggi input untuk obat dan tindakan yang lebih besar */
+}
+
+/* Tombol kuisioner */
+.kuisioner {
+    background-color: #145149;
+    color: white;
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 30px;
+    display: inline-block;
+    margin-bottom: 150px; /* Margin bawah yang cukup untuk tombol */
+}
+
+.kuisioner:hover {
+    background-color: #7DAEA8;
+}
+
+/* Footer */
+footer {
+    background-color: #f1f1f1;
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+    margin-top: auto; /* memastikan footer tetap di bawah */
+}
+
+/* Penyesuaian Responsif */
+
+/* Untuk perangkat dengan layar kecil (misalnya, ponsel) */
+@media (max-width: 600px) {
+    .text_detail {
+        font-size: 20px; /* Ukuran font judul lebih kecil untuk layar kecil */
+        margin-bottom: 10px; /* Margin bawah yang lebih kecil untuk layar kecil */
+    }
+
+    .form_field span {
+        font-size: 14px; /* Ukuran font label yang lebih kecil untuk layar kecil */
+    }
+
+    .form_field input {
+        font-size: 14px; /* Ukuran font input yang lebih kecil untuk layar kecil */
+        padding: 8px; /* Padding yang lebih kecil untuk input pada layar kecil */
+    }
+
+    .obat_pasien input, .tindakan_pasien input {
+        height: 50px; /* Tinggi input yang lebih kecil untuk layar kecil */
+    }
+
+    .kuisioner {
+        width: 80px; /* Lebar tombol yang lebih kecil untuk layar kecil */
+        height: 25px; /* Tinggi tombol yang lebih kecil untuk layar kecil */
+        font-size: 14px; /* Ukuran font tombol yang lebih kecil untuk layar kecil */
+    }
+
+    .kuisioner:hover {
+        background-color: #7DAEA8;
+    }
+}
+
+/* Untuk perangkat dengan layar sedang hingga besar (misalnya, tablet dan PC) */
+@media (min-width: 601px) and (max-width: 1023px) {
+    .text_detail {
+        font-size: 24px; /* Ukuran font judul yang sesuai untuk layar menengah */
+    }
+
+    .form_field span {
+        font-size: 16px; /* Ukuran font label yang sesuai untuk layar menengah */
+    }
+
+    .form_field input {
+        font-size: 16px; /* Ukuran font input yang sesuai untuk layar menengah */
+    }
+
+    .obat_pasien input, .tindakan_pasien input {
+        height: 60px; /* Tinggi input yang sesuai untuk layar menengah */
+    }
+
+    .kuisioner {
+        width: 100px; /* Lebar tombol yang sesuai untuk layar menengah */
+        height: 30px; /* Tinggi tombol yang sesuai untuk layar menengah */
+        font-size: 16px; /* Ukuran font tombol yang sesuai untuk layar menengah */
+    }
+}
+
+/* Untuk perangkat dengan layar lebih besar (misalnya, PC) */
+@media (min-width: 1024px) {
+    .text_detail {
+        font-size: 28px; /* Ukuran font judul yang lebih besar untuk layar besar */
+    }
+
+    .form_field span {
+        font-size: 18px; /* Ukuran font label yang lebih besar untuk layar besar */
+    }
+
+    .form_field input {
+        font-size: 18px; /* Ukuran font input yang lebih besar untuk layar besar */
+    }
+
+    .obat_pasien input, .tindakan_pasien input {
+        height: 70px; /* Tinggi input yang lebih besar untuk layar besar */
+    }
+
+    .kuisioner {
+        width: 120px; /* Lebar tombol yang lebih besar untuk layar besar */
+        height: 35px; /* Tinggi tombol yang lebih besar untuk layar besar */
+        font-size: 18px; /* Ukuran font tombol yang lebih besar untuk layar besar */
+    }
+}

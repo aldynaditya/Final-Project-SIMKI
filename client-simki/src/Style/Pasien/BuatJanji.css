@@ -1,0 +1,195 @@
+/* Atur html dan body untuk menghilangkan margin dan padding serta mengatur tinggi */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Kontainer utama */
+.BuatJanji_container {
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Ini memungkinkan kontainer utama mengisi ruang yang tersedia */
+}
+
+/* Judul halaman */
+.text_buatjanji {
+    margin: 150px 0 50px 0;
+    text-align: center; /* Pusatkan judul untuk tampilan yang lebih baik di layar besar dan kecil */
+}
+
+/* Kontainer formulir */
+.form_container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+}
+
+/* Grup formulir */
+.form_group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-radius: 10px;
+}
+
+/* Input dan select dalam formulir */
+.form_container select, 
+.form_container input[type="date"], 
+.form_container input[type="text"],
+.form_container input[type="time"] { /* Tambahkan tipe input "time" */
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background-color: #fff;
+    color: #333;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Kolom keluhan */
+.keluhan {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+.keluhan input {
+    width: 100%; /* Menyamakan lebar dengan kolom input lainnya */
+    height: 200px; /* Meningkatkan tinggi kolom input */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-size: 20px;
+    text-align: left;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* Tombol buat janji */
+.klik_buatjanji {
+    background-color: #145149;
+    color: white;
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 30px;
+    display: inline-block;
+    margin-bottom: 150px;
+}
+
+.klik_buatjanji:hover {
+    background-color: #7DAEA8;
+}
+
+/* Footer */
+.footer {
+    background-color: #145149;
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+}
+
+/* Penyesuaian Responsif */
+
+/* Untuk perangkat dengan layar kecil (misalnya, ponsel) */
+@media (max-width: 600px) {
+    .text_buatjanji {
+        margin: 80px 0 20px 0;
+        font-size: 24px;
+        margin-top: 300px;
+    }
+
+    .form_container {
+        width: 90%;
+        max-width: none; /* Menghilangkan batas maksimal lebar */
+        padding: 10px; /* Menambahkan padding untuk tampilan yang lebih baik di layar kecil */
+    }
+
+    .form_group {
+        flex-direction: column;
+    }
+
+    .form_container select, 
+    .form_container input[type="date"], 
+    .form_container input[type="text"],
+    .form_container input[type="time"] {
+        font-size: 14px; /* Ukuran font yang lebih kecil jika perlu */
+    }
+
+    .keluhan input {
+        height: 150px; /* Menyesuaikan tinggi kolom input pada layar kecil */
+        font-size: 16px; /* Ukuran font yang lebih kecil untuk keterbacaan */
+    }
+
+    .klik_buatjanji {
+        width: 100%; /* Lebar tombol menyesuaikan lebar layar */
+        height: 40px; /* Tinggi tombol menyesuaikan ukuran layar */
+        font-size: 18px; /* Ukuran font yang lebih besar untuk tombol */
+        margin-bottom: 50px; /* Mengurangi jarak bawah untuk layar kecil */
+    }
+}
+
+/* Untuk perangkat dengan layar sedang hingga besar (misalnya, tablet dan PC) */
+@media (min-width: 601px) and (max-width: 1023px) {
+    .text_buatjanji {
+        margin: 100px 0 30px 0;
+        font-size: 28px; 
+        margin-top: 300px;
+    }
+
+    .form_container {
+        width: 90%;
+        max-width: 800px;
+    }
+
+    .keluhan input {
+        height: 180px; /* Menyesuaikan tinggi kolom input pada layar menengah */
+        font-size: 18px; /* Ukuran font yang sesuai untuk layar menengah */
+    }
+
+    .klik_buatjanji {
+        width: 120px; /* Ukuran tombol lebih besar untuk layar menengah */
+        height: 35px; /* Tinggi tombol lebih besar untuk layar menengah */
+        font-size: 18px; /* Ukuran font yang lebih besar untuk tombol */
+    }
+}
+
+/* Untuk perangkat dengan layar lebih besar (misalnya, PC) */
+@media (min-width: 1024px) {
+    .text_buatjanji {
+        margin: 150px 0 50px 0;
+        font-size: 32px; /* Ukuran font yang lebih besar untuk layar besar */
+    }
+
+    .form_container {
+        width: 80%;
+        max-width: 800px;
+    }
+
+    .keluhan input {
+        height: 200px; /* Tinggi kolom input yang lebih besar untuk layar besar */
+        font-size: 20px; /* Ukuran font yang lebih besar untuk layar besar */
+    }
+
+    .klik_buatjanji {
+        width: 150px; /* Lebar tombol lebih besar untuk layar besar */
+        height: 40px; /* Tinggi tombol lebih besar untuk layar besar */
+        font-size: 20px; /* Ukuran font yang lebih besar untuk tombol */
+    }
+}

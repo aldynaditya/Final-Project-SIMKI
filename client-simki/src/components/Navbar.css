@@ -10,7 +10,6 @@
 body, html {
   width: 100%;
   height: 100%;
-  padding-top: 80px; /* Add padding to the top to prevent content overlap with navbar */
   font-family: 'Open Sans', sans-serif; /* Apply Open Sans font to the entire body */
 }
 
@@ -22,7 +21,8 @@ body, html {
   justify-content: space-between;
   background: #145149;
   padding: 10px 20px; /* Add some padding for better aesthetics */
-  position: fixed;
+  position: -webkit-sticky; /* For Safari */
+  position: sticky; /* For other browsers */
   top: 0;
   left: 0;
   z-index: 1000;

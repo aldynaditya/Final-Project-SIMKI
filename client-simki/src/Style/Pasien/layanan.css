@@ -1,0 +1,139 @@
+/* Menyusun halaman dengan Flexbox */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Container untuk konten utama */
+.layanan_container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 150px;
+}
+
+/* Margin dan padding untuk elemen dalam layanan */
+.layanan_kami {
+  text-align: center;
+  margin: 20px 0;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 2rem;
+
+}
+
+/* Gaya untuk elemen gambar klinik */
+.klinik_dipo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px 0;
+  padding: 0 15px;
+}
+
+.klinik_dipo img {
+  width: 100%;
+  height: auto;
+}
+
+/* Gaya untuk deskripsi layanan */
+.desc-layanan {
+  text-align: justify;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
+  max-width: 1200px;
+  width: 100%;
+  margin: 20px auto;
+  padding: 0 15px;
+  margin-bottom: 200px;
+}
+
+.footer {
+  width: 100%;
+  background-color: #145149;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  position: relative;
+  bottom: 0;
+}
+
+/* Media Queries */
+
+/* Tablet (landscape) dan perangkat yang lebih besar */
+@media (min-width: 768px) {
+  .layanan_kami {
+    font-size: 2.5rem;
+  }
+
+  .desc-layanan {
+    font-size: 1.2rem;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .layanan_kami {
+    margin-top: 100px;
+  }
+
+  .desc-layanan {
+    font-size: 1.5rem;
+  }
+}
+
+/* Telepon seluler */
+@media (max-width: 767px) {
+  .layanan_kami {
+    margin-top: 60px;
+    font-size: 1.5rem;
+  }
+
+  .desc-layanan {
+    font-size: 1rem;
+    padding: 0 10px;
+  }
+
+  .klinik_dipo {
+    padding: 0 10px;
+  }
+
+  .footer {
+    padding: 15px;
+  }
+}
+
+/* Navbar responsif */
+.navbar {
+  width: 100%;
+  background: #145149;
+  color: #fff;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 15px;
+}
+
+@media (max-width: 767px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar a {
+    padding: 10px;
+  }
+}
