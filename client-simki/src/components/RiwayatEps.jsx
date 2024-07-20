@@ -3,7 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import './RiwayatEps.css';
 
 const RiwayatEpisode = () => {
-    const [rows] = useState(Array.from({ length: 5 })); // Contoh data dummy
+    const [rows] = useState([
+        { date: '27/5/2024', doctor: 'dr. ', department: 'Poli ' },
+        { date: '26/5/2024', doctor: 'dr. ', department: 'Poli ' },
+        { date: '25/5/2024', doctor: 'dr. ', department: 'Poli ' }
+    ]);
     const navigate = useNavigate();
 
     const LihatDetailEps = () => {
@@ -22,22 +26,44 @@ const RiwayatEpisode = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {rows.map((_, index) => (
+                    {rows.map((row, index) => (
                         <tr key={index}>
                             <td className='kolom-tgl-eps-rsp'>
-                                <p className='tgl-eps-rsp'>27/7/2024</p>
+                                <p className='tgl-eps-rsp'>{row.date}</p>
                                 <button className='lihat-emr-rsp' onClick={LihatDetailEps}>Lihat</button>
                             </td>
                             <td className='kolom-dr-eps-rsp'>
-                                <p className='dr-eps-rsp'>dr.</p>
-                                <p className='poli-eps-rsp'>Poli</p>
+                                <p className='dr-eps-rsp'>{row.doctor}</p>
+                                <p className='poli-eps-rsp'>{row.department}</p>
                             </td>
                             <td className='kolom-soap-eps-rsp'>
-                                <input type='text' className='s-eps-rsp' placeholder='Subjective' />
-                                <input type='text' className='o-eps-rsp' placeholder='Objective' />
-                                <input type='text' className='a-eps-rsp' placeholder='Assessment' />
-                                <input type='text' className='p-eps-rsp' placeholder='Plan' />
-                                <input type='text' className='tindakan-eps-rsp' placeholder='Tindakan' />
+                                <ul className='soap-list'>
+                                    <li>
+                                        <div className='soap-entry'>
+                                            <span>S :</span> 
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div className='soap-entry'>
+                                            <span>O :</span> 
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div className='soap-entry'>
+                                            <span>A :</span> 
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div className='soap-entry'>
+                                            <span>P :</span> 
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div className='soap-entry'>
+                                            <span>Tindakan :</span> 
+                                        </div>
+                                    </li>
+                                </ul>
                             </td>
                         </tr>
                     ))}

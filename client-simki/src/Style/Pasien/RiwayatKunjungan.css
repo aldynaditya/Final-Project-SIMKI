@@ -1,0 +1,174 @@
+/* Atur html dan body untuk menghilangkan margin dan padding serta mengatur tinggi */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* Kontainer utama */
+.riwayat_kunjungan_container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Judul halaman */
+.text_riwayat {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start; /* Pusatkan judul untuk tampilan yang lebih baik di layar kecil dan besar */
+    align-items: center;
+    margin: 20px; /* Margin yang lebih kecil untuk layar kecil */
+    padding: 10px 0;
+}
+
+.text_riwayat h1 {
+    font-size: 24px; /* Ukuran font yang sesuai untuk layar kecil */
+}
+
+/* Kontainer tabel */
+.tabel_riwayat_kunjungan {
+    margin: 20px;
+    flex: 1;
+}
+
+/* Tabel riwayat kunjungan */
+.tabel_riwayat_kunjungan table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px; /* Ukuran font yang lebih kecil pada layar kecil */
+    text-align: center;  /* Pusatkan teks secara horizontal */
+}
+
+/* Sel tabel */
+.tabel_riwayat_kunjungan th, .tabel_riwayat_kunjungan td {
+    padding: 8px;
+    border-bottom: 1px solid black;
+    text-align: center;  /* Pusatkan teks secara horizontal */
+    vertical-align: middle;  /* Pusatkan teks secara vertikal */
+}
+
+.tabel_riwayat_kunjungan th {
+    background-color: #f2f2f2;
+    cursor: pointer;
+}
+
+.tabel_riwayat_kunjungan tr {
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.2s ease;
+}
+
+.tabel_riwayat_kunjungan tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Tombol "Selengkapnya" */
+.tombol_selengkapnya {
+    background-color: #145149;
+    color: white;
+    width: 100px; /* Lebar tombol lebih kecil pada layar kecil */
+    height: 30px; /* Tinggi tombol lebih kecil pada layar kecil */
+    border: none;
+    border-radius: 5px;
+    font-size: 14px; /* Ukuran font tombol lebih kecil pada layar kecil */
+    cursor: pointer;
+    text-align: center;
+    line-height: 30px;
+    display: inline-block;
+}
+
+.tombol_selengkapnya:hover {
+    background-color: #7DAEA8;
+}
+
+/* Footer */
+footer {
+    background-color: #f1f1f1;
+    width: 100%;
+    padding: 10px 0;
+    box-sizing: border-box;
+    text-align: center;
+    margin-top: auto; /* memastikan footer tetap di bawah */
+}
+
+/* Penyesuaian Responsif */
+
+/* Untuk perangkat dengan layar kecil (misalnya, ponsel) */
+@media (max-width: 600px) {
+    .text_riwayat {
+        margin: 10px;
+        padding: 10px 0;
+    }
+
+    .text_riwayat h1 {
+        font-size: 20px; /* Ukuran font yang lebih kecil untuk layar kecil */
+    }
+
+    .tabel_riwayat_kunjungan table {
+        font-size: 14px; /* Ukuran font yang lebih kecil untuk tabel pada layar kecil */
+    }
+
+    .tabel_riwayat_kunjungan th, .tabel_riwayat_kunjungan td {
+        padding: 6px; /* Padding yang lebih kecil untuk tabel pada layar kecil */
+    }
+
+    .tombol_selengkapnya {
+        width: 100px; /* Lebar tombol menyesuaikan ukuran layar */
+        height: 30px; /* Tinggi tombol menyesuaikan ukuran layar */
+        font-size: 12px; /* Ukuran font yang lebih kecil untuk tombol */
+    }
+}
+
+/* Untuk perangkat dengan layar sedang hingga besar (misalnya, tablet dan PC) */
+@media (min-width: 601px) and (max-width: 1023px) {
+    .text_riwayat {
+        margin: 20px;
+        padding: 15px 0;
+    }
+
+    .text_riwayat h1 {
+        font-size: 28px; /* Ukuran font yang sesuai untuk layar menengah */
+    }
+
+    .tabel_riwayat_kunjungan table {
+        font-size: 16px; /* Ukuran font yang sesuai untuk tabel pada layar menengah */
+    }
+
+    .tabel_riwayat_kunjungan th, .tabel_riwayat_kunjungan td {
+        padding: 8px; /* Padding yang sesuai untuk tabel pada layar menengah */
+    }
+
+    .tombol_selengkapnya {
+        width: 120px; /* Lebar tombol lebih besar untuk layar menengah */
+        height: 35px; /* Tinggi tombol lebih besar untuk layar menengah */
+        font-size: 14px; /* Ukuran font tombol yang sesuai untuk layar menengah */
+    }
+}
+
+/* Untuk perangkat dengan layar lebih besar (misalnya, PC) */
+@media (min-width: 1024px) {
+    .text_riwayat {
+        margin: 20px;
+        padding: 20px 0;
+    }
+
+    .text_riwayat h1 {
+        font-size: 32px; /* Ukuran font yang lebih besar untuk layar besar */
+    }
+
+    .tabel_riwayat_kunjungan table {
+        font-size: 18px; /* Ukuran font yang lebih besar untuk tabel pada layar besar */
+    }
+
+    .tabel_riwayat_kunjungan th, .tabel_riwayat_kunjungan td {
+        padding: 10px; /* Padding yang lebih besar untuk tabel pada layar besar */
+    }
+
+    .tombol_selengkapnya {
+        width: 150px; /* Lebar tombol lebih besar untuk layar besar */
+        height: 40px; /* Tinggi tombol lebih besar untuk layar besar */
+        font-size: 16px; /* Ukuran font tombol yang lebih besar untuk layar besar */
+    }
+}

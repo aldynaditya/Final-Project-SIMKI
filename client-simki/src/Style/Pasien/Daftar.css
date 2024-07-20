@@ -1,0 +1,182 @@
+/* Gaya Umum */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Open Sans', sans-serif; /* Terapkan font ke seluruh halaman */
+}
+
+.regist_container {
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* Memungkinkan konten utama mengisi sisa ruang */
+}
+
+/* Gaya untuk elemen di halaman registrasi */
+h1 {
+  text-align: center;
+  margin-top: 150px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  flex: 1; /* Membuat form-container mengisi ruang yang tersisa */
+}
+
+.form-fields {
+  width: 80%;
+  max-width: 600px;
+  margin: 20px auto;
+  font-size: 16px;
+}
+
+.form-fields input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.form-fields .ttl {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.form-fields .ttl input {
+  flex: 1;
+}
+
+.form-fields .daftar-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.form-fields .daftar {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 260px;
+  height: 65px;
+  color: #fff;
+  background: #7DAEA8;
+  border-radius: 50px;
+  font-size: 19px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  text-align: center; /* Pastikan teks berada di tengah */
+  margin-bottom: 150px;
+}
+
+.form-fields .daftar:hover {
+  background-color: #5F8882;
+}
+
+/* Gaya untuk footer */
+.footer {
+  width: 100%;
+  background-color: #145149;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  margin-top: auto; /* Memastikan footer berada di bagian bawah */
+}
+
+/* Penyesuaian Responsif */
+
+/* Untuk perangkat dengan layar kecil (misalnya, ponsel) */
+@media (max-width: 600px) {
+  .form-fields {
+    width: 90%; /* Gunakan lebih banyak lebar pada layar kecil */
+    font-size: 14px; /* Sesuaikan ukuran font untuk keterbacaan */
+  }
+
+  .form-fields input {
+    padding: 8px; /* Padding sedikit lebih kecil untuk mobile */
+    font-size: 14px; /* Sesuaikan ukuran font untuk input mobile */
+  }
+
+  .form-fields .ttl {
+    flex-direction: column; /* Susun input tempat lahir dan tanggal lahir secara vertikal */
+  }
+
+  .form-fields .ttl input {
+    width: 100%; /* Lebar penuh untuk input yang ditumpuk */
+    margin-bottom: 10px; /* Tambahkan jarak antara input yang ditumpuk */
+  }
+
+  .form-fields .daftar {
+    width: 100%; /* Tombol lebar penuh pada mobile */
+    font-size: 16px; /* Ukuran font lebih kecil pada mobile */
+  }
+
+  h1 {
+    margin-top: 250px; /* Sesuaikan margin atas untuk layar kecil */
+    font-size: 30px; /* Ukuran font lebih kecil untuk heading */
+  }
+}
+
+@media (min-width: 600px) {
+  .form-fields {
+    width: 90%; /* Gunakan lebih banyak lebar pada layar kecil */
+    font-size: 14px; /* Sesuaikan ukuran font untuk keterbacaan */
+  }
+
+  .form-fields input {
+    padding: 8px; /* Padding sedikit lebih kecil untuk mobile */
+    font-size: 14px; /* Sesuaikan ukuran font untuk input mobile */
+  }
+
+  .form-fields .ttl {
+    flex-direction: column; /* Susun input tempat lahir dan tanggal lahir secara vertikal */
+  }
+
+  .form-fields .ttl input {
+    width: 100%; /* Lebar penuh untuk input yang ditumpuk */
+    margin-bottom: 10px; /* Tambahkan jarak antara input yang ditumpuk */
+  }
+
+  .form-fields .daftar {
+    width: 100%; /* Tombol lebar penuh pada mobile */
+    font-size: 16px; /* Ukuran font lebih kecil pada mobile */
+  }
+
+  h1 {
+    margin-top: 250px; /* Sesuaikan margin atas untuk layar kecil */
+    font-size: 30px; /* Ukuran font lebih kecil untuk heading */
+  }
+}
+
+/* Untuk perangkat dengan layar lebih besar (misalnya, tablet dan PC) */
+@media (min-width: 1024px) {
+  .form-fields {
+    width: 70%; /* Sesuaikan lebar untuk layar yang lebih besar */
+    font-size: 16px; /* Pertahankan ukuran font untuk keterbacaan */
+  }
+
+  .form-fields .ttl {
+    flex-direction: row; /* Susun input secara berdampingan */
+  }
+
+  .form-fields .ttl input {
+    margin-bottom: 0; /* Hapus margin bawah untuk input yang berdampingan */
+  }
+
+  .form-fields .daftar {
+    width: 260px; /* Ukuran tombol tetap konsisten */
+    font-size: 19px; /* Ukuran font tetap konsisten */
+  }
+
+  h1 {
+    margin-top: 150px; /* Sesuaikan margin atas untuk layar besar */
+    font-size: 2rem; /* Ukuran font lebih besar untuk heading */
+  }
+}

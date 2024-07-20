@@ -1,0 +1,99 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Container utama untuk halaman kebijakan privasi */
+.privasi_container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Styling untuk judul halaman kebijakan privasi */
+.judul-privasi {
+  text-align: center;
+  margin-top: 150px;
+  font-size: 28px; /* Ukuran font judul pada perangkat besar */
+}
+
+/* Styling untuk deskripsi kebijakan privasi */
+.desc-privasi {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: justify;
+  margin: 20px 100px; /* Margin pada perangkat besar */
+  line-height: 2; /* Line height untuk keterbacaan */
+  font-size: 18px; /* Ukuran font untuk perangkat besar */
+  margin-bottom: 200px;
+  margin-top: 150px;
+}
+
+.desc-privasi p {
+  max-width: 100%; /* Memastikan lebar maksimal p sesuai dengan kontainer */
+}
+
+.desc-privasi span {
+  display: block;
+}
+
+/* Styling untuk footer */
+.footer {
+  width: 100%;
+  background-color: #145149;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  margin-top: 200px; /* Memastikan footer berada di bagian bawah */
+}
+
+/* Responsive adjustments */
+
+/* Untuk perangkat dengan layar kecil (misalnya, ponsel) */
+@media (max-width: 600px) {
+  .judul-privasi {
+    margin-top: 250px; /* Margin atas lebih kecil pada perangkat kecil */
+    font-size: 24px; /* Ukuran font judul lebih kecil pada perangkat kecil */
+  }
+
+  .desc-privasi {
+    margin: 10px; /* Margin lebih kecil pada perangkat kecil */
+    font-size: 16px; /* Ukuran font lebih kecil pada perangkat kecil */
+    padding: 10px; /* Padding lebih kecil pada perangkat kecil */
+  }
+}
+
+/* Untuk perangkat dengan layar menengah (misalnya, tablet) */
+@media (min-width: 601px) and (max-width: 1023px) {
+  .judul-privasi {
+    margin-top: 250px; /* Margin atas lebih kecil pada perangkat menengah */
+    font-size: 26px; /* Ukuran font judul sesuai pada perangkat menengah */
+  }
+
+  .desc-privasi {
+    margin: 20px; /* Margin lebih kecil pada perangkat menengah */
+    font-size: 17px; /* Ukuran font sesuai pada perangkat menengah */
+    padding: 15px; /* Padding lebih besar pada perangkat menengah */
+  }
+}
+
+/* Untuk perangkat dengan layar besar (misalnya, PC) */
+@media (min-width: 1024px) {
+  .judul-privasi {
+    margin-top: 150px; /* Margin atas sesuai pada perangkat besar */
+    font-size: 28px; /* Ukuran font judul lebih besar pada perangkat besar */
+  }
+
+  .desc-privasi {
+    margin: 20px 100px; /* Margin pada perangkat besar */
+    font-size: 18px; /* Ukuran font sesuai pada perangkat besar */
+    padding: 20px; /* Padding pada perangkat besar */
+  }
+}

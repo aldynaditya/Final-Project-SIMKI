@@ -1,0 +1,158 @@
+/* Import font Open Sans dari Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.kontainer-signin {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.navbar_signin_nakes {
+    display: flex;
+    justify-content: space-between; /* Mengatur jarak antara elemen di dalam flex container */
+    align-items: center; /* Mengatur posisi vertikal elemen di tengah */
+    padding: 10px; /* Padding untuk memberi ruang di sekitar elemen */
+    background-color: #145149; /* Warna latar belakang navbar */
+    height: 50px;
+    font-family: 'Open Sans', sans-serif; /* Menggunakan font Open Sans untuk seluruh navbar */
+    position: relative; /* Menambahkan posisi relatif untuk penggunaan posisi absolut pada anak elemen */
+}
+
+.konten-navbar {
+    display: flex;
+    align-items: center; /* Mengatur posisi vertikal elemen di tengah */
+    width: 100%; /* Pastikan elemen ini mengambil seluruh lebar navbar */
+    position: relative;
+}
+
+.tanggal {
+    /* Styling untuk tanggal (terletak di tengah navbar) */
+    position: absolute; /* Gunakan posisi absolut untuk menempatkan tanggal di tengah */
+    left: 50%; /* Posisi horizontal di tengah */
+    transform: translateX(-50%); /* Pindahkan ke kiri sebanyak 50% dari lebar elemen untuk mengatur posisi di tengah */
+    color: white; /* Warna teks putih */
+}
+
+.jam_signin {
+    /* Styling untuk jam (terletak di ujung kanan navbar) */
+    font-size: 16px; /* Ukuran font jam */
+    margin-left: auto; /* Meletakkan jam ke ujung kanan */
+    padding-right: 20px; /* Padding di sebelah kanan untuk memberi ruang agar tidak terlalu dekat dengan elemen lain */
+    color: white; /* Warna teks putih */
+}
+
+.text_sign_in {
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.logo_simki_private {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.simki {
+    width: 150px; /* Mengatur lebar gambar */
+    height: 150px; /* Mengatur tinggi gambar */
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* Mengatur jarak antar elemen */
+    margin-top: 20px;
+}
+
+.input-email input,
+.input-password input {
+    width: 400px; /* Lebar input */
+    height: 30px; /* Tinggi input */
+    border-radius: 5px; /* Lengkungan sudut */
+    border: 1px solid #ccc; /* Warna border */
+    padding: 5px; /* Padding di dalam input */
+    font-family: 'Open Sans', sans-serif; /* Menggunakan font Open Sans */
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    width: 100%; /* Pastikan elemen ini mengambil seluruh lebar kontainer */
+    margin-top: 20px; /* Tambahkan margin atas untuk memberi jarak dari input fields */
+}
+
+.klik_sign_in {
+    background-color: #7DAEA8;
+    color: black;
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 10px; /* Lengkungan sudut */
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold; /* Membuat teks Sign In menjadi bold */
+    line-height: 30px;
+    display: inline-block;
+}
+
+.klik_sign_in:hover {
+    background-color: #1E7E72;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 200px;
+}
+
+.footer_signin_nakes {
+    background-color: #145149;
+    padding: 20px 0;
+    width: 100%;
+    flex-shrink: 0; /* Pastikan footer tidak mengecil */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo_footer {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px; /* Space between logos and copyright */
+}
+
+.logo_klinik,
+.undip {
+    width: auto; /* Adjust the size as needed */
+    height: auto; /* Adjust the size as needed */
+}
+
+.footer-copyright {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.footer-copyright p {
+    font-size: 13px;
+    line-height: 15px;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    margin: 0;
+}

@@ -22,14 +22,12 @@ body {
     border-collapse: collapse;
     margin: 20px 0;
     font-size: 18px;
-    text-align: center;  /* Pusatkan teks secara horizontal */
 }
 
 .tabel-eps-rsp th, .tabel-eps-rsp td {
     padding: 12px 15px;
     border: 1px solid #ddd;
-    text-align: center;  /* Pusatkan teks secara horizontal */
-    vertical-align: center;  /* Pusatkan teks secara vertikal */
+    text-align: left;
 }
 
 .tabel-eps-rsp th {
@@ -53,7 +51,9 @@ body {
 
 .tgl-eps-rsp{
     text-align: left;
+    margin-bottom: 10px;
 }
+
 .lihat-emr-rsp{
     background-color: #7DAEA8;
     color: white;
@@ -83,6 +83,16 @@ body {
     gap: 10px;
 }
 
+.soap-entry {
+    display: flex;
+    align-items: center;
+}
+
+.soap-entry span {
+    margin-right: 10px;
+    width: 80px;
+}
+
 .s-eps-rsp, .o-eps-rsp, .a-eps-rsp, .p-eps-rsp, .tindakan-eps-rsp{
     border-radius: 5px;
     width: 100%;
@@ -90,4 +100,3 @@ body {
     padding: 10px;
     font-size: 16px;
 }
-
