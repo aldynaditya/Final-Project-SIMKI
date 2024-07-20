@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import '../../Style/Pasien/SigninPrivate.css';
+import '../../Style/signin/SigninPrivate.css';
 import simki_login from '../../images/simki login.png';
 import logoklinik from '../../images/logoklinik.png';
 import undip from '../../images/undip.png';

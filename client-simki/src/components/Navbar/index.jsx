@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import './Navbar.css';
-import logoklinik from '../images/logoklinik.png';
-import undip from '../images/undip.png';
-import phone from '../images/phone.png';
-import pin from '../images/pin.png';
+import '../../Style/components/Navbar.css';
+import logoklinik from '../../images/logoklinik.png';
+import undip from '../../images/undip.png';
+import phone from '../../images/phone.png';
+import pin from '../../images/pin.png';
 import { Link } from 'react-router-dom';
-import './reset.css';
+import '../../Style/components/reset.css';
 
 const Navbar = () => {
   const [activeLink, setActiveLink] = useState('');

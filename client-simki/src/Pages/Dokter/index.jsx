@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import NavbarPrivate from '../../components/NavbarPrivate';
 import FooterPrivate from '../../components/FooterPrivate';
 import '../../Style/Dokter/Dokter.css';
-import HeaderDokter from './HeaderDokter';
+import Header from '../../components/Header'; // Import the reusable Header component
 import notif from "../../images/notif.png";
 import user from "../../images/user.png";
 import agenda from "../../images/agenda.png";
@@ -23,25 +23,31 @@ const Dokter = () => {
     navigate('/jadwal-dokter');
   };
 
+  const Menudokter = [
+    { name: "Jadwal Dokter", path: "/schedule-dokter" },
+    { name: "Pasien", path: "/pasien-dokter" },
+    { name: "Notifikasi", path: "/notifikasi-dokter" }
+  ];
+
   return (
     <div className='dokter-container'>
       <NavbarPrivate />
       <div className='main-content-dokter'>
-        <HeaderDokter />
+        <Header accountName="Nama Akun Dokter" menuItems={Menudokter} /> {/* Use the reusable Header component */}
         <h1 className='text_dokter'>Dashboard</h1>
         <div className="klik_dokter">
-            <div className="jadwal_dokter" onClick={JadwalDokter}>
-                <img src={agenda} alt='jadwal_dokter' className='icon' />
-                <p>JADWAL DOKTER</p>
-            </div>
-            <div className="pasien" onClick={handlePasien}>
-                <img src={user} alt='pasien' className='icon' />
-                <p>PASIEN</p>
-            </div>
-            <div className="notifikasi" onClick={NotifikasiDokter}>
-                <img src={notif} alt='pasien' className='icon' />
-                <p>NOTIFIKASI</p>
-            </div>
+          <div className="jadwal_dokter" onClick={JadwalDokter}>
+            <img src={agenda} alt='jadwal_dokter' className='icon' />
+            <p>JADWAL DOKTER</p>
+          </div>
+          <div className="pasien" onClick={handlePasien}>
+            <img src={user} alt='pasien' className='icon' />
+            <p>PASIEN</p>
+          </div>
+          <div className="notifikasi" onClick={NotifikasiDokter}>
+            <img src={notif} alt='pasien' className='icon' />
+            <p>NOTIFIKASI</p>
+          </div>
         </div>
       </div>
       <FooterPrivate className='footerprivate'/>

@@ -1,5 +1,5 @@
 import React from 'react';
-import './FooterPrivate.css';
+import '../../Style/components/FooterPrivate.css';
 
 const FooterPrivate = () => {
     return (

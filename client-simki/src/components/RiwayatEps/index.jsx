@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './RiwayatEps.css';
+import '../../Style/components/RiwayatEps.css';
 
 const RiwayatEpisode = () => {
     const [rows] = useState([
