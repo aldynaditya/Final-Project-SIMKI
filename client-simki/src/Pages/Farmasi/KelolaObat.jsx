@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import NavbarPrivate from '../../components/NavbarPrivate';
 import FooterPrivate from '../../components/FooterPrivate';
 import '../../Style/Perawat/KelolaItem.css';
-import HeaderFarmasi from './HeaderFarmasi';
+import Header from '../../components/Header';
 import SearchBar from "../../components/SearchBar";  // Pastikan nama komponen dan path sesuai
 
 const KelolaObat = () => {
@@ -14,11 +14,16 @@ const KelolaObat = () => {
         navigate('/tambah-obat');
     };
 
+    const Menufarmasi = [
+        { name: "Order Masuk", path: "/order-masuk" },
+        { name: "Kelola Obat", path: "/kelola-obat" }
+    ];
+
     return (
         <div className="kelola-item-wrapper">
             <div className="navbar-kelola-item">
                 <NavbarPrivate />
-                <HeaderFarmasi className="header-kelola-item"/>
+                <Header accountName="Nama Akun Farmasi" menuItems={Menufarmasi} />
             </div>
             <div className="kelola-item-container">
                 <div className="content-wrapper-kelola-item">

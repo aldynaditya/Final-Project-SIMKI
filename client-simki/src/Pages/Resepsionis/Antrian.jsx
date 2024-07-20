@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import NavbarPrivate from '../../components/NavbarPrivate';
 import FooterPrivate from '../../components/FooterPrivate';
 import '../../Style/Resepsionis/Antrian.css';
-import HeaderRsp from './HeaderRsp';
+import Header from '../../components/Header';
 import SearchBar from "../../components/SearchBar";
 
 const Antrian = () => {
@@ -14,12 +14,19 @@ const Antrian = () => {
         navigate('/buatjanji-popup');
     };
 
+    const MenuResepsionis = [
+        { name: "Pendaftar Baru", path: "/pendaftar-baru" },
+        { name: "Antrian", path: "/antrian" },
+        { name: "Pasien", path: "/pasien-resepsionis" },
+        { name: "Kelola Jadwal", path: "/kelola-jadwal" }
+    ];
+
     return (
         <div className="page-antrian-container">
             <div className="content-wrap-antrian">
                 <div className="navbar-antrian">
                     <NavbarPrivate />
-                    <HeaderRsp className="header-antrian"/>
+                    <Header accountName="Nama Akun Resepsionis" menuItems={MenuResepsionis} />
                 </div>
                 <div className="antrian-container">
                     <div className="content-wrapper-antrian">

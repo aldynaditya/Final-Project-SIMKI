@@ -2,14 +2,22 @@ import React from "react";
 import NavbarPrivate from '../../components/NavbarPrivate';
 import FooterPrivate from '../../components/FooterPrivate';
 import '../../Style/Perawat/JadwalDokter.css';
-import HeaderDokter from './HeaderDokter';
+import Header from '../../components/Header';
 
 const JadwalDokter = () => {
+
+    const Menudokter = [
+        { name: "Jadwal Dokter", path: "/schedule-dokter" },
+        { name: "Pasien", path: "/pasien-dokter" },
+        { name: "Notifikasi", path: "/notifikasi-dokter" }
+      ];
+
+
     return (
         <div className="jadwal-dokter-wrapper">
             <div className="navbar-header-jadwal">
                 <NavbarPrivate />
-                <HeaderDokter />
+                <Header accountName="Nama Akun Dokter" menuItems={Menudokter} />
             </div>
             <div className="jadwal-dokter-container">
                 <div className="content-wrapper-jadwal">

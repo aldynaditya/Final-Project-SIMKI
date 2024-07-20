@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import NavbarPrivate from '../../components/NavbarPrivate';
 import FooterPrivate from '../../components/FooterPrivate';
 import RiwayatEpisode from '../../components/RiwayatEps';
-import HeaderDokter from './HeaderDokter';
+import Header from '../../components/Header';
 import '../../Style/Resepsionis/EmrResepsionis.css';
 import '../../Style/Resepsionis/DetailEpsResep.css';
 import '../../Style/Dokter/EntriMasuk.css';
@@ -15,10 +15,16 @@ const EntriMasuk = () => {
         navigate('/isi-cppt');
     };
 
+    const Menudokter = [
+        { name: "Jadwal Dokter", path: "/schedule-dokter" },
+        { name: "Pasien", path: "/pasien-dokter" },
+        { name: "Notifikasi", path: "/notifikasi-dokter" }
+      ];
+
     return (
         <div className='emr-resepsionis-container'>
             <NavbarPrivate />
-            <HeaderDokter />
+            <Header accountName="Nama Akun Dokter" menuItems={Menudokter} />
             <h1 className='text-emr-resepsionis'>EMR Pasien</h1>
             <div className='kolom-emr-resepsionis'>
                 <div className='no-emr-rsp'>

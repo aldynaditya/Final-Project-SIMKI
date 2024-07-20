@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import NavbarPrivate from '../../components/NavbarPrivate';
 import FooterPrivate from '../../components/FooterPrivate';
 import '../../Style/Resepsionis/PasienResepsionis.css';
-import HeaderNrs from './HeaderNrs';
+import Header from '../../components/Header';
 import SearchBar from "../../components/SearchBar"; 
 import '../../Style/Perawat/PasienPerawat.css'; 
 import { useNavigate } from 'react-router-dom';
@@ -15,11 +15,17 @@ const PasienPerawat= () => {
         navigate('/emr-perawat');
     };
 
+    const Menuperawat = [
+        { name: "Jadwal perawat", path: "/jadwal-perawat" },
+        { name: "Pasien", path: "/pasien-perawat" },
+        { name: "Kelola Item", path: "/kelola-item" }
+      ];
+
     return (
         <div className="pasien-resepsionis-wrapper">
             <div className="navbar-header-wrapper">
                 <NavbarPrivate />
-                <HeaderNrs />
+                <Header accountName="Nama Akun Perawat" menuItems={Menuperawat} />
             </div>
             <div className="pasien-resepsionis-container">
                 <div className="pasien-wrapper">

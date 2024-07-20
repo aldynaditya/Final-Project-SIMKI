@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import NavbarPrivate from '../../components/NavbarPrivate';
 import FooterPrivate from '../../components/FooterPrivate';
 import '../../Style/Resepsionis/PasienResepsionis.css';
-import HeaderRsp from './HeaderRsp';
+import Header from '../../components/Header';
 import SearchBar from "../../components/SearchBar";  // Pastikan nama komponen dan path sesuai
 
 const PasienResepsionis = () => {
@@ -16,11 +16,18 @@ const PasienResepsionis = () => {
         window.open('/emr-resepsionis', '_blank');
     };
 
+    const MenuResepsionis = [
+        { name: "Pendaftar Baru", path: "/pendaftar-baru" },
+        { name: "Antrian", path: "/antrian" },
+        { name: "Pasien", path: "/pasien-resepsionis" },
+        { name: "Kelola Jadwal", path: "/kelola-jadwal" }
+    ];
+
     return (
         <div className="pasien-resepsionis-wrapper">
             <div className="navbar-header-wrapper">
                 <NavbarPrivate />
-                <HeaderRsp />
+                <Header accountName="Nama Akun Resepsionis" menuItems={MenuResepsionis} />
             </div>
             <div className="pasien-resepsionis-container">
                 <div className="pasien-wrapper">

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';  // Pastikan useNavigate diimpor
 import NavbarPrivate from '../../components/NavbarPrivate';  // Pastikan jalurnya benar
 import FooterPrivate from '../../components/FooterPrivate';  // Pastikan jalurnya benar
 import '../../Style/Keuangan/NotifikasiSpv.css';
-import HeaderKeuangan from './HeaderSpv';  // Pastikan jalurnya benar
+import Header from '../../components/Header';  // Pastikan jalurnya benar
 import SearchBar from '../../components/SearchBar';  // Pastikan jalurnya benar
 
 const NotifikasiKeuangan = () => {
@@ -14,11 +14,16 @@ const NotifikasiKeuangan = () => {
         navigate('/laporan-popup');
     };
 
+    const MenuKeuangan = [
+        { name: "Transaksi", path: "/transaksi-keuangan" },
+        { name: "Notifikasi", path: "/notifikasi-keuangan" }
+    ];
+
     return (
         <div className="notif-keuangan-wrapper">
             <div className="navbar-header-notif-keuangan">
                 <NavbarPrivate />
-                <HeaderKeuangan />
+                <Header accountName="Nama Akun SPV Keuangan" menuItems={MenuKeuangan} />
             </div>
             <div className="notif-keuangan-container">
                 <div className="content-wrapper-notif-keuangan">
