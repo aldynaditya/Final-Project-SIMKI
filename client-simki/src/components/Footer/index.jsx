@@ -1,9 +1,9 @@
 // src/components/Footer.js
 import React from "react";
 import { Link } from "react-router-dom";
-import './footer.css';
-import instagram from "../images/instagram.png";
-import wa from "../images/wa.png";
+import '../../Style/components/footer.css';
+import instagram from "../../images/instagram.png";
+import wa from "../../images/wa.png";
 
 const Footer = () => {
   return (

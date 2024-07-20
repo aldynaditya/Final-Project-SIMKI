@@ -1,8 +1,8 @@
 import React from 'react';
-import './NavbarPrivate.css';
-import logoklinik from '../images/logoklinik.png';
-import undip from '../images/undip.png';
-import simki from '../images/simki.png';
+import '../../Style/components/NavbarPrivate.css';
+import logoklinik from '../../images/logoklinik.png';
+import undip from '../../images/undip.png';
+import simki from '../../images/simki.png';
 
 const NavbarPrivate = () => {
     return (

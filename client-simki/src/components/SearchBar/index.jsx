@@ -1,6 +1,6 @@
 import React from "react";
-import './SearchBar.css';  // Pastikan file ini ada untuk styling
-import search from "../images/search.png";
+import '../../Style/components/SearchBar.css';  // Pastikan file ini ada untuk styling
+import search from "../../images/search.png";
 
 const SearchBar = () => {
     const handleSearch = () => {

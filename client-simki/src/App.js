@@ -13,7 +13,7 @@ import RiwayatKunjungan from './Pages/Pasien/RiwayatKunjungan';
 import BuatJanji from './Pages/Pasien/BuatJanji';
 import DetailKunjungan from './Pages/Pasien/DetailKunjungan';
 import QuestionnairePopup from './Pages/Pasien/QuestionnairePopup';
-import SigninPrivate from './Pages/Pasien/SigninPrivate';
+import SigninPrivate from './Pages/signin/SigninPrivate';
 import Resepsionis from './Pages/Resepsionis/Resepsionis';
 import PendaftarBaru from './Pages/Resepsionis/PendaftarBaru';
 import Antrian from './Pages/Resepsionis/Antrian';
@@ -26,17 +26,17 @@ import CetakSuratPopup from './Pages/Resepsionis/CetakSuratPopup';
 import KelolaJadwal from './Pages/Resepsionis/KelolaJadwal';
 import JadwalPopup from './Pages/Resepsionis/JadwalPopup';
 import HasilKuisionerPopup from './Pages/Dokter/HasilKuisionerPopup';
-import Perawat from './Pages/Perawat/Perawat';
+import Perawat from './Pages/Perawat';
 import JadwalDokter from './Pages/Perawat/JadwalDokter';
 import EmrPerawat from './Pages/Perawat/EmrPerawat';
 import PasienPerawat from './Pages/Perawat/PasienPerawat';
 import KelolaItem from './Pages/Perawat/KelolaItem';
 import TambahItemPopup from './Pages/Perawat/TambahitemPopup';
-import Dokter from './Pages/Dokter/Dokter';
-import PasienDokter from './Pages/Dokter/PasienDokter';
+import Dokter from './Pages/Dokter';
+import PasienDokter from './Pages/Dokter/Pasien';
 import NotifikasiDokter from './Pages/Dokter/Notifikasi';
-import ScheduleDr from './Pages/Dokter/ScheduleDr';
-import EmrDokter from './Pages/Dokter/EmrDokter';
+import ScheduleDr from './Pages/Dokter/Schedule';
+import EmrDokter from './Pages/Dokter/Emr';
 import EntriMasuk from './Pages/Dokter/EntriMasuk';
 import IsiCppt from './Pages/Dokter/IsiCppt';
 import EntriBaru from './Pages/Dokter/EntriBaru';
@@ -45,7 +45,7 @@ import OrderProsedur from './Pages/Dokter/OrderProsedur';
 import OrderSurat from './Pages/Dokter/OrderSurat';
 import SuratRujukan from './Pages/Dokter/SuratRujukan';
 import SuratSakit from './Pages/Dokter/SuratSakit';
-import TambahObatDr from './Pages/Dokter/TambahObatDr';
+import TambahObatDr from './Pages/Dokter/TambahObat';
 import TambahProsedur from './Pages/Dokter/TambahProsedur';
 import Farmasi from './Pages/Farmasi/Farmasi';
 import OrderMasuk from './Pages/Farmasi/OrderMasuk';
@@ -58,10 +58,6 @@ import NotifikasiKeuangan from './Pages/Keuangan/NotifikasiSpv';
 import NotifikasiPimpinan from './Pages/Pimpinan/NotifikasiLead';
 import UploadLaporan from './Pages/Keuangan/UploadLaporan';
 import { listen } from './redux/listener';
-
-
-
-
 
 function App() {
   useEffect(() => {
