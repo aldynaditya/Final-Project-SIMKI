@@ -10,7 +10,7 @@ const JadwalDokter = () => {
         { name: "Jadwal Dokter", path: "/schedule-dokter" },
         { name: "Pasien", path: "/pasien-dokter" },
         { name: "Notifikasi", path: "/notifikasi-dokter" }
-      ];
+    ];
 
 
     return (

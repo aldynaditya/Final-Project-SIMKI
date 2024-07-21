@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import NavbarPrivate from '../../components/NavbarPrivate';
-import FooterPrivate from '../../components/FooterPrivate';
 import '../../Style/Kasir/TransaksiKasir.css';
 import HeaderKasir from './HeaderKasir';
 import SearchBar from '../../components/SearchBar'; // Corrected import statement
@@ -56,7 +54,6 @@ const TransaksiKasir = () => {
     return (
         <div className="transaksi-wrapper">
             <div className="navbar-header-transaksi">
-                <NavbarPrivate />
                 <HeaderKasir />
             </div>
             <div className="transaksi-container">
@@ -104,7 +101,6 @@ const TransaksiKasir = () => {
                     </div>
                 </div>
             </div>
-            <FooterPrivate />
         </div>
     );
 };

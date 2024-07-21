@@ -1,7 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import NavbarPrivate from '../../components/NavbarPrivate';
-import FooterPrivate from '../../components/FooterPrivate';
 import RiwayatEpisode from '../../components/RiwayatEps';
 import Header from '../../components/Header';
 import '../../Style/Resepsionis/EmrResepsionis.css';
@@ -27,7 +25,6 @@ const DetailEpisode = () => {
 
     return (
         <div className='emr-resepsionis-container'>
-            <NavbarPrivate />
             <Header accountName="Nama Akun Resepsionis" menuItems={MenuResepsionis} />
             <h1 className='text-emr-resepsionis'>EMR Pasien</h1>
             <div className='kolom-emr-resepsionis'>
@@ -136,7 +133,6 @@ const DetailEpisode = () => {
                 <button className="hasil-kuisioner" onClick={HasilKuisioner}>Hasil Kuisioner</button>
             </div>
             <RiwayatEpisode />
-            <FooterPrivate />
         </div>
     );
 };

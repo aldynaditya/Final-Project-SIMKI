@@ -1,7 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import NavbarPrivate from '../../components/NavbarPrivate';
-import FooterPrivate from '../../components/FooterPrivate';
 import '../../Style/Perawat/Perawat.css';
 import Header from '../../components/Header'; // Import the reusable Header component
 import item from "../../images/item.png";
@@ -31,7 +29,6 @@ const Perawat = () => {
 
   return (
     <div className='perawat-container'>
-      <NavbarPrivate />
       <div className='main-content-perawat'>
         <Header accountName="Nama Akun Perawat" menuItems={Menuperawat} /> {/* Use the reusable Header component */}
         <h1 className='text_perawat'>Dashboard</h1>
@@ -50,7 +47,6 @@ const Perawat = () => {
           </div>
         </div>
       </div>
-      <FooterPrivate className='footerprivate'/>
     </div>
   );
 };

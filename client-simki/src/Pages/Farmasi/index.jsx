@@ -1,7 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import NavbarPrivate from '../../components/NavbarPrivate';
-import FooterPrivate from '../../components/FooterPrivate';
 import '../../Style/Farmasi/Farmasi.css';
 import Header from '../../components/Header';
 import list from "../../images/list.png";
@@ -25,7 +23,6 @@ const Farmasi = () => {
 
   return (
     <div className='farmasi-container'>
-      <NavbarPrivate />
       <div className='main-content-farmasi'>
       <Header accountName="Nama Akun Farmasi" menuItems={Menufarmasi} />
         <h1 className='text_farmasi'>Dashboard</h1>
@@ -40,7 +37,6 @@ const Farmasi = () => {
             </div>
         </div>
       </div>
-      <FooterPrivate className='footerprivate'/>
     </div>
   );
 };
