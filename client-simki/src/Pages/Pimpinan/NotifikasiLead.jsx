@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import NavbarPrivate from '../../components/NavbarPrivate';  // Pastikan jalurnya benar
-import FooterPrivate from '../../components/FooterPrivate';  // Pastikan jalurnya benar
 import '../../Style/Pimpinan/NotifikasiLead.css';
 import HeaderPimpinan from './HeaderLead';  // Pastikan jalurnya benar
 import SearchBar from '../../components/SearchBar';  // Pastikan jalurnya benar
@@ -17,7 +15,6 @@ const NotifikasiPimpinan = () => {
     return (
         <div className="notif-pimpinan-wrapper">
             <div className="navbar-header-notif-pimpinan">
-                <NavbarPrivate />
                 <HeaderPimpinan />
             </div>
             <div className="notif-pimpinan-container">
@@ -57,7 +54,6 @@ const NotifikasiPimpinan = () => {
                     </div>
                 </div>
             </div>
-            <FooterPrivate />
         </div>
     );
 };

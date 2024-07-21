@@ -12,7 +12,7 @@ import { getRolePath } from '../../utils/navigateHelper';
 
 Modal.setAppElement('#root');
 
-const Signin_Private = () => {
+const SigninPrivate = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [form, setForm] = useState({
@@ -164,4 +164,4 @@ const Signin_Private = () => {
     );
 };
 
-export default Signin_Private;
+export default SigninPrivate;

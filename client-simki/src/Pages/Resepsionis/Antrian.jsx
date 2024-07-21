@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import NavbarPrivate from '../../components/NavbarPrivate';
-import FooterPrivate from '../../components/FooterPrivate';
 import '../../Style/Resepsionis/Antrian.css';
 import Header from '../../components/Header';
 import SearchBar from "../../components/SearchBar";
@@ -25,7 +23,6 @@ const Antrian = () => {
         <div className="page-antrian-container">
             <div className="content-wrap-antrian">
                 <div className="navbar-antrian">
-                    <NavbarPrivate />
                     <Header accountName="Nama Akun Resepsionis" menuItems={MenuResepsionis} />
                 </div>
                 <div className="antrian-container">
@@ -68,7 +65,6 @@ const Antrian = () => {
                     </div>
                 </div>
             </div>
-            <FooterPrivate />
         </div>
     );
 };

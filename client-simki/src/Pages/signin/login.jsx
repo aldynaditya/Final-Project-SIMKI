@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import '../../Style/Pasien/login.css';
 import email from '../../images/email.png';
 import pass from '../../images/pass.png';
-import Footer from '../../components/Footer';
-import Navbar from '../../components/Navbar';
 import simki_login from '../../images/simki login.png';
 
 const Login = () => {
@@ -22,7 +20,6 @@ const Login = () => {
 
   return (
     <div className="login_container">
-      <Navbar />
       <h1 className='text-login'>{action}</h1>
       <div className='logo-container'>
         <img src={simki_login} alt="Simki" className='simki' />
@@ -56,7 +53,6 @@ const Login = () => {
           Login
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

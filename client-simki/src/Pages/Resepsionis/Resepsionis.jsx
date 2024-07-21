@@ -1,7 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import NavbarPrivate from '../../components/NavbarPrivate';
-import FooterPrivate from '../../components/FooterPrivate';
 import '../../Style/Resepsionis/Resepsionis.css';
 import Header from '../../components/Header';
 import list from "../../images/list.png";
@@ -37,7 +35,6 @@ const Resepsionis = () => {
 
   return (
     <div className='resepsionis-container'>
-      <NavbarPrivate />
       <div className='main-content-resepsionis'>
       <Header accountName="Nama Akun Resepsionis" menuItems={MenuResepsionis} />
         <h1 className='text_resepsionis'>Dashboard</h1>
@@ -60,7 +57,6 @@ const Resepsionis = () => {
           </div>
         </div>
       </div>
-      <FooterPrivate className='footer'/>
     </div>
   );
 };

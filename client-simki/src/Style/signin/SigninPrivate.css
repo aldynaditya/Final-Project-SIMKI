@@ -18,10 +18,9 @@ html, body {
 .navbar_signin_nakes {
     display: flex;
     justify-content: space-between; /* Mengatur jarak antara elemen di dalam flex container */
-    align-items: center; /* Mengatur posisi vertikal elemen di tengah */
-    padding: 10px; /* Padding untuk memberi ruang di sekitar elemen */
+    align-items: center; /* Mengatur posisi vertikal elemen di tengah */ /* Mengatur padding lebih rapat */
     background-color: #145149; /* Warna latar belakang navbar */
-    height: 0px;
+    max-height: 5%; /* Menetapkan tinggi navbar yang sesuai */
     font-family: 'Open Sans', sans-serif; /* Menggunakan font Open Sans untuk seluruh navbar */
     position: relative; /* Menambahkan posisi relatif untuk penggunaan posisi absolut pada anak elemen */
 }

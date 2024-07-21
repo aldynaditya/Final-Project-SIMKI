@@ -17,7 +17,7 @@ const EmrPerawat = () => {
         { name: "Jadwal perawat", path: "/jadwal-perawat" },
         { name: "Pasien", path: "/pasien-perawat" },
         { name: "Kelola Item", path: "/kelola-item" }
-      ];
+    ];
 
     return (
         <div className='emr-resepsionis-container'>

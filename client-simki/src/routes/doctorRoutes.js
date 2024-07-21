@@ -15,12 +15,12 @@ import SuratRujukan from '../Pages/Dokter/SuratRujukan';
 import SuratSakit from '../Pages/Dokter/SuratSakit';
 import TambahObatDr from '../Pages/Dokter/TambahObat';
 import TambahProsedur from '../Pages/Dokter/TambahProsedur';
-import HasilKuisionerPopup from './Pages/Dokter/HasilKuisionerPopup';
+import HasilKuisionerPopup from '../Pages/Dokter/HasilKuisionerPopup';
 
 export function DoctorsRoute() {
     return (
         <Routes>
-            <Route path="/dokter" element={<Dokter />} />
+            <Route path="/" element={<Dokter />} />
             <Route path="/pasien-dokter" element={<PasienDokter />} />
             <Route path="/notifikasi-dokter" element={<NotifikasiDokter/>} />
             <Route path="/schedule-dokter" element={<ScheduleDr/>} />
