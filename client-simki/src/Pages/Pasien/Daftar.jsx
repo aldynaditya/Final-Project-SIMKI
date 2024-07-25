@@ -15,7 +15,6 @@ const Daftar = () => {
 
   return (
     <div className="regist_container">
-      <Navbar />
       <h1>Registrasi Akun</h1>
       <div className="form-container">
         <div className="form-fields">
@@ -55,7 +54,6 @@ const Daftar = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

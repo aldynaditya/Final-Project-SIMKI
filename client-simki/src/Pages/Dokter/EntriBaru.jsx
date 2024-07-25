@@ -28,12 +28,11 @@ const EntriBaru = () => {
         { name: "Jadwal Dokter", path: "/schedule-dokter" },
         { name: "Pasien", path: "/pasien-dokter" },
         { name: "Notifikasi", path: "/notifikasi-dokter" }
-      ];
+    ];
 
 
     return (
         <div className='emr-resepsionis-container'>
-            <NavbarPrivate />
             <Header accountName="Nama Akun Dokter" menuItems={Menudokter} />
             <h1 className='text-emr-resepsionis'>EMR Pasien</h1>
             <div className='kolom-emr-resepsionis'>
@@ -147,7 +146,6 @@ const EntriBaru = () => {
                 <button className="selesaikan-order-baru" onClick={SelesaikanOrder}>Selesaikan Order</button>
             </div>
             <RiwayatEpisode />
-            <FooterPrivate />
         </div>
     );
 };

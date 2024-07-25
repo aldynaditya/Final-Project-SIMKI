@@ -7,7 +7,6 @@ import '../../Style/Pasien/layanan.css';
 const Layanan = () => {
   return (
     <div className='layanan_container'>
-      <Navbar />
       <h1 className="layanan_kami">Layanan Kami</h1>
       <div className="klinik_dipo">
         <img src={klinikdipo} alt='Klinik Diponegoro' />
@@ -27,7 +26,6 @@ const Layanan = () => {
           memastikan pasien mendapatkan perawatan kesehatan yang komprehensif dan berkualitas.
         </p>
       </div>
-      <Footer />
     </div>
   );
 }

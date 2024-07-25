@@ -17,7 +17,6 @@ const Notifikasi = () => {
     return (
         <div className="notifikasi-wrapper">
             <div className="navbar-header-notifikasi">
-                <NavbarPrivate />
                 <Header accountName="Nama Akun Dokter" menuItems={Menudokter} />
             </div>
             <div className="notifikasi-container">
@@ -54,7 +53,6 @@ const Notifikasi = () => {
                     </div>
                 </div>
             </div>
-            <FooterPrivate />
         </div>
     );
 };

@@ -27,7 +27,6 @@ const OrderSurat = () => {
 
     return (
         <div className='order-obat-container'>
-            <NavbarPrivate />
             <Header accountName="Nama Akun Dokter" menuItems={Menudokter} />
 
             <h1 className='text-order-obat'>Order Obat</h1>
@@ -95,7 +94,6 @@ const OrderSurat = () => {
                     </tbody>
                 </table>
             </div>
-            <FooterPrivate />
         </div>
     );
 };

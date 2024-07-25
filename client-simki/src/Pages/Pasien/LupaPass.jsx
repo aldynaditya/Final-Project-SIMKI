@@ -51,7 +51,6 @@ const LupaPass = () => {
 
   return (
     <div className="page-container">
-      <Navbar />
       <div className="content-wrap">
         <h1 className='text-lupapass'>Lupa Kata Sandi</h1>
         <div className='inputs'>
@@ -74,7 +73,6 @@ const LupaPass = () => {
         </div>
         <div className='submit' onClick={handleSubmit}>Kirim</div>
       </div>
-      <Footer />
     </div>
   );
 };

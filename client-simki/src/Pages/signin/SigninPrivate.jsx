@@ -8,7 +8,6 @@ import { useDispatch } from 'react-redux';
 import { userLogin } from '../../redux/auth/actions';
 import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
-import { getRolePath } from '../../utils/navigateHelper';
 
 Modal.setAppElement('#root');
 
@@ -44,9 +43,7 @@ const SigninPrivate = () => {
 
                 setIsLoading(false);
 
-                // Use the utility function to get the path based on the role
-                const path = getRolePath(role);
-                navigate(path);
+                navigate('/');
             } else {
                 throw new Error(res?.response?.data?.msg || 'Internal server error');
             }

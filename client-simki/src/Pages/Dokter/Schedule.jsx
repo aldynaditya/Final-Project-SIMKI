@@ -16,7 +16,6 @@ const JadwalDokter = () => {
     return (
         <div className="jadwal-dokter-wrapper">
             <div className="navbar-header-jadwal">
-                <NavbarPrivate />
                 <Header accountName="Nama Akun Dokter" menuItems={Menudokter} />
             </div>
             <div className="jadwal-dokter-container">
@@ -111,7 +110,6 @@ const JadwalDokter = () => {
                     </div>
                 </div>
             </div>
-            <FooterPrivate />
         </div>
     );
 };
