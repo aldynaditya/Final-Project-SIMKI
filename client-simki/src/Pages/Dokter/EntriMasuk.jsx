@@ -1,7 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import NavbarPrivate from '../../components/NavbarPrivate';
-import FooterPrivate from '../../components/FooterPrivate';
 import RiwayatEpisode from '../../components/RiwayatEps';
 import Header from '../../components/Header';
 import '../../Style/Resepsionis/EmrResepsionis.css';
@@ -12,18 +10,17 @@ const EntriMasuk = () => {
     const navigate = useNavigate();
 
     const IsiCppt = () => {
-        navigate('/isi-cppt');
+        navigate('isi-cppt');
     };
 
     const Menudokter = [
-        { name: "Jadwal Dokter", path: "/schedule-dokter" },
-        { name: "Pasien", path: "/pasien-dokter" },
-        { name: "Notifikasi", path: "/notifikasi-dokter" }
+        { name: "Jadwal Dokter", path: "schedule-dokter" },
+        { name: "Pasien", path: "pasien-dokter" },
+        { name: "Notifikasi", path: "notifikasi-dokter" }
       ];
 
     return (
         <div className='emr-resepsionis-container'>
-            <NavbarPrivate />
             <Header accountName="Nama Akun Dokter" menuItems={Menudokter} />
             <h1 className='text-emr-resepsionis'>EMR Pasien</h1>
             <div className='kolom-emr-resepsionis'>
@@ -98,7 +95,6 @@ const EntriMasuk = () => {
                 <button type="isi" className="simpan-entri-masuk" onClick={IsiCppt}>Isi CPPT</button>
             </div>
             <RiwayatEpisode />
-            <FooterPrivate />
         </div>
     );
 };

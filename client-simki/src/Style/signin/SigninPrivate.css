@@ -135,12 +135,6 @@ html, body {
     margin-bottom: 10px; /* Space between logos and copyright */
 }
 
-.logo_klinik,
-.undip {
-    width: auto; /* Adjust the size as needed */
-    height: auto; /* Adjust the size as needed */
-}
-
 .footer-copyright {
     display: flex;
     justify-content: center;

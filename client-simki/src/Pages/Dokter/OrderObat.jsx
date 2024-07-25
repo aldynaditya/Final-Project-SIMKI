@@ -26,7 +26,6 @@ const OrderObat = () => {
 
     return (
         <div className='order-obat-container'>
-            <NavbarPrivate />
             <Header accountName="Nama Akun Dokter" menuItems={Menudokter} />
             <h1 className='text-order-obat'>Order Obat</h1>
             <div className='kolom-order-obat'>
@@ -101,7 +100,6 @@ const OrderObat = () => {
                 </table>
             </div>
             <button className="simpan-obat" onClick={SimpanObat}>Simpan</button>
-            <FooterPrivate />
         </div>
     );
 };

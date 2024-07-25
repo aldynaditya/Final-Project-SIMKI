@@ -119,7 +119,10 @@ const signinPasien = async (req) => {
 
     const token = createJWT({ payload: createTokenPasien(result) });
 
-    return token;
+    return { 
+        token: token,
+        role: result.role
+    };
 };
 
 const sendResetPasswordEmail = async (req, res) => {

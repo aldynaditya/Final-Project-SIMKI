@@ -6,7 +6,6 @@ import Footer from "../../components/Footer";
 const KebijakanPrivasi = () => {
     return (
         <div className="privasi_container">
-            <Navbar />
             <h1 className="judul-privasi">Kebijakan Privasi</h1>
             <div className="desc-privasi">
                 <p>
@@ -29,7 +28,6 @@ const KebijakanPrivasi = () => {
                     </span>
                 </p>
             </div>
-            <Footer />
         </div>
     );
 }

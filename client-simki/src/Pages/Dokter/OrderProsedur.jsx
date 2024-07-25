@@ -28,7 +28,6 @@ const OrderProsedur = () => {
 
     return (
         <div className='order-obat-container'>
-            <NavbarPrivate />
             <Header accountName="Nama Akun Dokter" menuItems={Menudokter} />
             <h1 className='text-order-obat'>Order Prosedur</h1>
             <div className='kolom-order-obat'>
@@ -103,7 +102,6 @@ const OrderProsedur = () => {
                 </table>
             </div>
             <button className="simpan-prosedur" onClick={SimpanProsedur}>Simpan</button>
-            <FooterPrivate />
         </div>
     );
 };

@@ -7,7 +7,6 @@ import Footer from "../../components/Footer";
 const Home = () => {
   return (
     <div className="page-container">
-      <Navbar />
       <div className="homepage-content">
         <h1 className="tentang_kami">Tentang Kami</h1>
         <div className="klinik_dipo">
@@ -34,7 +33,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

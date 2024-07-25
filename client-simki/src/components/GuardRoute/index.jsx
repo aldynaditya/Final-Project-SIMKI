@@ -1,24 +1,32 @@
-import * as React from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 
-export default function GuardRoute({ children }) {
+const rolePaths = {
+    pasien: '/pasien',
+    dokter: '/dokter',
+    perawat: '/perawat',
+    resepsionis: '/resepsionis',
+    farmasi: '/farmasi',
+    spvkeuangan: '/spvkeuangan',
+    pimpinan: '/pimpinan',
+    kasir: '/kasir',
+};
+
+export default function GuardRoute({ allowedRoles = [] }) {
     const { token, role } = useSelector((state) => state.auth);
 
+    // Check if the user is authenticated
     if (!token) {
-        if (role === 'pasien') {
-            return <Navigate to="/login" replace={true} />;
-        }
-        return <Navigate to="/signin" replace={true} />;
+        return <Navigate to="/" replace={true} />;
     }
 
-    if (role === 'pasien') {
-        return <Navigate to="/login" replace={true} />;
+    // Check if the user's role is allowed for this route
+    if (allowedRoles.length > 0 && !allowedRoles.includes(role)) {
+        // Redirect to the default path for the current role or home if none is defined
+        return <Navigate to={rolePaths[role] || '/'} replace={true} />;
     }
 
-    if (!['dokter', 'perawat', 'resepsionis', 'farmasi', 'kasir', 'pimpinan', 'spvkeuangan'].includes(role)) {
-        return <Navigate to="/signin" replace={true} />;
-    }
-
-    return children || <Outlet />;
+    // Render the route's component if the user has the correct role or if no specific role is required
+    return <Outlet />;
 }

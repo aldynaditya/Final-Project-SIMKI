@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import NavbarPrivate from '../../components/NavbarPrivate';
-import FooterPrivate from '../../components/FooterPrivate';
 import '../../Style/Resepsionis/PasienResepsionis.css';
 import Header from '../../components/Header';
 import SearchBar from "../../components/SearchBar"; 
@@ -12,19 +10,18 @@ const PasienDokter= () => {
     const navigate = useNavigate();
 
     const EmrDokter = () => {
-        navigate('/emr-dokter');
+        navigate('emr-dokter');
     };
 
     const Menudokter = [
         { name: "Jadwal Dokter", path: "/schedule-dokter" },
         { name: "Pasien", path: "/pasien-dokter" },
         { name: "Notifikasi", path: "/notifikasi-dokter" }
-      ];
+    ];
 
     return (
         <div className="pasien-resepsionis-wrapper">
             <div className="navbar-header-wrapper">
-                <NavbarPrivate />
                 <Header accountName="Nama Akun Dokter" menuItems={Menudokter} />
             </div>
             <div className="pasien-resepsionis-container">
@@ -63,7 +60,6 @@ const PasienDokter= () => {
                     </div>
                 </div>
             </div>
-            <FooterPrivate />
         </div>
     );
 };
