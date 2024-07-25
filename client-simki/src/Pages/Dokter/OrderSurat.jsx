@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import NavbarPrivate from '../../components/NavbarPrivate';
-import FooterPrivate from '../../components/FooterPrivate';
 import Header from '../../components/Header';
 import '../../Style/Dokter/OrderObat.css';
 import '../../Style/Dokter/OrderProsedur.css';

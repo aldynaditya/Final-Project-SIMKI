@@ -5,7 +5,7 @@ const FooterPrivate = () => {
     return (
         <footer className='footer_private_container'>
             <div className="footer_copyright_private">
-                <p>© copyright {new Date().getFullYear()} Universitas Diponegoro. All rights reserved.</p>
+                <p>© Copyright {new Date().getFullYear()} <b>Universitas Diponegoro</b>. All rights reserved</p>
             </div>
         </footer>
     );

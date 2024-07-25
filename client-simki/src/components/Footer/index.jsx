@@ -31,7 +31,7 @@ const Footer = () => {
         <div className="sb__footer-below">
           <div className="sb__footer-copyright">
             <p>
-              © copyright {new Date().getFullYear()} Universitas Diponegoro. All rights reserved.
+              © Copyright {new Date().getFullYear()} <b>Universitas Diponegoro</b>. All rights reserved
             </p>
           </div>
         </div>
