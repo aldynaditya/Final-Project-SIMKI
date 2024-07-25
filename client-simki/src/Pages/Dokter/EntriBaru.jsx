@@ -1,6 +1,4 @@
 import React from 'react';
-import NavbarPrivate from '../../components/NavbarPrivate';
-import FooterPrivate from '../../components/FooterPrivate';
 import RiwayatEpisode from '../../components/RiwayatEps';
 import Header from '../../components/Header';
 import '../../Style/Resepsionis/EmrResepsionis.css';

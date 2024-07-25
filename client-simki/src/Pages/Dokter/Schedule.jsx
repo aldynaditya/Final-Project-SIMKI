@@ -1,6 +1,4 @@
 import React from "react";
-import NavbarPrivate from '../../components/NavbarPrivate';
-import FooterPrivate from '../../components/FooterPrivate';
 import '../../Style/Perawat/JadwalDokter.css';
 import Header from '../../components/Header';
 

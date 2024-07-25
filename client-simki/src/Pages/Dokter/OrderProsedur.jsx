@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import NavbarPrivate from '../../components/NavbarPrivate';
-import FooterPrivate from '../../components/FooterPrivate';
 import Header from '../../components/Header';
 import { useNavigate } from 'react-router-dom';
 import '../../Style/Dokter/OrderObat.css';

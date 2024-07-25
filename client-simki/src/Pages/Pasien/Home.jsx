@@ -1,8 +1,6 @@
 import React from "react";
-import Navbar from "../../components/Navbar";
 import '../../Style/Pasien/Home.css';
 import klinikdipo from "../../images/klinikdipo.png";
-import Footer from "../../components/Footer";
 
 const Home = () => {
   return (

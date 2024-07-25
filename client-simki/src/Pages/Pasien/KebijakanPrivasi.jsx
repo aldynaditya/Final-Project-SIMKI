@@ -1,7 +1,5 @@
 import React from "react";
-import Navbar from "../../components/Navbar";
 import '../../Style/Pasien/KebijakanPrivasi.css';
-import Footer from "../../components/Footer";
 
 const KebijakanPrivasi = () => {
     return (

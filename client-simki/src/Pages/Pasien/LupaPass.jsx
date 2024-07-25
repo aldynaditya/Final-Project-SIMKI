@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
 import emailIcon from '../../images/email.png';
 import otpIcon from '../../images/otp.png'; 
 import '../../Style/Pasien/LupaPass.css';

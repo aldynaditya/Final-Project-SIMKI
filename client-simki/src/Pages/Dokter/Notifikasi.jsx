@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import NavbarPrivate from '../../components/NavbarPrivate';
-import FooterPrivate from '../../components/FooterPrivate';
 import '../../Style/Dokter/Notifikasi.css';
 import Header from '../../components/Header';
 import SearchBar from "../../components/SearchBar";
@@ -12,7 +10,7 @@ const Notifikasi = () => {
         { name: "Jadwal Dokter", path: "/schedule-dokter" },
         { name: "Pasien", path: "/pasien-dokter" },
         { name: "Notifikasi", path: "/notifikasi-dokter" }
-      ];
+    ];
 
     return (
         <div className="notifikasi-wrapper">

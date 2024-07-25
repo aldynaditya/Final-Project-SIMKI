@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../../Style/Pasien/login.css';
+import '../../Style/signin/login.css';
 import { postData } from '../../utils/fetch';
 import { useDispatch } from 'react-redux';
 import { userLogin } from '../../redux/auth/actions';
 import Modal from 'react-modal';
 import emailIcon from '../../images/email.png';
 import passIcon from '../../images/pass.png';
-import simkiLogin from '../../images/simki login.png';
+import logoklinik from '../../images/logoklinik.png';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -74,9 +74,9 @@ const Login = () => {
     <div className="login_container">
       <h1 className='text-login'>Login</h1>
       <div className='logo-container'>
-        <img src={simkiLogin} alt="Simki" className='simki' />
+        <img src={logoklinik} alt='Logo Klinik' className='logoklinik' />
         <div className='simki-text'>
-          <p>Selamat Datang di Sistem Kami</p>
+          <p>Selamat Datang di Klinik Pratama Diponegoro I</p>
           <p>Silakan masuk untuk melanjutkan</p>
         </div>
       </div>
