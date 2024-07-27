@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import '../../Style/Dokter/IsiCppt.css';
 import '../../Style/Resepsionis/CetakSuratPopup.css';
 
 const IsiCppt = () => {
     const [activeLink, setActiveLink] = useState('');
     const navigate = useNavigate();
+    const { entri } = useParams();
+
+    const BACK_PATH = `/dokter/pasien-dokter/emr-dokter/${entri}`;
 
     const handleLinkCancel = (link) => {
         setActiveLink(link);
@@ -13,11 +16,11 @@ const IsiCppt = () => {
 
     const SimpanCppt = () => {
         alert('Data Tersimpan');
-        navigate('/entri-masuk'); 
+        navigate(BACK_PATH);
     };
 
     const SelesaikanOrder = () => {
-        navigate('/entri-masuk'); 
+        navigate(BACK_PATH);
     };
 
     const DropdownOrder = (event) => {
@@ -31,7 +34,7 @@ const IsiCppt = () => {
         <div className='isicppt-popup-container'>
             <div className='isicppt-popup-content'>
                 <Link 
-                    to="/entri-masuk" 
+                    to={BACK_PATH}
                     className={activeLink === 'cancel' ? 'active cancel-link' : 'cancel-x'} 
                     onClick={() => handleLinkCancel('cancel')}
                 >
@@ -67,9 +70,9 @@ const IsiCppt = () => {
                         <span className='text-tindakan-cppt'>Tindakan :</span>
                         <select onChange={DropdownOrder} className='dropdown-entri-baru'>
                             <option value="">Order</option>
-                            <option value="/order-obat">Obat</option>
-                            <option value="/order-prosedur">Prosedur Medis</option>
-                            <option value="/buat-surat">Buat Surat</option>
+                            <option value="order-obat">Obat</option>
+                            <option value="order-prosedur">Prosedur Medis</option>
+                            <option value="order-surat">Buat Surat</option>
                         </select>
                     </div>
                 </div>

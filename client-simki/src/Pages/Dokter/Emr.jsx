@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import RiwayatEpisode from '../../components/RiwayatEps';
-import Header from '../../components/Header';
 import '../../Style/Resepsionis/EmrResepsionis.css';
 import '../../Style/Dokter/EmrDokter.css';
 import tambah from "../../images/tambah.png";
@@ -18,15 +17,8 @@ const EmrDokter = () => {
         navigate('entri-baru');
     };
 
-    const Menudokter = [
-        { name: "Jadwal Dokter", path: "/schedule-dokter" },
-        { name: "Pasien", path: "/pasien-dokter" },
-        { name: "Notifikasi", path: "/notifikasi-dokter" }
-    ];
-
     return (
         <div className='emr-resepsionis-container'>
-            <Header accountName="Nama Akun Dokter" menuItems={Menudokter} />
             <h1 className='text-emr-resepsionis'>EMR Pasien</h1>
             <div className='kolom-emr-resepsionis'>
                 <div className='no-emr-rsp'>

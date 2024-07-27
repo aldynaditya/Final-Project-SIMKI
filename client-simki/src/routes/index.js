@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import NavbarPrivate from '../components/NavbarPrivate';
 import Footer from '../components/Footer';
 import FooterPrivate from '../components/FooterPrivate';
+import Header from '../components/Header';
 
 import Home from '../Pages/Pasien/Home';
 import Layanan from '../Pages/Pasien/layanan';
@@ -24,6 +25,12 @@ import { LeaderRoute } from './leaderRoutes';
 import { CashierRoute } from './cashierRoutes';
 
 export function AppRoutes() {
+    const Menudokter = [
+        { name: "Jadwal Dokter", path: '/dokter/schedule-dokter' },
+        { name: "Pasien", path: '/dokter/pasien-dokter' },
+        { name: "Notifikasi", path: '/dokter/notifikasi-dokter' }
+    ];
+
     return (
         <Routes>
             {/* Public Access Routes */}
@@ -106,6 +113,7 @@ export function AppRoutes() {
                 element={
                     <>
                         <NavbarPrivate />
+                        <Header accountName="Nama Akun Dokter" menuItems={Menudokter}/>
                         <GuardRoute allowedRoles={['dokter']}>
                             <Outlet />
                         </GuardRoute>

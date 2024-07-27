@@ -1,11 +1,12 @@
 import React from 'react';
 import RiwayatEpisode from '../../components/RiwayatEps';
-import Header from '../../components/Header';
 import '../../Style/Resepsionis/EmrResepsionis.css';
 import '../../Style/Resepsionis/DetailEpsResep.css';
 import '../../Style/Dokter/EntriBaru.css';
 
 const EntriBaru = () => {
+    // Definisikan variabel konstanta untuk path dasar
+    const BASE_PATH = "/dokter/pasien-dokter/emr-dokter/entri-baru";
 
     const SimpanEntriBaru = () => {
         alert('Data Tersimpan');
@@ -22,16 +23,8 @@ const EntriBaru = () => {
         }
     };
 
-    const Menudokter = [
-        { name: "Jadwal Dokter", path: "/schedule-dokter" },
-        { name: "Pasien", path: "/pasien-dokter" },
-        { name: "Notifikasi", path: "/notifikasi-dokter" }
-    ];
-
-
     return (
         <div className='emr-resepsionis-container'>
-            <Header accountName="Nama Akun Dokter" menuItems={Menudokter} />
             <h1 className='text-emr-resepsionis'>EMR Pasien</h1>
             <div className='kolom-emr-resepsionis'>
                 <div className='no-emr-rsp'>
@@ -115,7 +108,6 @@ const EntriBaru = () => {
                             <input type='text' className='kolom-detak-detail'></input>
                         </div>
                     </div>
-                    
                 </div>
                 <div className='objektif-detail'>
                     <span className='text-objektif-detail'>Objektif :</span>
@@ -132,11 +124,11 @@ const EntriBaru = () => {
                 <div className='tindakan-entri-baru'>
                     <span className='text-tindakan-entri-baru'>Tindakan :</span>
                     <select onChange={DropdownOrder} className='dropdown-entri-baru'>
-                            <option value="">Order</option>
-                            <option value="/order-obat">Obat</option>
-                            <option value="/order-prosedur">Prosedur Medis</option>
-                            <option value="/buat-surat">Buat Surat</option>
-                        </select>
+                        <option value="">Order</option>
+                        <option value={`${BASE_PATH}/order-obat`}>Obat</option>
+                        <option value={`${BASE_PATH}/order-prosedur`}>Prosedur Medis</option>
+                        <option value={`${BASE_PATH}/order-surat`}>Buat Surat</option>
+                    </select>
                 </div>
             </div>
             <div className='button-entri-baru'>

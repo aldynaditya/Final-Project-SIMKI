@@ -11,7 +11,7 @@ const RiwayatEpisode = () => {
     const navigate = useNavigate();
 
     const LihatDetailEps = () => {
-        navigate('/detail-episode');
+        navigate('detail-episode');
     };
 
     return (

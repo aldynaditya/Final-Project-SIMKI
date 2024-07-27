@@ -1,21 +1,11 @@
 import React from "react";
 import '../../Style/Perawat/JadwalDokter.css';
-import Header from '../../components/Header';
 
 const JadwalDokter = () => {
-
-    const Menudokter = [
-        { name: "Jadwal Dokter", path: "/dokter/schedule-dokter" },
-        { name: "Pasien", path: "/dokter/pasien-dokter" },
-        { name: "Notifikasi", path: "/dokter/notifikasi-dokter" }
-    ];
-
-
     return (
         <div className="jadwal-dokter-wrapper">
             <div className="navbar-header-jadwal">
-                <Header accountName="Nama Akun Dokter" menuItems={Menudokter} />
-            </div>
+        </div>
             <div className="jadwal-dokter-container">
                 <div className="content-wrapper-jadwal">
                     <h1 className="text_jadwal">Jadwal Dokter</h1>

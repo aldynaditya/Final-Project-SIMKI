@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import '../../Style/Dokter/SuratRujukan.css';
 
 const SuratRujukan = () => {
     const [activeLink, setActiveLink] = useState('');
     const navigate = useNavigate();
+    const { entri } = useParams();
+
+    const SURAT_PATH = `/dokter/pasien-dokter/emr-dokter/${entri}/order-surat`;
+
 
     const handleLinkCancel = (link) => {
         setActiveLink(link);
@@ -12,14 +16,14 @@ const SuratRujukan = () => {
 
     const SimpanRujukan = () => {
         alert('Data Tersimpan');
-        navigate('/order-surat'); 
+        navigate(SURAT_PATH); 
     };
 
     return (
         <div className='suratrujukan-container'>
             <div className='suratrujukan-content'>
                 <Link 
-                    to="/order-surat" 
+                    to={SURAT_PATH} 
                     className={activeLink === 'cancel' ? 'active cancel-link' : 'cancel-x'} 
                     onClick={() => handleLinkCancel('cancel')}
                 >

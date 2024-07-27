@@ -1,21 +1,13 @@
 import React, { useState } from "react";
 import '../../Style/Dokter/Notifikasi.css';
-import Header from '../../components/Header';
 import SearchBar from "../../components/SearchBar";
 
 const Notifikasi = () => {
     const [rows] = useState(Array.from({ length: 20 }));
 
-    const Menudokter = [
-        { name: "Jadwal Dokter", path: "/dokter/schedule-dokter" },
-        { name: "Pasien", path: "/dokter/pasien-dokter" },
-        { name: "Notifikasi", path: "/dokter/notifikasi-dokter" }
-    ];
-
     return (
         <div className="notifikasi-wrapper">
             <div className="navbar-header-notifikasi">
-                <Header accountName="Nama Akun Dokter" menuItems={Menudokter} />
             </div>
             <div className="notifikasi-container">
                 <div className="content-wrapper-notifikasi">

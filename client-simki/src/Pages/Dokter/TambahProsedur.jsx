@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import '../../Style/Dokter/TambahProsedur.css';
 import search from "../../images/search.png";
 
 const TambahProsedur = () => {
     const [activeLink, setActiveLink] = useState('');
     const navigate = useNavigate();
+    const { entri } = useParams();
+
+    const PROSEDUR_PATH = `/dokter/pasien-dokter/emr-dokter/${entri}/order-prosedur`;
 
     const handleLinkCancel = (link) => {
         setActiveLink(link);
@@ -13,7 +16,7 @@ const TambahProsedur = () => {
 
     const SimpanProsedur = () => {
         alert('Prosedur Tersimpan');
-        navigate('/order-prosedur'); 
+        navigate(PROSEDUR_PATH); 
     };
 
     const handleSearch = () => {
@@ -44,7 +47,7 @@ const TambahProsedur = () => {
         <div className='tambahprosedur-container'>
             <div className='tambahprosedur-content'>
                 <Link 
-                    to="/order-prosedur" 
+                    to={PROSEDUR_PATH} 
                     className={activeLink === 'cancel' ? 'active cancel-link' : 'cancel-x'} 
                     onClick={() => handleLinkCancel('cancel')}
                 >

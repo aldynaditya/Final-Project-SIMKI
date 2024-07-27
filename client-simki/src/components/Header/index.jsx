@@ -51,7 +51,7 @@ const Header = ({ accountName, menuItems }) => {
 
     const handleLogout = () => {
         dispatch(userLogout());
-        navigate('/signin-private');
+        navigate('/signin');
     };
 
     const navigateTo = (path) => {
