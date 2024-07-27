@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import '../../Style/Dokter/TambahObatDr.css';
 import search from "../../images/search.png";
 
 const TambahObatDr = () => {
     const [activeLink, setActiveLink] = useState('');
     const navigate = useNavigate();
+    const { entri } = useParams();
+
+    const OBAT_PATH = `/dokter/pasien-dokter/emr-dokter/${entri}/order-obat`;
 
     const handleLinkCancel = (link) => {
         setActiveLink(link);
@@ -13,7 +16,7 @@ const TambahObatDr = () => {
 
     const Simpandokter = () => {
         alert('Data Tersimpan');
-        navigate('/order-obat'); 
+        navigate(OBAT_PATH); 
     };
 
     const handleSearch = () => {
@@ -44,7 +47,7 @@ const TambahObatDr = () => {
         <div className='tambahobatdr-container'>
             <div className='tambahobatdr-content'>
                 <Link 
-                    to="/order-obat" 
+                    to={OBAT_PATH} 
                     className={activeLink === 'cancel' ? 'active cancel-link' : 'cancel-x'} 
                     onClick={() => handleLinkCancel('cancel')}
                 >

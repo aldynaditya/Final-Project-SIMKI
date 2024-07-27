@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Header from '../../components/Header';
 import { useNavigate } from 'react-router-dom';
 import '../../Style/Dokter/OrderObat.css';
 import '../../Style/Dokter/OrderProsedur.css';
@@ -14,19 +13,11 @@ const OrderProsedur = () => {
     };
 
     const TambahProsedur = () => {
-        navigate('/tambah-prosedur');
+        navigate('tambah-prosedur');
     };
-
-    const Menudokter = [
-        { name: "Jadwal Dokter", path: "/schedule-dokter" },
-        { name: "Pasien", path: "/pasien-dokter" },
-        { name: "Notifikasi", path: "/notifikasi-dokter" }
-      ];
-
 
     return (
         <div className='order-obat-container'>
-            <Header accountName="Nama Akun Dokter" menuItems={Menudokter} />
             <h1 className='text-order-obat'>Order Prosedur</h1>
             <div className='kolom-order-obat'>
                 <div className='baris-satu'>

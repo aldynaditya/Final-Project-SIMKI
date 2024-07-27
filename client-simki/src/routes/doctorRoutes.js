@@ -16,6 +16,7 @@ import SuratSakit from '../Pages/Dokter/SuratSakit';
 import TambahObatDr from '../Pages/Dokter/TambahObat';
 import TambahProsedur from '../Pages/Dokter/TambahProsedur';
 import HasilKuisionerPopup from '../Pages/Dokter/HasilKuisionerPopup';
+import RiwayatEpisode from '../components/RiwayatEps';
 
 export function DoctorsRoute() {
     return (
@@ -25,16 +26,17 @@ export function DoctorsRoute() {
             <Route path="notifikasi-dokter" element={<NotifikasiDokter/>} />
             <Route path="schedule-dokter" element={<ScheduleDr/>} />
             <Route path="/pasien-dokter/emr-dokter" element={<EmrDokter />} />
+            <Route path="/pasien-dokter/emr-dokter/detail-episode" element={<RiwayatEpisode />} />
+            <Route path="/pasien-dokter/emr-dokter/:entri/isi-cppt" element={<IsiCppt />} />
+            <Route path="/pasien-dokter/emr-dokter/:entri/order-obat" element={<OrderObat />} />
+            <Route path="/pasien-dokter/emr-dokter/:entri/order-obat/tambah-obat" element={<TambahObatDr />} />
+            <Route path="/pasien-dokter/emr-dokter/:entri/order-prosedur" element={<OrderProsedur />} />
+            <Route path="/pasien-dokter/emr-dokter/:entri/order-prosedur/tambah-prosedur" element={<TambahProsedur />} />
+            <Route path="/pasien-dokter/emr-dokter/:entri/order-surat" element={<OrderSurat />} />
+            <Route path="/pasien-dokter/emr-dokter/:entri/order-surat/surat-rujukan" element={<SuratRujukan />} />
+            <Route path="/pasien-dokter/emr-dokter/:entri/order-surat/surat-sakit" element={<SuratSakit />} />
             <Route path="/pasien-dokter/emr-dokter/entri-masuk" element={<EntriMasuk />} />
-            <Route path="/pasien-dokter/emr-dokter/entri-masuk/isi-cppt" element={<IsiCppt />} />
             <Route path="/pasien-dokter/emr-dokter/entri-baru" element={<EntriBaru />} />
-            <Route path="surat-rujukan" element={<SuratRujukan />} />
-            <Route path="surat-sakit" element={<SuratSakit />} />
-            <Route path="tambahobat-dokter" element={<TambahObatDr />} />
-            <Route path="tambah-prosedur" element={<TambahProsedur />} />
-            <Route path="order-obat" element={<OrderObat />} />
-            <Route path="order-prosedur" element={<OrderProsedur />} />
-            <Route path="order-surat" element={<OrderSurat />} />
             <Route path="hasilkuisioner-popup" element={<HasilKuisionerPopup />} />
         </Routes>
     );

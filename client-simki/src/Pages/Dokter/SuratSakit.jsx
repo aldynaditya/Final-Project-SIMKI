@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import '../../Style/Resepsionis/CetakSuratPopup.css';
 
 const SuratSakit = () => {
     const [activeLink, setActiveLink] = useState('');
-    const navigate = useNavigate(); // Add useNavigate hook
+    const navigate = useNavigate();
+    const { entri } = useParams();
+
+    const SURAT_PATH = `/dokter/pasien-dokter/emr-dokter/${entri}/order-surat`;
 
     const handleLinkCancel = (link) => {
         setActiveLink(link);
@@ -12,14 +15,14 @@ const SuratSakit = () => {
 
     const handleSuratSakit = () => {
         alert('Data Tersimpan');
-        navigate('/order-surat'); // Navigate back to DetailEpisode page
+        navigate(SURAT_PATH);
     };
 
     return (
         <div className='cetaksurat-popup-container'>
             <div className='cetaksurat-popup-content'>
                 <Link 
-                    to="/order-surat" 
+                    to={SURAT_PATH}
                     className={activeLink === 'cancel' ? 'active cancel-link' : 'cancel-x'} 
                     onClick={() => handleLinkCancel('cancel')}
                 >
