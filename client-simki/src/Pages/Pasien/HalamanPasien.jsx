@@ -1,37 +1,34 @@
 import React from "react";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
-import '../../Style/Pasien/HalamanPasien.css';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import '../../Style/Pasien/HalamanPasien.css';
+import { userLogout } from '../../redux/auth/actions';
 import user from "../../images/user.png";
 import buatjanji from "../../images/buatjanji.png";
 import riwayat from "../../images/riwayat.png";
 
 const HalamanPasien = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const Home = () => {
-        navigate('/');
+    const PROFILE_PATH = 'profile';
+    const BUATJANJI_PATH = 'buat-janji';
+    const RIWAYAT_PATH = 'riwayat-kunjungan';
+
+    const handleNavigation = (path) => {
+        navigate(path);
     };
 
-    const handleProfil = () => {
-        navigate('/profile');
-    };
-
-    const handleBuatjanji = () => {
-        navigate('/buat-janji');
-    };
-
-    const handleRiwayatkunjungan = () => {
-        navigate('/riwayat-kunjungan');
+    const handleLogout = () => {
+        dispatch(userLogout());
+        navigate('/login');
     };
 
     return (
         <div className="halaman_pasien_container">
-            <Navbar />
             <h1 className="center_text">
                 <span className="nama_pasien">Hai, (nama pasien) </span>
-                <button className="keluar" onClick={Home}>Keluar</button>
+                <button className="keluar" onClick={handleLogout}>Keluar</button>
             </h1>
             <div className="transaksi">
                 <p>Transaksi Berlangsung :</p>
@@ -59,20 +56,19 @@ const HalamanPasien = () => {
                 </table>
             </div>
             <div className="klik_pasien">
-                <div className='profile' onClick={handleProfil}>
+                <div className='profile' onClick={() => handleNavigation(PROFILE_PATH)}>
                     <img src={user} alt='Profil' className='user' />
                     <p>PROFIL</p>
                 </div>
-                <div className="buat_janji" onClick={handleBuatjanji}>
+                <div className="buat_janji" onClick={() => handleNavigation(BUATJANJI_PATH)}>
                     <img src={buatjanji} alt='Buat_Janji' className='buatjanji' />
                     <p>BUAT JANJI</p>
                 </div>
-                <div className="riwayat_kunjungan" onClick={handleRiwayatkunjungan}>
+                <div className="riwayat_kunjungan" onClick={() => handleNavigation(RIWAYAT_PATH)}>
                     <img src={riwayat} alt='riwayat' className='riwayat' />
                     <p>RIWAYAT KUNJUNGAN</p>
                 </div>
             </div>
-            <Footer />
         </div>
     );
 }

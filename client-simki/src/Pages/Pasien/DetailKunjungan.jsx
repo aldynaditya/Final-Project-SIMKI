@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import Navbar from "../../components/Navbar";  
-import Footer from "../../components/Footer";   
 import '../../Style/Pasien/DetailKunjungan.css';
 import QuestionnairePopup from "./QuestionnairePopup"; // Impor komponen baru
 
@@ -17,7 +15,6 @@ const DetailKunjungan = () => {
 
     return (
         <div className="detail_kunjungan_container">
-            <Navbar />
             <h1 className="text_detail">Detail Kunjungan</h1>
             <div className="form_container">
                 <div className="form_field">
@@ -49,7 +46,6 @@ const DetailKunjungan = () => {
                 </div>
             </div>
             {isQuestionnaireOpen && <QuestionnairePopup onClose={handleCloseQuestionnaire} />}
-            <Footer />
         </div>
     );
 };

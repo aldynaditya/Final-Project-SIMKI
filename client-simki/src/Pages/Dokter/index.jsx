@@ -18,9 +18,9 @@ const Dokter = () => {
   };
 
   const Menudokter = [
-    { name: "Jadwal Dokter", path: JADWAL_PATH },
-    { name: "Pasien", path: PASIEN_PATH },
-    { name: "Notifikasi", path: NOTIFIKASI_PATH }
+    { name: "Jadwal Dokter", path: '/dokter/schedule-dokter' },
+    { name: "Pasien", path: '/dokter/pasien-dokter' },
+    { name: "Notifikasi", path: '/dokter/notifikasi-dokter' }
   ];
 
   return (
