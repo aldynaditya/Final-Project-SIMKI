@@ -1,15 +1,14 @@
 import React from "react";
-import Navbar from "../../components/Navbar";  
-import Footer from "../../components/Footer";  
 import { useNavigate } from 'react-router-dom';  
 import '../../Style/Pasien/RiwayatKunjungan.css';
 
 const RiwayatKunjungan = () => {
     const navigate = useNavigate();
+    
+    const DETAIL_PATH = 'detail-kunjungan';
 
-    const handleSelengkapnya = () => {
-        // Logika untuk menampilkan detail atau navigasi ke halaman lain
-        navigate('/detail-kunjungan');
+    const handleNavigation = (path) => {
+        navigate(path);
     };
 
     const rows = Array.from({ length: 20 }, (_, index) => (
@@ -18,13 +17,12 @@ const RiwayatKunjungan = () => {
             <td></td>
             <td></td>
             <td></td>
-            <td><button className="tombol_selengkapnya" onClick={handleSelengkapnya}>Selengkapnya</button></td>
+            <td><button className="tombol_selengkapnya" onClick={() => handleNavigation(DETAIL_PATH)}>Selengkapnya</button></td>
         </tr>
     ));
 
     return (
         <div className="riwayat_kunjungan_container">
-            <Navbar />
             <div className="text_riwayat">
                 <h1>Riwayat Kunjungan</h1>
             </div>
@@ -44,7 +42,6 @@ const RiwayatKunjungan = () => {
                     </tbody>
                 </table>
             </div>
-            <Footer />
         </div>
     );
 }

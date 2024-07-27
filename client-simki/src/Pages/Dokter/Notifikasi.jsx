@@ -7,9 +7,9 @@ const Notifikasi = () => {
     const [rows] = useState(Array.from({ length: 20 }));
 
     const Menudokter = [
-        { name: "Jadwal Dokter", path: "/schedule-dokter" },
-        { name: "Pasien", path: "/pasien-dokter" },
-        { name: "Notifikasi", path: "/notifikasi-dokter" }
+        { name: "Jadwal Dokter", path: "/dokter/schedule-dokter" },
+        { name: "Pasien", path: "/dokter/pasien-dokter" },
+        { name: "Notifikasi", path: "/dokter/notifikasi-dokter" }
     ];
 
     return (

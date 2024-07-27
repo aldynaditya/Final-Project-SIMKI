@@ -14,7 +14,7 @@ export function PatientRoute() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/riwayat-kunjungan" element={<RiwayatKunjungan />} />
             <Route path="/buat-janji" element={<BuatJanji />} />
-            <Route path="/detail-kunjungan" element={<DetailKunjungan />} />
+            <Route path="riwayat-kunjungan/detail-kunjungan" element={<DetailKunjungan />} />
             <Route path="/questionnaire-popup" element={<QuestionnairePopup />} />
         </Routes>
     );

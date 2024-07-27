@@ -1,18 +1,14 @@
 // Profile.js
 import React from 'react';
-import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
 import '../../Style/Pasien/profile.css';
 
 const Profile = () => {
     const handleSimpan = () => {
-        // Logika untuk menangani submit di sini
         alert('Biodata Tersimpan');
     };
 
     return (
         <div className='profile_container'>
-            <Navbar />
             <div className="content">
                 <h1 className='text_profil'>Profil</h1>
                 <div className='biodata-pasien-public'>
@@ -46,7 +42,6 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
-            <Footer />
         </div>
     );
 };

@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
 import '../../Style/Pasien/BuatJanji.css';
 
 const BuatJanji = () => {
@@ -42,7 +40,6 @@ const BuatJanji = () => {
 
     return (
         <div className='BuatJanji_container'>
-            <Navbar />
             <h1 className='text_buatjanji'>Buat Janji</h1>
             <div className='form_container'>
                 <div className='form_group'>
@@ -89,7 +86,6 @@ const BuatJanji = () => {
 
                 <button className='klik_buatjanji' onClick={handleBuatJanji}>Buat Janji</button>
             </div>
-            <Footer />
         </div>
     );
 };
