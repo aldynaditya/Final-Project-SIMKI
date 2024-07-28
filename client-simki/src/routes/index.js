@@ -31,6 +31,12 @@ export function AppRoutes() {
         { name: "Notifikasi", path: '/dokter/notifikasi-dokter' }
     ];
 
+    const Menuperawat = [
+        { name: "Jadwal perawat", path: "/perawat/jadwal-dokter" },
+        { name: "Pasien", path: "/perawat/pasien-perawat" },
+        { name: "Kelola Item", path: "/perawat/kelola-item" }
+    ];
+
     return (
         <Routes>
             {/* Public Access Routes */}
@@ -128,6 +134,7 @@ export function AppRoutes() {
                 element={
                     <>
                         <NavbarPrivate />
+                        <Header accountName="Nama Akun Perawat" menuItems={Menuperawat}/>
                         <GuardRoute allowedRoles={['perawat']}>
                             <Outlet />
                         </GuardRoute>

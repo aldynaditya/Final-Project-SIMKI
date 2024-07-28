@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import NavbarPrivate from '../../components/NavbarPrivate';
-import FooterPrivate from '../../components/FooterPrivate';
 import '../../Style/Perawat/KelolaItem.css';
-import Header from '../../components/Header';
 import SearchBar from "../../components/SearchBar";  // Pastikan nama komponen dan path sesuai
 
 const KelolaItem = () => {
@@ -11,20 +8,12 @@ const KelolaItem = () => {
     const navigate = useNavigate();
 
     const handleTambahItemPopup = () => {
-        navigate('/tambahitem-popup');
+        navigate('tambah-item-popup');
     };
-
-    const Menuperawat = [
-        { name: "Jadwal perawat", path: "/jadwal-perawat" },
-        { name: "Pasien", path: "/pasien-perawat" },
-        { name: "Kelola Item", path: "/kelola-item" }
-      ];
 
     return (
         <div className="kelola-item-wrapper">
             <div className="navbar-kelola-item">
-                <NavbarPrivate />
-                <Header accountName="Nama Akun Perawat" menuItems={Menuperawat} />
             </div>
             <div className="kelola-item-container">
                 <div className="content-wrapper-kelola-item">
@@ -63,7 +52,6 @@ const KelolaItem = () => {
                     </div>
                 </div>
             </div>
-            <FooterPrivate />
         </div>
     );
 };

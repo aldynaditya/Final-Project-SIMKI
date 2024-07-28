@@ -7,20 +7,22 @@ const TambahItemPopup = () => {
     const [activeLink, setActiveLink] = useState('');
     const navigate = useNavigate();
 
+    const ITEM_PATH = '/perawat/kelola-item';
+
     const handleLinkCancel = (link) => {
         setActiveLink(link);
     };
 
     const SimpanItem = () => {
         alert('Data Tersimpan');
-        navigate('/kelola-item'); 
+        navigate(ITEM_PATH); 
     };
 
     return (
         <div className='tambahitem-popup-container'>
             <div className='tambahitem-popup-content'>
                 <Link 
-                    to="/kelola-item" 
+                    to={ITEM_PATH} 
                     className={activeLink === 'cancel' ? 'active cancel-link' : 'cancel-x'} 
                     onClick={() => handleLinkCancel('cancel')}
                 >
