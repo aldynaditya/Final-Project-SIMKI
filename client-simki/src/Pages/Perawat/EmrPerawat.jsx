@@ -1,8 +1,6 @@
 import React from 'react';
-import NavbarPrivate from '../../components/NavbarPrivate';
-import FooterPrivate from '../../components/FooterPrivate';
 import RiwayatEpisode from '../../components/RiwayatEps';
-import Header from '../../components/Header';
+
 import '../../Style/Resepsionis/EmrResepsionis.css';
 import '../../Style/Resepsionis/DetailEpsResep.css';
 import '../../Style/Perawat/EmrPerawat.css';
@@ -13,16 +11,8 @@ const EmrPerawat = () => {
         alert('Data Tersimpan');
     };
 
-    const Menuperawat = [
-        { name: "Jadwal perawat", path: "/jadwal-perawat" },
-        { name: "Pasien", path: "/pasien-perawat" },
-        { name: "Kelola Item", path: "/kelola-item" }
-    ];
-
     return (
         <div className='emr-resepsionis-container'>
-            <NavbarPrivate />
-            <Header accountName="Nama Akun Perawat" menuItems={Menuperawat} />
             <h1 className='text-emr-resepsionis'>EMR Pasien</h1>
             <div className='kolom-emr-resepsionis'>
                 <div className='no-emr-rsp'>
@@ -96,7 +86,6 @@ const EmrPerawat = () => {
                 <button type="submit" className="simpan-emr-perawat" onClick={SimpanEmr}>Simpan</button>
             </div>
             <RiwayatEpisode />
-            <FooterPrivate />
         </div>
     );
 };

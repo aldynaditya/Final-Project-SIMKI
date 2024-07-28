@@ -52,6 +52,22 @@ export async function putData(url, payload) {
     }
 }
 
+export async function patchData(url, payload) {
+    try {
+        const { token } = localStorage.getItem('auth')
+        ? JSON.parse(localStorage.getItem('auth'))
+        : {};
+
+    return await axios.patch(`${config.api_host_dev}${url}`, payload, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    } catch (err) {
+        return handleError(err);
+    }
+}
+
 export async function deleteData(url) {
     try {
         const { token } = localStorage.getItem('auth')

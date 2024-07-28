@@ -10,12 +10,12 @@ import TambahItemPopup from '../Pages/Perawat/TambahitemPopup';
 export function NursesRoute() {
     return (
         <Routes>
-            <Route path="/emr-perawat" element={<EmrPerawat />} />
-            <Route path="/pasien-perawat" element={<PasienPerawat />} />
             <Route path="/" element={<Perawat />} />
-            <Route path="/jadwal-dokter" element={<JadwalDokter />} />
-            <Route path="/kelola-item" element={<KelolaItem />} />
-            <Route path="/tambahitem-popup" element={<TambahItemPopup />} />
+            <Route path="pasien-perawat" element={<PasienPerawat />} />
+            <Route path="jadwal-dokter" element={<JadwalDokter />} />
+            <Route path="kelola-item" element={<KelolaItem />} />
+            <Route path="/pasien-perawat/emr-perawat" element={<EmrPerawat />} />
+            <Route path="/kelola-item/tambah-item-popup" element={<TambahItemPopup />} />
         </Routes>
     );
 }

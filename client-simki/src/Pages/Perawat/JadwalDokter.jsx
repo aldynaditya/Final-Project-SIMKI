@@ -1,23 +1,10 @@
 import React from "react";
-import NavbarPrivate from '../../components/NavbarPrivate';
-import FooterPrivate from '../../components/FooterPrivate';
 import '../../Style/Perawat/JadwalDokter.css';
-import Header from '../../components/Header'; 
 
 const JadwalDokter = () => {
-
-    const Menuperawat = [
-        { name: "Jadwal perawat", path: "/jadwal-perawat" },
-        { name: "Pasien", path: "/pasien-perawat" },
-        { name: "Kelola Item", path: "/kelola-item" }
-      ];
-
-
     return (
         <div className="jadwal-dokter-wrapper">
             <div className="navbar-header-jadwal">
-                <NavbarPrivate />
-                <Header accountName="Nama Akun Perawat" menuItems={Menuperawat} />
             </div>
             <div className="jadwal-dokter-container">
                 <div className="content-wrapper-jadwal">
@@ -111,7 +98,6 @@ const JadwalDokter = () => {
                     </div>
                 </div>
             </div>
-            <FooterPrivate />
         </div>
     );
 };
