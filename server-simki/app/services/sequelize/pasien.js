@@ -268,6 +268,7 @@ const getDataPasien = async (req) => {
 };
 
 const updateDataPasien = async (req) => {
+    console.log('Received data for update:', req.body);
     const { nik, nama_lengkap, tempat_lahir, tanggal_lahir, jenis_kelamin, gol_darah, suku_bangsa, alamat } = req.body;
     const { pasienId } = req.pasien;
 

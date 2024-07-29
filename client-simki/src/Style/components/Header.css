@@ -21,10 +21,26 @@
     flex-grow: 1; /* Memastikan info-account mendapatkan ruang yang cukup */
 }
 
+/* Container for name and role */
+.name-role {
+    display: flex;
+    flex-direction: column; /* Arrange items vertically */
+    align-items: flex-start;
+    margin-left: 20px; /* Align items to the start of the container */
+}
+
+/* Style for the user's name */
 .nama_account {
-    font-size: 16px; /* Sesuaikan dengan ukuran yang diinginkan */
-    margin-left: 20px; /* Jarak antara teks dan gambar profil */
-    margin-right: 30px; /* Jarak antara teks dan datetime-container */
+    font-size: 16px; /* Adjust as needed */
+    font-weight: bold; /* Optional: make the name bold */
+    color: #000; /* Adjust color as needed */
+    margin-bottom: 4px; /* Space between name and role */
+}
+
+/* Style for the user's role */
+.role_account {
+    font-size: 16px; /* Adjust as needed */
+    color: #666; /* Adjust color as needed */
 }
 
 .datetime-container {

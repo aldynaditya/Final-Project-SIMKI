@@ -1,4 +1,3 @@
-// src/redux/profile/actions.js
 import { getData, patchData } from '../../utils/fetch';
 import {
     FETCH_PROFILE_REQUEST,
@@ -9,6 +8,7 @@ import {
     UPDATE_PROFILE_FAILURE
 } from './constants';
 
+// Fetch profile data
 export const fetchProfile = () => async dispatch => {
     dispatch({ type: FETCH_PROFILE_REQUEST });
     try {
@@ -19,12 +19,20 @@ export const fetchProfile = () => async dispatch => {
     }
 };
 
-export const updateProfile = (profileData) => async dispatch => {
-    dispatch({ type: UPDATE_PROFILE_REQUEST });
+// Update profile data
+export const updateProfile = (data) => async dispatch => {
+    dispatch({ type: UPDATE_PROFILE_REQUEST }); // Notify that update has started
     try {
-        await patchData('/pasien', profileData);
-        dispatch({ type: UPDATE_PROFILE_SUCCESS });
+        const res = await patchData('/pasien', data);
+        if (res?.data?.data) {
+            dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: res.data.data }); // Notify success
+            dispatch(fetchProfile()); // Refetch profile after successful update
+        }
     } catch (error) {
-        dispatch({ type: UPDATE_PROFILE_FAILURE, payload: error.message });
+        dispatch({
+            type: UPDATE_PROFILE_FAILURE,
+            payload: error.message,
+        });
+        throw error; // Rethrow error so it can be caught in the component
     }
 };

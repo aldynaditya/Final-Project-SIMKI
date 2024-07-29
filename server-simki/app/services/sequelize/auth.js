@@ -25,7 +25,8 @@ const signin = async (req) => {
 
     return { 
         token: token,
-        role: result.role
+        role: result.role,
+        nama: result.nama
     };
 };
 

@@ -1,11 +1,13 @@
+// actions.js
 import { USER_LOGIN, USER_LOGOUT } from './constants';
 
-export function userLogin(token, role) {
-    localStorage.setItem('auth', JSON.stringify({ token, role }));
+export function userLogin(token, role, nama) {
+    localStorage.setItem('auth', JSON.stringify({ token, role, nama }));
     return {
         type: USER_LOGIN,
         token,
-        role
+        role,
+        nama
     };
 }
 

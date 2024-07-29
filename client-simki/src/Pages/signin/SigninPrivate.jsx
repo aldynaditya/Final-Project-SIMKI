@@ -38,8 +38,8 @@ const SigninPrivate = () => {
             const res = await postData(`/cms/auth/signin`, form);
 
             if (res?.data?.data) {
-                const { token, role } = res.data.data;
-                dispatch(userLogin(token, role));
+                const { token, role, nama } = res.data.data;
+                dispatch(userLogin(token, role, nama));
 
                 setIsLoading(false);
 

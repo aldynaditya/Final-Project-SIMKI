@@ -1,15 +1,33 @@
-import React from "react";
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import '../../Style/Pasien/HalamanPasien.css';
 import { userLogout } from '../../redux/auth/actions';
 import user from "../../images/user.png";
 import buatjanji from "../../images/buatjanji.png";
 import riwayat from "../../images/riwayat.png";
+import { fetchProfile } from '../../redux/profile/actions';
 
 const HalamanPasien = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { profile } = useSelector(state => state.profile);
+
+    const [localProfile, setLocalProfile] = useState({
+        nama_lengkap: '',
+    });
+
+    useEffect(() => {
+        dispatch(fetchProfile());
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (profile && profile.data) {
+            setLocalProfile({
+                nama_lengkap: profile.data.nama_lengkap || '',
+            });
+        }
+    }, [profile]);
 
     const PROFILE_PATH = 'profile';
     const BUATJANJI_PATH = 'buat-janji';
@@ -27,7 +45,7 @@ const HalamanPasien = () => {
     return (
         <div className="halaman_pasien_container">
             <h1 className="center_text">
-                <span className="nama_pasien">Hai, (nama pasien) </span>
+                <span className="nama_pasien">Hai, {localProfile.nama_lengkap}</span>
                 <button className="keluar" onClick={handleLogout}>Keluar</button>
             </h1>
             <div className="transaksi">
