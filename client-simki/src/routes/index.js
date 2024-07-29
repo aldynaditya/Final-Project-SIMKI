@@ -119,7 +119,7 @@ export function AppRoutes() {
                 element={
                     <>
                         <NavbarPrivate />
-                        <Header accountName="Nama Akun Dokter" menuItems={Menudokter}/>
+                        <Header menuItems={Menudokter}/>
                         <GuardRoute allowedRoles={['dokter']}>
                             <Outlet />
                         </GuardRoute>
@@ -134,7 +134,7 @@ export function AppRoutes() {
                 element={
                     <>
                         <NavbarPrivate />
-                        <Header accountName="Nama Akun Perawat" menuItems={Menuperawat}/>
+                        <Header menuItems={Menuperawat}/>
                         <GuardRoute allowedRoles={['perawat']}>
                             <Outlet />
                         </GuardRoute>

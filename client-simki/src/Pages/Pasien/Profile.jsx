@@ -1,6 +1,7 @@
 // src/pages/Profile.js
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Modal from 'react-modal';
 import '../../Style/Pasien/profile.css';
 import { fetchProfile, updateProfile } from '../../redux/profile/actions';
 
@@ -9,14 +10,20 @@ const Profile = () => {
     const { profile, loading, error } = useSelector(state => state.profile);
 
     const [localProfile, setLocalProfile] = useState({
-        namaLengkap: '',
+        nama_lengkap: '',
         nik: '',
-        tempatLahir: '',
-        tanggalLahir: '',
-        jenisKelamin: '',
-        golDarah: '',
-        sukuBangsa: '',
+        tempat_lahir: '',
+        tanggal_lahir: '',
+        jenis_kelamin: '',
+        gol_darah: '',
+        suku_bangsa: '',
         alamat: ''
+    });
+
+    const [alert, setAlert] = useState({
+        status: false,
+        message: '',
+        type: '',
     });
 
     useEffect(() => {
@@ -26,13 +33,13 @@ const Profile = () => {
     useEffect(() => {
         if (profile && profile.data) {
             setLocalProfile({
-                namaLengkap: profile.data.nama_lengkap || '',
+                nama_lengkap: profile.data.nama_lengkap || '',
                 nik: profile.data.nik || '',
-                tempatLahir: profile.data.tempat_lahir || '',
-                tanggalLahir: profile.data.tanggal_lahir ? new Date(profile.data.tanggal_lahir).toISOString().split('T')[0] : '',
-                jenisKelamin: profile.data.jenis_kelamin || '',
-                golDarah: profile.data.gol_darah || '',
-                sukuBangsa: profile.data.suku_bangsa || '',
+                tempat_lahir: profile.data.tempat_lahir || '',
+                tanggal_lahir: profile.data.tanggal_lahir ? new Date(profile.data.tanggal_lahir).toISOString().split('T')[0] : '',
+                jenis_kelamin: profile.data.jenis_kelamin || '',
+                gol_darah: profile.data.gol_darah || '',
+                suku_bangsa: profile.data.suku_bangsa || '',
                 alamat: profile.data.alamat || ''
             });
         }
@@ -45,10 +52,26 @@ const Profile = () => {
         });
     };
 
-    const handleSimpan = () => {
-        alert('Biodata Tersimpan');
-        console.log('Updating profile with data:', localProfile); // Debugging step
-        dispatch(updateProfile(localProfile));
+    const closeModal = () => {
+        setAlert({ status: false, message: '', type: '' });
+    };
+
+    const handleSimpan = async () => {
+        console.log('Updating profile with data:', localProfile);
+        try {
+            await dispatch(updateProfile(localProfile));
+            setAlert({
+                status: true,
+                message: 'Biodata Tersimpan',
+                type: 'success',
+            });
+        } catch (err) {
+            setAlert({
+                status: true,
+                message: 'Failed to update profile',
+                type: 'danger',
+            });
+        }
     };
 
     if (loading) {
@@ -69,8 +92,8 @@ const Profile = () => {
                             type='text'
                             className='kolom-npasien-public'
                             placeholder='Nama Lengkap'
-                            name='namaLengkap'
-                            value={localProfile.namaLengkap}
+                            name='nama_lengkap'
+                            value={localProfile.nama_lengkap}
                             onChange={handleChange}
                         />
                         <input
@@ -87,8 +110,8 @@ const Profile = () => {
                             type='text'
                             className='kolom-ttl-public'
                             placeholder='Tempat'
-                            name='tempatLahir'
-                            value={localProfile.tempatLahir}
+                            name='tempat_lahir'
+                            value={localProfile.tempat_lahir}
                             onChange={handleChange}
                         />
                     </div>
@@ -97,8 +120,8 @@ const Profile = () => {
                             type='date'
                             className='kolom-ttl-public'
                             placeholder='Tanggal Lahir'
-                            name='tanggalLahir'
-                            value={localProfile.tanggalLahir}
+                            name='tanggal_lahir'
+                            value={localProfile.tanggal_lahir}
                             onChange={handleChange}
                         />
                     </div>
@@ -107,8 +130,8 @@ const Profile = () => {
                             type='text'
                             className='kolom-gender-public'
                             placeholder='Jenis Kelamin'
-                            name='jenisKelamin'
-                            value={localProfile.jenisKelamin}
+                            name='jenis_kelamin'
+                            value={localProfile.jenis_kelamin}
                             onChange={handleChange}
                         />
                     </div>
@@ -117,8 +140,8 @@ const Profile = () => {
                             type='text'
                             className='kolom-blood-public'
                             placeholder='Golongan Darah'
-                            name='golDarah'
-                            value={localProfile.golDarah}
+                            name='gol_darah'
+                            value={localProfile.gol_darah}
                             onChange={handleChange}
                         />
                     </div>
@@ -127,8 +150,8 @@ const Profile = () => {
                             type='text'
                             className='kolom-suku-public'
                             placeholder='Suku Bangsa'
-                            name='sukuBangsa'
-                            value={localProfile.sukuBangsa}
+                            name='suku_bangsa'
+                            value={localProfile.suku_bangsa}
                             onChange={handleChange}
                         />
                     </div>
@@ -137,6 +160,7 @@ const Profile = () => {
                             type='text'
                             className='kolom-alamat-public'
                             placeholder='Alamat Lengkap'
+                            name='alamat'
                             value={localProfile.alamat}
                             onChange={handleChange}
                         />
@@ -146,6 +170,20 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
+            <Modal
+                isOpen={alert.status}
+                onRequestClose={closeModal}
+                contentLabel="Alert Message"
+                className="Modal"
+                overlayClassName="Overlay"
+                shouldCloseOnOverlayClick={true}
+                shouldCloseOnEsc={true}
+            >
+                <div className="modal-content">
+                    <p>{alert.message}</p>
+                    <button onClick={closeModal}>Close</button>
+                </div>
+            </Modal>
         </div>
     );
 };

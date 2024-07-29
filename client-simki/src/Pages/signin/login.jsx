@@ -60,7 +60,6 @@ const Login = () => {
         throw new Error(res?.response?.data?.msg || 'Internal server error');
       }
     } catch (err) {
-      console.log("Error response:", err);
       setIsLoading(false);
       setAlert({
         status: true,

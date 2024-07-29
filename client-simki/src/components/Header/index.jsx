@@ -1,19 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userLogout } from '../../redux/auth/actions';
 import '../../Style/components/Header.css';
 import profil from "../../images/profil.png";
 import dropdown from "../../images/dropdown.png";
 
-const Header = ({ accountName, menuItems }) => {
+const Header = ({ menuItems }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const dropdownRef = useRef(null);
 
     const [currentTime, setCurrentTime] = useState(new Date());
     const [dropdownVisible, setDropdownVisible] = useState(false);
+
+    const userName = useSelector((state) => state.auth.nama);
+    const userRole = useSelector((state) => state.auth.role); // Get user role from Redux state
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -63,7 +66,10 @@ const Header = ({ accountName, menuItems }) => {
         <header className='header-container'>
             <div className='info-account'>
                 <img src={profil} alt='Profil' className='profil_account' />
-                <span className='nama_account'>{accountName}</span>
+                <div className='name-role'>
+                    <span className='nama_account'>{userName}</span>
+                    <span className='role_account'>{userRole}</span>
+                </div>
                 <div className='datetime-container'>
                     <div className='date'>
                         Tanggal {currentTime.getDate()}/{currentTime.getMonth() + 1}/{currentTime.getFullYear()}
@@ -98,7 +104,6 @@ const Header = ({ accountName, menuItems }) => {
 };
 
 Header.propTypes = {
-    accountName: PropTypes.string.isRequired,
     menuItems: PropTypes.arrayOf(PropTypes.shape({
         name: PropTypes.string.isRequired,
         path: PropTypes.string.isRequired
