@@ -1,23 +1,45 @@
-import React from "react";
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';  
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchHistory } from '../../redux/patient/history/actions';
 import '../../Style/Pasien/RiwayatKunjungan.css';
 
 const RiwayatKunjungan = () => {
     const navigate = useNavigate();
-    
-    const DETAIL_PATH = 'detail-kunjungan';
+    const dispatch = useDispatch();
+    const { data, loading, error } = useSelector(state => state.history);
 
-    const handleNavigation = (path) => {
-        navigate(path);
+    useEffect(() => {
+        dispatch(fetchHistory());
+    }, [dispatch]);
+
+    const handleNavigation = (id) => {
+        navigate(`detail-kunjungan/${id}`);
     };
 
-    const rows = Array.from({ length: 20 }, (_, index) => (
-        <tr key={index}>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td><button className="tombol_selengkapnya" onClick={() => handleNavigation(DETAIL_PATH)}>Selengkapnya</button></td>
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
+
+    // Ensure data is an array
+    const historyData = Array.isArray(data) ? data : [];
+
+    const rows = historyData.map(item => (
+        <tr key={item.id}>
+            <td>{formatDate(item.tanggal)}</td>
+            <td>{item.dokter}</td>
+            <td>{item.poli}</td>
+            <td>{item.keterangan}</td>
+            <td>
+                <button className="tombol_selengkapnya" onClick={() => handleNavigation(item.id)}>Selengkapnya</button>
+            </td>
         </tr>
     ));
 

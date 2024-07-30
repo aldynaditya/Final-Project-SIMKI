@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import '../../Style/Pasien/Daftar.css';
-import { daftarUser } from '../../redux/daftar/actions';
+import { daftarUser } from '../../redux/patient/daftar/actions';
 
 const Daftar = () => {
   const dispatch = useDispatch();

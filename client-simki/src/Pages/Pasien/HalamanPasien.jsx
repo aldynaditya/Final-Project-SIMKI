@@ -6,8 +6,8 @@ import { userLogout } from '../../redux/auth/actions';
 import user from "../../images/user.png";
 import buatjanji from "../../images/buatjanji.png";
 import riwayat from "../../images/riwayat.png";
-import { fetchProfile } from '../../redux/profile/actions';
-import { fetchAppointments } from '../../redux/appointment/actions';
+import { fetchProfile } from '../../redux/patient/profile/actions';
+import { fetchAppointments } from '../../redux/patient/appointment/actions';
 import Modal from 'react-modal';
 
 const HalamanPasien = () => {
