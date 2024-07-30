@@ -12,6 +12,8 @@ import Layanan from '../Pages/Pasien/layanan';
 import KebijakanPrivasi from '../Pages/Pasien/KebijakanPrivasi';
 import LupaPass from '../Pages/Pasien/LupaPass';
 import Daftar from '../Pages/Pasien/Daftar';
+import AktivasiAkun from '../Pages/Pasien/AktivasiAkun';
+import GantiPassword from '../Pages/Pasien/GantiPassword';
 
 import Login from '../Pages/signin/login';
 import SigninPrivate from '../Pages/signin/SigninPrivate';
@@ -23,6 +25,8 @@ import { ReceptionistRoute } from './receptionistRoutes';
 import { SupervisorRoute } from './supervisorRoutes';
 import { LeaderRoute } from './leaderRoutes';
 import { CashierRoute } from './cashierRoutes';
+
+
 
 export function AppRoutes() {
     const Menudokter = [
@@ -80,6 +84,26 @@ export function AppRoutes() {
                     <>
                         <Navbar />
                         <LupaPass />
+                        <Footer />
+                    </>
+                }
+            />
+            <Route
+                path="/ganti-password"
+                element={
+                    <>
+                        <Navbar />
+                        <GantiPassword />
+                        <Footer />
+                    </>
+                }
+            />
+            <Route
+                path="/aktivasi-akun"
+                element={
+                    <>
+                        <Navbar />
+                        <AktivasiAkun />
                         <Footer />
                     </>
                 }
