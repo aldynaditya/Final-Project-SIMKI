@@ -134,7 +134,7 @@ const sendResetPasswordEmail = async (req, res) => {
 
     const token = createJWT({ payload: createTokenPassword(user) });
 
-    const resetUrl = `http://localhost:9000/reset-password?token=${token}`; // Use localhost for testing
+    const resetUrl = `http://localhost:3000/ganti-password?token=${token}`; // Use localhost for testing
 
     const data = { resetUrl };
 
@@ -198,7 +198,7 @@ const getpasienAppointments = async (req) => {
     const formattedResult = result.map(appointment => {
         return {
             tanggal: appointment.tanggal,
-            nama_dokter: appointment.schedule ? appointment.schedule.user_klinik.name : null,
+            nama_dokter: appointment.schedule.user_klinik.nama,
             poli: appointment.schedule ? appointment.schedule.poli : null,
             keterangan: appointment.keterangan,
             penjamin: appointment.penjamin,
