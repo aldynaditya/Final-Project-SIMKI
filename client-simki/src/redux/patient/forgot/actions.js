@@ -1,4 +1,4 @@
-import { postData } from '../../utils/fetch';
+import { postData } from '../../../utils/fetch';
 import {
     FORGOT_PASSWORD_REQUEST,
     FORGOT_PASSWORD_SUCCESS,

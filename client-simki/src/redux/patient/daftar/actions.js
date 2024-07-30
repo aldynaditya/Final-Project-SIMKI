@@ -1,4 +1,4 @@
-import { postData } from '../../utils/fetch';
+import { postData } from '../../../utils/fetch';
 import { DAFTAR_REQUEST, DAFTAR_SUCCESS, DAFTAR_FAILURE } from './constants';
 
 export const daftarUser = (userData) => async (dispatch) => {

@@ -1,4 +1,4 @@
-import { getData, patchData } from '../../utils/fetch';
+import { getData, patchData } from '../../../utils/fetch';
 import {
     FETCH_PROFILE_REQUEST,
     FETCH_PROFILE_SUCCESS,

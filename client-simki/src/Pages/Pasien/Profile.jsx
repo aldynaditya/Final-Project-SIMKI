@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import '../../Style/Pasien/profile.css';
-import { fetchProfile, updateProfile } from '../../redux/profile/actions';
+import { fetchProfile, updateProfile } from '../../redux/patient/profile/actions';
 
 const Profile = () => {
     const dispatch = useDispatch();

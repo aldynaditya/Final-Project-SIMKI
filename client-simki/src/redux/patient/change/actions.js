@@ -1,4 +1,4 @@
-import { postData } from '../../utils/fetch';
+import { postData } from '../../../utils/fetch';
 import {
     CHANGE_PASSWORD_REQUEST,
     CHANGE_PASSWORD_SUCCESS,

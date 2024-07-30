@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import passIcon from '../../images/pass.png';
-import { changePassword } from '../../redux/change/actions';
+import { changePassword } from '../../redux/patient/change/actions';
 import '../../Style/Pasien/GantiPassword.css';
 
 const GantiPassword = () => {

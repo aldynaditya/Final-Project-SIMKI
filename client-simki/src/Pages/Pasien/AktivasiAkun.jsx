@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 import emailIcon from '../../images/email.png';
 import otpIcon from '../../images/otp.png';
 import '../../Style/Pasien/AktivasiAkun.css';
-import { activateAccount } from '../../redux/activated/actions';
+import { activateAccount } from '../../redux/patient/activated/actions';
 
 const AktivasiAkun = () => {
   const navigate = useNavigate();

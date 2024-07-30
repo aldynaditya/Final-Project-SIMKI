@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import emailIcon from '../../images/email.png';
-import { forgotPassword } from '../../redux/forgot/actions';
+import { forgotPassword } from '../../redux/patient/forgot/actions';
 import '../../Style/Pasien/LupaPass.css';
 
 const LupaPass = () => {

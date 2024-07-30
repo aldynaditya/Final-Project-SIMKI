@@ -3,7 +3,7 @@ import {
     FETCH_APPOINTMENTS_SUCCESS,
     FETCH_APPOINTMENTS_FAILURE
 } from './constants';
-import { getData } from '../../utils/fetch';
+import { getData } from '../../../utils/fetch';
 
 export const fetchAppointments = () => async (dispatch) => {
     dispatch({ type: FETCH_APPOINTMENTS_REQUEST });

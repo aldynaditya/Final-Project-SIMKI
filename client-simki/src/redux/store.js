@@ -7,12 +7,14 @@ import {
 
 import { thunk } from 'redux-thunk';
 import authReducer from './auth/reducer';
-import profileReducer from './profile/reducer';
-import daftarReducer from './daftar/reducer';
-import activatedReducer from './activated/reducer';
-import forgotPasswordReducer from './forgot/reducer';
-import changePasswordReducer from './change/reducer';
-import appointmentReducer from './appointment/reducer';
+import profileReducer from './patient/profile/reducer';
+import daftarReducer from './patient/daftar/reducer';
+import activatedReducer from './patient/activated/reducer';
+import forgotPasswordReducer from './patient/forgot/reducer';
+import changePasswordReducer from './patient/change/reducer';
+import appointmentReducer from './patient/appointment/reducer';
+import historyReducer from './patient/history/reducer';
+import detailReducer from './patient/detail/reducer';
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -24,6 +26,8 @@ const rootReducers = combineReducers({
     forgotPassword: forgotPasswordReducer,
     changePassword: changePasswordReducer,
     appointments: appointmentReducer,
+    history: historyReducer,
+    detail: detailReducer,
 });
 const store = createStore(
     rootReducers,

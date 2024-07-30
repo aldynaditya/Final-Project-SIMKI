@@ -1,5 +1,5 @@
 import { ACTIVATE_ACCOUNT_REQUEST, ACTIVATE_ACCOUNT_SUCCESS, ACTIVATE_ACCOUNT_FAILURE } from './constants';
-import { putData } from '../../utils/fetch';
+import { putData } from '../../../utils/fetch';
 
 export const activateAccount = (payload) => async (dispatch) => {
     dispatch({ type: ACTIVATE_ACCOUNT_REQUEST });
