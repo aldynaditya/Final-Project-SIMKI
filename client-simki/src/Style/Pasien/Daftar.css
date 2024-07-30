@@ -180,3 +180,43 @@ h1 {
     font-size: 2rem; /* Ukuran font lebih besar untuk heading */
   }
 }
+
+.form-fields select,
+.form-fields input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-family: inherit; /* Use the same font as the other inputs */
+  font-size: inherit; /* Use the same font size as the other inputs */
+}
+
+.form-fields select {
+  -webkit-appearance: none; /* Remove default styling on Chrome */
+  -moz-appearance: none; /* Remove default styling on Firefox */
+  appearance: none; /* Remove default styling on other browsers */
+  background-color: white; /* Set background color */
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%204%205%27%3E%3Cpath%20fill%3D%27%23ccc%27%20d%3D%27M2%200L0%202h4L2%200z%20M2%205l2-2H0l2%202z%27/%3E%3C/svg%3E'); /* Add custom dropdown icon */
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 10px;
+}
+
+.form-fields .gender,
+.form-fields .blood,
+.form-fields .suku {
+  margin-bottom: 10px; /* Maintain spacing consistency */
+}
+
+.form-fields .ttl {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.form-fields .ttl input,
+.form-fields .ttl select {
+  flex: 1;
+}
