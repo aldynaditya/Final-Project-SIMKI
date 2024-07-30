@@ -7,12 +7,21 @@ import user from "../../images/user.png";
 import buatjanji from "../../images/buatjanji.png";
 import riwayat from "../../images/riwayat.png";
 import { fetchProfile } from '../../redux/profile/actions';
+import { fetchAppointments } from '../../redux/appointment/actions';
+import Modal from 'react-modal';
 
 const HalamanPasien = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { appointments, loading, error } = useSelector(state => state.appointments);
     const { profile } = useSelector(state => state.profile);
 
+    const [alert, setAlert] = useState({
+        status: false,
+        message: '',
+        type: '',
+    });
+    
     const [localProfile, setLocalProfile] = useState({
         nama_lengkap: '',
     });
@@ -22,12 +31,24 @@ const HalamanPasien = () => {
     }, [dispatch]);
 
     useEffect(() => {
+        dispatch(fetchAppointments());
+    }, [dispatch]);
+
+    useEffect(() => {
         if (profile && profile.data) {
             setLocalProfile({
                 nama_lengkap: profile.data.nama_lengkap || '',
             });
         }
     }, [profile]);
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
 
     const PROFILE_PATH = 'profile';
     const BUATJANJI_PATH = 'buat-janji';
@@ -41,6 +62,24 @@ const HalamanPasien = () => {
         dispatch(userLogout());
         navigate('/login');
     };
+
+    const closeModal = () => {
+        setAlert({ status: false, message: '', type: '' });
+    };
+
+    useEffect(() => {
+        if (error) {
+            setAlert({
+                status: true,
+                message: error,
+                type: 'danger',
+            });
+        }
+    }, [error]);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div className="halaman_pasien_container">
@@ -58,18 +97,20 @@ const HalamanPasien = () => {
                             <th>Tanggal</th>
                             <th>Dokter</th>
                             <th>Poli</th>
-                            <th>Jam</th>
+                            <th>Keterangan</th>
                             <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><div className="tombol_pending">Pending</div></td>
-                        </tr>
+                        {appointments.map((appointment, index) => (
+                            <tr key={index}>
+                                <td>{formatDate(appointment.tanggal)}</td>
+                                <td>{appointment.nama_dokter}</td>
+                                <td>{appointment.poli}</td>
+                                <td>{appointment.keterangan}</td>
+                                <td><div className={`tombol_${appointment.status.toLowerCase()}`}>{appointment.status}</div></td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
@@ -87,8 +128,23 @@ const HalamanPasien = () => {
                     <p>RIWAYAT KUNJUNGAN</p>
                 </div>
             </div>
+
+            <Modal
+                isOpen={alert.status}
+                onRequestClose={closeModal}
+                contentLabel="Alert Message"
+                className="Modal"
+                overlayClassName="Overlay"
+                shouldCloseOnOverlayClick={true}
+                shouldCloseOnEsc={true}
+            >
+                <div className="modal-content">
+                    <p>{alert.message}</p>
+                    <button onClick={closeModal}>Close</button>
+                </div>
+            </Modal>
         </div>
     );
-}
+};
 
 export default HalamanPasien;
