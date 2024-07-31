@@ -97,6 +97,7 @@ const HalamanPasien = () => {
                             <th>Tanggal</th>
                             <th>Dokter</th>
                             <th>Poli</th>
+                            <th>Jam</th>
                             <th>Keterangan</th>
                             <th>Status</th>
                         </tr>
@@ -107,6 +108,7 @@ const HalamanPasien = () => {
                                 <td>{formatDate(appointment.tanggal)}</td>
                                 <td>{appointment.nama_dokter}</td>
                                 <td>{appointment.poli}</td>
+                                <td>{appointment.jam}</td>
                                 <td>{appointment.keterangan}</td>
                                 <td><div className={`tombol_${appointment.status.toLowerCase()}`}>{appointment.status}</div></td>
                             </tr>

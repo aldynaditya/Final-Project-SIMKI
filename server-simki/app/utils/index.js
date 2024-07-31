@@ -19,6 +19,10 @@ const {
 const {
     generateNoEMR
 } = require('./emrNumber')
+const {
+    validateTimeFormat,
+    timesOverlap
+} = require('./formattedTime')
 
 module.exports = {
     getDayOfWeek,
@@ -29,5 +33,7 @@ module.exports = {
     isTokenValid,
     createTokenUser,
     createTokenPasien,
-    createTokenPassword
+    createTokenPassword,
+    validateTimeFormat,
+    timesOverlap
 };

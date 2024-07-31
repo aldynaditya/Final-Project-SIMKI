@@ -14,6 +14,7 @@ import LupaPass from '../Pages/Pasien/LupaPass';
 import Daftar from '../Pages/Pasien/Daftar';
 import AktivasiAkun from '../Pages/Pasien/AktivasiAkun';
 import GantiPassword from '../Pages/Pasien/GantiPassword';
+import Jadwal from '../Pages/Pasien/jadwal';
 
 import Login from '../Pages/signin/login';
 import SigninPrivate from '../Pages/signin/SigninPrivate';
@@ -25,6 +26,7 @@ import { ReceptionistRoute } from './receptionistRoutes';
 import { SupervisorRoute } from './supervisorRoutes';
 import { LeaderRoute } from './leaderRoutes';
 import { CashierRoute } from './cashierRoutes';
+
 
 
 
@@ -114,6 +116,16 @@ export function AppRoutes() {
                     <>
                         <Navbar />
                         <Daftar />
+                        <Footer />
+                    </>
+                }
+            />
+            <Route
+                path="/jadwal"
+                element={
+                    <>
+                        <Navbar />
+                        <Jadwal />
                         <Footer />
                     </>
                 }

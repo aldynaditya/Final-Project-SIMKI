@@ -27,6 +27,9 @@ const {
     getDayOfWeek
 } = require('../../utils');
 const { otpMail } = require('../mail');
+const { 
+    validateTimeFormat,
+} = require('../../utils')
 
 const signupPasien = async (req) => {
     const { nik, nama_lengkap, tempat_lahir, tanggal_lahir, jenis_kelamin, gol_darah, suku_bangsa, alamat, email, password } = req.body;
@@ -185,7 +188,7 @@ const getpasienAppointments = async (req) => {
             {
                 model: Schedule,
                 as: 'schedule',
-                attributes: ['hari', 'poli'],
+                attributes: ['hari', 'poli', 'start_time', 'end_time'],
                 include: {
                     model: UserKlinik,
                     attributes: ['nama'],
@@ -196,14 +199,18 @@ const getpasienAppointments = async (req) => {
     });
 
     const formattedResult = result.map(appointment => {
+        const { schedule } = appointment;
+        const startTime = schedule.start_time.slice(0, 5);
+        const endTime = schedule.end_time.slice(0, 5);
+
         return {
             tanggal: appointment.tanggal,
-            nama_dokter: appointment.schedule.user_klinik.nama,
-            poli: appointment.schedule ? appointment.schedule.poli : null,
+            nama_dokter: schedule.user_klinik.nama,
+            jam: `${startTime}-${endTime}`,
+            poli: schedule.poli,
             keterangan: appointment.keterangan,
             penjamin: appointment.penjamin,
             status: appointment.status,
-
         };
     });
 
@@ -211,9 +218,12 @@ const getpasienAppointments = async (req) => {
 };
 
 const createAppointment = async (req, res) => {
-    const { tanggal, keluhan, penjamin, dokter, poli } = req.body;
+    const { tanggal, keluhan, penjamin, dokter, poli, start_time, end_time } = req.body;
     const { pasienId } = req.pasien;
     const dayOfWeek = getDayOfWeek(tanggal);
+
+    const formattedStartTime = validateTimeFormat(start_time);
+    const formattedEndTime = validateTimeFormat(end_time);
 
     const schedule = await Schedule.findOne({
         where: {
@@ -233,13 +243,21 @@ const createAppointment = async (req, res) => {
         ],
     });
 
-    if (!schedule) throw new NotFoundError( 'Tidak ada Dokter yang tersedia pada tanggal itu' );
+    if (!schedule) {
+        throw new NotFoundError('Tidak ada Dokter yang tersedia pada tanggal itu');
+    }
+
+    if (formattedStartTime < schedule.start_time || formattedEndTime > schedule.end_time) {
+        throw new Error('Waktu janji tidak sesuai dengan jadwal dokter');
+    }
 
     const dataPasien = await DataPasien.findOne({
         where: { userId: pasienId }
     });
 
-    if (!dataPasien) throw new NotFoundError('Data Pasien tidak ditemukan');
+    if (!dataPasien) {
+        throw new NotFoundError('Data Pasien tidak ditemukan');
+    }
 
     const result = await Appointment.create({
         tanggal,
@@ -247,7 +265,9 @@ const createAppointment = async (req, res) => {
         penjamin,
         pasienId: dataPasien.uuid,
         dataPasienId: dataPasien.uuid,
-        scheduleId: schedule.uuid
+        scheduleId: schedule.uuid,
+        start_time: formattedStartTime,
+        end_time: formattedEndTime
     });
 
     return result;
@@ -343,14 +363,15 @@ const getAllVisitHistory = async (req) =>  {
     });
 
     const result = history.map(episode => {
-        const history = episode.emrpasien.appointment;
+        const emr = episode.emrpasien
+        const history = emr.appointment;
         
         return{
             id: episode.uuid,
             tanggal: history.tanggal,
             dokter: history.schedule.user_klinik.nama,
             poli: history.schedule.poli,
-            keterangan: history.keterangan,
+            keterangan: emr.status,
         }
     });
 

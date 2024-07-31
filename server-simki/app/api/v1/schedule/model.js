@@ -32,6 +32,20 @@ const Schedule = db.define('schedule', {
             },
         },
     },
+    start_time: {
+        type: DataTypes.TIME,
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
+    },
+    end_time: {
+        type: DataTypes.TIME,
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
+    },
     status: {
         type: DataTypes.ENUM( 'ada', 'tidak ada' ),
         defaultValue: 'tidak ada',
