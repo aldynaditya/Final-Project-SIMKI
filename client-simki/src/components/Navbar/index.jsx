@@ -53,6 +53,15 @@ const Navbar = () => {
           </li>
           <li>
             <Link 
+              to="/jadwal" 
+              className={activeLink === 'jadwal' ? 'active' : ''} 
+              onClick={() => handleLinkClick('jadwal')}
+            >
+              Dokter
+            </Link>
+          </li>
+          <li>
+            <Link 
               to="/login" 
               className={activeLink === 'login' ? 'active' : ''} 
               onClick={() => handleLinkClick('login')}
