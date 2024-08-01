@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import '../../Style/components/RiwayatEps.css';
 
 const RiwayatEpisode = () => {
@@ -9,9 +10,18 @@ const RiwayatEpisode = () => {
         { date: '25/5/2024', doctor: 'dr. ', department: 'Poli ' }
     ]);
     const navigate = useNavigate();
+    const { role } = useSelector((state) => state.auth);
 
     const LihatDetailEps = () => {
-        navigate('detail-episode');
+        let path;
+        if (role === 'dokter') {
+            path = '/dokter/detail-episode';
+        } else if (role === 'resepsionis') {
+            path = '/resepsionis/detail-episode';
+        } else if (role === 'perawat') {
+            path = '/perawat/detail-episode';
+        }
+        navigate(path);
     };
 
     return (

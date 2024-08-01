@@ -7,7 +7,7 @@ import BuatJanjiPopup from '../Pages/Resepsionis/BuatJanjiPopup';
 import IdentitasPasien from '../Pages/Resepsionis/IdentitasPasien';
 import EmrResepsionis from '../Pages/Resepsionis/EmrResepsionis';
 import PasienResepsionis from '../Pages/Resepsionis/PasienResepsionis';
-import DetailEpsResep from '../Pages/Resepsionis/DetailEpsResep';
+import DetailEpsResep from '../components/DetailEpisode';
 import CetakSuratPopup from '../Pages/Resepsionis/CetakSuratPopup';
 import KelolaJadwal from '../Pages/Resepsionis/KelolaJadwal';
 import JadwalPopup from '../Pages/Resepsionis/JadwalPopup';
@@ -18,7 +18,7 @@ export function ReceptionistRoute() {
             <Route path="/" element={<Resepsionis />} />
             <Route path="/pendaftar-baru" element={<PendaftarBaru />} />
             <Route path="/antrian" element={<Antrian />} />
-            <Route path="/buatjanji-popup" element={<BuatJanjiPopup />} />
+            <Route path="/antrian/buatjanji-popup" element={<BuatJanjiPopup />} />
             <Route path="/identitas-pasien" element={<IdentitasPasien />} />
             <Route path="/emr-resepsionis" element={<EmrResepsionis />} />
             <Route path="/pasien-resepsionis" element={<PasienResepsionis />} />

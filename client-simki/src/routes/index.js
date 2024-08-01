@@ -43,6 +43,13 @@ export function AppRoutes() {
         { name: "Kelola Item", path: "/perawat/kelola-item" }
     ];
 
+    const Menuresepsionis = [
+        { name: "Pendaftar Baru", path: "/pendaftar-baru" },
+        { name: "Antrian", path: "/antrian" },
+        { name: "Pasien", path: "/pasien-resepsionis" },
+        { name: "Kelola Jadwal", path: "/kelola-jadwal" }
+    ];
+
     return (
         <Routes>
             {/* Public Access Routes */}
@@ -199,6 +206,7 @@ export function AppRoutes() {
                 element={
                     <>
                         <NavbarPrivate />
+                        <Header menuItems={Menuresepsionis}/>
                         <GuardRoute allowedRoles={['resepsionis']}>
                             <Outlet />
                         </GuardRoute>

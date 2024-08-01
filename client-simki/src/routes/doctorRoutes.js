@@ -16,7 +16,7 @@ import SuratSakit from '../Pages/Dokter/SuratSakit';
 import TambahObatDr from '../Pages/Dokter/TambahObat';
 import TambahProsedur from '../Pages/Dokter/TambahProsedur';
 import HasilKuisionerPopup from '../Pages/Dokter/HasilKuisionerPopup';
-import RiwayatEpisode from '../components/RiwayatEps';
+import DetailEpsDok from '../components/DetailEpisode';
 
 export function DoctorsRoute() {
     return (
@@ -26,7 +26,6 @@ export function DoctorsRoute() {
             <Route path="notifikasi-dokter" element={<NotifikasiDokter/>} />
             <Route path="schedule-dokter" element={<ScheduleDr/>} />
             <Route path="/pasien-dokter/emr-dokter" element={<EmrDokter />} />
-            <Route path="/pasien-dokter/emr-dokter/detail-episode" element={<RiwayatEpisode />} />
             <Route path="/pasien-dokter/emr-dokter/:entri/isi-cppt" element={<IsiCppt />} />
             <Route path="/pasien-dokter/emr-dokter/:entri/order-obat" element={<OrderObat />} />
             <Route path="/pasien-dokter/emr-dokter/:entri/order-obat/tambah-obat" element={<TambahObatDr />} />
@@ -38,6 +37,7 @@ export function DoctorsRoute() {
             <Route path="/pasien-dokter/emr-dokter/entri-masuk" element={<EntriMasuk />} />
             <Route path="/pasien-dokter/emr-dokter/entri-baru" element={<EntriBaru />} />
             <Route path="hasilkuisioner-popup" element={<HasilKuisionerPopup />} />
+            <Route path="/detail-episode" element={<DetailEpsDok />} />
         </Routes>
     );
 }

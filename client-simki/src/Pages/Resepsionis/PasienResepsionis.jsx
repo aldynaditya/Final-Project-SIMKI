@@ -9,11 +9,11 @@ const PasienResepsionis = () => {
     const [rows] = useState(Array.from({ length: 20 }));
 
     const IdentitasPasien = () => {
-        window.open('/identitas-pasien', '_blank');
+        window.open('identitas-pasien', '_blank');
     };
 
     const EmrResepsionis = () => {
-        window.open('/emr-resepsionis', '_blank');
+        window.open('emr-resepsionis', '_blank');
     };
 
     const MenuResepsionis = [
