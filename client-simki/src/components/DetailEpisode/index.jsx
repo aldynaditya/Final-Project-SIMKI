@@ -1,12 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import RiwayatEpisode from '../../components/RiwayatEps';
-import Header from '../../components/Header';
 import '../../Style/Resepsionis/EmrResepsionis.css';
-import '../../Style/Resepsionis/DetailEpsResep.css';
+import '../../Style/components/DetailEpisode.css';
 
 const DetailEpisode = () => {
     const navigate = useNavigate();
+    const { role } = useSelector((state) => state.auth);
 
     const CetakSurat = () => {
         navigate('/cetaksurat-popup');
@@ -16,16 +17,8 @@ const DetailEpisode = () => {
         navigate('/hasilkuisioner-popup');
     };
 
-    const MenuResepsionis = [
-        { name: "Pendaftar Baru", path: "/pendaftar-baru" },
-        { name: "Antrian", path: "/antrian" },
-        { name: "Pasien", path: "/pasien-resepsionis" },
-        { name: "Kelola Jadwal", path: "/kelola-jadwal" }
-    ];
-
     return (
         <div className='emr-resepsionis-container'>
-            <Header accountName="Nama Akun Resepsionis" menuItems={MenuResepsionis} />
             <h1 className='text-emr-resepsionis'>EMR Pasien</h1>
             <div className='kolom-emr-resepsionis'>
                 <div className='no-emr-rsp'>
@@ -129,8 +122,12 @@ const DetailEpisode = () => {
                 </div>
             </div>
             <div className='button-detail'>
-                <button className="cetak-surat" onClick={CetakSurat}>Cetak Surat</button>
-                <button className="hasil-kuisioner" onClick={HasilKuisioner}>Hasil Kuisioner</button>
+                {role === 'resepsionis' && (
+                    <button className="cetak-surat" onClick={CetakSurat}>Cetak Surat</button>
+                )}
+                {role === 'dokter' && (
+                    <button className="hasil-kuisioner" onClick={HasilKuisioner}>Hasil Kuisioner</button>
+                )}
             </div>
             <RiwayatEpisode />
         </div>

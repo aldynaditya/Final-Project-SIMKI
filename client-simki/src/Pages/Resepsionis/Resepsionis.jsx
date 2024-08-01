@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../Style/Resepsionis/Resepsionis.css';
-import Header from '../../components/Header';
 import list from "../../images/list.png";
 import antrian from "../../images/antrian.png";
 import user from "../../images/user.png";
@@ -11,32 +10,25 @@ const Resepsionis = () => {
   const navigate = useNavigate();
 
   const handlePendaftarBaru = () => {
-    navigate('/pendaftar-baru');
+    navigate('pendaftar-baru');
   };
 
   const handleAntrian = () => {
-    navigate('/antrian');
+    navigate('antrian');
   };
 
   const handlePasien = () => {
-    navigate('/pasien-resepsionis');
+    navigate('pasien-resepsionis');
   };
 
   const handleAgenda = () => {
-    navigate('/kelola-jadwal');
+    navigate('kelola-jadwal');
   };
 
-  const MenuResepsionis = [
-    { name: "Pendaftar Baru", path: "/pendaftar-baru" },
-    { name: "Antrian", path: "/antrian" },
-    { name: "Pasien", path: "/pasien-resepsionis" },
-    { name: "Kelola Jadwal", path: "/kelola-jadwal" }
-  ];
 
   return (
     <div className='resepsionis-container'>
       <div className='main-content-resepsionis'>
-      <Header accountName="Nama Akun Resepsionis" menuItems={MenuResepsionis} />
         <h1 className='text_resepsionis'>Dashboard</h1>
         <div className="klik_resepsionis">
           <div className='pendaftar-baru' onClick={handlePendaftarBaru}>

@@ -2,7 +2,7 @@ import React from 'react';
 import RiwayatEpisode from '../../components/RiwayatEps';
 
 import '../../Style/Resepsionis/EmrResepsionis.css';
-import '../../Style/Resepsionis/DetailEpsResep.css';
+import '../../Style/components/DetailEpisode.css';
 import '../../Style/Perawat/EmrPerawat.css';
 
 const EmrPerawat = () => {

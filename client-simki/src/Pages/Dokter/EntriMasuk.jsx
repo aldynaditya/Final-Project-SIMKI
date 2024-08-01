@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import RiwayatEpisode from '../../components/RiwayatEps';
 import '../../Style/Resepsionis/EmrResepsionis.css';
-import '../../Style/Resepsionis/DetailEpsResep.css';
+import '../../Style/components/DetailEpisode.css';
 import '../../Style/Dokter/EntriMasuk.css';
 
 const EntriMasuk = () => {

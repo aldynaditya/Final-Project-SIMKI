@@ -9,7 +9,7 @@ const Antrian = () => {
     const navigate = useNavigate();
 
     const handleBuatJanjiPopup = () => {
-        navigate('/buatjanji-popup');
+        navigate('buatjanji-popup');
     };
 
     const MenuResepsionis = [

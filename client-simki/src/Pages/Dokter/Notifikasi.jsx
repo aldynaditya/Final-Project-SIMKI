@@ -24,7 +24,6 @@ const Notifikasi = () => {
                                     <th>Keterangan</th>
                                     <th>Tanggal</th>
                                     <th>Status</th>
-                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -35,7 +34,6 @@ const Notifikasi = () => {
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td><div className="ket_aksi">Terima</div></td>
                                     </tr>
                                 ))}
                             </tbody>

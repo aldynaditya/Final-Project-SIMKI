@@ -1,7 +1,7 @@
 import React from 'react';
 import RiwayatEpisode from '../../components/RiwayatEps';
 import '../../Style/Resepsionis/EmrResepsionis.css';
-import '../../Style/Resepsionis/DetailEpsResep.css';
+import '../../Style/components/DetailEpisode.css';
 import '../../Style/Dokter/EntriBaru.css';
 
 const EntriBaru = () => {
@@ -54,7 +54,7 @@ const EntriBaru = () => {
                     <input type='text' className='kolom-alergi-rsp'></input>
                 </div>
             </div>
-            <h2 className='text-riwayat-episode'>Detail Episode :</h2>
+            <h2 className='text-riwayat-episode'>Entri Baru :</h2>
             <div className='kolom-detail-eps'>
                 <div className='tgl-detail'>
                     <span className='text-tgl-detail'>Tanggal :</span>
