@@ -62,6 +62,6 @@ export const createAppointment = (data) => async (dispatch) => {
         const response = await postData(`/appointment`, data);
         dispatch({ type: CREATE_APPOINTMENT_SUCCESS, payload: response.data });
     } catch (error) {
-        dispatch({ type: CREATE_APPOINTMENT_FAILURE, payload: error.message });
+        dispatch({ type: CREATE_APPOINTMENT_FAILURE, payload: error.message, });
     }
 };

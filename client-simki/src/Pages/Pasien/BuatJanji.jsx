@@ -24,6 +24,20 @@ const BuatJanji = () => {
         type: '',
     });
 
+    // Function to generate time options in 30-minute intervals
+    const generateTimeOptions = () => {
+        const options = [];
+        for (let hour = 0; hour < 24; hour++) {
+            for (let minute = 0; minute < 60; minute += 30) {
+                const time = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+                options.push(time);
+            }
+        }
+        return options;
+    };
+
+    const timeOptions = generateTimeOptions();
+
     // Fetch doctors based on selected polyclinic
     useEffect(() => {
         if (formData.poli) {
@@ -50,17 +64,20 @@ const BuatJanji = () => {
     const handleSubmit = async () => {
         try {
             await dispatch(createAppointment(formData));
-            setAlert({
-                status: true,
-                message: 'Janji berhasil dibuat!',
-                type: 'success',
-            });
+            if (error) {
+                setAlert({
+                    status: true,
+                    message: error.message,
+                    type: 'danger',
+                });
+            } else {
+                setAlert({
+                    status: true,
+                    message: 'Janji berhasil dibuat!',
+                    type: 'success',
+                });
+            }
         } catch (error) {
-            setAlert({
-                status: true,
-                message: error.message || 'An error occurred',
-                type: 'danger',
-            });
         }
     };
 
@@ -99,8 +116,20 @@ const BuatJanji = () => {
 
                 <div className='form_group'>
                     <label htmlFor="jam">Jam :</label>
-                    <input type="time" id="start_time" name="start_time" value={formData.start_time} onChange={handleChange} />
-                    <input type="time" id="end_time" name="end_time" value={formData.end_time} onChange={handleChange} />
+                    <div className="time_input_container">
+                        <select id="start_time" name="start_time" value={formData.start_time} onChange={handleChange}>
+                            <option value="">Start Time</option>
+                            {timeOptions.map(time => (
+                                <option key={time} value={time}>{time}</option>
+                            ))}
+                        </select>
+                        <select id="end_time" name="end_time" value={formData.end_time} onChange={handleChange}>
+                            <option value="">End Time</option>
+                            {timeOptions.map(time => (
+                                <option key={time} value={time}>{time}</option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
 
                 <div className='form_group'>
@@ -108,7 +137,6 @@ const BuatJanji = () => {
                     <select id="penjamin" name="penjamin" value={formData.penjamin} onChange={handleChange}>
                         <option value="umum">Umum</option>
                         <option value="asuransi">Asuransi</option>
-                        <option value="bpjs">BPJS</option>
                     </select>
                 </div>
 
