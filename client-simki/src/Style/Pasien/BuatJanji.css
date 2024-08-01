@@ -57,6 +57,14 @@ body, html {
     box-sizing: border-box;
 }
 
+.time_input_container {
+    display: flex;
+    gap: 10px; /* Adjust the gap between the inputs as needed */
+}
+
+.time_input_container input {
+    flex: 1;
+}
 /* Kolom keluhan */
 .keluhan {
     width: 100%;
