@@ -11,6 +11,7 @@ const rolePaths = {
     spvkeuangan: '/spvkeuangan',
     pimpinan: '/pimpinan',
     kasir: '/kasir',
+    superuser: '/admin',
 };
 
 export default function GuardRoute({ allowedRoles = [] }) {

@@ -1,27 +1,27 @@
 import React, { useState } from "react";
-import '../../Style/Pimpinan/NotifikasiLead.css';
+import '../../Style/Admin/KelolaUser.css';
 import SearchBar from '../../components/SearchBar';  // Pastikan jalurnya benar
 import { useNavigate } from 'react-router-dom'; 
 
-const NotifikasiPimpinan = () => {
+const KelolaUser = () => {
     const [rows] = useState(Array.from({ length: 10 }));
     const navigate = useNavigate();
 
     const LihatLaporan = () => {
-        navigate('/notifikasi-pimpinan');
+        navigate('/notifikasi-admin');
     };
 
     return (
-        <div className="notif-pimpinan-wrapper">
-            <div className="navbar-header-notif-pimpinan">
+        <div className="notif-admin-wrapper">
+            <div className="navbar-header-notif-admin">
             </div>
-            <div className="notif-pimpinan-container">
-                <div className="content-wrapper-notif-pimpinan">
-                    <div className="header-notif-pimpinan">
-                        <h1 className="text_notif-pimpinan">Notifikasi</h1>
+            <div className="notif-admin-container">
+                <div className="content-wrapper-notif-admin">
+                    <div className="header-notif-admin">
+                        <h1 className="text_notif-admin">Notifikasi</h1>
                         <SearchBar />
                     </div>
-                    <div className="tabel_notif-pimpinan">
+                    <div className="tabel_notif-admin">
                         <table>
                             <thead>
                                 <tr>
@@ -43,7 +43,7 @@ const NotifikasiPimpinan = () => {
                                         <td></td>
                                         <td className="notif-laporan-cell" >
                                             <div className="ket_terima">Terima</div>
-                                            <button className="laporan-pimpinan" onClick={LihatLaporan}>Lihat</button>
+                                            <button className="laporan-admin" onClick={LihatLaporan}>Lihat</button>
                                         </td>
                                     </tr>
                                 ))}
@@ -56,4 +56,4 @@ const NotifikasiPimpinan = () => {
     );
 };
 
-export default NotifikasiPimpinan;
+export default KelolaUser;

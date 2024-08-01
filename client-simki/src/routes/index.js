@@ -158,6 +158,21 @@ export function AppRoutes() {
 
             {/* Private Access Routes */}
             <Route
+                path="/admin/*"
+                element={
+                    <>
+                        <NavbarPrivate />
+                        <Header />
+                        <GuardRoute allowedRoles={['superuser']}>
+                            <Outlet />
+                        </GuardRoute>
+                        <FooterPrivate />
+                    </>
+                }
+            >
+                <Route path="*" element={<DoctorsRoute />} />
+            </Route>
+            <Route
                 path="/dokter/*"
                 element={
                     <>
@@ -235,6 +250,7 @@ export function AppRoutes() {
                 element={
                     <>
                         <NavbarPrivate />
+                        <Header />
                         <GuardRoute allowedRoles={['pimpinan']}>
                             <Outlet />
                         </GuardRoute>
@@ -249,6 +265,7 @@ export function AppRoutes() {
                 element={
                     <>
                         <NavbarPrivate />
+                        <Header />
                         <GuardRoute allowedRoles={['kasir']}>
                             <Outlet />
                         </GuardRoute>

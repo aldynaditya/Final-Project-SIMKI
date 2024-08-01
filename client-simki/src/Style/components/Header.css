@@ -45,6 +45,7 @@
 
 .datetime-container {
     display: flex;
+    margin-left: 50px;
     flex-direction: column;
     align-items: flex-start;
     flex-grow: 1; /* Memastikan datetime-container mendapatkan ruang yang cukup */
@@ -107,7 +108,7 @@
     background-color: #1E7E72;
 }
 
-.tombol_menu_container, .tombol_keluar {
+.tombol_menu_container {
     background-color: #7DAEA8;
     color: black;
     width: 100px;
@@ -119,6 +120,23 @@
     display: flex;
     justify-content: center;
     align-items: center; /* Pusatkan item secara vertikal */
+    position: relative;
+    margin-left: 20px; /* Diperlukan untuk memposisikan ikon */
+}
+
+.tombol_keluar {
+    background-color: #7DAEA8;
+    color: black;
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 10px; /* Lengkungan sudut 10px */
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Pusatkan item secara vertikal */
+    margin-top: 20px; /* Tambahkan margin atas untuk memberi jarak dari input fields */
     position: relative;
     margin-left: 20px; /* Diperlukan untuk memposisikan ikon */
 }

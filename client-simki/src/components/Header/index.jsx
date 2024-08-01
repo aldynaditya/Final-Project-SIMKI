@@ -16,7 +16,7 @@ const Header = ({ menuItems }) => {
     const [dropdownVisible, setDropdownVisible] = useState(false);
 
     const userName = useSelector((state) => state.auth.nama);
-    const userRole = useSelector((state) => state.auth.role); // Get user role from Redux state
+    const userRole = useSelector((state) => state.auth.role);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -62,13 +62,36 @@ const Header = ({ menuItems }) => {
         setDropdownVisible(false);
     };
 
+    const getRoleDisplayName = (role) => {
+        switch (role) {
+            case 'dokter':
+                return 'Dokter';
+            case 'perawat':
+                return 'Perawat';
+            case 'resepsionis':
+                return 'Resepsionis';
+            case 'farmasi':
+                return 'Farmasi';
+            case 'spvkeuangan':
+                return 'Supervisor Keuangan';
+            case 'kasir':
+                return 'Kasir';
+            case 'pimpinan':
+                return 'Pimpinan';
+            case 'superuser':
+                return 'Superuser';
+            default:
+                return role;
+        }
+    };
+
     return (
         <header className='header-container'>
             <div className='info-account'>
                 <img src={profil} alt='Profil' className='profil_account' />
                 <div className='name-role'>
                     <span className='nama_account'>{userName}</span>
-                    <span className='role_account'>{userRole}</span>
+                    <span className='role_account'>{getRoleDisplayName(userRole)}</span>
                 </div>
                 <div className='datetime-container'>
                     <div className='date'>
@@ -81,21 +104,23 @@ const Header = ({ menuItems }) => {
             </div>
             <div className='button-container-container'>
                 <div className='button-container'>
-                    <div className='menu-dropdown'>
-                        <button className='tombol_menu_container' onClick={handleMenu}>
-                            <p className='text_menu' style={{ marginRight: '10px' }}>Menu</p>
-                            <img src={dropdown} alt='Dropdown' className='icon_dropdown' style={{ width: '20px', height: '20px' }} />
-                        </button>
-                        {dropdownVisible && (
-                            <div className="dropdown" ref={dropdownRef}>
-                                <ul>
-                                    {menuItems.map((menu) => (
-                                        <li key={menu.name} onClick={() => navigateTo(menu.path)}>{menu.name}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
-                    </div>
+                    {!(userRole === 'pimpinan' || userRole === 'superuser' || userRole === 'kasir') && (
+                        <div className='menu-dropdown'>
+                            <button className='tombol_menu_container' onClick={handleMenu}>
+                                <p className='text_menu' style={{ marginRight: '10px' }}>Menu</p>
+                                <img src={dropdown} alt='Dropdown' className='icon_dropdown' style={{ width: '20px', height: '20px' }} />
+                            </button>
+                            {dropdownVisible && (
+                                <div className="dropdown" ref={dropdownRef}>
+                                    <ul>
+                                        {menuItems.map((menu) => (
+                                            <li key={menu.name} onClick={() => navigateTo(menu.path)}>{menu.name}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                        </div>
+                    )}
                     <button className="tombol_keluar" onClick={handleLogout}>Keluar</button>
                 </div>
             </div>
