@@ -21,6 +21,8 @@ export default function GuestOnlyRoute({ children }) {
                 return <Navigate to="/pimpinan" replace={true} />;
             case 'kasir':
                 return <Navigate to="/kasir" replace={true} />;
+            case 'superuser':
+                return <Navigate to="/admin" replace={true} />;
             case 'pasien':
                 return <Navigate to="/pasien" replace={true} />;
             default:
