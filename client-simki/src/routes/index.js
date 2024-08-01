@@ -26,6 +26,7 @@ import { ReceptionistRoute } from './receptionistRoutes';
 import { SupervisorRoute } from './supervisorRoutes';
 import { LeaderRoute } from './leaderRoutes';
 import { CashierRoute } from './cashierRoutes';
+import { AdminRoute } from './adminRoutes';
 
 
 
@@ -170,7 +171,7 @@ export function AppRoutes() {
                     </>
                 }
             >
-                <Route path="*" element={<DoctorsRoute />} />
+                <Route path="*" element={<AdminRoute />} />
             </Route>
             <Route
                 path="/dokter/*"

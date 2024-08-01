@@ -1,0 +1,114 @@
+.tambah-popup-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #D9D9D9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tambah-popup-content {
+    background: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    width: 600px; /* Increased width */
+    position: relative;
+}
+
+.cancel-x {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    text-decoration: none;
+    color: #000;
+}
+
+.text-tambah-popup {
+    font-size: 24px;
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+.kolom-tambah {
+    margin-top: 50px;
+    margin-left: 70px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 16px;
+}
+.nama {
+    display: flex;
+}
+.text-nama {
+    margin-right: 53px;
+    font-size: 16px;
+}
+.kolom-nama {
+    border-radius: 5px;
+    width: 300px;
+    height: 35px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.text-email {
+    margin-right: 55px;
+    font-size: 16px;
+}
+.kolom-email {
+    border-radius: 5px;
+    width: 300px;
+    height: 35px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.text-pass {
+    margin-right: 27px;
+    font-size: 16px;
+}
+.kolom-pass {
+    border-radius: 5px;
+    width: 300px;
+    height: 35px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.text-role {
+    margin-right: 75px;
+    font-size: 16px;
+}
+.kolom-role {
+    border-radius: 5px;
+    width: 300px;
+    height: 35px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.tambah--container {
+    display: flex;
+    justify-content: center; /* Center the button horizontally */
+    margin-top: 20px;
+}
+
+.simpan {
+    padding: 10px;
+    background-color: #145149;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 150px;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
+.simpan:hover {
+    background-color: #7DAEA8;
+}

@@ -1,139 +1,41 @@
-/* Menyusun halaman dengan Flexbox */
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Container untuk konten utama */
 .jadwal_container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  box-sizing: border-box;
-  margin-top: 150px;
+  margin-top: 200px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
-/* Margin dan padding untuk elemen dalam jadwal */
-.jadwal_kami {
-  text-align: center;
-  margin: 20px 0;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 2rem;
-
-}
-
-/* Gaya untuk elemen gambar klinik */
 .klinik_dipo {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  width: 100%;
-  max-width: 1200px;
-  margin: 20px 0;
-  padding: 0 15px;
+  margin-bottom: 40px;
 }
 
-.klinik_dipo img {
+.jadwal_table {
   width: 100%;
-  height: auto;
+  margin-bottom: 20px;
 }
 
-/* Gaya untuk deskripsi jadwal */
-.desc-jadwal {
-  text-align: justify;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1rem;
-  max-width: 1200px;
-  width: 100%;
-  margin: 20px auto;
-  padding: 0 15px;
-  margin-bottom: 200px;
-}
-
-.footer {
-  width: 100%;
-  background-color: #145149;
-  color: white;
+.jadwal_table h2 {
   text-align: center;
-  padding: 10px 0;
-  position: relative;
-  bottom: 0;
 }
 
-/* Media Queries */
-
-/* Tablet (landscape) dan perangkat yang lebih besar */
-@media (min-width: 768px) {
-  .jadwal_kami {
-    font-size: 2.5rem;
-  }
-
-  .desc-jadwal {
-    font-size: 1.2rem;
-  }
-}
-
-/* Desktop */
-@media (min-width: 1024px) {
-  .jadwal_kami {
-    margin-top: 100px;
-  }
-
-  .desc-jadwal {
-    font-size: 1.5rem;
-  }
-}
-
-/* Telepon seluler */
-@media (max-width: 767px) {
-  .jadwal_kami {
-    margin-top: 60px;
-    font-size: 1.5rem;
-  }
-
-  .desc-jadwal {
-    font-size: 1rem;
-    padding: 0 10px;
-  }
-
-  .klinik_dipo {
-    padding: 0 10px;
-  }
-
-  .footer {
-    padding: 15px;
-  }
-}
-
-/* Navbar responsif */
-.navbar {
+table {
   width: 100%;
-  background: #145149;
-  color: #fff;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  border-collapse: collapse;
 }
 
-.navbar a {
-  color: #fff;
-  text-decoration: none;
-  padding: 10px 15px;
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
 }
 
-@media (max-width: 767px) {
-  .navbar {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
 
-  .navbar a {
-    padding: 10px;
-  }
+.desc-jadwal {
+  text-align: center;
 }

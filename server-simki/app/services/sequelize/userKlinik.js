@@ -2,11 +2,7 @@ const  UserKlinik  = require('../../api/v1/userKlinik/model');
 const { BadRequestError, NotFoundError } = require('../../errors');
 
 const createUsers = async (req) => {
-    const { nama, password, role, confirmPassword, email } = req.body;
-
-    if (password !== confirmPassword) {
-        throw new BadRequestError('Password dan Konfirmasi password tidak cocok');
-    }
+    const { nama, password, role, email } = req.body;
 
     const result = await UserKlinik.create({
         nama,
@@ -19,8 +15,19 @@ const createUsers = async (req) => {
 };
 
 const getAllUserKlinik = async (req) => {
-    const result = await UserKlinik.findAll(req.body);
+    const userklinik = await UserKlinik.findAll(req.body);
+    
+    const result = userklinik.map(user => {
 
+        return {
+            id: user.uuid,
+            nama: user.nama,
+            email: user.email,
+            password: user.password,
+            role: user.role,
+        }
+    });
+    
     return result;
 };
 
