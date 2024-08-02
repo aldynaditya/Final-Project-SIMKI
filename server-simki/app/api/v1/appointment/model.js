@@ -32,8 +32,11 @@ const Appointment = db.define('appointment', {
         defaultValue: 'diproses',
     },
     penjamin: {
-        type: DataTypes.ENUM('BPJS', 'NON BPJS'),
-        defaultValue: 'BPJS',
+        type: DataTypes.ENUM('asuransi', 'umum'),
+        allowNull: false,
+        validate: {
+            notNull: { msg: 'penjamin harus diisi' },
+        },
     },
     keterangan: {
         type: DataTypes.STRING,
@@ -55,7 +58,6 @@ const Appointment = db.define('appointment', {
 });
 
 Appointment.belongsTo(DataPasien, { as: 'datapasien', foreignKey: 'pasienId', targetKey: 'uuid' });
-
 Appointment.belongsTo(Schedule, { as: 'schedule',foreignKey: 'scheduleId', targetKey: 'uuid' });
 
 module.exports = Appointment;
