@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
-import { getDoctors, getAvailableHours, createAppointment } from '../../redux/patient/appointment/actions';
+import { createAppointment } from '../../redux/patient/create/actions';
+import { getSchedules } from '../../redux/patient/input/actions';
 import '../../Style/Pasien/BuatJanji.css';
 
 const BuatJanji = () => {
     const dispatch = useDispatch();
-    const { doctors, hours, loading, error } = useSelector(state => state.appointments);
+    const schedules = useSelector(state => state.input.schedules);
+    const error = useSelector(state => state.input.error);
+    const [alert, setAlert] = useState({ status: false, message: '' });
 
     const [formData, setFormData] = useState({
         poli: '',
@@ -18,13 +21,12 @@ const BuatJanji = () => {
         keluhan: ''
     });
 
-    const [alert, setAlert] = useState({
-        status: false,
-        message: '',
-        type: '',
-    });
+    console.log(formData)
 
-    // Function to generate time options in 30-minute intervals
+    useEffect(() => {
+        dispatch(getSchedules());
+    }, [dispatch]);
+
     const generateTimeOptions = () => {
         const options = [];
         for (let hour = 0; hour < 24; hour++) {
@@ -38,21 +40,6 @@ const BuatJanji = () => {
 
     const timeOptions = generateTimeOptions();
 
-    // Fetch doctors based on selected polyclinic
-    useEffect(() => {
-        if (formData.poli) {
-            dispatch(getDoctors(formData.poli));
-        }
-    }, [formData.poli, dispatch]);
-
-    // Fetch available hours based on selected doctor and date
-    useEffect(() => {
-        if (formData.dokter && formData.tanggal) {
-            dispatch(getAvailableHours(formData.dokter, formData.tanggal));
-        }
-    }, [formData.dokter, formData.tanggal, dispatch]);
-
-    // Handle form input changes
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -60,30 +47,12 @@ const BuatJanji = () => {
         });
     };
 
-    // Handle form submission
     const handleSubmit = async () => {
-        try {
-            await dispatch(createAppointment(formData));
-            if (error) {
-                setAlert({
-                    status: true,
-                    message: error.message,
-                    type: 'danger',
-                });
-            } else {
-                setAlert({
-                    status: true,
-                    message: 'Janji berhasil dibuat!',
-                    type: 'success',
-                });
-            }
-        } catch (error) {
-        }
+        dispatch(createAppointment(formData));
     };
 
-    // Close the modal
     const closeModal = () => {
-        setAlert({ status: false, message: '', type: '' });
+        setAlert({ status: false, message: '' });
     };
 
     return (
@@ -94,8 +63,9 @@ const BuatJanji = () => {
                     <label htmlFor="poli">Poli :</label>
                     <select id="poli" name="poli" value={formData.poli} onChange={handleChange}>
                         <option value="">Pilih Poli</option>
-                        <option value="Umum">Umum</option>
-                        <option value="Gigi">Gigi</option>
+                        {Array.isArray(schedules) && schedules.length > 0 && [...new Set(schedules.map(schedule => schedule.poli))].map(poli => (
+                            <option key={poli} value={poli}>{poli}</option>
+                        ))}
                     </select>
                 </div>
 
@@ -103,8 +73,8 @@ const BuatJanji = () => {
                     <label htmlFor="dokter">Dokter :</label>
                     <select id="dokter" name="dokter" value={formData.dokter} onChange={handleChange}>
                         <option value="">Pilih Dokter</option>
-                        {Array.isArray(doctors) && doctors.map(doctor => (
-                            <option key={doctor.uuid} value={doctor.dokter}>{doctor.dokter}</option>
+                        {Array.isArray(schedules) && schedules.length > 0 && [...new Set(schedules.map(schedule => schedule.dokter))].map(dokter => (
+                            <option key={dokter} value={dokter}>{dokter}</option>
                         ))}
                     </select>
                 </div>

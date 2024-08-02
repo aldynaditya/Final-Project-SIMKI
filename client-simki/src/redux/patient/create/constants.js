@@ -1,0 +1,3 @@
+export const CREATE_APPOINTMENT_REQUEST = 'redux/patient/create/CREATE_APPOINTMENT_REQUEST';
+export const CREATE_APPOINTMENT_SUCCESS = 'redux/patient/create/CREATE_APPOINTMENT_SUCCESS';
+export const CREATE_APPOINTMENT_FAILURE = 'redux/patient/create/CREATE_APPOINTMENT_FAILURE';

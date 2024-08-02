@@ -37,7 +37,7 @@ const Laporan = require('./app/api/v1/laporan/model');
 // });
 
 // (async()=>{
-//     await Transaksi.sync({force:true}); 
+//     await Appointment.sync({force:true}); 
 // })();
 
 

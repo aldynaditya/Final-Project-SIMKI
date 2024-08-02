@@ -17,6 +17,8 @@ import historyReducer from './patient/history/reducer';
 import detailReducer from './patient/detail/reducer';
 import userReducer from './admin/user/reducer';
 import addUserReducer from './admin/add/reducer';
+import createAppointmentReducer from './patient/create/reducer';
+import inputReducer from './patient/input/reducer';
 
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -32,7 +34,9 @@ const rootReducers = combineReducers({
     history: historyReducer,
     detail: detailReducer,
     user: userReducer,
-    addUser: addUserReducer
+    addUser: addUserReducer,
+    createAppointment: createAppointmentReducer,
+    input: inputReducer,
 });
 const store = createStore(
     rootReducers,
