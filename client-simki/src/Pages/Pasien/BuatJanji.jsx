@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import { createAppointment } from '../../redux/patient/create/actions';
-import { getSchedules } from '../../redux/patient/input/actions';
+import { getSchedules } from '../../redux/patient/schedule/actions';
 import '../../Style/Pasien/BuatJanji.css';
 
 const BuatJanji = () => {
     const dispatch = useDispatch();
-    const schedules = useSelector(state => state.input.schedules);
-    const error = useSelector(state => state.input.error);
+    const schedules = useSelector(state => state.schedule.schedules);
+    const error = useSelector(state => state.schedule.error);
+    const errorform =  useSelector(state => state.createAppointment.error);
     const [alert, setAlert] = useState({ status: false, message: '' });
-
+    
     const [formData, setFormData] = useState({
         poli: '',
         dokter: '',
@@ -20,12 +21,24 @@ const BuatJanji = () => {
         penjamin: '',
         keluhan: ''
     });
-
-    console.log(formData)
+    
+    const [filteredDokters, setFilteredDokters] = useState([]);
 
     useEffect(() => {
         dispatch(getSchedules());
     }, [dispatch]);
+
+    useEffect(() => {
+        if (formData.poli) {
+            // Filter schedules based on selected poli
+            const filtered = schedules.filter(schedule => schedule.poli === formData.poli);
+            // Get unique dokter names
+            const dokters = [...new Set(filtered.map(schedule => schedule.dokter))];
+            setFilteredDokters(dokters);
+        } else {
+            setFilteredDokters([...new Set(schedules.map(schedule => schedule.dokter))]);
+        }
+    }, [formData.poli, schedules]);
 
     const generateTimeOptions = () => {
         const options = [];
@@ -48,7 +61,29 @@ const BuatJanji = () => {
     };
 
     const handleSubmit = async () => {
-        dispatch(createAppointment(formData));
+        try {
+            await dispatch(createAppointment(formData));
+            if (errorform) {
+                setAlert({
+                    status: true,
+                    message: errorform.message,
+                    type: 'danger',
+                });
+            } else {
+                setAlert({
+                    status: true,
+                    message: 'Janji berhasil dibuat!',
+                    type: 'success',
+                });
+            }
+        } catch (error) {
+            console.error('Error creating appointment:', error);
+            setAlert({
+                status: true,
+                message: 'Terjadi kesalahan saat membuat janji.',
+                type: 'danger',
+            });
+        }
     };
 
     const closeModal = () => {
@@ -73,7 +108,7 @@ const BuatJanji = () => {
                     <label htmlFor="dokter">Dokter :</label>
                     <select id="dokter" name="dokter" value={formData.dokter} onChange={handleChange}>
                         <option value="">Pilih Dokter</option>
-                        {Array.isArray(schedules) && schedules.length > 0 && [...new Set(schedules.map(schedule => schedule.dokter))].map(dokter => (
+                        {filteredDokters.map(dokter => (
                             <option key={dokter} value={dokter}>{dokter}</option>
                         ))}
                     </select>
@@ -105,6 +140,7 @@ const BuatJanji = () => {
                 <div className='form_group'>
                     <label htmlFor="penjamin">Penjamin :</label>
                     <select id="penjamin" name="penjamin" value={formData.penjamin} onChange={handleChange}>
+                        <option value="">Pilih Penjamin</option>
                         <option value="umum">Umum</option>
                         <option value="asuransi">Asuransi</option>
                     </select>

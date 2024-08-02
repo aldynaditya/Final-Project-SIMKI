@@ -18,7 +18,7 @@ import detailReducer from './patient/detail/reducer';
 import userReducer from './admin/user/reducer';
 import addUserReducer from './admin/add/reducer';
 import createAppointmentReducer from './patient/create/reducer';
-import inputReducer from './patient/input/reducer';
+import scheduleReducer from './patient/schedule/reducer';
 
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -36,7 +36,7 @@ const rootReducers = combineReducers({
     user: userReducer,
     addUser: addUserReducer,
     createAppointment: createAppointmentReducer,
-    input: inputReducer,
+    schedule: scheduleReducer
 });
 const store = createStore(
     rootReducers,
