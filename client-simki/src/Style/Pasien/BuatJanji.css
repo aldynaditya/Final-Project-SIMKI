@@ -105,6 +105,12 @@ body, html {
     background-color: #7DAEA8;
 }
 
+.klik_buatjanji:disabled {
+    background-color: #7DAEA8; /* Warna latar belakang untuk tombol dinonaktifkan */
+    cursor: not-allowed; /* Mengubah kursor untuk menunjukkan bahwa tombol tidak dapat diklik */
+    opacity: 0.6; /* Memberikan efek transparansi untuk menunjukkan tombol dinonaktifkan */
+}
+
 /* Footer */
 .footer {
     background-color: #145149;
@@ -201,3 +207,10 @@ body, html {
         font-size: 20px; /* Ukuran font yang lebih besar untuk tombol */
     }
 }
+
+.error_message {
+    color: red;
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+

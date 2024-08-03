@@ -1,28 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom'; 
 import Modal from 'react-modal';
 import { createAppointment } from '../../redux/patient/create/actions';
 import { getSchedules } from '../../redux/patient/schedule/actions';
+import { getDayString } from '../../utils/convertfunction';
 import '../../Style/Pasien/BuatJanji.css';
 
 const BuatJanji = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const schedules = useSelector(state => state.schedule.schedules);
     const error = useSelector(state => state.schedule.error);
-    const errorform =  useSelector(state => state.createAppointment.error);
+    const errorform = useSelector(state => state.createAppointment.error);
     const [alert, setAlert] = useState({ status: false, message: '' });
-    
+    const [navigateAfterClose, setNavigateAfterClose] = useState(false);
+
     const [formData, setFormData] = useState({
         poli: '',
         dokter: '',
         tanggal: '',
-        start_time: '',
-        end_time: '',
+        jam: '',
         penjamin: '',
         keluhan: ''
     });
-    
+
+    console.log(formData)
+
+    const [formErrors, setFormErrors] = useState({
+        poli: 'Poli harus diisi.',
+        dokter: 'Dokter harus diisi.',
+        tanggal: 'Tanggal harus diisi.',
+        jam: 'Jam harus diisi.',
+        penjamin: 'Penjamin harus diisi.',
+        keluhan: 'Keluhan harus diisi.'
+    });
+
     const [filteredDokters, setFilteredDokters] = useState([]);
+    const [timeOptions, setTimeOptions] = useState([]);
 
     useEffect(() => {
         dispatch(getSchedules());
@@ -35,38 +50,58 @@ const BuatJanji = () => {
             // Get unique dokter names
             const dokters = [...new Set(filtered.map(schedule => schedule.dokter))];
             setFilteredDokters(dokters);
+
         } else {
             setFilteredDokters([...new Set(schedules.map(schedule => schedule.dokter))]);
         }
     }, [formData.poli, schedules]);
 
-    const generateTimeOptions = () => {
-        const options = [];
-        for (let hour = 0; hour < 24; hour++) {
-            for (let minute = 0; minute < 60; minute += 30) {
-                const time = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-                options.push(time);
-            }
-        }
-        return options;
-    };
+    useEffect(() => {
+        if (formData.tanggal) {
+            const dayString = getDayString(formData.tanggal);
+            const filtered = schedules.filter(
+                schedule => 
+                    schedule.poli === formData.poli && 
+                    schedule.dokter === formData.dokter &&
+                    schedule.hari === dayString
+                );
 
-    const timeOptions = generateTimeOptions();
+            const times = [...new Set(filtered.map(schedule => schedule.jam))];
+            setTimeOptions(times);
+        }
+    }, [formData.tanggal, formData.dokter, formData.poli, schedules]);
 
     const handleChange = (e) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         });
+        setFormErrors({
+            ...formErrors,
+            [e.target.name]: e.target.value ? '' : `${e.target.name.charAt(0).toUpperCase() + e.target.name.slice(1)} harus diisi.`
+        });
     };
 
     const handleSubmit = async () => {
+        const [start_time, end_time] = formData.jam.split('-');
+        const appointmentData = {
+            ...formData,
+            start_time,
+            end_time
+        };
+
         try {
-            await dispatch(createAppointment(formData));
+            await dispatch(createAppointment(appointmentData));
             if (errorform) {
                 setAlert({
                     status: true,
-                    message: errorform.message,
+                    message: errorform || 'Isian tidak valid, tolong cek kembali',
+                    type: 'danger',
+                });
+            } else if (error) {
+                setAlert({
+                    status: true,
+                    message: error || 'Isian tidak valid, tolong cek kembali',
                     type: 'danger',
                 });
             } else {
@@ -75,6 +110,7 @@ const BuatJanji = () => {
                     message: 'Janji berhasil dibuat!',
                     type: 'success',
                 });
+                setNavigateAfterClose(true);
             }
         } catch (error) {
             console.error('Error creating appointment:', error);
@@ -88,6 +124,13 @@ const BuatJanji = () => {
 
     const closeModal = () => {
         setAlert({ status: false, message: '' });
+        if (navigateAfterClose) {
+            navigate('/pasien');
+        }
+    };
+
+    const isFormValid = () => {
+        return Object.values(formData).every(value => value.trim() !== '');
     };
 
     return (
@@ -102,6 +145,7 @@ const BuatJanji = () => {
                             <option key={poli} value={poli}>{poli}</option>
                         ))}
                     </select>
+                    {formErrors.poli && <p className="error_message">{formErrors.poli}</p>}
                 </div>
 
                 <div className='form_group'>
@@ -112,29 +156,24 @@ const BuatJanji = () => {
                             <option key={dokter} value={dokter}>{dokter}</option>
                         ))}
                     </select>
+                    {formErrors.dokter && <p className="error_message">{formErrors.dokter}</p>}
                 </div>
 
                 <div className='form_group'>
                     <label htmlFor="tanggal">Tanggal :</label>
                     <input type="date" id="tanggal" name="tanggal" value={formData.tanggal} onChange={handleChange} />
+                    {formErrors.tanggal && <p className="error_message">{formErrors.tanggal}</p>}
                 </div>
 
                 <div className='form_group'>
                     <label htmlFor="jam">Jam :</label>
-                    <div className="time_input_container">
-                        <select id="start_time" name="start_time" value={formData.start_time} onChange={handleChange}>
-                            <option value="">Start Time</option>
-                            {timeOptions.map(time => (
-                                <option key={time} value={time}>{time}</option>
-                            ))}
-                        </select>
-                        <select id="end_time" name="end_time" value={formData.end_time} onChange={handleChange}>
-                            <option value="">End Time</option>
-                            {timeOptions.map(time => (
-                                <option key={time} value={time}>{time}</option>
-                            ))}
-                        </select>
-                    </div>
+                    <select id="jam" name="jam" value={formData.jam} onChange={handleChange}>
+                        <option value="">Pilih Jam</option>
+                        {timeOptions.map(jam => (
+                            <option key={jam} value={jam}>{jam}</option>
+                        ))}
+                    </select>
+                    {formErrors.jam && <p className="error_message">{formErrors.jam}</p>}
                 </div>
 
                 <div className='form_group'>
@@ -144,13 +183,15 @@ const BuatJanji = () => {
                         <option value="umum">Umum</option>
                         <option value="asuransi">Asuransi</option>
                     </select>
+                    {formErrors.penjamin && <p className="error_message">{formErrors.penjamin}</p>}
                 </div>
 
                 <div className='keluhan'>
                     <input type="text" placeholder="Keluhan Umum" name="keluhan" value={formData.keluhan} onChange={handleChange} />
+                    {formErrors.keluhan && <p className="error_message">{formErrors.keluhan}</p>}
                 </div>
 
-                <button className='klik_buatjanji' onClick={handleSubmit}>Buat Janji</button>
+                <button className='klik_buatjanji' onClick={handleSubmit} disabled={!isFormValid()}>Buat Janji</button>
             </div>
 
             <Modal
