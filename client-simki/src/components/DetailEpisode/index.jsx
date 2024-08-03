@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import RiwayatEpisode from '../RiwayatEps/index';
 import CetakSuratPopup from '../../Pages/Resepsionis/CetakSuratPopup';
@@ -8,7 +7,6 @@ import '../../Style/Resepsionis/EmrResepsionis.css';
 import '../../Style/components/DetailEpisode.css';
 
 const DetailEpisode = () => {
-    const navigate = useNavigate();
     const { role } = useSelector((state) => state.auth);
     const [showCetakSuratPopup, setShowCetakSuratPopup] = useState(false);
     const [showHasilKuisionerPopup, setShowHasilKuisionerPopup] = useState(false);

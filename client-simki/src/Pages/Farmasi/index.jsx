@@ -9,11 +9,11 @@ const Farmasi = () => {
   const navigate = useNavigate();
 
   const OrderMasuk = () => {
-    navigate('/order-masuk');
+    navigate('order-masuk');
   };
 
   const KelolaObat = () => {
-    navigate('/kelola-obat');
+    navigate('kelola-obat');
   };
 
   const Menufarmasi = [
