@@ -44,11 +44,39 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 20px 70px;
-    margin-top: 20px;
+    margin-top: 50px;
 }
 
 .text_pendaftar {
     margin: 0;
+}
+
+.header-pendaftar-action {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 1;
+}
+
+
+.tambah_pendaftar {
+    background-color: #145149;
+    color: white;
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 30px;
+    display: inline-block;
+    z-index: 2;
+    margin-right: 50px;
+}
+
+.tambah_pendaftar:hover {
+    background-color: #7DAEA8;
 }
 
 .search-bar-container {
@@ -112,7 +140,7 @@ body {
 }
 
 
-.ket_aksi {
+.hapus-pendaftar {
     background-color: #1E7E72;
     color: white;
     width: 80px;
@@ -124,6 +152,10 @@ body {
     line-height: 30px;
     display: inline-block;
     font-family: 'Open Sans', sans-serif; /* Mengatur font ke Open Sans */
+}
+
+.hapus-pendaftar:hover {
+    background-color: #7DAEA8;
 }
 
 .loader {

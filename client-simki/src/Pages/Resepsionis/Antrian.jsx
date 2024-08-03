@@ -1,36 +1,31 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import BuatJanjiPopup from './BuatJanjiPopup'; // Pastikan jalur impor benar
 import '../../Style/Resepsionis/Antrian.css';
-import Header from '../../components/Header';
 import SearchBar from "../../components/SearchBar";
 
 const Antrian = () => {
     const [rows] = useState(Array.from({ length: 20 }));
-    const navigate = useNavigate();
+    const [showPopup, setShowPopup] = useState(false);
 
-    const handleBuatJanjiPopup = () => {
-        navigate('buatjanji-popup');
+    const handleOpenPopup = () => {
+        setShowPopup(true);
     };
 
-    const MenuResepsionis = [
-        { name: "Pendaftar Baru", path: "/pendaftar-baru" },
-        { name: "Antrian", path: "/antrian" },
-        { name: "Pasien", path: "/pasien-resepsionis" },
-        { name: "Kelola Jadwal", path: "/kelola-jadwal" }
-    ];
+    const handleClosePopup = () => {
+        setShowPopup(false);
+    };
 
     return (
         <div className="page-antrian-container">
             <div className="content-wrap-antrian">
                 <div className="navbar-antrian">
-                    <Header accountName="Nama Akun Resepsionis" menuItems={MenuResepsionis} />
                 </div>
                 <div className="antrian-container">
                     <div className="content-wrapper-antrian">
                         <div className="header-antrian">
                             <h1 className="text_antrian">Antrian</h1>
                             <div className="header-antrian-action">
-                                <button className='tombol_buatjanji' onClick={handleBuatJanjiPopup}>Buat Janji</button>
+                                <button className='tombol_buatjanji' onClick={handleOpenPopup}>Buat Janji</button>
                                 <SearchBar />
                             </div>
                         </div>
@@ -65,6 +60,7 @@ const Antrian = () => {
                     </div>
                 </div>
             </div>
+            {showPopup && <BuatJanjiPopup onClose={handleClosePopup} />}
         </div>
     );
 };

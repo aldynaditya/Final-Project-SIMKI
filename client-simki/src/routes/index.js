@@ -28,9 +28,6 @@ import { LeaderRoute } from './leaderRoutes';
 import { CashierRoute } from './cashierRoutes';
 import { AdminRoute } from './adminRoutes';
 
-
-
-
 export function AppRoutes() {
     const Menudokter = [
         { name: "Jadwal Dokter", path: '/dokter/schedule-dokter' },
@@ -44,11 +41,11 @@ export function AppRoutes() {
         { name: "Kelola Item", path: "/perawat/kelola-item" }
     ];
 
-    const Menuresepsionis = [
-        { name: "Pendaftar Baru", path: "/pendaftar-baru" },
-        { name: "Antrian", path: "/antrian" },
-        { name: "Pasien", path: "/pasien-resepsionis" },
-        { name: "Kelola Jadwal", path: "/kelola-jadwal" }
+    const MenuResepsionis = [
+        { name: "Pendaftar Baru", path: "pendaftar-baru" },
+        { name: "Antrian", path: "antrian" },
+        { name: "Pasien", path: "pasien-resepsionis" },
+        { name: "Kelola Jadwal", path: "kelola-jadwal" }
     ];
 
     return (
@@ -222,7 +219,7 @@ export function AppRoutes() {
                 element={
                     <>
                         <NavbarPrivate />
-                        <Header menuItems={Menuresepsionis}/>
+                        <Header menuItems={MenuResepsionis}/>
                         <GuardRoute allowedRoles={['resepsionis']}>
                             <Outlet />
                         </GuardRoute>

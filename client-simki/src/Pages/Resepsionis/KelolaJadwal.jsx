@@ -1,36 +1,28 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
-import NavbarPrivate from '../../components/NavbarPrivate';
-import FooterPrivate from '../../components/FooterPrivate';
 import '../../Style/Resepsionis/KelolaJadwal.css';
-import Header from '../../components/Header';
+import TambahJadwal from './JadwalPopup'; // Import TambahJadwal component
 
 const KelolaJadwal = () => {
     const [rows] = useState(Array.from({ length: 12 }));
-    const navigate = useNavigate();
+    const [showPopup, setShowPopup] = useState(false); // State to control popup visibility
 
-    const TambahJadwal = () => {
-        navigate('/jadwal-popup');
+    const handleTambahJadwal = () => {
+        setShowPopup(true);
     };
 
-    const MenuResepsionis = [
-        { name: "Pendaftar Baru", path: "/pendaftar-baru" },
-        { name: "Antrian", path: "/antrian" },
-        { name: "Pasien", path: "/pasien-resepsionis" },
-        { name: "Kelola Jadwal", path: "/kelola-jadwal" }
-    ];
+    const handleClosePopup = () => {
+        setShowPopup(false);
+    };
 
     return (
         <div className="kelola-jadwal-container">
             <div className="navbar-kelola-jadwal">
-                <NavbarPrivate />
-                <Header accountName="Nama Akun Resepsionis" menuItems={MenuResepsionis} />
             </div>
             <div className="content-wrap-kelola-jadwal">
                 <div className="content-wrapper-kelola-jadwal">
                     <div className="header-kelola-jadwal">
                         <h1 className="text_kelola-jadwal">Kelola Jadwal</h1>
-                        <button className='tombol_tambah-jadwal' onClick={TambahJadwal}>Tambah Jadwal</button>
+                        <button className='tombol_tambah-jadwal' onClick={handleTambahJadwal}>Tambah Jadwal</button>
                     </div>
                     <div className="tabel_kelola-jadwal">
                         <table>
@@ -56,7 +48,7 @@ const KelolaJadwal = () => {
                     </div>
                 </div>
             </div>
-            <FooterPrivate className="footerprivate-kelola-jadwal" />
+            {showPopup && <TambahJadwal onClose={handleClosePopup} />} {/* Conditionally render the popup */}
         </div>
     );
 };

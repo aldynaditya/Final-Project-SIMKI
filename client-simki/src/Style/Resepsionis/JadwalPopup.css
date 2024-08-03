@@ -4,7 +4,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #D9D9D9;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,7 +14,7 @@
     background: #f0f0f0;
     padding: 20px;
     border-radius: 10px;
-    width: 600px; /* Increased width */
+    width: 600px;
     position: relative;
 }
 
@@ -24,6 +24,7 @@
     right: 10px;
     text-decoration: none;
     color: #000;
+    cursor: pointer;
 }
 
 .text-tambah-jadwal{
@@ -76,7 +77,6 @@
     padding: 10px;
     font-size: 16px;
 }
-
 
 .text-jam-tambahjadwal {
     margin-right: 120px;

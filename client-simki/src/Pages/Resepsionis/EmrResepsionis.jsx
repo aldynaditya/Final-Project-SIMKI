@@ -1,23 +1,12 @@
 import React from 'react';
-import NavbarPrivate from '../../components/NavbarPrivate';
-import FooterPrivate from '../../components/FooterPrivate';
 import RiwyataEpisode from '../../components/RiwayatEps';
-import Header from '../../components/Header';
 import '../../Style/Resepsionis/EmrResepsionis.css';
 
 const EmrResepsionis = () => {
 
-    const MenuResepsionis = [
-        { name: "Pendaftar Baru", path: "/pendaftar-baru" },
-        { name: "Antrian", path: "/antrian" },
-        { name: "Pasien", path: "/pasien-resepsionis" },
-        { name: "Kelola Jadwal", path: "/kelola-jadwal" }
-    ];
 
     return (
         <div className='emr-resepsionis-container'>
-            <NavbarPrivate />
-            <Header accountName="Nama Akun Resepsionis" menuItems={MenuResepsionis} />
             <h1 className='text-emr-resepsionis'>EMR Pasien</h1>
             <div className='kolom-emr-resepsionis'>
                 <div className='no-emr-rsp'>
@@ -48,7 +37,6 @@ const EmrResepsionis = () => {
                 </div>
             </div>
             <RiwyataEpisode />
-            <FooterPrivate />
         </div>
     );
 };
