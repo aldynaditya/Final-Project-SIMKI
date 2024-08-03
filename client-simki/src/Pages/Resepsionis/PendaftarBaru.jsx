@@ -1,27 +1,37 @@
 import React, { useState } from "react";
 import '../../Style/Resepsionis/PendaftarBaru.css';
+import PendaftarPopup from './PendaftarPopup';
 import SearchBar from "../../components/SearchBar";
 
 const PendaftarBaru = () => {
-    const [rows] = useState(Array.from({ length: 20 }));
+    const [rows, setRows] = useState(Array.from({ length: 20 }, (_, index) => index));
+    const [showPopup, setShowPopup] = useState(false);
 
-    const MenuResepsionis = [
-        { name: "Pendaftar Baru", path: "/pendaftar-baru" },
-        { name: "Antrian", path: "/antrian" },
-        { name: "Pasien", path: "/pasien-resepsionis" },
-        { name: "Kelola Jadwal", path: "/kelola-jadwal" }
-    ];
+    const HapusPendaftar = (index) => {
+        setRows(rows.filter((_, i) => i !== index));
+    };
+
+    const handleOpenPopup = () => {
+        setShowPopup(true);
+    };
+
+    const handleClosePopup = () => {
+        setShowPopup(false);
+    };
 
     return (
         <div className="pendaftar-baru-wrapper">
             <div className="navbar-header-pendaftar">
-                {/* Navbar content if any */}
+                {/* Konten Navbar jika ada */}
             </div>
             <div className="pendaftar-baru-container">
                 <div className="content-wrapper">
                     <div className="header-pendaftar-baru">
                         <h1 className="text_pendaftar">Pendaftar Baru</h1>
-                        <SearchBar />
+                        <div className="header-pendaftar-action">
+                            <button className='tambah_pendaftar' onClick={handleOpenPopup}>Tambah</button>
+                            <SearchBar />
+                        </div>
                     </div>
                     <div className="tabel_pendaftar_baru">
                         <table>
@@ -37,7 +47,7 @@ const PendaftarBaru = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {rows.map((_, index) => (
+                                {rows.map((row, index) => (
                                     <tr key={index}>
                                         <td></td>
                                         <td></td>
@@ -45,7 +55,11 @@ const PendaftarBaru = () => {
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td><div className="ket_aksi">Aksi</div></td>
+                                        <td>
+                                            <div className="hapus-pendaftar" onClick={() => HapusPendaftar(index)}>
+                                                Hapus
+                                            </div>
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -53,6 +67,7 @@ const PendaftarBaru = () => {
                     </div>
                 </div>
             </div>
+            {showPopup && <PendaftarPopup onClose={handleClosePopup} />}
         </div>
     );
 };

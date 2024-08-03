@@ -11,6 +11,7 @@ import DetailEpsResep from '../components/DetailEpisode';
 import CetakSuratPopup from '../Pages/Resepsionis/CetakSuratPopup';
 import KelolaJadwal from '../Pages/Resepsionis/KelolaJadwal';
 import JadwalPopup from '../Pages/Resepsionis/JadwalPopup';
+import PendaftarPopup from '../Pages/Resepsionis/PendaftarPopup';
 
 export function ReceptionistRoute() {
     return (
@@ -26,6 +27,7 @@ export function ReceptionistRoute() {
             <Route path="detail-episode" element={<DetailEpsResep />} />
             <Route path="cetaksurat-popup" element={<CetakSuratPopup />} />
             <Route path="kelola-jadwal/jadwal-popup" element={<JadwalPopup />} />
+            <Route path="pendaftar-baru/pendaftar-popup" element={<PendaftarPopup />} />
         </Routes>
     );
 }

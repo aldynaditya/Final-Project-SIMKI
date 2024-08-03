@@ -1,20 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import RiwayatEpisode from '../../components/RiwayatEps';
+import RiwayatEpisode from '../RiwayatEps/index';
+import CetakSuratPopup from '../../Pages/Resepsionis/CetakSuratPopup';
+import HasilKuisionerPopup from '../../Pages/Dokter/HasilKuisionerPopup'; // Assuming you have this component
 import '../../Style/Resepsionis/EmrResepsionis.css';
 import '../../Style/components/DetailEpisode.css';
 
 const DetailEpisode = () => {
     const navigate = useNavigate();
     const { role } = useSelector((state) => state.auth);
+    const [showCetakSuratPopup, setShowCetakSuratPopup] = useState(false);
+    const [showHasilKuisionerPopup, setShowHasilKuisionerPopup] = useState(false);
 
     const CetakSurat = () => {
-        navigate('cetaksurat-popup');
+        setShowCetakSuratPopup(true);
     };
 
     const HasilKuisioner = () => {
-        navigate('hasilkuisioner-popup');
+        setShowHasilKuisionerPopup(true);
+    };
+
+    const closeCetakSuratPopup = () => {
+        setShowCetakSuratPopup(false);
+    };
+
+    const closeHasilKuisionerPopup = () => {
+        setShowHasilKuisionerPopup(false);
     };
 
     return (
@@ -130,6 +142,8 @@ const DetailEpisode = () => {
                 )}
             </div>
             <RiwayatEpisode />
+            {showCetakSuratPopup && <CetakSuratPopup onClose={closeCetakSuratPopup} />}
+            {showHasilKuisionerPopup && <HasilKuisionerPopup onClose={closeHasilKuisionerPopup} />}
         </div>
     );
 };
