@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import '../../Style/Pasien/QuestionnairePopup.css';
 
 const questions = [
-    "Pertanyaan 1",
-    "Pertanyaan 2",
-    "Pertanyaan 3",
-    "Pertanyaan 4",
-    "Pertanyaan 5"
+    "Gejala utama membaik setelah kunjungan ? ",
+    "Nyeri berkurang setelah kunjungan klinik ? ",
+    "Energi meningkat setelah kunjungan klinik ? ",
+    "Aktivitas kembali normal setelah kunjungan ? ",
+    "Efek samping pengobatan muncul ? "
 ];
 
 const options = ["1", "2", "3", "4", "5"];

@@ -16,16 +16,16 @@ export function ReceptionistRoute() {
     return (
         <Routes>
             <Route path="/" element={<Resepsionis />} />
-            <Route path="/pendaftar-baru" element={<PendaftarBaru />} />
-            <Route path="/antrian" element={<Antrian />} />
-            <Route path="/antrian/buatjanji-popup" element={<BuatJanjiPopup />} />
-            <Route path="/identitas-pasien" element={<IdentitasPasien />} />
-            <Route path="/emr-resepsionis" element={<EmrResepsionis />} />
-            <Route path="/pasien-resepsionis" element={<PasienResepsionis />} />
-            <Route path="/detail-episode" element={<DetailEpsResep />} />
-            <Route path="/cetaksurat-popup" element={<CetakSuratPopup />} />
-            <Route path="/kelola-jadwal" element={<KelolaJadwal />} />
-            <Route path="/jadwal-popup" element={<JadwalPopup />} />
+            <Route path="pendaftar-baru" element={<PendaftarBaru />} />
+            <Route path="antrian" element={<Antrian />} />
+            <Route path="pasien-resepsionis" element={<PasienResepsionis />} />
+            <Route path="kelola-jadwal" element={<KelolaJadwal />} />
+            <Route path="antrian/buatjanji-popup" element={<BuatJanjiPopup />} />
+            <Route path="identitas-pasien" element={<IdentitasPasien />} />
+            <Route path="emr-resepsionis" element={<EmrResepsionis />} />
+            <Route path="detail-episode" element={<DetailEpsResep />} />
+            <Route path="cetaksurat-popup" element={<CetakSuratPopup />} />
+            <Route path="kelola-jadwal/jadwal-popup" element={<JadwalPopup />} />
         </Routes>
     );
 }

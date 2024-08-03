@@ -1,13 +1,21 @@
 import React, { useState } from "react";
 import '../../Style/Resepsionis/PendaftarBaru.css';
-import SearchBar from "../../components/SearchBar"; 
+import SearchBar from "../../components/SearchBar";
 
 const PendaftarBaru = () => {
     const [rows] = useState(Array.from({ length: 20 }));
 
+    const MenuResepsionis = [
+        { name: "Pendaftar Baru", path: "/pendaftar-baru" },
+        { name: "Antrian", path: "/antrian" },
+        { name: "Pasien", path: "/pasien-resepsionis" },
+        { name: "Kelola Jadwal", path: "/kelola-jadwal" }
+    ];
+
     return (
         <div className="pendaftar-baru-wrapper">
             <div className="navbar-header-pendaftar">
+                {/* Navbar content if any */}
             </div>
             <div className="pendaftar-baru-container">
                 <div className="content-wrapper">

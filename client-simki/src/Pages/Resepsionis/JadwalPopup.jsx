@@ -1,30 +1,32 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import '../../Style/Resepsionis/JadwalPopup.css';
 
-const TambahJadwal = () => {
+const TambahJadwal = ({ onClose }) => {
     const [activeLink, setActiveLink] = useState('');
-    const navigate = useNavigate(); // Add useNavigate hook
 
     const handleLinkCancel = (link) => {
         setActiveLink(link);
+        if (onClose) {
+            onClose(); // Close the popup
+        }
     };
 
     const SimpanJadwal = () => {
         alert('Jadwal Ditambahkan');
-        navigate('/kelola-jadwal'); // Navigate back to DetailEpisode page
+        if (onClose) {
+            onClose(); // Close the popup
+        }
     };
 
     return (
         <div className='tambah-jadwal-container'>
             <div className='tambah-jadwal-content'>
-                <Link 
-                    to="/kelola-jadwal" 
+                <div 
                     className={activeLink === 'cancel' ? 'active cancel-link' : 'cancel-x'} 
                     onClick={() => handleLinkCancel('cancel')}
                 >
                     Cancel X
-                </Link>
+                </div>
                 <h1 className='text-tambah-jadwal'>Tambah Jadwal</h1>
                 <div className='kolom-dokter-jadwal'>
                     <div className='ndokter-tambahjadwal'>

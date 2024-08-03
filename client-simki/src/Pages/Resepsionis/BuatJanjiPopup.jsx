@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import '../../Style/Resepsionis/BuatJanjiPopup.css';
 
 const BuatJanjiPopup = ({ onClose }) => {
-    const navigate = useNavigate();
     const [namaPasien, setNamaPasien] = useState('');
     const [poli, setPoli] = useState('');
     const [dokter, setDokter] = useState('');
     const [tanggal, setTanggal] = useState('');
     const [jam, setJam] = useState('');
-    const [penjamin, setPenjamin] = useState('Umum'); // Penjamin defaultnya Umum
+    const [penjamin, setPenjamin] = useState('Umum');
 
-    // Daftar dokter berdasarkan poli
     const dokterOptions = {
         Umum: ['dr. Akhmad Ismail', 'dr. Neni Susilaningsih', 'dr. Farmaditya Eka Putra', 'dr. Dea Amarilisa Adespin', 'dr. Budi Laksono', 'dr. Nur Asri', 'dr. Della Rimawati', 'dr. Citra Hutami Saraswati', 'dr. Amalian Puswitasari'],
         Gigi: ['drg. Tyas Prihatiningsih', 'drg. Ahmad Fahmi Fahrobi', 'drg. Eghia Laditra Ambarani']
@@ -20,21 +17,18 @@ const BuatJanjiPopup = ({ onClose }) => {
     const handleSimpan = () => {
         if (onClose) {
             onClose();
-        } else {
-            navigate('/antrian'); // Navigasi kembali ke halaman Antrian
         }
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Tangani pengiriman formulir
         console.log({ namaPasien, dokter, poli, tanggal, jam, penjamin });
+        handleSimpan();
     };
 
     const handlePoliChange = (e) => {
         const selectedPoli = e.target.value;
         setPoli(selectedPoli);
-        // Reset dokter saat ganti poli
         setDokter('');
     };
 
@@ -59,7 +53,6 @@ const BuatJanjiPopup = ({ onClose }) => {
                             <option value="Gigi">Gigi</option>
                         </select>
                     </label>
-                    {/* Tampilkan dropdown dokter jika tidak ada poli yang dipilih atau sudah dipilih */}
                     {!poli || (
                         <label>
                             Dokter:
@@ -97,7 +90,7 @@ const BuatJanjiPopup = ({ onClose }) => {
                             <option value="BPJS">BPJS</option>
                         </select>
                     </label>
-                    <button type="submit" className="submit-buatjanji" onClick={handleSimpan}>Simpan</button>
+                    <button type="submit" className="submit-buatjanji">Simpan</button>
                 </form>
             </div>
         </div>

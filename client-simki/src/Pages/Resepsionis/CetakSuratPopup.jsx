@@ -12,7 +12,7 @@ const CetakSuratPopup = () => {
 
     const handlePerubahan = () => {
         alert('Data Tersimpan');
-        navigate('/detail-episode'); // Navigate back to DetailEpisode page
+        navigate('detail-episode'); // Navigate back to DetailEpisode page
     };
 
     return (

@@ -10,11 +10,11 @@ const DetailEpisode = () => {
     const { role } = useSelector((state) => state.auth);
 
     const CetakSurat = () => {
-        navigate('/cetaksurat-popup');
+        navigate('cetaksurat-popup');
     };
 
     const HasilKuisioner = () => {
-        navigate('/hasilkuisioner-popup');
+        navigate('hasilkuisioner-popup');
     };
 
     return (
