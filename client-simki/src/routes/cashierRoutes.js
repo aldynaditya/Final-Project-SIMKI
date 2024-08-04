@@ -7,7 +7,7 @@ export function CashierRoute() {
     return (
         <Routes>
             <Route path="/" element={<TransaksiKasir />} />
-            <Route path="/detail-faktur" element={<DetailFaktur />} />
+            <Route path="transaksi-kasir/detail-faktur" element={<DetailFaktur />} />
         </Routes>
     );
 }

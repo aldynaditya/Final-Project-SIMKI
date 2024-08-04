@@ -1,4 +1,4 @@
-.tambah-jadwal-container {
+.update-status-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -8,15 +8,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000; /* Ensure the popup is on top */
+    z-index: 1000; /* Ensure it appears above other content */
+    font-family: 'Open Sans', sans-serif;
 }
 
-.tambah-jadwal-content {
+.update-status-content {
     background: #f0f0f0;
     padding: 20px;
     border-radius: 10px;
     width: 600px;
     position: relative;
+    z-index: 1001; /* Ensure it appears above the background */
 }
 
 .cancel-x {
@@ -28,13 +30,13 @@
     cursor: pointer;
 }
 
-.text-tambah-jadwal, .text-edit-jadwal{
+.text-update-status {
     font-size: 24px;
     margin-bottom: 20px;
     margin-top: 30px;
 }
 
-.kolom-dokter-jadwal {
+.kolom-update-status {
     margin-top: 50px;
     margin-left: 70px;
     display: flex;
@@ -43,61 +45,55 @@
     font-size: 16px;
 }
 
-.text-ndokter-tambahjadwal {
-    margin-right: 53px;
-    font-size: 16px;
-}
-.kolom-ndokter-tambahjadwal {
-    border-radius: 5px;
-    width: 300px;
-    height: 30px;
-    padding: 10px;
+.text-status-aksi {
+    margin-right: 60px;
     font-size: 16px;
 }
 
-.text-poli-tambahjadwal {
-    margin-right: 120px;
-    font-size: 16px;
-}
-.kolom-poli-tambahjadwal {
+/* Existing styles */
+
+.kolom-status-aksi {
     border-radius: 5px;
-    width: 300px;
-    height: 30px;
+    width: 150px;
+    height: 40px;
     padding: 10px;
     font-size: 16px;
+    text-align: center;
+    /* Add styles for the dropdown */
 }
 
-.text-hari-tambahjadwal {
-    margin-right: 120px;
-    font-size: 16px;
-}
-.kolom-hari-tambahjadwal {
+.kolom-keterangan-aksi {
     border-radius: 5px;
-    width: 300px;
-    height: 30px;
+    width: 350px;
+    height: 100px;
     padding: 10px;
     font-size: 16px;
+    /* Ensure text is aligned to the top */
+    vertical-align: top;
+    resize: vertical; /* Allow vertical resizing */
+    overflow: auto; /* Add scroll if content overflows */
+    margin-right: 20px;
 }
 
-.text-jam-tambahjadwal {
-    margin-right: 120px;
-    font-size: 16px;
-}
-.kolom-jam-tambahjadwal {
-    border-radius: 5px;
-    width: 140px;
-    height: 30px;
+/* Ensure the textarea has top alignment */
+textarea {
+    box-sizing: border-box;
     padding: 10px;
-    font-size: 16px;
+    margin-top: 5px;
+    vertical-align: top;
 }
 
-.tambahjadwal-container {
+.text-keterangan-aksi{
+    margin-right: 20px;
+}
+
+.updateaksi-container {
     display: flex;
     justify-content: center; /* Center the button horizontally */
     margin-top: 20px;
 }
 
-.button-tambahjadwal {
+.button-updatestatus {
     padding: 10px;
     background-color: #145149;
     color: white;
@@ -109,6 +105,6 @@
     letter-spacing: 3px;
 }
 
-.button-tambahjadwal:hover {
+.button-updatestatus:hover {
     background-color: #7DAEA8;
 }

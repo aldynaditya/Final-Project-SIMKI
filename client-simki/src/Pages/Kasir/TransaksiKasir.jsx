@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import '../../Style/Kasir/TransaksiKasir.css';
-import SearchBar from '../../components/SearchBar'; // Corrected import statement
-import { useNavigate } from 'react-router-dom'; 
+import SearchBar from '../../components/SearchBar';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import DetailFaktur from './DetailFaktur';
 
 const TransaksiKasir = () => {
     const [rows] = useState(Array.from({ length: 20 }));
-    const navigate = useNavigate();
+    const [isDetailFakturVisible, setIsDetailFakturVisible] = useState(false);
 
-    const DetailFaktur = () => {
-        navigate('/detail-faktur');
+    const handleDetailFakturOpen = () => {
+        setIsDetailFakturVisible(true);
+    };
+
+    const handleDetailFakturClose = () => {
+        setIsDetailFakturVisible(false);
     };
 
     const CetakTransaksi = (index) => {
@@ -19,15 +23,12 @@ const TransaksiKasir = () => {
         const cloneThead = document.querySelector('.tabel_transaksi thead').cloneNode(true);
         const cloneRow = element.cloneNode(true);
 
-        // Remove action column from cloned header and row
         cloneThead.querySelectorAll('th')[9].remove();
         cloneRow.querySelectorAll('td')[9].remove();
 
-        // Append header and row to the cloned table
         cloneTable.appendChild(cloneThead);
         cloneTable.appendChild(cloneRow);
 
-        // Style adjustments for better readability in PDF
         cloneTable.style.fontSize = '12px';
         cloneTable.style.borderCollapse = 'collapse';
         cloneTable.querySelectorAll('th, td').forEach(cell => {
@@ -40,7 +41,7 @@ const TransaksiKasir = () => {
         html2canvas(cloneTable).then(canvas => {
             document.body.removeChild(cloneTable);
             const imgData = canvas.toDataURL('image/png');
-            const pdf = new jsPDF('landscape', 'mm', [215, 40]); // Set size to 215x75 mm
+            const pdf = new jsPDF('landscape', 'mm', [215, 40]);
             const imgProps = pdf.getImageProperties(imgData);
             const pdfWidth = pdf.internal.pageSize.getWidth();
             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
@@ -52,9 +53,7 @@ const TransaksiKasir = () => {
 
     return (
         <div className="transaksi-wrapper">
-            <div className="navbar-header-transaksi">
-
-            </div>
+            <div className="navbar-header-transaksi"></div>
             <div className="transaksi-container">
                 <div className="content-wrapper-transaksi">
                     <div className="header-transaksi">
@@ -90,7 +89,7 @@ const TransaksiKasir = () => {
                                         <td></td>
                                         <td></td>
                                         <td className="detail-faktur-cell">
-                                            <button className="detail-faktur" onClick={DetailFaktur}>Detail Faktur</button>
+                                            <button className="detail-faktur" onClick={handleDetailFakturOpen}>Detail</button>
                                             <button className="cetak-transaksi" onClick={() => CetakTransaksi(index)}>Cetak</button>
                                         </td>
                                     </tr>
@@ -100,6 +99,7 @@ const TransaksiKasir = () => {
                     </div>
                 </div>
             </div>
+            {isDetailFakturVisible && <DetailFaktur onClose={handleDetailFakturClose} />}
         </div>
     );
 };

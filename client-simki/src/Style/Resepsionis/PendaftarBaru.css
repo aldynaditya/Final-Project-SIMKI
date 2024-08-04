@@ -141,17 +141,18 @@ body {
 
 
 .hapus-pendaftar {
-    background-color: #1E7E72;
+    background-color: #145149;
     color: white;
     width: 80px;
-    height: 30px;
+    height: 35px;
     border: none;
     border-radius: 5px;
+    font-size: 16px;
     cursor: pointer;
     text-align: center;
-    line-height: 30px;
+    line-height: 35px;
     display: inline-block;
-    font-family: 'Open Sans', sans-serif; /* Mengatur font ke Open Sans */
+    font-weight: bold;
 }
 
 .hapus-pendaftar:hover {

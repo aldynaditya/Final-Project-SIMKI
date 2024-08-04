@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../../Style/Resepsionis/JadwalPopup.css';
 
-const TambahJadwal = ({ onClose, title }) => {
+const EditJadwal = ({ onClose, title }) => {
     const [activeLink, setActiveLink] = useState('');
 
     const handleLinkCancel = (link) => {
@@ -12,7 +12,7 @@ const TambahJadwal = ({ onClose, title }) => {
     };
 
     const SimpanJadwal = () => {
-        alert('Jadwal Ditambahkan');
+        alert('Jadwal Sudah Diperbarui');
         if (onClose) {
             onClose(); // Close the popup
         }
@@ -54,4 +54,4 @@ const TambahJadwal = ({ onClose, title }) => {
     );
 };
 
-export default TambahJadwal;
+export default EditJadwal;

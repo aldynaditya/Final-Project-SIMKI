@@ -48,6 +48,16 @@ export function AppRoutes() {
         { name: "Kelola Jadwal", path: "kelola-jadwal" }
     ];
 
+    const Menufarmasi = [
+        { name: "Order Masuk", path: "order-masuk" },
+        { name: "Kelola Obat", path: "kelola-obat" }
+    ];
+
+    const Menuspv = [
+        { name: "Transaksi", path: "transaksi-keuangan" },
+        { name: "Laporan", path: "notifikasi-keuangan" }
+    ];
+
     return (
         <Routes>
             {/* Public Access Routes */}
@@ -205,6 +215,7 @@ export function AppRoutes() {
                 element={
                     <>
                         <NavbarPrivate />
+                        <Header menuItems={Menufarmasi} />
                         <GuardRoute allowedRoles={['farmasi']}>
                             <Outlet />
                         </GuardRoute>
@@ -234,6 +245,7 @@ export function AppRoutes() {
                 element={
                     <>
                         <NavbarPrivate />
+                        <Header menuItems={Menuspv} />
                         <GuardRoute allowedRoles={['spvkeuangan']}>
                             <Outlet />
                         </GuardRoute>

@@ -1,20 +1,31 @@
-.tambahitem-popup-container {
+.kelola-item-container.overlay::before {
+    content: '';
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #D9D9D9;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+}
+
+.tambahitem-popup-container {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -20%);
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 999;
 }
 
 .tambahitem-popup-content {
     background: #f0f0f0;
     padding: 20px;
     border-radius: 10px;
-    width: 600px; /* Increased width */
+    width: 600px;
     position: relative;
 }
 
@@ -23,8 +34,15 @@
     top: 10px;
     right: 10px;
     text-decoration: none;
-    color: #000;
+    color: #333; /* Darker color for the text */
+    font-size: 20px; /* Increase font size */
+    background: transparent; /* No background */
+    border: none; /* No border */
+    cursor: pointer; /* Pointer cursor */
+    font-family: 'Arial', sans-serif; /* Ensure a clean, sans-serif font */
+    font-weight: normal; /* Normal weight to match the image */
 }
+
 
 .text-tambahitem-popup {
     font-size: 24px;
@@ -40,13 +58,16 @@
     gap: 10px;
     font-size: 16px;
 }
+
 .nama-item {
     display: flex;
 }
+
 .text-nama-item {
     margin-right: 53px;
     font-size: 16px;
 }
+
 .kolom-nama-item {
     border-radius: 5px;
     width: 300px;
@@ -56,9 +77,10 @@
 }
 
 .text-kode-item {
-    margin-right: 55px;
+    margin-right: 56px;
     font-size: 16px;
 }
+
 .kolom-kode-item {
     border-radius: 5px;
     width: 300px;
@@ -68,9 +90,10 @@
 }
 
 .text-harga-item {
-    margin-right: 27px;
+    margin-right: 32px;
     font-size: 16px;
 }
+
 .kolom-harga-item {
     border-radius: 5px;
     width: 300px;
@@ -80,9 +103,10 @@
 }
 
 .text-satuan-item {
-    margin-right: 75px;
+    margin-right: 78px;
     font-size: 16px;
 }
+
 .kolom-satuan-item {
     border-radius: 5px;
     width: 300px;
@@ -95,6 +119,7 @@
     margin-right: 25px;
     font-size: 16px;
 }
+
 .kolom-stok-item {
     border-radius: 5px;
     width: 300px;
@@ -105,7 +130,7 @@
 
 .tambah-item-container {
     display: flex;
-    justify-content: center; /* Center the button horizontally */
+    justify-content: center;
     margin-top: 20px;
 }
 

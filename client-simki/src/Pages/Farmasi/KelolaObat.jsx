@@ -1,31 +1,36 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
-import NavbarPrivate from '../../components/NavbarPrivate';
-import FooterPrivate from '../../components/FooterPrivate';
 import '../../Style/Perawat/KelolaItem.css';
-import Header from '../../components/Header';
-import SearchBar from "../../components/SearchBar";  // Pastikan nama komponen dan path sesuai
+import SearchBar from "../../components/SearchBar";
+import TambahObat from "./TambahObat";
+import EditObat from "./EditObat";
 
 const KelolaObat = () => {
-    const [rows] = useState(Array.from({ length: 20 }));
-    const navigate = useNavigate();
+    const [rows, setRows] = useState(Array.from({ length: 20 }));
+    const [isPopupVisible, setIsPopupVisible] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
 
     const handleTambahObat = () => {
-        navigate('/tambah-obat');
+        setIsPopupVisible(true);
+        setIsEditing(false);
     };
 
-    const Menufarmasi = [
-        { name: "Order Masuk", path: "/order-masuk" },
-        { name: "Kelola Obat", path: "/kelola-obat" }
-    ];
+    const handleUbahObat = () => {
+        setIsPopupVisible(true);
+        setIsEditing(true);
+    };
+
+    const handleClosePopup = () => {
+        setIsPopupVisible(false);
+    };
+
+    const hapusObat = (index) => {
+        setRows(rows.filter((_, i) => i !== index));
+    };
 
     return (
         <div className="kelola-item-wrapper">
-            <div className="navbar-kelola-item">
-                <NavbarPrivate />
-                <Header accountName="Nama Akun Farmasi" menuItems={Menufarmasi} />
-            </div>
-            <div className="kelola-item-container">
+            <div className="navbar-kelola-item"></div>
+            <div className={`kelola-item-container ${isPopupVisible ? 'overlay' : ''}`}>
                 <div className="content-wrapper-kelola-item">
                     <div className="header-kelola-item">
                         <h1 className="text_kelola-item">Stok Obat</h1>
@@ -54,7 +59,12 @@ const KelolaObat = () => {
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td><div className="ket_aksi">Aksi</div></td>
+                                        <td>
+                                            <button className="ubah-jadwal" onClick={handleUbahObat}>Ubah</button>
+                                            <div className="hapus-jadwal" onClick={() => hapusObat(index)}>
+                                                Hapus
+                                            </div>
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -62,7 +72,7 @@ const KelolaObat = () => {
                     </div>
                 </div>
             </div>
-            <FooterPrivate />
+            {isPopupVisible && (isEditing ? <EditObat onClose={handleClosePopup} /> : <TambahObat onClose={handleClosePopup} />)}
         </div>
     );
 };

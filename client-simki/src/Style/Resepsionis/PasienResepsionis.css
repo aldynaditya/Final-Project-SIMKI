@@ -123,7 +123,8 @@ body {
     text-align: center;
     line-height: 35px;
     display: inline-block;
-    margin-right: 20px; /* Add margin to the right */
+    margin-right: 20px; 
+    font-weight: bold;
 }
 
 .emr-resepsionis {
@@ -138,6 +139,7 @@ body {
     text-align: center;
     line-height: 35px;
     display: inline-block;
+    font-weight: bold;
 }
 
 .identitas-pasien:hover, .emr-resepsionis:hover {

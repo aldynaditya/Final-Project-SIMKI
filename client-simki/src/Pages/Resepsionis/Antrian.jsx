@@ -1,18 +1,32 @@
 import React, { useState } from "react";
-import BuatJanjiPopup from './BuatJanjiPopup'; // Pastikan jalur impor benar
+import BuatJanjiPopup from './BuatJanjiPopup';
+import UpdateStatus from './AksiPopup';
 import '../../Style/Resepsionis/Antrian.css';
 import SearchBar from "../../components/SearchBar";
 
 const Antrian = () => {
     const [rows] = useState(Array.from({ length: 20 }));
-    const [showPopup, setShowPopup] = useState(false);
+    const [showJanjiPopup, setShowJanjiPopup] = useState(false);
+    const [showAksiPopup, setShowAksiPopup] = useState(false);
 
-    const handleOpenPopup = () => {
-        setShowPopup(true);
+    const handleOpenJanjiPopup = () => {
+        setShowJanjiPopup(true);
     };
 
-    const handleClosePopup = () => {
-        setShowPopup(false);
+    const handleCloseJanjiPopup = () => {
+        setShowJanjiPopup(false);
+    };
+
+    const handleOpenAksiPopup = () => {
+        setShowAksiPopup(true);
+    };
+
+    const handleCloseAksiPopup = () => {
+        setShowAksiPopup(false);
+    };
+
+    const IdentitasPasien = () => {
+        window.open('identitas-pasien', '_blank');
     };
 
     return (
@@ -25,7 +39,7 @@ const Antrian = () => {
                         <div className="header-antrian">
                             <h1 className="text_antrian">Antrian</h1>
                             <div className="header-antrian-action">
-                                <button className='tombol_buatjanji' onClick={handleOpenPopup}>Buat Janji</button>
+                                <button className='tombol_buatjanji' onClick={handleOpenJanjiPopup}>Buat Janji</button>
                                 <SearchBar />
                             </div>
                         </div>
@@ -51,7 +65,10 @@ const Antrian = () => {
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                            <td><div className="ket_aksi">Aksi</div></td>
+                                            <td>
+                                                <button className="lihat-identitas" onClick={IdentitasPasien}>Lihat</button>
+                                                <button className="aksi-antrian" onClick={handleOpenAksiPopup}>Aksi</button>
+                                            </td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -60,7 +77,8 @@ const Antrian = () => {
                     </div>
                 </div>
             </div>
-            {showPopup && <BuatJanjiPopup onClose={handleClosePopup} />}
+            {showJanjiPopup && <BuatJanjiPopup onClose={handleCloseJanjiPopup} />}
+            {showAksiPopup && <UpdateStatus onClose={handleCloseAksiPopup} />}
         </div>
     );
 };

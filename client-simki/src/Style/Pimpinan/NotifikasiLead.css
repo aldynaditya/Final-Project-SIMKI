@@ -110,33 +110,29 @@ body {
     background-color: #f1f1f1;
 }
 
-.notif-laporan-cell{
+.notif-laporan-cell {
     display: flex;
-    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
     gap: 10px;
-   
+    text-align: center;
 }
 
-.ket_terima, .laporan-pimpinan {
-    background-color: #1E7E72;
+.ket_terima-pimpinan, .laporan-pimpinan {
+    background-color: #145149;
     color: white;
     width: 80px;
-    height: 30px;
+    height: 35px;
     border: none;
     border-radius: 5px;
+    font-size: 16px;
     cursor: pointer;
+    line-height: 35px;
     text-align: center;
-    line-height: 30px;
-    display: inline-block;
-    font-family: 'Open Sans', sans-serif; /* Mengatur font ke Open Sans */
+    font-weight: bold;
 }
 
-.laporan-pimpinan {
-    background-color: #1E7E72; /* Samakan warna latar belakang dengan .ket_terima */
-    font-size: 14px; /* Samakan ukuran font dengan .ket_terima */
-}
-
-.laporan-pimpinan:hover{
+.laporan-pimpinan:hover {
     background-color: #7DAEA8;
 }
 
