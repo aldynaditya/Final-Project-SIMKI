@@ -81,6 +81,14 @@ const HalamanPasien = () => {
         return <div>Loading...</div>;
     }
 
+    const sortedAppointments = [...appointments].sort((a, b) => {
+        const createdComparison = new Date(b.dibuat) - new Date(a.dibuat);
+        if (createdComparison !== 0) {
+            return createdComparison;
+        }
+        return new Date(b.diupdate) - new Date(a.diupdate);
+    });
+
     return (
         <div className="halaman_pasien_container">
             <h1 className="center_text">
@@ -90,7 +98,7 @@ const HalamanPasien = () => {
             <div className="transaksi">
                 <p>Transaksi Berlangsung :</p>
             </div>
-            <div className="tabel_transaksi">
+            <div className="tabel_transaksi_pasien">
                 <table>
                     <thead>
                         <tr>
@@ -103,7 +111,7 @@ const HalamanPasien = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {appointments.map((appointment, index) => (
+                        {sortedAppointments.map((appointment, index) => (
                             <tr key={index}>
                                 <td>{formatDate(appointment.tanggal)}</td>
                                 <td>{appointment.nama_dokter}</td>

@@ -211,6 +211,8 @@ const getpasienAppointments = async (req) => {
             keterangan: appointment.keterangan,
             penjamin: appointment.penjamin,
             status: appointment.status,
+            dibuat: appointment.createdAt,
+            diupdate: appointment.updatedAt
         };
     });
 
