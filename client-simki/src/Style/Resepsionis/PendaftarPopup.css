@@ -1,0 +1,129 @@
+/* Ensure the popup is on top of other content */
+.tambah-pendaftar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* High z-index to ensure it's on top */
+}
+
+.tambah-pendaftar-content {
+    background: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    width: 600px;
+    position: relative;
+}
+
+.cancel-x {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    text-decoration: none;
+    color: #000;
+    cursor: pointer;
+}
+
+.text-tambah-pendaftar {
+    font-size: 24px;
+    margin-bottom: 20px;
+    margin-top: 30px;
+}
+
+.kolom-pendaftar-baru {
+    margin-top: 50px;
+    margin-left: 70px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 16px;
+}
+
+.kolom-npasien-pendaftar-baru{
+    width: 450px;
+    height: 30px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: none;
+    margin-right: 10px;
+}
+
+.ttl-pendaftar-baru{
+    display: flex;
+    flex-direction: row;
+}
+
+.kolom-tempat-pendaftar-baru{
+    width: 220px;
+    height: 30px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: none;
+    margin-right: 10px;
+}
+
+.kolom-tanggal-pendaftar-baru{
+    width: 220px;
+    height: 30px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: none;
+    margin-right: 10px;
+}
+
+.kolom-nik-pendaftar-baru,
+.kolom-gender-pendaftar-baru,
+.kolom-blood-pendaftar-baru,
+.kolom-suku-pendaftar-baru,
+.kolom-alamat-pendaftar-baru {
+    width: 450px;
+    height: 30px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: none;
+    margin-right: 10px;
+}
+
+.kolom-alamat-pendaftar-baru {
+    width: 450px;
+    height: 30px;
+}
+
+.tambahpendaftar-container {
+    display: flex;
+    justify-content: center; /* Center the button horizontally */
+    margin-top: 20px;
+}
+
+.button-tambahpendaftar {
+    padding: 10px;
+    background-color: #145149;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 150px;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
+.button-tambahpendaftar:hover {
+    background-color: #7DAEA8;
+}

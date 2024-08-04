@@ -37,7 +37,7 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Memastikan konten mengisi ruang yang ada */
+    justify-content: space-between;
 }
 
 .header-order-masuk {
@@ -78,15 +78,19 @@ body {
     padding: 5px;
 }
 
+.tabel-pendaftar-baru-wrapper {
+    overflow-x: auto; /* Enable horizontal scrolling */
+    flex: 1;
+}
+
 .tabel_pendaftar_baru {
     margin: 20px;
-    flex: 1;
+    min-width: 1200px; /* Ensure the table takes minimum width to avoid squishing */
 }
 
 .tabel_pendaftar_baru table {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
     font-size: 18px;
     text-align: center;  /* Pusatkan teks secara horizontal */
 }
@@ -112,19 +116,23 @@ body {
     background-color: #f1f1f1;
 }
 
-
-.ket_aksi {
-    background-color: #1E7E72;
+.proses-obat {
+    background-color: #145149;
     color: white;
-    width: 80px;
+    width: 70px;
     height: 30px;
     border: none;
     border-radius: 5px;
+    font-size: 14px;
     cursor: pointer;
     text-align: center;
     line-height: 30px;
     display: inline-block;
-    font-family: 'Open Sans', sans-serif; /* Mengatur font ke Open Sans */
+    font-weight: bold;
+}
+
+.proses-obat:hover {
+    background-color: #7DAEA8;
 }
 
 .loader {

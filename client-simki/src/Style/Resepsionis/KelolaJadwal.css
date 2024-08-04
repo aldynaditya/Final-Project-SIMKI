@@ -109,6 +109,30 @@ body {
     background-color: #f1f1f1;
 }
 
+.aksi-column {
+    width: 300px; /* Adjust this width as necessary */
+}
+
+.ubah-jadwal, .hapus-jadwal {
+    background-color: #145149;
+    color: white;
+    width: 70px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 30px;
+    display: inline-block;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.ubah-jadwal:hover, .hapus-jadwal:hover {
+    background-color: #7DAEA8;
+}
+
 .loader {
     text-align: center;
     padding: 1rem;

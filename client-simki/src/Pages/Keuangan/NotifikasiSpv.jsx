@@ -1,30 +1,22 @@
-import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';  // Pastikan useNavigate diimpor
-import NavbarPrivate from '../../components/NavbarPrivate';  // Pastikan jalurnya benar
-import FooterPrivate from '../../components/FooterPrivate';  // Pastikan jalurnya benar
+import React, { useState } from 'react';
 import '../../Style/Keuangan/NotifikasiSpv.css';
-import Header from '../../components/Header';  // Pastikan jalurnya benar
-import SearchBar from '../../components/SearchBar';  // Pastikan jalurnya benar
+import SearchBar from '../../components/SearchBar';
+import UploadLaporan from './UploadLaporan';
 
 const NotifikasiKeuangan = () => {
     const [rows] = useState(Array.from({ length: 10 }));
-    const navigate = useNavigate();
+    const [isPopupVisible, setIsPopupVisible] = useState(false);
 
     const UnggahLaporan = () => {
-        navigate('/laporan-popup');
+        setIsPopupVisible(true);
     };
 
-    const MenuKeuangan = [
-        { name: "Transaksi", path: "/transaksi-keuangan" },
-        { name: "Notifikasi", path: "/notifikasi-keuangan" }
-    ];
+    const handleClosePopup = () => {
+        setIsPopupVisible(false);
+    };
 
     return (
         <div className="notif-keuangan-wrapper">
-            <div className="navbar-header-notif-keuangan">
-                <NavbarPrivate />
-                <Header accountName="Nama Akun SPV Keuangan" menuItems={MenuKeuangan} />
-            </div>
             <div className="notif-keuangan-container">
                 <div className="content-wrapper-notif-keuangan">
                     <div className="header-notif-keuangan">
@@ -60,7 +52,7 @@ const NotifikasiKeuangan = () => {
                     </div>
                 </div>
             </div>
-            <FooterPrivate />
+            {isPopupVisible && <UploadLaporan onClose={handleClosePopup} />} 
         </div>
     );
 };

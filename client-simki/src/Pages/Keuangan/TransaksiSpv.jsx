@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import NavbarPrivate from '../../components/NavbarPrivate';
-import FooterPrivate from '../../components/FooterPrivate';
 import '../../Style/Keuangan/TransaksiSpv.css';
-import Header from '../../components/Header';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
@@ -44,17 +41,8 @@ const TransaksiKeuangan = () => {
         }
     };
 
-    const MenuKeuangan = [
-        { name: "Transaksi", path: "/transaksi-keuangan" },
-        { name: "Notifikasi", path: "/notifikasi-keuangan" }
-    ];
-
     return (
         <div className="transaksi-keuangan-wrapper">
-            <div className="navbar-header-transaksi-keuangan">
-                <NavbarPrivate />
-                <Header accountName="Nama Akun SPV Keuangan" menuItems={MenuKeuangan} />
-            </div>
             <div className="transaksi-keuangan-container">
                 <div className="content-wrapper-transaksi-keuangan">
                     <div className="header-transaksi-keuangan">
@@ -101,7 +89,6 @@ const TransaksiKeuangan = () => {
                     <button className="buat-laporan" onClick={BuatLaporan}>Buat Laporan</button>
                 </div>
             </div>
-            <FooterPrivate />
         </div>
     );
 };

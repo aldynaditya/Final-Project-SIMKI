@@ -1,23 +1,32 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import '../../Style/Resepsionis/KelolaJadwal.css';
-import TambahJadwal from './JadwalPopup'; // Import TambahJadwal component
+import TambahJadwal from './JadwalPopup'; // Import komponen TambahJadwal
+import EditJadwal from './EditJadwal'; // Import komponen EditJadwal
 
 const KelolaJadwal = () => {
-    const [rows] = useState(Array.from({ length: 12 }));
-    const [showPopup, setShowPopup] = useState(false); // State to control popup visibility
+    const [baris, setBaris] = useState(Array.from({ length: 12 }));
+    const [tampilkanPopup, setTampilkanPopup] = useState({ show: false, type: '' }); // State untuk mengontrol visibilitas popup
+    const navigate = useNavigate();
 
     const handleTambahJadwal = () => {
-        setShowPopup(true);
+        setTampilkanPopup({ show: true, type: 'tambah' });
     };
 
-    const handleClosePopup = () => {
-        setShowPopup(false);
+    const handleTutupPopup = () => {
+        setTampilkanPopup({ show: false, type: '' });
+    };
+
+    const hapusJadwal = (index) => {
+        setBaris(baris.filter((_, i) => i !== index));
+    };
+
+    const UbahJadwal = () => {
+        setTampilkanPopup({ show: true, type: 'edit' });
     };
 
     return (
         <div className="kelola-jadwal-container">
-            <div className="navbar-kelola-jadwal">
-            </div>
             <div className="content-wrap-kelola-jadwal">
                 <div className="content-wrapper-kelola-jadwal">
                     <div className="header-kelola-jadwal">
@@ -32,15 +41,22 @@ const KelolaJadwal = () => {
                                     <th>Poli</th>
                                     <th>Hari</th>
                                     <th>Jam</th>
+                                    <th className="aksi-column">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {rows.map((_, index) => (
+                                {baris.map((_, index) => (
                                     <tr key={index}>
                                         <td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
+                                        <td>
+                                            <button className="ubah-jadwal" onClick={UbahJadwal}>Ubah</button>
+                                            <div className="hapus-jadwal" onClick={() => hapusJadwal(index)}>
+                                                Hapus
+                                            </div>
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -48,7 +64,13 @@ const KelolaJadwal = () => {
                     </div>
                 </div>
             </div>
-            {showPopup && <TambahJadwal onClose={handleClosePopup} />} {/* Conditionally render the popup */}
+            {tampilkanPopup.show && (
+                tampilkanPopup.type === 'tambah' ? (
+                    <TambahJadwal onClose={handleTutupPopup} title="Tambah Jadwal" />
+                ) : (
+                    <EditJadwal onClose={handleTutupPopup} title="Edit Jadwal" />
+                )
+            )}
         </div>
     );
 };

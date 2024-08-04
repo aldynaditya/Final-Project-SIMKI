@@ -1,20 +1,21 @@
-.detail-faktur-container {
+.modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #D9D9D9;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1000; /* Ensure it appears above other content */
 }
 
-.detail-faktur-content {
+.detail-faktur-popup-container {
     background: #f0f0f0;
     padding: 20px;
     border-radius: 10px;
-    width: 600px; /* Increased width */
+    width: 600px;
     position: relative;
 }
 
@@ -24,12 +25,14 @@
     right: 10px;
     text-decoration: none;
     color: #000;
+    cursor: pointer;
 }
 
 .text-detail-faktur {
     font-size: 24px;
     margin-bottom: 20px;
     margin-top: 30px;
+    text-align: center;
 }
 
 .kolom-detail-faktur {
@@ -41,24 +44,8 @@
     font-size: 16px;
 }
 
-.penjamin-faktur {
-    display: flex;
-}
-.text-penjamin-faktur{
-    margin-right: 100px;
-    font-size: 16px;
-}
-
-
 .text-metode-pembayaran {
     margin-right: 17px;
-    font-size: 16px;
-}
-.kolom-metode-pembayaran {
-    border-radius: 5px;
-    width: 300px;
-    height: 30px;
-    padding: 10px;
     font-size: 16px;
 }
 
@@ -72,29 +59,16 @@
     border: none;
     cursor: pointer;
 }
+
 .dropdown-pembayaran:hover {
     background-color: #5A9080;
 }
-
-.dropdown-penjamin {
-    margin-left: 20px;
-    border-radius: 5px;
-    padding: 10px;
-    font-size: 16px;
-    background-color: #7DAEA8;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-.dropdown-penjamin:hover {
-    background-color: #5A9080;
-}
-
 
 .text-diskon-faktur {
     margin-right: 135px;
     font-size: 16px;
 }
+
 .kolom-diskon-faktur {
     border-radius: 5px;
     width: 250px;
@@ -107,6 +81,7 @@
     margin-right: 100px;
     font-size: 16px;
 }
+
 .kolom-keterangan-faktur {
     border-radius: 5px;
     width: 250px;
@@ -115,13 +90,6 @@
     font-size: 16px;
 }
 
-.tambah-item-container {
-    display: flex;
-    justify-content: center; /* Center the button horizontally */
-    margin-top: 20px;
-}
-
-
 .simpan-faktur-container {
     display: flex;
     justify-content: center;
@@ -129,7 +97,7 @@
     margin-top: 20px;
 }
 
-.simpan-faktur{
+.simpan-faktur {
     padding: 10px;
     background-color: #145149;
     color: white;
@@ -140,6 +108,8 @@
     font-weight: bold;
     letter-spacing: 3px;
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .simpan-faktur:hover {

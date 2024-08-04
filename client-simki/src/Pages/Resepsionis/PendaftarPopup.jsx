@@ -29,20 +29,27 @@ const TambahPendaftar = ({ onClose }) => {
                 </div>
                 <h1 className='text-tambah-pendaftar'>Pendaftar Baru</h1>
                 <div className='kolom-pendaftar-baru'>
-                    <div className='nama-tambahpendaftar'>
-                        <input type='text' className='kolom-ndokter-tambahpendaftar'></input>
+                    <div className='npasien-pendaftar-baru'>
+                        <input type='text' className='kolom-npasien-pendaftar-baru' placeholder='Nama Lengkap (Sesuai KTP)'/>
                     </div>
-                    <div className='poli-tambahpendaftar'>
-                        <span className='text-poli-tambahpendaftar'>Poli :</span>
-                        <input type='text' className='kolom-poli-tambahpendaftar'></input>
+                    <div className='ttl-pendaftar-baru'>
+                        <input type='text' className='kolom-tempat-pendaftar-baru' placeholder='Tempat'/>
+                        <input type='date' className='kolom-tanggal-pendaftar-baru' placeholder='Tanggal Lahir'/>
                     </div>
-                    <div className='hari-tambahpendaftar'>
-                        <span className='text-hari-tambahpendaftar'>Hari :</span>
-                        <input type='text' className='kolom-hari-tambahpendaftar'></input>
+                    <div className='gender-pendaftar-baru'>
+                        <input type='text' className='kolom-gender-pendaftar-baru' placeholder='Jenis Kelamin'/>
                     </div>
-                    <div className='jam-tambahpendaftar'>
-                        <span className='text-jam-tambahpendaftar'>Jam :</span>
-                        <input type='date' className='kolom-jam-tambahpendaftar'></input>
+                    <div className='blood-pendaftar-baru'>
+                        <input type='text' className='kolom-blood-pendaftar-baru' placeholder='Golongan Darah'/>
+                    </div>
+                    <div className='suku-pendaftar-baru'>
+                        <input type='text' className='kolom-suku-pendaftar-baru' placeholder='Suku Bangsa'/>
+                    </div>
+                    <div className='alamat-pendaftar-baru'>
+                        <input type='text' className='kolom-alamat-pendaftar-baru' placeholder='Alamat Lengkap'/>
+                    </div>
+                    <div className='nik-pendaftar-baru'>
+                        <input type='text' className='kolom-nik-pendaftar-baru' placeholder='NIK'/>
                     </div>
                 </div>
                 <div className='tambahpendaftar-container'>

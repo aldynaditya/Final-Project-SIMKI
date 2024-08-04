@@ -125,17 +125,19 @@ body {
 }
 
 .detail-faktur, .cetak-transaksi {
-    background-color: #1E7E72;
+    background-color: #145149;
     color: white;
-    width: 80px;
-    height: 35px;
+    width: 70px;
+    height: 30px;
     border: none;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
     text-align: center;
-    line-height: 35px;
+    line-height: 30px;
     display: inline-block;
+    margin-right: 10px;
+    font-weight: bold;
 }
 
 .detail-faktur:hover, .cetak-transaksi:hover {

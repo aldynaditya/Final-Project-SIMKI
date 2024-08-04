@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import '../../Style/Pimpinan/NotifikasiLead.css';
 import SearchBar from '../../components/SearchBar';  // Pastikan jalurnya benar
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 
 const NotifikasiPimpinan = () => {
     const [rows] = useState(Array.from({ length: 10 }));
     const navigate = useNavigate();
 
     const LihatLaporan = () => {
-        navigate('/notifikasi-pimpinan');
+        navigate('notifikasi-pimpinan');
     };
 
     return (
@@ -41,8 +41,8 @@ const NotifikasiPimpinan = () => {
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td className="notif-laporan-cell" >
-                                            <div className="ket_terima">Terima</div>
+                                        <td className="notif-laporan-cell">
+                                            <button className="ket_terima-pimpinan">Terima</button>
                                             <button className="laporan-pimpinan" onClick={LihatLaporan}>Lihat</button>
                                         </td>
                                     </tr>

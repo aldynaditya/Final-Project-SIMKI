@@ -1,39 +1,33 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../Style/Keuangan/Keuangan.css';
-import Header from '../../components/Header';
 import list from "../../images/list.png";
 import item from "../../images/item.png";
 
 const SpvKeuangan = () => {
     const navigate = useNavigate();
 
-    const OrderMasuk = () => {
-        navigate('/order-masuk');
+    const TransaksiKeuangan = () => {
+        navigate('transaksi-keuangan');
     };
 
-    const KelolaObat = () => {
-        navigate('/kelola-obat');
+    const NotifikasiKeuangan = () => {
+        navigate('notifikasi-keuangan');
     };
 
-    const Menuspv = [
-        { name: "Transaksi", path: "/transaksi-keuangan" },
-        { name: "Laporan", path: "/notifikasi-keuangan" }
-    ];
 
     return (
         <div className='keuangan-container'>
             <div className='main-content-keuangan'>
-            <Header accountName="Nama Akun keuangan" menuItems={Menuspv} />
             <h1 className='text_keuangan'>Dashboard</h1>
                 <div className="klik_keuangan">
-                    <div className="order-masuk" onClick={OrderMasuk}>
+                    <div className="order-masuk" onClick={TransaksiKeuangan}>
                         <img src={list} alt='order-masuk' className='icon' />
                         <p>TRANSAKSI</p>
                     </div>
-                    <div className="kelola_obat" onClick={KelolaObat}>
+                    <div className="kelola_obat" onClick={NotifikasiKeuangan}>
                         <img src={item} alt='kelola_obat' className='icon' />
-                        <p>LAPORAN</p>
+                        <p>NOTIFIKASI</p>
                     </div>
                 </div>
             </div>

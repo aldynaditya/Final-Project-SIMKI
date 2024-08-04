@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../../Style/Perawat/TambahitemPopup.css';
 
-const TambahObat = ({ onClose }) => {
+const EditObat = ({ onClose }) => {
     const [activeLink, setActiveLink] = useState('');
 
     const handleLinkCancel = () => {
@@ -23,7 +23,7 @@ const TambahObat = ({ onClose }) => {
                 >
                     Cancel X
                 </button>
-                <h1 className='text-tambahitem-popup'>Tambah Obat</h1>
+                <h1 className='text-tambahitem-popup'>Edit Obat</h1>
                 <div className='kolom-tambah-item'>
                     <div className='nama-item'>
                         <span className='text-nama-item'>Nama Obat :</span>
@@ -54,4 +54,4 @@ const TambahObat = ({ onClose }) => {
     );
 };
 
-export default TambahObat;
+export default EditObat;
