@@ -52,61 +52,70 @@ html, body {
     margin-bottom: 50px;
 }
 
-.tabel_transaksi {
-    margin: 20px;
+.tabel_transaksi_pasien {
+    padding: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
     flex: 1;
+    max-height: 300px; /* Set fixed height for the table container */
+    overflow: auto;
 }
 
-.tabel_transaksi table {
+.tabel_transaksi_pasien table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
     font-size: 18px;
-    text-align: center;  /* Pusatkan teks secara horizontal */
+    text-align: center;
+    max-height: 300px; /* Set fixed height for the table container */
+    overflow: auto;  /* Pusatkan teks secara horizontal */
 }
 
-.tabel_transaksi th, .tabel_transaksi td {
+.tabel_transaksi_pasien th, .tabel_transaksi_pasien td {
     padding: 8px;
     border-bottom: 1px solid black;
     text-align: center;  /* Pusatkan teks secara horizontal */
     vertical-align: middle;  /* Pusatkan teks secara vertikal */
 }
 
-.tabel_transaksi th {
+.tabel_transaksi_pasien th {
     background-color: #f2f2f2;
     cursor: pointer;
 }
 
-.tabel_transaksi tr {
+.tabel_transaksi_pasien tr {
     border-bottom: 1px solid #ddd;
     transition: background-color 0.2s ease;
 }
 
-.tabel_transaksi tr:hover {
+.tabel_transaksi_pasien tr:hover {
     background-color: #f1f1f1;
-}
-
-.tombol_pending {
-    background-color: #145149;
-    color: white;
-    width: 80px;
-    height: 30px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-    line-height: 30px;
-    display: inline-block;
-    font-family: 'Open Sans', sans-serif; /* Mengatur font ke Open Sans */
 }
 
 .klik_pasien {
     display: flex;
-    justify-content: center; /* Memusatkan elemen di tengah */
+    justify-content: space-around; /* Distribute space evenly between buttons */
     padding: 20px;
-    gap: 100px; /* Mengurangi jarak antar elemen */
+    gap: 20px; /* Adjust gap as needed */
     margin-bottom: 50px;
-    margin-top: 80px;
+    margin-top: 20px; /* Adjust margin-top as needed */
+    width: calc(100% - 100px); /* Ensure the width matches the table container */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.profile, .buat_janji, .riwayat_kunjungan {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: calc((100% - 40px) / 3); /* Adjust to fit 3 buttons */
+    height: 150px;
+    background-color: #C6E6E1;
+    border: 1px solid #C6E6E1;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
 }
 
 .profile, .buat_janji, .riwayat_kunjungan {
@@ -172,11 +181,11 @@ html, body {
         font-size: 14px;
     }
 
-    .tabel_transaksi table {
+    .tabel_transaksi_pasien table {
         font-size: 14px;
     }
 
-    .tabel_transaksi th, .tabel_transaksi td {
+    .tabel_transaksi_pasien th, .tabel_transaksi_pasien td {
         padding: 6px;
     }
 

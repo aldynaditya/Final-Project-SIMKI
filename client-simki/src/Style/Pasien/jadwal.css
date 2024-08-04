@@ -1,18 +1,23 @@
 .jadwal_container {
-  margin-top: 200px;
   margin-left: 20px;
   margin-right: 20px;
+  display: flex;
+  justify-content: center;
 }
 
-.klinik_dipo {
+.klinik_dipo_jadwal {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 40px;
 }
 
+.Header-Jadwal {
+  margin-bottom: 60px;
+}
+
 .jadwal_table {
-  width: 100%;
+  width: 80%;
   margin-bottom: 20px;
 }
 
@@ -23,19 +28,36 @@
 table {
   width: 100%;
   border-collapse: collapse;
+  margin: auto;
+  table-layout: fixed;
 }
 
 th, td {
   border: 1px solid #ddd;
   padding: 8px;
-  text-align: center;
 }
 
 th {
   background-color: #f2f2f2;
   font-weight: bold;
+  text-align: center;
+}
+
+td:first-child {
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden; /* Hide overflow text */
+  text-overflow: ellipsis;
+}
+
+td {
+  text-align: center; /* Center other cells */
 }
 
 .desc-jadwal {
   text-align: center;
+}
+
+@media (min-width: 600px) {
+  
 }
