@@ -5,7 +5,7 @@ import '../../Style/Pasien/layanan.css';
 const Layanan = () => {
   return (
     <div className='layanan_container'>
-      <h1 className="layanan_kami">Layanan Kami</h1>
+      <h1 className="header_layanan_kami">Layanan Kami</h1>
       <div className="klinik_dipo">
         <img src={klinikdipo} alt='Klinik Diponegoro' />
       </div>

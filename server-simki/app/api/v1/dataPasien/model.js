@@ -29,7 +29,6 @@ const DataPasien = db.define('dataPasien', {
     nama_lengkap: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
         validate: {
             notNull: { msg: 'Nama harus diisi' },
         },

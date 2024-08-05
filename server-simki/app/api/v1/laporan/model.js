@@ -19,6 +19,7 @@ const Laporan = db.define('laporan', {
     no_laporan: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
         validate: {
             notEmpty: true,
         }

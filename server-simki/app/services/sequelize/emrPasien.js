@@ -186,10 +186,6 @@ const finishOrder = async (req) => {
         })
     ]);
 
-    if (!ordersObat.length && !ordersProsedur.length) {
-        throw new NotFoundError('No orders found for the provided episodeId');
-    }
-
     const total = [...ordersObat, ...ordersProsedur].reduce((acc, order) => acc + parseFloat(order.total), 0);
 
     const transaksi = await Transaksi.create({
