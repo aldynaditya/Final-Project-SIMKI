@@ -143,26 +143,6 @@ footer {
   }
 }
 
-/* Navbar responsif */
-.navbar {
-  width: 100%;
-  background: #145149;
-  color: #fff;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  z-index: 1000;
-}
-
-.navbar a {
-  color: #fff;
-  text-decoration: none;
-  padding: 10px 15px;
-}
-
 @media (max-width: 767px) {
   .navbar {
     flex-direction: column;

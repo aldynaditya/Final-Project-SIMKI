@@ -13,7 +13,17 @@
 }
 
 .Header-Jadwal {
-  margin-bottom: 60px;
+  margin-bottom: 65px;
+  margin-top: 130px;
+}
+
+.header-gigi {
+  margin-bottom: 10px;
+  margin-top: 65px;
+}
+
+.header-umum {
+  margin-bottom: 10px;
 }
 
 .jadwal_table {
