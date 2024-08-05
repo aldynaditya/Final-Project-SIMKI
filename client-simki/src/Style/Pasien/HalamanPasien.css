@@ -19,27 +19,28 @@ html, body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px; /* Sesuaikan padding sesuai kebutuhan */
+    padding: 20px;
+    margin-top: 50px;
 }
 
 .nama_pasien {
-    margin-left: 50px; /* Sesuaikan margin sesuai kebutuhan */
+    margin-left: 60px;
+    margin-bottom: 20px; /* Sesuaikan margin sesuai kebutuhan */
 }
 
 .keluar {
     background-color: #145149;
     color: white;
-    width: 100px;
-    height: 30px;
+    width: 130px;
+    height: 40px;
     border: none;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 20px;
     cursor: pointer;
     text-align: center;
     line-height: 30px;
     display: inline-block;
-    margin-left: 100px;
-    margin-right: 100px;
+    margin-right: 70px;
 }
 
 .keluar:hover {
@@ -48,14 +49,14 @@ html, body {
 
 .transaksi {
     text-align: left;
-    margin-left: 100px;
-    margin-bottom: 50px;
+    margin-left: 90px;
+    font-size: 18px;
 }
 
 .tabel_transaksi_pasien {
     padding: 20px;
-    margin-left: 50px;
-    margin-right: 50px;
+    margin-left: 70px;
+    margin-right: 70px;
     flex: 1;
     max-height: 300px; /* Set fixed height for the table container */
     overflow: auto;
@@ -64,7 +65,6 @@ html, body {
 .tabel_transaksi_pasien table {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
     font-size: 18px;
     text-align: center;
     max-height: 300px; /* Set fixed height for the table container */
@@ -226,8 +226,8 @@ html, body {
     }
 
     .profile, .buat_janji, .riwayat_kunjungan {
-        width: 220px;
-        height: 170px;
+        width: 350px;
+        height: 350px;
     }
 
     .user, .buatjanji, .riwayat {

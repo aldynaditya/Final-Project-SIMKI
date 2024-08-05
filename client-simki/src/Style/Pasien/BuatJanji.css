@@ -18,18 +18,19 @@ body, html {
 
 /* Judul halaman */
 .text_buatjanji {
-    margin: 150px 0 50px 0;
+    margin: 70px 0 50px 0;
     text-align: center; /* Pusatkan judul untuk tampilan yang lebih baik di layar besar dan kecil */
 }
 
 /* Kontainer formulir */
-.form_container {
+.form_container_buatjanji {
     display: flex;
     flex-direction: column;
     gap: 20px;
     width: 100%;
     max-width: 800px;
     margin: auto;
+    margin-bottom: 150px;
 }
 
 /* Grup formulir */
@@ -41,10 +42,10 @@ body, html {
 }
 
 /* Input dan select dalam formulir */
-.form_container select, 
-.form_container input[type="date"], 
-.form_container input[type="text"],
-.form_container input[type="time"] { /* Tambahkan tipe input "time" */
+.form_container_buatjanji select, 
+.form_container_buatjanji input[type="date"], 
+.form_container_buatjanji input[type="text"],
+.form_container_buatjanji input[type="time"] { /* Tambahkan tipe input "time" */
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
@@ -88,17 +89,18 @@ body, html {
 /* Tombol buat janji */
 .klik_buatjanji {
     background-color: #145149;
+    justify-content: center;
+    align-items: center;
     color: white;
-    width: 100px;
-    height: 30px;
+    width: 200px;
+    height: 55px;
     border: none;
-    border-radius: 5px;
+    border-radius: 50px;
     font-size: 16px;
     cursor: pointer;
     text-align: center;
     line-height: 30px;
     display: inline-block;
-    margin-bottom: 150px;
 }
 
 .klik_buatjanji:hover {
@@ -109,6 +111,11 @@ body, html {
     background-color: #7DAEA8; /* Warna latar belakang untuk tombol dinonaktifkan */
     cursor: not-allowed; /* Mengubah kursor untuk menunjukkan bahwa tombol tidak dapat diklik */
     opacity: 0.6; /* Memberikan efek transparansi untuk menunjukkan tombol dinonaktifkan */
+}
+
+.button_container {
+    display: flex;
+    justify-content: center; /* Adjust this value as needed */
 }
 
 /* Footer */
@@ -129,7 +136,7 @@ body, html {
         margin-top: 300px;
     }
 
-    .form_container {
+    .form_container_buatjanji {
         width: 90%;
         max-width: none; /* Menghilangkan batas maksimal lebar */
         padding: 10px; /* Menambahkan padding untuk tampilan yang lebih baik di layar kecil */
@@ -139,10 +146,10 @@ body, html {
         flex-direction: column;
     }
 
-    .form_container select, 
-    .form_container input[type="date"], 
-    .form_container input[type="text"],
-    .form_container input[type="time"] {
+    .form_container_buatjanji select, 
+    .form_container_buatjanji input[type="date"], 
+    .form_container_buatjanji input[type="text"],
+    .form_container_buatjanji input[type="time"] {
         font-size: 14px; /* Ukuran font yang lebih kecil jika perlu */
     }
 
@@ -167,7 +174,7 @@ body, html {
         margin-top: 300px;
     }
 
-    .form_container {
+    .form_container_buatjanji {
         width: 90%;
         max-width: 800px;
     }
@@ -185,28 +192,7 @@ body, html {
 }
 
 /* Untuk perangkat dengan layar lebih besar (misalnya, PC) */
-@media (min-width: 1024px) {
-    .text_buatjanji {
-        margin: 150px 0 50px 0;
-        font-size: 32px; /* Ukuran font yang lebih besar untuk layar besar */
-    }
 
-    .form_container {
-        width: 80%;
-        max-width: 800px;
-    }
-
-    .keluhan input {
-        height: 200px; /* Tinggi kolom input yang lebih besar untuk layar besar */
-        font-size: 20px; /* Ukuran font yang lebih besar untuk layar besar */
-    }
-
-    .klik_buatjanji {
-        width: 150px; /* Lebar tombol lebih besar untuk layar besar */
-        height: 40px; /* Tinggi tombol lebih besar untuk layar besar */
-        font-size: 20px; /* Ukuran font yang lebih besar untuk tombol */
-    }
-}
 
 .error_message {
     color: red;

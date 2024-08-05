@@ -16,11 +16,12 @@
 }
 
 /* Gaya untuk elemen h1 */
-.tentang_kami {
-  margin: 20px 0;
-  margin-top: 100px;
-  font-family: 'Open Sans', sans-serif;
+.header_tentang_kami {
   text-align: center;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 2rem;
 }
 
 /* Gaya untuk elemen gambar klinik */

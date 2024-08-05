@@ -136,7 +136,7 @@ const BuatJanji = () => {
     return (
         <div className='BuatJanji_container'>
             <h1 className='text_buatjanji'>Buat Janji</h1>
-            <div className='form_container'>
+            <div className='form_container_buatjanji'>
                 <div className='form_group'>
                     <label htmlFor="poli">Poli :</label>
                     <select id="poli" name="poli" value={formData.poli} onChange={handleChange}>
@@ -191,7 +191,9 @@ const BuatJanji = () => {
                     {formErrors.keluhan && <p className="error_message">{formErrors.keluhan}</p>}
                 </div>
 
-                <button className='klik_buatjanji' onClick={handleSubmit} disabled={!isFormValid()}>Buat Janji</button>
+                <div className='button_container'>
+                    <button className='klik_buatjanji' onClick={handleSubmit} disabled={!isFormValid()}>Buat Janji</button>
+                </div>
             </div>
 
             <Modal
