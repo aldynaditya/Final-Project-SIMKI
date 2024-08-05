@@ -44,7 +44,7 @@ const Jadwal = () => {
       <div className="klinik_dipo_jadwal">
         <h1 className= "Header-Jadwal" >JADWAL PRAKTEK DOKTER</h1>
         <div className="jadwal_table">
-          <h2>Poli Umum</h2>
+          <h2 className="header-umum">Poli Umum</h2>
           <br />
           <table>
             <thead>
@@ -60,7 +60,7 @@ const Jadwal = () => {
           </table>
         </div>
         <div className="jadwal_table">
-          <h2>Poli Gigi</h2>
+          <h2 className="header-gigi ">Poli Gigi</h2>
           <br />
           <table>
             <thead>
