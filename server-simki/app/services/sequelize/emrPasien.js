@@ -186,14 +186,6 @@ const finishOrder = async (req) => {
         })
     ]);
 
-    const total = [...ordersObat, ...ordersProsedur].reduce((acc, order) => acc + parseFloat(order.total), 0);
-
-    const transaksi = await Transaksi.create({
-        episodeId: id,
-        total,
-        userKlinikId: req.user.id
-    });
-
     const episode = await Episode.findOne({
         where: { uuid: id },
     });
@@ -202,7 +194,19 @@ const finishOrder = async (req) => {
         throw new NotFoundError('Episode tidak ditemukan');
     }
 
+    const tindakanArray = episode.tindakan;
+    const isNoAction = tindakanArray.includes('none');
+    const isSurat = tindakanArray.includes('surat');
+    const total = (isNoAction || isSurat) ? 35000 : [...ordersObat, ...ordersProsedur].reduce((acc, order) => acc + parseFloat(order.total), 0);
+    const keterangan = isNoAction ? 'konsultasi' : isSurat ? 'surat' : tindakanArray.join(', ');
     const emrpasienId = episode.emrPasienId;
+
+    const transaksi = await Transaksi.create({
+        episodeId: id,
+        total,
+        keterangan,
+        userKlinikId: req.user.id,
+    });
 
     await EMRPasien.update({ 
         status: 'finished',
