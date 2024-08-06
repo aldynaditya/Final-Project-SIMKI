@@ -37,7 +37,7 @@ const Laporan = require('./app/api/v1/laporan/model');
 // });
 
 // (async()=>{
-//     await Schedule.sync({force:true}); 
+//     await DataPasien.sync({force:true}); 
 // })();
 
 

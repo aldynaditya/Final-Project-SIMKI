@@ -24,6 +24,20 @@ const Daftar = () => {
     confirmPassword: ''
   });
 
+  const [userErrors, setUserErrors] = useState({
+    nama_lengkap: 'nama harus diisi',
+    tempat_lahir: 'tempat lahir harus diisi',
+    tanggal_lahir: 'tanggal lahir harus diisi',
+    jenis_kelamin: 'jenis kelamin harus diisi',
+    gol_darah: 'golongan darah harus diisi',
+    suku_bangsa: 'suku bangsa harus diisi',
+    alamat: 'alamat harus diisi',
+    nik: 'nik harus diisi',
+    email: 'email harus diisi',
+    password: 'password harus diisi',
+    confirmPassword: 'password harus diisi'
+  });
+
   const [alert, setAlert] = useState({
     status: false,
     message: '',
@@ -34,6 +48,10 @@ const Daftar = () => {
     setUserData({
       ...userData,
       [e.target.name]: e.target.value
+    });
+    setUserErrors({
+      ...userErrors,
+      [e.target.name]: e.target.value ? '' : `${e.target.name.charAt(0).toUpperCase() + e.target.name.slice(1)} harus diisi.`
     });
   };
 
@@ -68,11 +86,16 @@ const Daftar = () => {
     setAlert({ status: false, message: '', type: '' });
   };
 
+  const isFormValid = () => {
+    return Object.values(userData).every(value => value.trim() !== '');
+  };
+
   return (
     <div className="regist_container">
       <h1>Registrasi Akun</h1>
       <div className="form-container">
         <div className="form-fields">
+        {userErrors.nama_lengkap && <p className="error_message">{userErrors.nama_lengkap}</p>}
           <div className='nama'>
             <input 
               type="text" 
@@ -82,22 +105,29 @@ const Daftar = () => {
               onChange={handleChange} 
             />
           </div>
-          <div className='ttl'>
-            <input 
-              type="text" 
-              name="tempat_lahir" 
-              placeholder="Tempat Lahir" 
-              value={userData.tempat_lahir} 
-              onChange={handleChange} 
-            />
-            <input 
-              type="date" 
-              name="tanggal_lahir" 
-              placeholder="Tanggal Lahir" 
-              value={userData.tanggal_lahir} 
-              onChange={handleChange} 
-            />
+          <div className='tempat-tanggal-lahir'>
+            <div className='field-container'>
+              {userErrors.tempat_lahir && <p className="error_message">{userErrors.tempat_lahir}</p>}
+              <input 
+                type="text" 
+                name="tempat_lahir" 
+                placeholder="Tempat Lahir" 
+                value={userData.tempat_lahir} 
+                onChange={handleChange} 
+              />
+            </div>
+            <div className='field-container'>
+              {userErrors.tanggal_lahir && <p className="error_message">{userErrors.tanggal_lahir}</p>}
+              <input 
+                type="date" 
+                name="tanggal_lahir" 
+                placeholder="Tanggal Lahir" 
+                value={userData.tanggal_lahir} 
+                onChange={handleChange} 
+              />
+            </div>
           </div>
+          {userErrors.jenis_kelamin && <p className="error_message">{userErrors.jenis_kelamin}</p>}
           <div className='gender'>
             <select 
               name="jenis_kelamin" 
@@ -109,6 +139,7 @@ const Daftar = () => {
               <option value="perempuan">Perempuan</option>
             </select>
           </div>
+          {userErrors.gol_darah && <p className="error_message">{userErrors.gol_darah}</p>}
           <div className='blood'>
             <select 
               name="gol_darah" 
@@ -122,6 +153,7 @@ const Daftar = () => {
               <option value="AB">AB</option>
             </select>
           </div>
+          {userErrors.suku_bangsa && <p className="error_message">{userErrors.suku_bangsa}</p>}
           <div className='suku'>
             <select 
               name="suku_bangsa" 
@@ -133,6 +165,7 @@ const Daftar = () => {
               <option value="WNA">WNA</option>
             </select>
           </div>
+          {userErrors.alamat && <p className="error_message">{userErrors.alamat}</p>}
           <div className='alamat'>
             <input 
               type="text" 
@@ -142,6 +175,7 @@ const Daftar = () => {
               onChange={handleChange} 
             />
           </div>
+          {userErrors.nik && <p className="error_message">{userErrors.nik}</p>}
           <div className='nik'>
             <input 
               type="text" 
@@ -153,6 +187,7 @@ const Daftar = () => {
               onChange={handleChange} 
             />
           </div>
+          {userErrors.email && <p className="error_message">{userErrors.email}</p>}
           <div className='email'>
             <input 
               type="email" 
@@ -162,6 +197,7 @@ const Daftar = () => {
               onChange={handleChange} 
             />
           </div>
+          {userErrors.password && <p className="error_message">{userErrors.password}</p>}
           <div className='password'>
             <input 
               type="password" 
@@ -171,6 +207,7 @@ const Daftar = () => {
               onChange={handleChange} 
             />
           </div>
+          {userErrors.confirmPassword && <p className="error_message">{userErrors.confirmPassword}</p>}
           <div className='password'>
             <input 
               type="password" 
@@ -181,7 +218,11 @@ const Daftar = () => {
             />
           </div>
           <div className="daftar-container">
-            <div className='daftar' onClick={handleDaftar}>
+            <div 
+              className='daftar' 
+              onClick={handleDaftar} 
+              style={{ pointerEvents: isFormValid() ? 'auto' : 'none' }}
+            >
               {loading ? 'Loading...' : 'Daftar'}
             </div>
           </div>
