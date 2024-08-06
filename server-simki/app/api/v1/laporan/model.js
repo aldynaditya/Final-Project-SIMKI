@@ -54,7 +54,7 @@ const Laporan = db.define('laporan', {
 });
 
 Laporan.belongsTo(UserKlinik, {
-    foreignKey: 'userId',
+    foreignKey: 'userKlinikId',
     targetKey: 'uuid',
     as: 'user'
 });

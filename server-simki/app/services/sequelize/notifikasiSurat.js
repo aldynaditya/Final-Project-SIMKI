@@ -86,7 +86,7 @@ const updateSuratSakit = async (req) => {
 
         console.log('Versi Surat baru:', versi_surat)
         await OrderSurat.update(
-            { versi_surat, status: 'in process' }, 
+            { versi_surat, status: 'updated' }, 
             { where: { suratsakitId: suratSakit.uuid } });
     }
     
