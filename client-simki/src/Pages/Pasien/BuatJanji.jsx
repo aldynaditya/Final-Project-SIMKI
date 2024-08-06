@@ -25,8 +25,6 @@ const BuatJanji = () => {
         keluhan: ''
     });
 
-    console.log(formData)
-
     const [formErrors, setFormErrors] = useState({
         poli: 'Poli harus diisi.',
         dokter: 'Dokter harus diisi.',

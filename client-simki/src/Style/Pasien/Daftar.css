@@ -1,20 +1,46 @@
-/* Gaya Umum */
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
+.field-container {
+  flex: 1;
+  min-width: 0; /* Allow it to shrink below its content width */
   display: flex;
   flex-direction: column;
-  font-family: 'Open Sans', sans-serif; /* Terapkan font ke seluruh halaman */
+}
+
+.field-container input,
+.field-container select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background-color: #fff;
+    color: #333;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.error_message {
+  color: red;
+  font-size: 1px;
+  margin-bottom: 5px;
+}
+
+.tempat-tanggal-lahir {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tempat-tanggal-lahir .tpt {
+  flex: 1;
 }
 
 .regist_container {
   display: flex;
   flex-direction: column;
-  flex: 1; /* Memungkinkan konten utama mengisi sisa ruang */
+  flex: 1; 
 }
 
-/* Gaya untuk elemen di halaman registrasi */
 h1 {
   text-align: center;
   margin-top: 150px;
@@ -24,7 +50,7 @@ h1 {
 .form-container {
   display: flex;
   justify-content: center;
-  flex: 1; /* Membuat form-container mengisi ruang yang tersisa */
+  flex: 1; 
 }
 
 .form-fields {
@@ -32,25 +58,19 @@ h1 {
   max-width: 600px;
   margin: 20px auto;
   font-size: 16px;
+  margin-bottom: 25px;
 }
 
-.form-fields input {
+.form-fields input,
+.form-fields select {
   width: 100%;
   padding: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
-}
-
-.form-fields .ttl {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.form-fields .ttl input {
-  flex: 1;
+  font-family: inherit; 
+  font-size: inherit;
 }
 
 .form-fields .daftar-container {
@@ -72,7 +92,7 @@ h1 {
   cursor: pointer;
   border: none;
   text-decoration: none;
-  text-align: center; /* Pastikan teks berada di tengah */
+  text-align: center; 
   margin-bottom: 150px;
 }
 
@@ -80,124 +100,25 @@ h1 {
   background-color: #5F8882;
 }
 
-/* Gaya untuk footer */
-.footer {
-  width: 100%;
-  background-color: #145149;
-  color: white;
-  text-align: center;
-  padding: 10px 0;
-  margin-top: auto; /* Memastikan footer berada di bagian bawah */
-}
-
-/* Penyesuaian Responsif */
-
-/* Untuk perangkat dengan layar kecil (misalnya, ponsel) */
-@media (max-width: 600px) {
-  .form-fields {
-    width: 90%; /* Gunakan lebih banyak lebar pada layar kecil */
-    font-size: 14px; /* Sesuaikan ukuran font untuk keterbacaan */
-  }
-
-  .form-fields input {
-    padding: 8px; /* Padding sedikit lebih kecil untuk mobile */
-    font-size: 14px; /* Sesuaikan ukuran font untuk input mobile */
-  }
-
-  .form-fields .ttl {
-    flex-direction: column; /* Susun input tempat lahir dan tanggal lahir secara vertikal */
-  }
-
-  .form-fields .ttl input {
-    width: 100%; /* Lebar penuh untuk input yang ditumpuk */
-    margin-bottom: 10px; /* Tambahkan jarak antara input yang ditumpuk */
-  }
-
-  .form-fields .daftar {
-    width: 100%; /* Tombol lebar penuh pada mobile */
-    font-size: 16px; /* Ukuran font lebih kecil pada mobile */
-  }
-
-  h1 {
-    margin-top: 250px; /* Sesuaikan margin atas untuk layar kecil */
-    font-size: 30px; /* Ukuran font lebih kecil untuk heading */
-  }
-}
-
-@media (min-width: 600px) {
-  .form-fields {
-    width: 90%; /* Gunakan lebih banyak lebar pada layar kecil */
-    font-size: 14px; /* Sesuaikan ukuran font untuk keterbacaan */
-  }
-
-  .form-fields input {
-    padding: 8px; /* Padding sedikit lebih kecil untuk mobile */
-    font-size: 14px; /* Sesuaikan ukuran font untuk input mobile */
-  }
-
-  .form-fields .ttl {
-    flex-direction: column; /* Susun input tempat lahir dan tanggal lahir secara vertikal */
-  }
-
-  .form-fields .ttl input {
-    width: 100%; /* Lebar penuh untuk input yang ditumpuk */
-    margin-bottom: 10px; /* Tambahkan jarak antara input yang ditumpuk */
-  }
-
-  .form-fields .daftar {
-    width: 100%; /* Tombol lebar penuh pada mobile */
-    font-size: 16px; /* Ukuran font lebih kecil pada mobile */
-  }
-
-  h1 {
-    margin-top: 250px; /* Sesuaikan margin atas untuk layar kecil */
-    font-size: 30px; /* Ukuran font lebih kecil untuk heading */
-  }
-}
-
-/* Untuk perangkat dengan layar lebih besar (misalnya, tablet dan PC) */
-@media (min-width: 1024px) {
-  .form-fields {
-    width: 70%; /* Sesuaikan lebar untuk layar yang lebih besar */
-    font-size: 16px; /* Pertahankan ukuran font untuk keterbacaan */
-  }
-
-  .form-fields .ttl {
-    flex-direction: row; /* Susun input secara berdampingan */
-  }
-
-  .form-fields .ttl input {
-    margin-bottom: 0; /* Hapus margin bawah untuk input yang berdampingan */
-  }
-
-  .form-fields .daftar {
-    width: 260px; /* Ukuran tombol tetap konsisten */
-    font-size: 19px; /* Ukuran font tetap konsisten */
-  }
-
-  h1 {
-    margin-top: 150px; /* Sesuaikan margin atas untuk layar besar */
-    font-size: 2rem; /* Ukuran font lebih besar untuk heading */
-  }
-}
-
-.form-fields select,
-.form-fields input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-  font-family: inherit; /* Use the same font as the other inputs */
-  font-size: inherit; /* Use the same font size as the other inputs */
+.daftar-container:disabled {
+  background-color: #7DAEA8; 
+  cursor: not-allowed; 
+  opacity: 0.6;
 }
 
 .form-fields select {
-  -webkit-appearance: none; /* Remove default styling on Chrome */
-  -moz-appearance: none; /* Remove default styling on Firefox */
-  appearance: none; /* Remove default styling on other browsers */
-  background-color: white; /* Set background color */
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-family: inherit; 
+  font-size: inherit; 
+  -webkit-appearance: none; 
+  -moz-appearance: none;
+  appearance: none; 
+  background-color: white; 
   background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%204%205%27%3E%3Cpath%20fill%3D%27%23ccc%27%20d%3D%27M2%200L0%202h4L2%200z%20M2%205l2-2H0l2%202z%27/%3E%3C/svg%3E'); /* Add custom dropdown icon */
   background-repeat: no-repeat;
   background-position: right 10px center;
@@ -207,16 +128,5 @@ h1 {
 .form-fields .gender,
 .form-fields .blood,
 .form-fields .suku {
-  margin-bottom: 10px; /* Maintain spacing consistency */
-}
-
-.form-fields .ttl {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.form-fields .ttl input,
-.form-fields .ttl select {
-  flex: 1;
+  margin-bottom: 0px; /* Maintain spacing consistency */
 }

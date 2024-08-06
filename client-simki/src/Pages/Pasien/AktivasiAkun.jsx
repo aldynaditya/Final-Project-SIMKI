@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import emailIcon from '../../images/email.png';
@@ -10,6 +10,8 @@ import { activateAccount } from '../../redux/patient/activated/actions';
 const AktivasiAkun = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { loading, error } = useSelector(state => state.activated);
+  const [navigateAfterClose, setNavigateAfterClose] = useState(false);
 
   const [form, setForm] = useState({
     email: '',
@@ -21,7 +23,7 @@ const AktivasiAkun = () => {
     message: '',
     type: ''
   });
-
+  
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -32,18 +34,25 @@ const AktivasiAkun = () => {
   const handleSubmit = async () => {
     try {
       await dispatch(activateAccount(form));
+      if (error) {
+        setAlert({
+          status: true,
+          message: error,
+          type: 'danger'
+        });
+      } else {
+        setAlert({
+          status: true,
+          message: 'Account activated successfully!',
+          type: 'success'
+        });
+        setNavigateAfterClose(true);
+      }
+    } catch (error) {
+      // Handle the error if necessary
       setAlert({
         status: true,
-        message: 'Account activated successfully!',
-        type: 'success'
-      });
-      setTimeout(() => {
-        navigate('/login');
-      }, 1500);
-    } catch (err) {
-      setAlert({
-        status: true,
-        message: 'Failed to activate account',
+        message: 'An error occurred. Please try again.',
         type: 'danger'
       });
     }
@@ -51,6 +60,9 @@ const AktivasiAkun = () => {
 
   const closeModal = () => {
     setAlert({ status: false, message: '', type: '' });
+        if (navigateAfterClose) {
+            navigate('/login');
+      }
   };
 
   return (
@@ -77,7 +89,9 @@ const AktivasiAkun = () => {
             onChange={handleChange}
           />
         </div>
-        <div className='submit' onClick={handleSubmit}>Kirim</div>
+        <div className='submit' onClick={handleSubmit} disabled={loading}>
+          {loading ? 'Processing...' : 'Kirim'}
+        </div>
       </div>
       <Modal
         isOpen={alert.status}

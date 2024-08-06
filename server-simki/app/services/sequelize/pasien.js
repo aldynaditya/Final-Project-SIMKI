@@ -52,22 +52,31 @@ const signupPasien = async (req) => {
         result.otp = Math.floor(Math.random() * 9999);
         await result.save();
     } else {
-        result = await Pasien.create({
-            email,
-            password,
-            otp: Math.floor(Math.random() * 9999),
-        });
-        await DataPasien.create({
-            nik,
-            nama_lengkap,
-            tempat_lahir,
-            tanggal_lahir,
-            jenis_kelamin,
-            gol_darah,
-            suku_bangsa,
-            alamat,
-            userId: result.uuid,
-        });
+        // Wrap the creation in a try-catch to handle validation errors
+        try {
+            result = await Pasien.create({
+                email,
+                password,
+                otp: Math.floor(Math.random() * 9999),
+            });
+
+            await DataPasien.create({
+                nik,
+                nama_lengkap,
+                tempat_lahir,
+                tanggal_lahir,
+                jenis_kelamin,
+                gol_darah,
+                suku_bangsa,
+                alamat,
+                userId: result.uuid,
+            });
+        } catch (err) {
+            if (result) {
+                await result.destroy();
+            }
+            throw err; // Re-throw the error to be caught by the outer try-catch
+        }
     }
 
     const data = { otp: result.otp };
