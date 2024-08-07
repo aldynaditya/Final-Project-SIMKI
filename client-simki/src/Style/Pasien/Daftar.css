@@ -1,6 +1,6 @@
 .field-container {
   flex: 1;
-  min-width: 0; /* Allow it to shrink below its content width */
+  min-width: 0;
   display: flex;
   flex-direction: column;
 }
@@ -41,7 +41,7 @@
   flex: 1; 
 }
 
-h1 {
+.title-resgitrasi {
   text-align: center;
   margin-top: 100px;
   margin-bottom: 40px;
