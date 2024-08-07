@@ -1,5 +1,10 @@
 import { postData } from '../../../utils/fetch';
-import { DAFTAR_REQUEST, DAFTAR_SUCCESS, DAFTAR_FAILURE } from './constants';
+import { 
+    DAFTAR_REQUEST, 
+    DAFTAR_SUCCESS, 
+    DAFTAR_FAILURE,
+    CLEAR_ERROR 
+} from './constants';
 
 export const daftarUser = (userData) => async (dispatch) => {
     dispatch({ type: DAFTAR_REQUEST });
@@ -11,3 +16,7 @@ export const daftarUser = (userData) => async (dispatch) => {
         dispatch({ type: DAFTAR_FAILURE, payload: error.message });
     }
 };
+
+export const clearError = () => ({
+    type: CLEAR_ERROR
+});
