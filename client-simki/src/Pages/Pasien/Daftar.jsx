@@ -111,7 +111,7 @@ const Daftar = () => {
 
   return (
     <div className="regist_container">
-      <h1>Registrasi Akun</h1>
+      <h1 className='title-resgitrasi'>Registrasi Akun</h1>
       <div className="form-container">
         <div className="form-fields">
           {formError && <p className="error_message">{formError}</p>}

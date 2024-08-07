@@ -1,10 +1,9 @@
-/* src/components/HeroSection.css */
 .upper-section {
     position: relative;
     width: 100%;
-    max-width: 1200px;
+    max-height: 400px;
     overflow: hidden;
-    margin: 0 auto; /* Center the section horizontally */
+    margin: 0 auto;
 }
 
 .upper-image {
@@ -18,9 +17,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 2rem;
+    font-size: 3rem;
     color: white;
-    background-color: rgba(0, 0, 0, 0.5); /* Optional: for better contrast */
+    background-color: rgba(0, 0, 0, 0.5);
     padding: 10px;
     border-radius: 5px;
     text-align: center;

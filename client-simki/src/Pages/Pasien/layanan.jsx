@@ -1,18 +1,15 @@
 import React from "react";
 import '../../Style/Pasien/Home.css';
-import klinikdipo from "../../images/klinikdipo.png";
 import TitleSection from "../../components/TitleSection";
 
 const Layanan = () => {
   return (
     <div className='layanan_container'>
-      <TitleSection 
-        imageSrc={klinikdipo} 
-        title="Layanan Kami" 
-        titleColor="white" // Optional: adjust color as needed
-      />
-      <div className="desc-layanan">
-        <p>
+      <div className="desc-container">
+        <TitleSection 
+          title="Layanan Kami" 
+        />
+        <p className="desc-dipo">
           <strong>Klinik Diponegoro 1</strong> menyediakan berbagai fasilitas untuk memenuhi
           kebutuhan kesehatan masyarakat, termasuk poli umum dan poli gigi. Poli umum
           menawarkan pemeriksaan kesehatan rutin, diagnostik dengan alat canggih, pengobatan
