@@ -1,5 +1,9 @@
-// src/redux/daftar/reducer.js
-import { DAFTAR_REQUEST, DAFTAR_SUCCESS, DAFTAR_FAILURE } from './constants';
+import { 
+    DAFTAR_REQUEST, 
+    DAFTAR_SUCCESS, 
+    DAFTAR_FAILURE, 
+    CLEAR_ERROR 
+} from './constants';
 
 const initialState = {
     loading: false,
@@ -10,11 +14,13 @@ const initialState = {
 const daftarReducer = (state = initialState, action) => {
     switch (action.type) {
         case DAFTAR_REQUEST:
-            return { ...state, loading: true };
+            return { ...state, loading: true, error: null };
         case DAFTAR_SUCCESS:
-            return { ...state, loading: false, user: action.payload };
+            return { ...state, loading: false, user: action.payload, error: null };
         case DAFTAR_FAILURE:
             return { ...state, loading: false, error: action.payload };
+        case CLEAR_ERROR:
+            return { ...state, error: null };
         default:
             return state;
     }

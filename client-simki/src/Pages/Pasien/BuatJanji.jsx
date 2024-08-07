@@ -43,9 +43,9 @@ const BuatJanji = () => {
 
     useEffect(() => {
         if (formData.poli) {
-            // Filter schedules based on selected poli
+
             const filtered = schedules.filter(schedule => schedule.poli === formData.poli);
-            // Get unique dokter names
+
             const dokters = [...new Set(filtered.map(schedule => schedule.dokter))];
             setFilteredDokters(dokters);
 
