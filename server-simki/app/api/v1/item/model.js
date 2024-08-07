@@ -16,8 +16,7 @@ const Item = db.define('item', {
         type: DataTypes. STRING,
         allowNull: false,
         validate: {
-            notEmpty: true,
-            len : [3,100]
+            notEmpty: true
         }
     },
     kode_item:{

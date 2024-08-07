@@ -1,8 +1,11 @@
 const Obat = require('../../api/v1/obat/model');
 const UserKlinik = require('../../api/v1/userKlinik/model');
-const { BadRequestError, NotFoundError } = require('../../errors');
+const { 
+    BadRequestError, 
+    NotFoundError 
+} = require('../../errors');
 
-const getAllObat = async (req) => {
+const getAllObat = async () => {
     const obat = await Obat.findAll({
         include: [{
             model: UserKlinik,
@@ -13,6 +16,7 @@ const getAllObat = async (req) => {
 
     const result = obat.map(obat => {
         return {
+            id: obat.uuid,
             nama_obat: obat.nama_obat,
             kode_obat: obat.kode_obat,
             harga_obat: obat.harga_satuan_obat,

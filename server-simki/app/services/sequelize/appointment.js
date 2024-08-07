@@ -5,11 +5,15 @@ const EMRPasien = require('../../api/v1/emrPasien/model');
 const UserKlinik = require('../../api/v1/userKlinik/model');
 const { 
     getDayOfWeek,
-    generateNoEMR
+    generateNoEMR,
+    validateTimeFormat,
 } = require('../../utils');
-const { BadRequestError, NotFoundError } = require('../../errors');
+const { 
+    BadRequestError, 
+    NotFoundError 
+} = require('../../errors');
 
-const getAllAppointment = async (req) => {
+const getAllAppointment = async () => {
     const appointment = await Appointment.findAll({
         include: [
             {
@@ -35,6 +39,7 @@ const getAllAppointment = async (req) => {
         const schedule = appointment.schedule;
 
         return {
+            id: appointment.uuid,
             nama_lengkap: datapasien.nama_lengkap,
             nama_dokter: schedule.user_klinik.nama,
             poli: schedule.poli,
@@ -50,7 +55,7 @@ const getAllAppointment = async (req) => {
 };
 
 const createAppointment = async (req) => {
-    const { dokter, poli, tanggal, keluhan, nik, penjamin } = req.body;
+    const { tanggal, keluhan, penjamin, dokter, poli, start_time, end_time, nik } = req.body;
 
     let dataPasien = await DataPasien.findOne({
         where: { nik }
@@ -83,12 +88,21 @@ const createAppointment = async (req) => {
         throw new NotFoundError('Tidak ada Dokter yang tersedia pada tanggal itu');
     }
 
+    const formattedStartTime = validateTimeFormat(start_time);
+    const formattedEndTime = validateTimeFormat(end_time);
+
+    if (formattedStartTime < schedule.start_time || formattedEndTime > schedule.end_time) {
+        throw new Error('Waktu janji tidak sesuai dengan jadwal dokter');
+    }
+
     const result = await Appointment.create({
         tanggal,
         keluhan,
         penjamin,
         pasienId: dataPasien.uuid,
-        scheduleId: schedule.uuid
+        scheduleId: schedule.uuid,
+        start_time: formattedStartTime,
+        end_time: formattedEndTime
     });
 
     return result;
@@ -131,7 +145,7 @@ const updateAppointment = async (req) => {
                 pasienId: appointment.pasienId,
             });
         } else {
-            throw new Error('PasienId is not set in the appointment');
+            throw new BadRequestError('PasienId is not set in the appointment');
         }
 
         await Appointment.update(

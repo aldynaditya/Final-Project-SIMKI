@@ -17,6 +17,7 @@ const Pasien = db.define('pasien', {
         unique: true,
         allowNull: false,
         validate: {
+            notEmpty: true,
             notNull: { msg: 'Email harus diisi' },
             isEmail: { msg: 'Email tidak valid' },
         },
@@ -25,6 +26,7 @@ const Pasien = db.define('pasien', {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
+            notEmpty: true,
             notNull: { msg: 'Password harus diisi' },
             len: { args: [6], msg: 'Password minimal 6 karakter' },
         },

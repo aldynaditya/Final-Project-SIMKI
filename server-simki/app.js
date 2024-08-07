@@ -16,7 +16,6 @@ const Pasien = require('./app/api/v1/pasien/model');
 const emrpasien = require('./app/api/v1/emrPasien/model');
 const Episode = require('./app/api/v1/episode/model');
 const UserKlinik = require('./app/api/v1/userKlinik/model');
-const pasien = require('./app/api/v1/pasien/model');
 const Obat = require('./app/api/v1/obat/model');
 const Item = require('./app/api/v1/item/model');
 const SuratSakit = require('./app/api/v1/suratSakit/model');
@@ -37,7 +36,7 @@ const Laporan = require('./app/api/v1/laporan/model');
 // });
 
 // (async()=>{
-//     await Transaksi.sync({force:true}); 
+//     await OrderSurat.sync({force:true}); 
 // })();
 
 

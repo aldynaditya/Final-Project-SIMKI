@@ -2,22 +2,16 @@ const EMRPasien = require('../../api/v1/emrPasien/model');
 const Appointment = require('../../api/v1/appointment/model');
 const DataPasien = require('../../api/v1/dataPasien/model');
 const Episode = require('../../api/v1/episode/model');
-const Schedule = require('../../api/v1/schedule/model');
-const UserKlinik = require('../../api/v1/userKlinik/model');
 const OrderSurat = require('../../api/v1/orderSurat/model');
 const SuratSakit = require('../../api/v1/suratSakit/model');
 const { 
-    BadRequestError, 
     NotFoundError, 
-    UnauthorizedError 
 } = require('../../errors');
 const { getNextVersion } = require('../../utils');
 
-//ini mesti dibuat 2 satunya untuk diakses oleh doctor satunya untuk resepsionis
-//difilter berdasarkan nilai pada atribut status untuk doctor 'in process', dan untuk resepsionis 'updated'
-const getAllSuratSakit = async (req, res) => {
+const getAllSuratSakit = async () => {
     const notifikasi = await OrderSurat.findAll({
-        attributes: ['status','updatedAt'],
+        attributes: ['uuid','status','updatedAt'],
         include: [
             {
                 model: Episode,
@@ -50,6 +44,7 @@ const getAllSuratSakit = async (req, res) => {
             const suratsakit = notifikasi.suratsakit;
 
             return{
+                id: notifikasi.uuid,
                 noEMR: emr.noEMR,
                 namaPasien: datapasien.nama_lengkap,
                 tanggal: notifikasi.updatedAt,
@@ -94,7 +89,6 @@ const updateSuratSakit = async (req) => {
 
     const updatedSuratSakit = await SuratSakit.findByPk(id);
 
-    // Ambil OrderSurat yang terkait dengan SuratSakit yang telah diperbarui
     const orderSurat = await OrderSurat.findOne({ where: { suratsakitId: suratSakit.uuid } });
 
     return { suratsakit: updatedSuratSakit, ordersurat: orderSurat };

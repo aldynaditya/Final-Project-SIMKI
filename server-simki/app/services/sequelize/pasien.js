@@ -7,13 +7,9 @@ const EMRPasien = require('../../api/v1/emrPasien/model');
 const Episode = require('../../api/v1/episode/model');
 const OrderObat = require('../../api/v1/orderObat/model');
 const OrderProsedur = require('../../api/v1/orderProsedur/model');
-const OrderSurat = require('../../api/v1/orderSurat/model');
 const Obat = require('../../api/v1/obat/model');
 const Item = require('../../api/v1/item/model');
-const SuratSakit = require('../../api/v1/suratSakit/model');
-const SuratRujukan = require('../../api/v1/suratRujukan/model');
 const Response = require('../../api/v1/kuisioner/responses/model');
-const Question = require('../../api/v1/kuisioner/question/model');
 const {
     BadRequestError,
     NotFoundError,
@@ -24,12 +20,12 @@ const {
     createTokenPassword,
     isTokenValid, 
     createJWT,
-    getDayOfWeek
-} = require('../../utils');
-const { otpMail } = require('../mail');
-const { 
+    getDayOfWeek,
     validateTimeFormat,
-} = require('../../utils')
+} = require('../../utils');
+const { 
+    otpMail 
+} = require('../mail');
 
 const signupPasien = async (req) => {
     const { nik, nama_lengkap, tempat_lahir, tanggal_lahir, jenis_kelamin, gol_darah, suku_bangsa, alamat, email, password } = req.body;
@@ -52,7 +48,6 @@ const signupPasien = async (req) => {
         result.otp = Math.floor(Math.random() * 9999);
         await result.save();
     } else {
-        // Wrap the creation in a try-catch to handle validation errors
         try {
             result = await Pasien.create({
                 email,
@@ -75,7 +70,7 @@ const signupPasien = async (req) => {
             if (result) {
                 await result.destroy();
             }
-            throw err; // Re-throw the error to be caught by the outer try-catch
+            throw err;
         }
     }
 
@@ -109,25 +104,18 @@ const activatePasien = async (req) => {
 const signinPasien = async (req) => {
     const { email, password } = req.body;
 
-    if (!email || !password) {
-        throw new BadRequestError('Please provide email and password');
-    }
+    if (!email || !password) throw new BadRequestError('Please provide email and password');
+    
 
     const result = await Pasien.findOne({ where: { email } });
 
-    if (!result) {
-        throw new UnauthorizedError('Invalid Credentials');
-    }
+    if (!result) throw new UnauthorizedError('Invalid Credentials');
 
-    if (result.status === 'tidak aktif') {
-        throw new UnauthorizedError('Akun anda belum aktif');
-    }
+    if (result.status === 'tidak aktif') throw new UnauthorizedError('Akun anda belum aktif');
 
     const isPasswordCorrect = await result.comparePassword(password);
 
-    if (!isPasswordCorrect) {
-        throw new UnauthorizedError('Invalid Credentials');
-    }
+    if (!isPasswordCorrect) throw new UnauthorizedError('Invalid Credentials');
 
     const token = createJWT({ payload: createTokenPasien(result) });
 
@@ -146,11 +134,11 @@ const sendResetPasswordEmail = async (req, res) => {
 
     const token = createJWT({ payload: createTokenPassword(user) });
 
-    const resetUrl = `http://localhost:3000/ganti-password?token=${token}`; // Use localhost for testing
+    const resetUrl = `http://localhost:3000/ganti-password?token=${token}`;
 
     const data = { resetUrl };
 
-    await otpMail(email, data, 'reset-password'); // Specify the template for reset password
+    await otpMail(email, data, 'reset-password');
 
     return { message: 'Password reset email sent', resetUrl };
 };
@@ -158,10 +146,7 @@ const sendResetPasswordEmail = async (req, res) => {
 const resetPassword = async (req) => {
     const { token, newPassword, confirmPassword } = req.body;
 
-    // Verifikasi bahwa password baru cocok dengan konfirmasi password
-    if (newPassword !== confirmPassword) {
-        throw new BadRequestError('Password tidak cocok');
-    }
+    if (newPassword !== confirmPassword) throw new BadRequestError('Password tidak cocok');
 
     let payload;
     try {
@@ -174,9 +159,7 @@ const resetPassword = async (req) => {
 
     const user = await Pasien.findOne({ where: { email } });
 
-    if (!user) {
-        throw new NotFoundError('Partisipan tidak ditemukan');
-    }
+    if (!user) throw new NotFoundError('Partisipan tidak ditemukan');
 
     user.password = newPassword;
     await user.save();
@@ -213,6 +196,7 @@ const getpasienAppointments = async (req) => {
         const endTime = schedule.end_time.slice(0, 5);
 
         return {
+            id: appointment.uuid,
             tanggal: appointment.tanggal,
             nama_dokter: schedule.user_klinik.nama,
             jam: `${startTime}-${endTime}`,
@@ -228,14 +212,11 @@ const getpasienAppointments = async (req) => {
     return formattedResult;
 };
 
-const createAppointment = async (req, res) => {
+const createAppointment = async (req) => {
     const { tanggal, keluhan, penjamin, dokter, poli, start_time, end_time } = req.body;
     const { pasienId } = req.pasien;
+    
     const dayOfWeek = getDayOfWeek(tanggal);
-
-    const formattedStartTime = validateTimeFormat(start_time);
-    const formattedEndTime = validateTimeFormat(end_time);
-
     const schedule = await Schedule.findOne({
         where: {
             hari: dayOfWeek,
@@ -254,9 +235,10 @@ const createAppointment = async (req, res) => {
         ],
     });
 
-    if (!schedule) {
-        throw new NotFoundError('Tidak ada Dokter yang tersedia pada tanggal itu');
-    }
+    if (!schedule) throw new NotFoundError('Tidak ada Dokter yang tersedia pada tanggal itu');
+
+    const formattedStartTime = validateTimeFormat(start_time);
+    const formattedEndTime = validateTimeFormat(end_time);
 
     if (formattedStartTime < schedule.start_time || formattedEndTime > schedule.end_time) {
         throw new Error('Waktu janji tidak sesuai dengan jadwal dokter');
@@ -266,9 +248,7 @@ const createAppointment = async (req, res) => {
         where: { userId: pasienId }
     });
 
-    if (!dataPasien) {
-        throw new NotFoundError('Data Pasien tidak ditemukan');
-    }
+    if (!dataPasien) throw new NotFoundError('Data Pasien tidak ditemukan');
 
     const result = await Appointment.create({
         tanggal,
@@ -291,15 +271,12 @@ const getDataPasien = async (req) => {
         where: { userId: pasienId }
     });
 
-    if (!dataPasien) {
-        throw new NotFoundError('Data Pasien tidak ditemukan');
-    }
+    if (!dataPasien) throw new NotFoundError('Data Pasien tidak ditemukan');
 
     return dataPasien;
 };
 
 const updateDataPasien = async (req) => {
-    console.log('Received data for update:', req.body);
     const { nik, nama_lengkap, tempat_lahir, tanggal_lahir, jenis_kelamin, gol_darah, suku_bangsa, alamat } = req.body;
     const { pasienId } = req.pasien;
 
@@ -317,9 +294,7 @@ const updateDataPasien = async (req) => {
         { where: { userId: pasienId } }
     );
 
-    if (updatedRows === 0) {
-        throw new NotFoundError('Data Pasien tidak ditemukan');
-    }
+    if (updatedRows === 0) throw new NotFoundError('Data Pasien tidak ditemukan');
 
     const updatedDataPasien = await DataPasien.findOne({
         where: { userId: pasienId }
@@ -332,9 +307,7 @@ const getAllVisitHistory = async (req) =>  {
     const { role, pasienId } = req.pasien;
     const query = req.query;
 
-    if (role !== 'pasien') {
-        throw new UnauthorizedError('Akses Ditolak');
-    }
+    if (role !== 'pasien') throw new UnauthorizedError('Akses Ditolak');
 
     let whereClause = {
         '$EMRPasien.appointment.datapasien.pasien.uuid$': pasienId,
@@ -393,9 +366,7 @@ const getDetailVisitHistory = async (req) =>  {
     const { role, pasienId } = req.pasien;
     const { id } = req.params;
 
-    if (role !== 'pasien') {
-        throw new UnauthorizedError('Akses Ditolak');
-    }
+    if (role !== 'pasien') throw new UnauthorizedError('Akses Ditolak');
 
     const whereClause = {
         uuid: id,
@@ -434,9 +405,7 @@ const getDetailVisitHistory = async (req) =>  {
         where: whereClause
     });
 
-    if (!history) {
-        throw new NotFoundError('Detail tidak ditemukan');
-    }
+    if (!history) throw new NotFoundError('Detail tidak ditemukan');
 
     const episodeId = history.uuid;
 
@@ -519,9 +488,7 @@ const submitResponses = async (req) => {
         where: {uuid: id},
     });
 
-    if (!episode) {
-        throw new NotFoundError('Detail tidak ditemukan');
-    }
+    if (!episode) throw new NotFoundError('Detail tidak ditemukan');
 
     const emrpasienId = episode.emrPasienId
 

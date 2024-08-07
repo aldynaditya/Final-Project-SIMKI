@@ -18,6 +18,7 @@ const OrderSurat = db.define('orderSurat', {
         type: DataTypes.ENUM( 'sakit','rujukan' ),
         allownull: false,
         validate: {
+            notEmpty: true,
             isIn: {
                 args: [[ 'sakit','rujukan' ]],
                 msg: 'Pilihan tidak valid',

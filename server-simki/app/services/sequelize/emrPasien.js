@@ -7,9 +7,6 @@ const Transaksi = require('../../api/v1/transaksi/model');
 const UserKlinik = require('../../api/v1/userKlinik/model');
 const OrderObat = require('../../api/v1/orderObat/model');
 const OrderProsedur = require('../../api/v1/orderProsedur/model');
-const OrderSurat = require('../../api/v1/orderSurat/model');
-const SuratSakit = require('../../api/v1/suratSakit/model');
-const SuratRujukan = require('../../api/v1/suratRujukan/model');
 const Obat = require('../../api/v1/obat/model');
 const Item = require('../../api/v1/item/model');
 const { 
@@ -17,7 +14,9 @@ const {
     NotFoundError, 
     UnauthorizedError 
 } = require('../../errors');
-const { generateInvoiceNumber } = require('../../utils');
+const { 
+    generateInvoiceNumber 
+} = require('../../utils');
 const validTindakanValues = ['obat', 'prosedur', 'surat'];
 
 const getAllEMRPasien = async ( req ) => {
@@ -65,6 +64,7 @@ const getAllEMRPasien = async ( req ) => {
     const result = emrPasienData.map(emr => {
         const appointment = emr.appointment;
         return {
+            id: emr.uuid,
             noEMR: emr.noEMR,
             nama_pasien: appointment.datapasien.nama_lengkap,
             tanggal_lahir: appointment.datapasien.tanggal_lahir,
@@ -255,6 +255,7 @@ const getAllMedicalRecord = async (req) => {
         const appointment = emr.appointment;
         const episode= emr.episodes[0]
         return {
+            id: emr.uuid,
             tanggal: appointment.tanggal,
             pemeriksa: appointment.schedule.user_klinik.nama,
             subjective: episode.subjective,
@@ -303,9 +304,10 @@ const findOneMedicalRecord = async (req) => {
     }
 
     const appointment = emr.appointment;
-    const episode = emr.episodes[0]; // Ambil episode pertama, bisa disesuaikan sesuai kebutuhan
+    const episode = emr.episodes[0];
 
     const result = {
+        id: emr.uuid,
         noEMR: emr.noEMR,
         nama_pasien: appointment.datapasien.nama_lengkap,
         tanggal_lahir: appointment.datapasien.tanggal_lahir,

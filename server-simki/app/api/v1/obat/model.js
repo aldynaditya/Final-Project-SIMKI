@@ -16,8 +16,7 @@ const Obat = db.define('obat', {
         type: DataTypes. STRING,
         allowNull: false,
         validate: {
-            notEmpty: true,
-            len : [3,100]
+            notEmpty: true
         }
     },
     kode_obat:{
@@ -42,7 +41,6 @@ const Obat = db.define('obat', {
         allowNull: false,
         validate: {
             notEmpty: true,
-            len : [3,100]
         }
     },
     stok:{

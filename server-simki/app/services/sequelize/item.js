@@ -1,8 +1,11 @@
 const Item = require('../../api/v1/item/model');
 const UserKlinik = require('../../api/v1/userKlinik/model');
-const { BadRequestError, NotFoundError } = require('../../errors');
+const { 
+    BadRequestError, 
+    NotFoundError 
+} = require('../../errors');
 
-const getAllItem = async (req) => {
+const getAllItem = async () => {
     const item = await Item.findAll({
         include: [{
             model: UserKlinik,
@@ -13,6 +16,7 @@ const getAllItem = async (req) => {
 
     const result = item.map(item => {
         return {
+            id: item.uuid,
             nama_item: item.nama_item,
             kode_item: item.kode_item,
             harga_item: item.harga_satuan_item,
