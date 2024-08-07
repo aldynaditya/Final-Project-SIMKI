@@ -1,12 +1,12 @@
 /* General Styles */
-.page-container {
+.page-container-aktivasi {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   font-family: 'Open Sans', sans-serif;
 }
 
-.content-wrap {
+.content-wrap-aktivasi {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -18,6 +18,17 @@
 
 .text-header {
   margin-bottom: 50px;
+  font-size: 2rem;
+}
+
+.text-ket {
+  font-size: 20px;
+  color: rgb(87, 87, 87);
+  max-width: 420px;
+  line-height: 1.5;
+  text-align: justify;
+  text-align-last: center;
+  margin-bottom: 35px;
 }
 
 .input {
@@ -79,93 +90,14 @@ footer {
   text-align: center;
 }
 
-/* Responsive Adjustments */
-
-/* For devices with small screens (e.g., phones) */
-@media (max-width: 600px) {
-  .inputs {
-    width: 90%;
-    height: 60px;
-  }
-
-  .inputs img {
-    margin: 0 15px;
-  }
-
-  .inputs input {
-    font-size: 16px;
-  }
-
-  .submit {
-    width: 90%;
-    font-size: 16px;
-  }
-
-  .text-lupapass {
-    margin-top: 300px;
-    font-size: 1.5rem;
-  }
-
-  .submit-container {
-    margin-bottom: 50px;
-  }
+.kode-otp-ulang {
+  margin-bottom: 50px;
+  color: rgb(87, 87, 87);
+  font-size: 15px;
+  text-align: center; /* Menempatkan teks di tengah */
 }
 
-/* For devices with larger screens (e.g., PCs) */
-@media (min-width: 1024px) {
-  .inputs {
-    width: 480px;
-    height: 80px;
-  }
-
-  .inputs img {
-    margin: 0 30px;
-  }
-
-  .inputs input {
-    font-size: 19px;
-  }
-
-  .submit {
-    width: 220px;
-    font-size: 19px;
-  }
-
-  .text-lupapass {
-    margin-top: 300px;
-    font-size: 2rem;
-  }
-
-  .submit-container {
-    margin-bottom: 100px;
-  }
-}
-
-@media (min-width: 600px) {
-  .inputs {
-    width: 480px;
-    height: 80px;
-  }
-
-  .inputs img {
-    margin: 0 30px;
-  }
-
-  .inputs input {
-    font-size: 19px;
-  }
-
-  .submit {
-    width: 220px;
-    font-size: 19px;
-  }
-
-  .text-lupapass {
-    margin-top: 300px;
-    font-size: 2rem;
-  }
-
-  .submit-container {
-    margin-bottom: 100px;
-  }
+.kode-otp-ulang span {
+  color: #4c00b4;
+  cursor: pointer;
 }

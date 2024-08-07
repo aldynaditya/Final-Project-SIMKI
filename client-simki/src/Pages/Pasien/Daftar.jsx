@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import '../../Style/Pasien/Daftar.css';
-import { daftarUser, clearError } from '../../redux/patient/daftar/actions'; // Import clearError action
+import { daftarUser } from '../../redux/patient/daftar/actions';
 
 const Daftar = () => {
   const dispatch = useDispatch();
@@ -103,7 +103,6 @@ const Daftar = () => {
 
   const closeModal = () => {
     setAlert({ status: false, message: '' });
-    dispatch(clearError());
     if (navigateAfterClose) {
       setNavigateAfterClose(false);
       navigate('/aktivasi-akun');

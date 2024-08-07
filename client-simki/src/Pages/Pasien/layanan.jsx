@@ -1,14 +1,16 @@
-import React from 'react';
+import React from "react";
+import '../../Style/Pasien/Home.css';
 import klinikdipo from "../../images/klinikdipo.png";
-import '../../Style/Pasien/layanan.css';
+import TitleSection from "../../components/TitleSection";
 
 const Layanan = () => {
   return (
     <div className='layanan_container'>
-      <h1 className="header_layanan_kami">Layanan Kami</h1>
-      <div className="klinik_dipo">
-        <img src={klinikdipo} alt='Klinik Diponegoro' />
-      </div>
+      <TitleSection 
+        imageSrc={klinikdipo} 
+        title="Layanan Kami" 
+        titleColor="white" // Optional: adjust color as needed
+      />
       <div className="desc-layanan">
         <p>
           <strong>Klinik Diponegoro 1</strong> menyediakan berbagai fasilitas untuk memenuhi

@@ -5,11 +5,11 @@ import {
 } from './constants';
 import { putData } from '../../../utils/fetch';
 
-export const activateAccount = (payload) => async (dispatch) => {
+export const activateAccount = (form) => async (dispatch) => {
     dispatch({ type: ACTIVATE_ACCOUNT_REQUEST });
 
     try {
-        const response = await putData('/active', payload);
+        const response = await putData('/active', form);
         dispatch({ type: ACTIVATE_ACCOUNT_SUCCESS, payload: response.data });
     } catch (error) {
         dispatch({ type: ACTIVATE_ACCOUNT_FAILURE, payload: error.message });

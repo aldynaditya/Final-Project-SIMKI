@@ -15,7 +15,7 @@ const forgotPasswordReducer = (state = initialState, action) => {
         case FORGOT_PASSWORD_REQUEST:
             return { ...state, loading: true, error: null };
         case FORGOT_PASSWORD_SUCCESS:
-            return { ...state, loading: false, data: action.payload };
+            return { ...state, loading: false, data: action.payload, error: null };
         case FORGOT_PASSWORD_FAILURE:
             return { ...state, loading: false, error: action.payload };
         default:

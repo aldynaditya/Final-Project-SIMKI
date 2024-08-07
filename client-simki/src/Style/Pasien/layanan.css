@@ -1,4 +1,3 @@
-/* Menyusun halaman dengan Flexbox */
 html, body {
   height: 100%;
   margin: 0;
@@ -7,7 +6,6 @@ html, body {
   flex-direction: column;
 }
 
-/* Container untuk konten utama */
 .layanan_container {
   flex: 1;
   display: flex;
@@ -18,17 +16,14 @@ html, body {
   margin-top: 100px;
 }
 
-/* Margin dan padding untuk elemen dalam layanan */
 .header_layanan_kami {
   text-align: center;
   margin-top: 0px;
   margin-bottom: 20px;
   font-family: 'Open Sans', sans-serif;
   font-size: 2rem;
-
 }
 
-/* Gaya untuk elemen gambar klinik */
 .klinik_dipo {
   display: flex;
   justify-content: center;
@@ -44,7 +39,6 @@ html, body {
   height: auto;
 }
 
-/* Gaya untuk deskripsi layanan */
 .desc-layanan {
   text-align: justify;
   font-family: 'Open Sans', sans-serif;
@@ -64,15 +58,4 @@ html, body {
   padding: 10px 0;
   position: relative;
   bottom: 0;
-}
-
-/* Media Queries */
-
-/* Tablet (landscape) dan perangkat yang lebih besar */
-@media (min-width: 768px) {
-
-
-  .desc-layanan {
-    font-size: 1.2rem;
-  }
 }

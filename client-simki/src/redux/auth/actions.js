@@ -1,4 +1,3 @@
-// actions.js
 import { USER_LOGIN, USER_LOGOUT } from './constants';
 
 export function userLogin(token, role, nama) {

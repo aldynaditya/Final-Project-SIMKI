@@ -1,46 +1,17 @@
-/* Atur root container untuk menggunakan Flexbox */
+/* src/Style/Pasien/Home.css */
 .page-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-/* Konten utama harus mengambil ruang fleksibel */
 .homepage-content {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
-  padding-top: 80px; /* Tambahkan padding atas untuk ruang antara navbar */
 }
 
-/* Gaya untuk elemen h1 */
-.header_tentang_kami {
-  text-align: center;
-  margin-top: 0px;
-  margin-bottom: 20px;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 2rem;
-}
-
-/* Gaya untuk elemen gambar klinik */
-.klinik_dipo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px 0;
-  width: 100%;
-  max-width: 1200px;
-}
-
-.klinik_dipo img {
-  width: 100%;
-  height: auto;
-  margin-bottom: 20px;
-}
-
-/* Konten deskripsi dan jam operasional */
 .desc-jam-home-container {
   display: flex;
   flex-direction: column;
@@ -50,16 +21,24 @@
   margin-top: 50px;
 }
 
-/* Gaya untuk deskripsi dan jam operasional */
 .desc-homepage, .jam-homepage {
   width: 100%;
-  max-width: 1200px; /* Sama dengan max-width klinik_dipo */
+  max-width: 1200px;
   text-align: justify;
   font-size: 20px;
   margin: 0 auto;
 }
 
-/* Gaya untuk jadwal klinik */
+.desc-dipo {
+  font-size: 20px;
+  color: rgb(87, 87, 87);
+  max-width: 420px;
+  line-height: 1.5;
+  text-align: justify;
+  text-align-last: center;
+  margin-bottom: 35px;
+}
+
 .jadwal-klinik {
   font-size: 20px;
   list-style-type: disc;
@@ -76,95 +55,10 @@ li {
   padding: 5px 0;
 }
 
-/* Atur footer agar tidak memiliki margin atau padding */
 footer {
   width: 100%;
   background: #f2f2f2;
   padding: 10px 0;
   text-align: center;
   flex-shrink: 0;
-}
-
-/* Media Queries */
-
-/* Tablet (landscape) dan perangkat yang lebih besar */
-@media (min-width: 768px) {
-  .desc-homepage, .jam-homepage {
-    font-size: 18px; /* Ukuran font sedikit lebih kecil pada layar yang lebih besar */
-  }
-
-  .jadwal-klinik {
-    font-size: 18px;
-  }
-}
-
-/* Desktop */
-@media (min-width: 1024px) {
-  .homepage-content {
-    padding: 40px;
-    padding-top: 100px; /* Tambahkan padding atas untuk desktop */
-  }
-
-  .desc-homepage, .jam-homepage {
-    font-size: 20px; /* Ukuran font standar untuk desktop */
-  }
-
-  .jadwal-klinik {
-    font-size: 20px;
-  }
-}
-
-/* Telepon seluler */
-@media (max-width: 767px) {
-  .homepage-content {
-    padding-top: 100px; /* Tambahkan padding atas untuk perangkat seluler */
-  }
-
-  .tentang_kami {
-    margin-top: 0;
-  }
-
-  .desc-jam-home-container {
-    gap: 30px;
-    margin-top: 30px;
-  }
-
-  .desc-homepage, .jam-homepage {
-    font-size: 16px; /* Ukuran font lebih kecil pada perangkat seluler */
-    width: 100%;
-    padding: 0 10px;
-  }
-
-  .jadwal-klinik {
-    font-size: 16px;
-  }
-
-  ul {
-    padding-left: 20px;
-  }
-}
-
-@media (max-width: 767px) {
-  .navbar {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .navbar a {
-    padding: 10px;
-  }
-}
-
-/* Footer responsif */
-footer {
-  width: 100%;
-  background: #f2f2f2;
-  padding: 20px;
-  text-align: center;
-}
-
-@media (max-width: 767px) {
-  footer {
-    padding: 15px;
-  }
 }
