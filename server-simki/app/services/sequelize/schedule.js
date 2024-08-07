@@ -1,13 +1,15 @@
 const { Op } = require('sequelize');
 const Schedule = require('../../api/v1/schedule/model');
 const UserKlinik = require('../../api/v1/userKlinik/model');
-const { BadRequestError, NotFoundError } = require('../../errors');
+const { 
+    BadRequestError, 
+    NotFoundError } = require('../../errors');
 const { 
     validateTimeFormat,
     timesOverlap
 } = require('../../utils')
 
-const getAllSchedule = async (req) => {
+const getAllSchedule = async () => {
     const schedules = await Schedule.findAll({
         include: {
             model: UserKlinik,
@@ -23,7 +25,7 @@ const getAllSchedule = async (req) => {
         const endTime = schedule.end_time.slice(0, 5);
 
         return {
-            uuid: schedule.uuid,
+            id: schedule.uuid,
             hari: schedule.hari,
             poli: schedule.poli,
             jam: `${startTime}-${endTime}`,
@@ -49,9 +51,7 @@ const createSchedule = async (req) => {
         }
     });
 
-    if (!dokter) {
-        throw new NotFoundError('Dokter tidak ditemukan');
-    }
+    if (!dokter) throw new NotFoundError('Dokter tidak ditemukan');
 
     const existingSchedules = await Schedule.findAll({
         where: {
@@ -92,9 +92,8 @@ const updateSchedule = async (req) => {
     const formattedEndTime = validateTimeFormat(end_time);
 
     const existingSchedule = await Schedule.findOne({ where: { uuid: id } });
-    if (!existingSchedule) {
-        throw new NotFoundError(`Tidak ada Schedule dengan id: ${id}`);
-    }
+    
+    if (!existingSchedule) throw new NotFoundError(`Tidak ada Schedule dengan id: ${id}`);
 
     const existingSchedules = await Schedule.findAll({
         where: {
@@ -110,7 +109,6 @@ const updateSchedule = async (req) => {
         }
     }
 
-    // Update the schedule
     const result = await Schedule.update(
         { status, hari, start_time: formattedStartTime, end_time: formattedEndTime },
         { where: { uuid: id } }

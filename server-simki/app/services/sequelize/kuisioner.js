@@ -1,8 +1,9 @@
 const EMRPasien = require('../../api/v1/emrPasien/model');
-const Episode = require('../../api/v1/episode/model');
 const Question = require('../../api/v1/kuisioner/question/model');
 const Response = require('../../api/v1/kuisioner/responses/model');
-const { BadRequestError, NotFoundError } = require('../../errors');
+const { 
+    NotFoundError 
+} = require('../../errors');
 
 const getAllQuestions = async () => {
     const result = await Question.findAll();

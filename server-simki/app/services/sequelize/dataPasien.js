@@ -1,9 +1,12 @@
 const { Op } = require('sequelize');
 const DataPasien = require('../../api/v1/dataPasien/model');
-const { BadRequestError, NotFoundError } = require('../../errors');
+const { 
+    BadRequestError, 
+    NotFoundError 
+} = require('../../errors');
 
-const getAllDataPasien = async (req) => {
-    const result = await DataPasien.findAll(req.body);
+const getAllDataPasien = async () => {
+    const result = await DataPasien.findAll();
 
     return result;
 };
@@ -49,7 +52,7 @@ const getOneDataPasien = async (req) => {
     }
 
     if (whereCondition.length === 0) {
-        throw new Error('At least one search parameter must be provided');
+        throw new Error('setidaknya sediakan 1 parameter pencarian');
     }
 
     const result = await DataPasien.findOne({

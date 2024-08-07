@@ -17,6 +17,7 @@ const Appointment = db.define('appointment', {
         type: DataTypes.DATE,
         allowNull: false,
         validate: {
+            notEmpty: true,
             notNull: { msg: 'Tanggal Buat Janji harus diisi' },
         },
     },
@@ -24,6 +25,7 @@ const Appointment = db.define('appointment', {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
+            notEmpty: true,
             notNull: { msg: 'Keluhan harus diisi' },
         },
     },
@@ -35,7 +37,11 @@ const Appointment = db.define('appointment', {
         type: DataTypes.ENUM('asuransi', 'umum'),
         allowNull: false,
         validate: {
-            notNull: { msg: 'penjamin harus diisi' },
+            notEmpty: true,
+            isIn: {
+                args: [[ 'asuransi', 'umum' ]],
+                msg: 'Pilihan tidak valid',
+            },
         },
     },
     keterangan: {

@@ -6,15 +6,10 @@ const Episode = require('../../api/v1/episode/model');
 const Transaksi = require('../../api/v1/transaksi/model');
 const OrderObat = require('../../api/v1/orderObat/model');
 const OrderProsedur = require('../../api/v1/orderProsedur/model');
-const OrderSurat = require('../../api/v1/orderSurat/model');
-const SuratSakit = require('../../api/v1/suratSakit/model');
-const SuratRujukan = require('../../api/v1/suratRujukan/model');
 const Obat = require('../../api/v1/obat/model');
 const Item = require('../../api/v1/item/model');
 const { 
-    BadRequestError, 
     NotFoundError, 
-    UnauthorizedError 
 } = require('../../errors');
 const { Op } = require('sequelize');
 
@@ -51,6 +46,7 @@ const getAllOrders = async () => {
         const datapasien = appointment.datapasien;
 
         return{
+            id: transaksi.uuid,
             noInvoice: episode.invoiceNumber,
             tanggal: appointment.tanggal,
             noEMR: emr.noEMR,
@@ -70,7 +66,7 @@ const getOrderDetails = async (req) => {
     const { id } = req.params;
 
     const transaksi = await Transaksi.findOne({ where: { uuid: id }});
-    if (!transaksi) throw new NotFoundError('Transaction not found');
+    if (!transaksi) throw new NotFoundError('Transaksi tidak ditemukan');
 
     const episodeId = transaksi.episodeId;
 
@@ -78,22 +74,6 @@ const getOrderDetails = async (req) => {
         OrderObat.findAll({
             where: { episodeId },
             include: [
-                // {
-                //     model: Episode,
-                //     as: 'episode',
-                //     include: {
-                //         model: EMRPasien,
-                //         as: 'emrpasien',
-                //         include: {
-                //             model: Appointment,
-                //             include: {
-                //                 model: DataPasien,
-                //                 as: 'datapasien',
-                //                 attributes: ['nama_lengkap']
-                //             }
-                //         }
-                //     }
-                // }
                 {
                     model: Obat,
                     as: 'dataobat'
@@ -103,22 +83,6 @@ const getOrderDetails = async (req) => {
         OrderProsedur.findAll({
             where: { episodeId },
             include: [
-                // {
-                //     model: Episode,
-                //     as: 'episode',
-                //     include: {
-                //         model: EMRPasien,
-                //         as: 'emrpasien',
-                //         include: {
-                //             model: Appointment,
-                //             include: {
-                //                 model: DataPasien,
-                //                 as: 'datapasien',
-                //                 attributes: ['nama_lengkap']
-                //             }
-                //         }
-                //     }
-                // }
                 {
                     model: Item,
                     as: 'dataitem'
@@ -169,7 +133,7 @@ const updateTransaction = async (req) => {
     const { metode_bayar, diskon, keterangan } = req.body;
 
     const transaction = await Transaksi.findByPk(id);
-    if (!transaction) throw new NotFoundError('Transaction not found');
+    if (!transaction) throw new NotFoundError('Transaksi tidak ditemukan');
 
     const totalAfterDiscount = transaction.total - (transaction.total * (diskon / 100));
 
@@ -224,6 +188,10 @@ const filterAllTransactionByPeriod = async (req) => {
         ]
     });
 
+    if (transaksi.length === 0) {
+        throw new NotFoundError('Tidak ada transaksi pada periode tersebut.');
+    }
+
     const result = transaksi.map(transaksi => {
         const episode = transaksi.episode;
         const emr = episode.emrpasien;
@@ -231,6 +199,7 @@ const filterAllTransactionByPeriod = async (req) => {
         const datapasien = appointment.datapasien;
 
         return{
+            id: transaksi.uuid,
             noInvoice: episode.invoiceNumber,
             tanggal: transaksi.createdAt,
             noEMR: emr.noEMR,

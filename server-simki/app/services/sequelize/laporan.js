@@ -1,4 +1,8 @@
 const Laporan = require('../../api/v1/laporan/model');
+const { 
+    BadRequestError, 
+    NotFoundError 
+} = require('../../errors');
 
 
 const getAllLaporan = async () => {
@@ -25,10 +29,9 @@ const createLaporan = async (req, res) => {
         userKlinikId: req.user.id
     });
 
-    // Save file info to the database
     if (req.file) {
-        newLaporan.file_path = req.file.path; // Simpan path file
-        await newLaporan.save(); // Simpan perubahan ke database
+        newLaporan.file_path = req.file.path;
+        await newLaporan.save();
     }
 
     return newLaporan;
@@ -43,21 +46,21 @@ const getAllLaporanByPimpinan = async () => {
 };
 
 const updateStatusLaporan = async (req, res) => {
-    const { id } = req.params; // Ambil ID laporan dari parameter URL
-    const { status } = req.body; // Ambil status baru dari body
+    const { id } = req.params;
+    const { status } = req.body;
 
     if (status !== 'accepted' && status !== 'rejected') {
-        return res.status(400).json({ message: 'Status must be accepted or rejected' });
+        throw new BadRequestError( 'status harus "accepted" atau "rejected"' );
     }
 
-    const laporan = await Laporan.findByPk(id); // Mencari laporan berdasarkan ID
+    const laporan = await Laporan.findByPk(id);
 
     if (!laporan) {
-        return res.status(404).json({ message: 'Laporan not found' });
+        throw new NotFoundError( 'Laporan tidak ditemukan' );
     }
 
-    laporan.status = status; // Update status
-    await laporan.save(); // Simpan perubahan
+    laporan.status = status;
+    await laporan.save();
 
     return laporan;
 };

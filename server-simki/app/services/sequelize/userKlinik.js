@@ -1,5 +1,7 @@
 const  UserKlinik  = require('../../api/v1/userKlinik/model');
-const { BadRequestError, NotFoundError } = require('../../errors');
+const { 
+    NotFoundError 
+} = require('../../errors');
 
 const createUsers = async (req) => {
     const { nama, password, role, email } = req.body;
@@ -14,8 +16,8 @@ const createUsers = async (req) => {
     return result;
 };
 
-const getAllUserKlinik = async (req) => {
-    const userklinik = await UserKlinik.findAll(req.body);
+const getAllUserKlinik = async () => {
+    const userklinik = await UserKlinik.findAll();
     
     const result = userklinik.map(user => {
 

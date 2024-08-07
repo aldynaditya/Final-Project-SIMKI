@@ -30,6 +30,7 @@ const DataPasien = db.define('dataPasien', {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
+            notEmpty: true,
             notNull: { msg: 'Nama harus diisi' },
         },
     },
@@ -37,6 +38,7 @@ const DataPasien = db.define('dataPasien', {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
+            notEmpty: true,
             notNull: { msg: 'Tempat Lahir harus diiisi' },
         },
     },
@@ -44,6 +46,7 @@ const DataPasien = db.define('dataPasien', {
         type: DataTypes.DATE,
         allowNull: false,
         validate: {
+            notEmpty: true,
             notNull: { msg: 'Tanggal Lahir harus diiisi' },
         },
     },
@@ -51,6 +54,7 @@ const DataPasien = db.define('dataPasien', {
         type: DataTypes.ENUM( 'laki-laki', 'perempuan' ),
         allowNull: false,
         validate: {
+            notEmpty: true,
             isIn: {
                 args: [[ 'laki-laki', 'perempuan' ]],
                 msg: 'Pilihan tidak valid',
@@ -61,6 +65,7 @@ const DataPasien = db.define('dataPasien', {
         type: DataTypes.ENUM( 'O', 'A', 'B', 'AB' ),
         allowNull: false,
         validate: {
+            notEmpty: true,
             isIn: {
                 args: [[ 'O', 'A', 'B', 'AB' ]],
                 msg: 'Pilihan tidak valid',
@@ -81,6 +86,7 @@ const DataPasien = db.define('dataPasien', {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
+            notEmpty: true,
             notNull: { msg: 'Alamat harus diiisi' },
         },
     },

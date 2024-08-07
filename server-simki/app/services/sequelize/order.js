@@ -4,7 +4,6 @@ const DataPasien = require('../../api/v1/dataPasien/model');
 const Episode = require('../../api/v1/episode/model');
 const Schedule = require('../../api/v1/schedule/model');
 const UserKlinik = require('../../api/v1/userKlinik/model');
-const Transaksi = require('../../api/v1/transaksi/model');
 const OrderObat = require('../../api/v1/orderObat/model');
 const OrderProsedur = require('../../api/v1/orderProsedur/model');
 const OrderSurat = require('../../api/v1/orderSurat/model');
@@ -112,6 +111,7 @@ const getOrderDetailInformation = async(req) => {
     const datapasien = detail.datapasien;
 
     const result = {
+        id: episode.uuid,
         noEMR: emr.noEMR,
         tanggal: detail.tanggal,
         jam: episode.createdAt,
@@ -167,6 +167,7 @@ const getALlOrderObatbyFarmasi = async() => {
         const schedule = appointment.schedule;
         
         return{
+            id: orderobat.uuid,
             noInvoice: episode.invoiceNumber,
             dateAndTime: orderobat.createdAt,
             noEMR: emr.noEMR,
@@ -251,8 +252,6 @@ const createOrderSuratSakit = async (req) => {
         userKlinikId: req.user.id
     });
 
-    console.log('SuratSakit created:', suratSakit.uuid);
-
     const versi_surat = await getNextVersion(SuratSakit, 'suratsakitId', suratSakit.uuid);
 
     const orderSurat = await OrderSurat.create({
@@ -263,8 +262,6 @@ const createOrderSuratSakit = async (req) => {
         versi_surat,
         total: 0
     });
-
-    console.log('OrderSurat created:', orderSurat);
 
     const ordersuratWithDetails = await OrderSurat.findByPk(orderSurat.uuid, {
         include: [
