@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
@@ -10,7 +10,7 @@ import { activateAccount } from '../../redux/patient/activated/actions';
 const AktivasiAkun = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading, error } = useSelector(state => state.activated);
+  const { loading, error, data } = useSelector(state => state.activated);
   const [navigateAfterClose, setNavigateAfterClose] = useState(false);
 
   const [form, setForm] = useState({
@@ -23,7 +23,21 @@ const AktivasiAkun = () => {
     message: '',
     type: ''
   });
-  
+
+  const [formError, setFormError] = useState('');
+
+  const isFormValid = useCallback(() => {
+    return Object.values(form).every(value => value.trim() !== '');
+  }, [form]);
+
+  useEffect(() => {
+    if (!isFormValid()) {
+      setFormError('Isi seluruh form');
+    } else {
+      setFormError('');
+    }
+  }, [form, isFormValid]);
+
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -31,44 +45,60 @@ const AktivasiAkun = () => {
     });
   };
 
-  const handleSubmit = async () => {
-    try {
-      await dispatch(activateAccount(form));
-      if (error) {
-        setAlert({
-          status: true,
-          message: error,
-          type: 'danger'
-        });
-      } else {
-        setAlert({
-          status: true,
-          message: 'Account activated successfully!',
-          type: 'success'
-        });
-        setNavigateAfterClose(true);
-      }
-    } catch (error) {
-      // Handle the error if necessary
+  const handleSubmit = () => {
+    if (!isFormValid()) {
       setAlert({
         status: true,
-        message: 'An error occurred. Please try again.',
+        message: 'Isi seluruh form',
         type: 'danger'
       });
+      return;
+    }
+
+    setAlert({ status: false, message: '' }); // Reset alert before dispatching
+    dispatch(activateAccount(form));
+  };
+
+  useEffect(() => {
+    if (error) {
+      setAlert({
+        status: true,
+        message: error,
+        type: 'danger'
+      });
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (data) {
+      setAlert({
+        status: true,
+        message: 'Account activated successfully!',
+        type: 'success'
+      });
+      setNavigateAfterClose(true);
+    }
+  }, [data]);
+
+  const handleActionClick = (actionType) => {
+    if (actionType === "KirimKode") {
+      navigate('/lupa-password');
     }
   };
 
   const closeModal = () => {
-    setAlert({ status: false, message: '', type: '' });
-        if (navigateAfterClose) {
-            navigate('/login');
-      }
+    setAlert({ status: false, message: '' });
+    if (navigateAfterClose) {
+      setNavigateAfterClose(false);
+      navigate('/login');
+    }
   };
 
   return (
-    <div className="page-container">
-      <div className="content-wrap">
+    <div className="page-container-aktivasi">
+      <div className="content-wrap-aktivasi">
         <h1 className='text-header'>Aktivasi Akun</h1>
+        <p className='text-ket'>Ketik email yang didaftarkan dan kode verifikasi yang telah dikirim ke alamat email Anda:</p>
         <div className='input'>
           <img src={emailIcon} alt="ikon email" />
           <input
@@ -89,7 +119,10 @@ const AktivasiAkun = () => {
             onChange={handleChange}
           />
         </div>
-        <div className='submit' onClick={handleSubmit} disabled={loading}>
+        <div className='kode-otp-ulang'>
+            Belum dapat kode? <span onClick={() => handleActionClick("KirimKode")}>Kirim ulang</span>
+        </div>
+        <div className='submit' onClick={handleSubmit} style={{ pointerEvents: isFormValid() ? 'auto' : 'none' }}>
           {loading ? 'Processing...' : 'Kirim'}
         </div>
       </div>

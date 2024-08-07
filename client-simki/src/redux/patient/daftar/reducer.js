@@ -1,8 +1,7 @@
 import { 
     DAFTAR_REQUEST, 
     DAFTAR_SUCCESS, 
-    DAFTAR_FAILURE, 
-    CLEAR_ERROR 
+    DAFTAR_FAILURE
 } from './constants';
 
 const initialState = {
@@ -19,8 +18,6 @@ const daftarReducer = (state = initialState, action) => {
             return { ...state, loading: false, user: action.payload, error: null };
         case DAFTAR_FAILURE:
             return { ...state, loading: false, error: action.payload };
-        case CLEAR_ERROR:
-            return { ...state, error: null };
         default:
             return state;
     }

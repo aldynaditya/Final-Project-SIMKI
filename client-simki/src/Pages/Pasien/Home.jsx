@@ -1,18 +1,19 @@
 import React from "react";
 import '../../Style/Pasien/Home.css';
 import klinikdipo from "../../images/klinikdipo.png";
+import TitleSection from "../../components/TitleSection";
 
 const Home = () => {
   return (
     <div className="page-container">
       <div className="homepage-content">
-        <h1 className="header_tentang_kami">Tentang Kami</h1>
-        <div className="klinik_dipo">
-          <img src={klinikdipo} alt="Klinik Diponegoro" />
-        </div>
+        <TitleSection 
+          imageSrc={klinikdipo} 
+          title="Tentang Kami" 
+        />
         <div className="desc-jam-home-container">
           <div className="desc-homepage">
-            <p>
+            <p className="desc-dipo">
               <strong>Klinik Pratama Diponegoro 1</strong> merupakan unit layanan kesehatan dari
               UNDIP MAJU. Klinik Pratama Diponegoro 1 menjadi Fasilitas Kesehatan
               Tingkat Pertama (FKTP) bagi civitas akademika Universitas Diponegoro
