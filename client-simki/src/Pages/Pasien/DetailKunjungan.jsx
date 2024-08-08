@@ -3,18 +3,32 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import '../../Style/Pasien/DetailKunjungan.css';
 import { fetchDetail } from '../../redux/patient/detail/actions';
+import { fetchResponses } from '../../redux/patient/response/actions';
 import QuestionnairePopup from './QuestionnairePopup';
 
 const DetailKunjungan = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const { data, loading, error } = useSelector(state => state.detail);
+    const { responses, loading: responsesLoading, error: responsesError } = useSelector(state => state.responses);
     const [isQuestionnaireOpen, setIsQuestionnaireOpen] = useState(false);
-    const [completed, setCompleted] = useState(false); // New state
+    const [completed, setCompleted] = useState(false);
 
     useEffect(() => {
         dispatch(fetchDetail(id));
     }, [dispatch, id]);
+
+    useEffect(() => {
+        if (data && data.emrId) {
+            dispatch(fetchResponses(data.emrId)); // Fetch responses using the emrId from state
+        }
+    }, [dispatch, data]);
+
+    useEffect(() => {
+        if (responses && responses.length > 0) {
+            setCompleted(true);
+        }
+    }, [responses]);
 
     const handleKuisioner = () => {
         setIsQuestionnaireOpen(true);
@@ -25,7 +39,7 @@ const DetailKunjungan = () => {
     };
 
     const handleQuestionnaireComplete = () => {
-        setCompleted(true); //
+        setCompleted(true);
         setIsQuestionnaireOpen(false);
     };
 
@@ -37,8 +51,8 @@ const DetailKunjungan = () => {
         return `${year}-${month}-${day}`;
     };
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
+    if (loading || responsesLoading) return <div>Loading...</div>;
+    if (error || responsesError) return <div>Error: {error || responsesError}</div>;
 
     return (
         <div className="detail_kunjungan_container">
