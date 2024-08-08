@@ -1,23 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Modal from 'react-modal';
+import { fetchQuestions } from '../../redux/patient/question/actions';
+import { submitResponses } from '../../redux/patient/response/actions';
 import '../../Style/Pasien/QuestionnairePopup.css';
 
-const questions = [
-    "Gejala utama membaik setelah kunjungan ? ",
-    "Nyeri berkurang setelah kunjungan klinik ? ",
-    "Energi meningkat setelah kunjungan klinik ? ",
-    "Aktivitas kembali normal setelah kunjungan ? ",
-    "Efek samping pengobatan muncul ? "
-];
-
-const options = ["1", "2", "3", "4", "5"];
-
-const QuestionnairePopup = ({ onClose }) => {
+const QuestionnairePopup = ({ id, onClose, onComplete }) => {
+    const dispatch = useDispatch();
+    const { questions, loading: loadingQuestions } = useSelector(state => state.questions);
+    const { submitting, error, response } = useSelector(state => state.responses);
+    
     const [currentQuestion, setCurrentQuestion] = useState(0);
-    const [answers, setAnswers] = useState(Array(questions.length).fill(null));
+    const [answers, setAnswers] = useState([]);
+    const [alert, setAlert] = useState({ status: false, message: '' });
+
+    useEffect(() => {
+        dispatch(fetchQuestions());
+    }, [dispatch]);
 
     const handleAnswer = (index) => {
         const newAnswers = [...answers];
-        newAnswers[currentQuestion] = options[index];
+        newAnswers[currentQuestion] = index;
         setAnswers(newAnswers);
     };
 
@@ -25,8 +28,43 @@ const QuestionnairePopup = ({ onClose }) => {
         if (currentQuestion < questions.length - 1) {
             setCurrentQuestion(currentQuestion + 1);
         } else {
-            onClose();
+            const formattedAnswers = questions.map((question, index) => ({
+                questionId: question.id,
+                answer: ["Strongly Agree", "Agree", "Neutral", "Disagree", "Strongly Disagree"][answers[index]] || ""
+            }));
+
+            dispatch(submitResponses(id, formattedAnswers));
         }
+    };
+
+    useEffect(() => {
+        if (error) {
+            setAlert({
+                status: true,
+                message: error
+            });
+        } else if (response) {
+            setAlert({
+                status: true,
+                message: 'Response has been sent successfully!'
+            });
+        }
+    }, [error, response]);
+
+    useEffect(() => {
+        if (!submitting && !error && response) {
+            const timer = setTimeout(() => {
+                setAlert({ status: false, message: '' });
+                onComplete();
+            }, 2000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [submitting, error, response, onComplete]);
+
+    const handleCloseModal = () => {
+        setAlert({ status: false, message: '' });
+        onClose();
     };
 
     return (
@@ -35,28 +73,45 @@ const QuestionnairePopup = ({ onClose }) => {
                 <div className="questionnaire_header">
                     <span>{currentQuestion + 1}/{questions.length}</span>
                 </div>
-                <h2>{questions[currentQuestion]}</h2>
-                <div className="options">
-                    {options.map((option, index) => (
-                        <div
-                            key={index}
-                            className={`option_container ${answers[currentQuestion] === option ? 'selected' : ''}`}
-                            onClick={() => handleAnswer(index)}
-                        >
-                            <div className="option_circle" style={{ transform: `scale(${0.6 + index * 0.2})` }}></div>
-                            <span className="option_label">{option}</span>
+                {!loadingQuestions && questions.length > 0 ? (
+                    <>
+                        <h2>{questions[currentQuestion].text}</h2>
+                        <div className="options">
+                            {["Strongly Agree", "Agree", "Neutral", "Disagree", "Strongly Disagree"].map((option, index) => (
+                                <div
+                                    key={index}
+                                    className={`option_container ${answers[currentQuestion] === index ? 'selected' : ''}`}
+                                    onClick={() => handleAnswer(index)}
+                                >
+                                    <div className="option_circle"></div>
+                                    <span className="option_label">{option}</span>
+                                </div>
+                            ))}
                         </div>
-                    ))}
-                </div>
-                <div className="legend">
-                    <p>1 = Sangat Tidak Setuju</p>
-                    <p>2 = Tidak Setuju</p>
-                    <p>3 = Tidak Kedua-duanya</p>
-                    <p>4 = Setuju</p>
-                    <p>5 = Sangat Setuju</p>
-                </div>
-                <button className="next_button" onClick={handleNext}>Next </button>
+                        <button 
+                            className="next_button" 
+                            onClick={handleNext} 
+                            disabled={answers[currentQuestion] === undefined}
+                        >
+                            {currentQuestion === questions.length - 1 ? 'Finish' : 'Next'}
+                        </button>
+                    </>
+                ) : (
+                    <p>Loading questions...</p>
+                )}
             </div>
+            <Modal
+                isOpen={alert.status}
+                onRequestClose={handleCloseModal}
+                contentLabel="Alert Message"
+                className="Modal"
+                overlayClassName="Overlay"
+            >
+                <div className="modal-content">
+                    <p>{alert.message}</p>
+                    <button onClick={handleCloseModal}>Close</button>
+                </div>
+            </Modal>
         </div>
     );
 };

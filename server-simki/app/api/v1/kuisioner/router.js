@@ -10,8 +10,8 @@ const {
     authorizeRoles,
 } = require('../../../middleware/auth');
 
-router.get('/questions', authenticateUser, authorizeRoles('dokter'), index);
+router.get('/questions', index);
 router.post('/questions', authenticateUser, authorizeRoles('dokter'), create);
-router.get('/responses/:id', authenticateUser, authorizeRoles('dokter'), indexRes);
+router.get('/responses/:id', indexRes);
 
 module.exports = router;

@@ -483,6 +483,7 @@ const getDetailVisitHistory = async (req) =>  {
     const historyDetail = history.emrpasien.appointment;
 
     const result = {
+        emrId: history.emrpasien.uuid,
         tanggal: historyDetail.tanggal,
         dokter: historyDetail.schedule.user_klinik.nama,
         poli: historyDetail.schedule.poli,
@@ -503,15 +504,27 @@ const submitResponses = async (req) => {
     const { responses } = req.body;
 
     const episode = await Episode.findOne({
-        where: {uuid: id},
+        where: { uuid: id },
     });
 
     if (!episode) throw new NotFoundError('Detail tidak ditemukan');
 
-    const emrpasienId = episode.emrPasienId
+    const emrpasienId = episode.emrPasienId;
+
+    const validAnswers = ['Strongly Agree', 'Agree', 'Neutral', 'Disagree', 'Strongly Disagree'];
+
+    const formattedResponses = responses.map(response => {
+        if (!validAnswers.includes(response.answer)) {
+            throw new Error(`Invalid answer value: ${response.answer}`);
+        }
+        return {
+            ...response,
+            answer: response.answer,
+        };
+    });
 
     const result = await Promise.all(
-        responses.map(response =>
+        formattedResponses.map(response =>
             Response.create({
                 answer: response.answer,
                 questionId: response.questionId,
@@ -520,8 +533,14 @@ const submitResponses = async (req) => {
         )
     );
 
-    return result
+    await EMRPasien.update(
+        { questionnaireCompleted: true },
+        { where: { uuid: emrpasienId } }
+    );
+
+    return result;
 };
+
 
 module.exports = {
     signupPasien,

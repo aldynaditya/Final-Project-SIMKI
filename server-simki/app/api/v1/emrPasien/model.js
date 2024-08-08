@@ -42,6 +42,10 @@ const EMRPasien = db.define('emrPasien', {
     finishedAt: {
         type: DataTypes.DATE,
         allowNull: true,
+    },
+    questionnaireCompleted: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
 }, {
     tableName: 'emrPasien',
