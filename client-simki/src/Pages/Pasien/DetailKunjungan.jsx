@@ -10,6 +10,7 @@ const DetailKunjungan = () => {
     const dispatch = useDispatch();
     const { data, loading, error } = useSelector(state => state.detail);
     const [isQuestionnaireOpen, setIsQuestionnaireOpen] = useState(false);
+    const [completed, setCompleted] = useState(false); // New state
 
     useEffect(() => {
         dispatch(fetchDetail(id));
@@ -23,10 +24,15 @@ const DetailKunjungan = () => {
         setIsQuestionnaireOpen(false);
     };
 
+    const handleQuestionnaireComplete = () => {
+        setCompleted(true); //
+        setIsQuestionnaireOpen(false);
+    };
+
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
         return `${year}-${month}-${day}`;
     };
@@ -63,10 +69,22 @@ const DetailKunjungan = () => {
                         <span className="text_tindakan_pasien">Tindakan yang Diberikan:</span>
                         <input type="text" value={data.tindakan || ''} readOnly />
                     </div>
-                    <button className='kuisioner' onClick={handleKuisioner}>Isi Kuisioner</button>
+                    <button
+                        className='kuisioner'
+                        onClick={handleKuisioner}
+                        disabled={completed}
+                    >
+                        Isi Kuisioner
+                    </button>
                 </div>
             </div>
-            {isQuestionnaireOpen && <QuestionnairePopup onClose={handleCloseQuestionnaire} />}
+            {isQuestionnaireOpen && 
+                <QuestionnairePopup 
+                    id={id} 
+                    onClose={handleCloseQuestionnaire} 
+                    onComplete={handleQuestionnaireComplete} 
+                />
+            }
         </div>
     );
 };

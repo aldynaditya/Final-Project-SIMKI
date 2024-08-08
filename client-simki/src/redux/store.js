@@ -20,6 +20,8 @@ import addUserReducer from './admin/add/reducer';
 import createAppointmentReducer from './patient/create/reducer';
 import scheduleReducer from './patient/schedule/reducer';
 import resendOtpReducer from './patient/resend/reducer';
+import questionReducer from './patient/question/reducer';
+import responseReducer from './patient/response/reducer';
 
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -39,6 +41,8 @@ const rootReducers = combineReducers({
     createAppointment: createAppointmentReducer,
     schedule: scheduleReducer,
     resendOtp: resendOtpReducer,
+    questions: questionReducer,
+    responses: responseReducer
 });
 const store = createStore(
     rootReducers,
