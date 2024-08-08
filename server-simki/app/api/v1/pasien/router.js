@@ -2,6 +2,7 @@ const express = require('express');
 const router = express();
 const {
     signup,
+    resend,
     activeAccount,
     signin,
     makeAppointment,
@@ -23,6 +24,7 @@ const checkEMRStatus = require('../../../middleware/checkEMRStatus');
 
 
 router.post('/auth/signup', signup);
+router.post('/resend-otp', resend);
 router.post('/auth/signin', signin);
 router.put('/active', activeAccount);
 router.post('/forgot-password', forgotpassword);

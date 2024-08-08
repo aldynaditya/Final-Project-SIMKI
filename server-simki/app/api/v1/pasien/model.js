@@ -64,5 +64,10 @@ Pasien.prototype.comparePassword = async function (candidatePassword) {
     return await argon2.verify(this.password, candidatePassword);
 };
 
+Pasien.prototype.generateAndSaveNewOtp = async function() {
+    this.otp = Math.floor(Math.random() * 9999).toString().padStart(4, '0');
+    await this.save();
+};
+
 module.exports = Pasien;
 

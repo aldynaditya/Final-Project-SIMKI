@@ -10,7 +10,7 @@ export const daftarUser = (userData) => async (dispatch) => {
 
     try {
         const response = await postData('/auth/signup', userData);
-        dispatch({ type: DAFTAR_SUCCESS, payload: response.data });
+        dispatch({ type: DAFTAR_SUCCESS, payload: { ...response.data, email: userData.email } });
     } catch (error) {
         dispatch({ type: DAFTAR_FAILURE, payload: error.message });
     }
