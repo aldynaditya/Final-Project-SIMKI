@@ -2,19 +2,20 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
-import emailIcon from '../../images/email.png';
 import otpIcon from '../../images/otp.png';
 import '../../Style/Pasien/AktivasiAkun.css';
 import { activateAccount } from '../../redux/patient/activated/actions';
+import { resendOtp } from '../../redux/patient/resend/actions';
 
 const AktivasiAkun = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { loading, error, data } = useSelector(state => state.activated);
+  const { email } = useSelector(state => state.daftar); // Ambil email dari state daftar
+  const { loading: resendLoading, error: resendError, success: resendSuccess } = useSelector(state => state.resendOtp);
   const [navigateAfterClose, setNavigateAfterClose] = useState(false);
 
   const [form, setForm] = useState({
-    email: '',
     otp: ''
   });
 
@@ -27,7 +28,7 @@ const AktivasiAkun = () => {
   const [formError, setFormError] = useState('');
 
   const isFormValid = useCallback(() => {
-    return Object.values(form).every(value => value.trim() !== '');
+    return form.otp.trim() !== '';
   }, [form]);
 
   useEffect(() => {
@@ -56,7 +57,7 @@ const AktivasiAkun = () => {
     }
 
     setAlert({ status: false, message: '' }); // Reset alert before dispatching
-    dispatch(activateAccount(form));
+    dispatch(activateAccount({ email, otp: form.otp }));
   };
 
   useEffect(() => {
@@ -70,6 +71,22 @@ const AktivasiAkun = () => {
   }, [error]);
 
   useEffect(() => {
+    if (resendError) {
+      setAlert({
+        status: true,
+        message: resendError,
+        type: 'danger'
+      });
+    } else if (resendSuccess) {
+      setAlert({
+        status: true,
+        message: 'Kode OTP telah dikirim ulang ke email Anda',
+        type: 'success'
+      });
+    }
+  }, [resendError, resendSuccess]);
+
+  useEffect(() => {
     if (data) {
       setAlert({
         status: true,
@@ -80,9 +97,15 @@ const AktivasiAkun = () => {
     }
   }, [data]);
 
-  const handleActionClick = (actionType) => {
-    if (actionType === "KirimKode") {
-      navigate('/lupa-password');
+  const handleActionClick = () => {
+    if (email.trim() === '') {
+      setAlert({
+        status: true,
+        message: 'Email tidak ditemukan',
+        type: 'danger'
+      });
+    } else {
+      dispatch(resendOtp(email));
     }
   };
 
@@ -98,17 +121,7 @@ const AktivasiAkun = () => {
     <div className="page-container-aktivasi">
       <div className="content-wrap-aktivasi">
         <h1 className='text-header'>Aktivasi Akun</h1>
-        <p className='text-ket'>Ketik email yang didaftarkan dan kode verifikasi yang telah dikirim ke alamat email Anda:</p>
-        <div className='input'>
-          <img src={emailIcon} alt="ikon email" />
-          <input
-            type='email'
-            placeholder='Email'
-            name='email'
-            value={form.email}
-            onChange={handleChange}
-          />
-        </div>
+        <p className='text-ket'>Ketik kode verifikasi yang telah dikirim ke alamat email Anda:</p>
         <div className='input'>
           <img src={otpIcon} alt="ikon otp" />
           <input
@@ -120,7 +133,7 @@ const AktivasiAkun = () => {
           />
         </div>
         <div className='kode-otp-ulang'>
-            Belum dapat kode? <span onClick={() => handleActionClick("KirimKode")}>Kirim ulang</span>
+            Belum dapat kode? <span onClick={handleActionClick}>Kirim ulang</span>
         </div>
         <div className='submit' onClick={handleSubmit} style={{ pointerEvents: isFormValid() ? 'auto' : 'none' }}>
           {loading ? 'Processing...' : 'Kirim'}

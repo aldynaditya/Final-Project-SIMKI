@@ -11,13 +11,26 @@ const {
     getDetailVisitHistory,
     sendResetPasswordEmail,
     resetPassword,
-    submitResponses
+    submitResponses,
+    resendOtp
 } = require('../../../services/sequelize/pasien');
 const { StatusCodes } = require('http-status-codes');
 
 const signup = async (req, res, next) => {
     try {
         const result = await signupPasien(req);
+
+        res.status(StatusCodes.CREATED).json({
+            data: result,
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
+const resend = async (req, res, next) => {
+    try {
+        const result = await resendOtp(req);
 
         res.status(StatusCodes.CREATED).json({
             data: result,
@@ -161,6 +174,7 @@ const submit = async (req, res, next) => {
 
 module.exports = {
     signup,
+    resend,
     activeAccount,
     signin,
     forgotpassword,

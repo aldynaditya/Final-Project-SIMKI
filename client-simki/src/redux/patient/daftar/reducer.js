@@ -8,6 +8,7 @@ const initialState = {
     loading: false,
     user: null,
     error: null,
+    email: '',
 };
 
 const daftarReducer = (state = initialState, action) => {
@@ -15,7 +16,7 @@ const daftarReducer = (state = initialState, action) => {
         case DAFTAR_REQUEST:
             return { ...state, loading: true, error: null };
         case DAFTAR_SUCCESS:
-            return { ...state, loading: false, user: action.payload, error: null };
+            return { ...state, loading: false, user: action.payload, email: action.payload.email, error: null };
         case DAFTAR_FAILURE:
             return { ...state, loading: false, error: action.payload };
         default:

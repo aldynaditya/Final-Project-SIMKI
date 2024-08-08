@@ -83,6 +83,24 @@ const signupPasien = async (req) => {
     return result;
 };
 
+const resendOtp = async (req) => {
+    const { email } = req.body;
+
+    const pasien = await Pasien.findOne({
+        where: { 
+            email,
+            status: 'tidak aktif' 
+        }
+    });
+    if (!pasien) throw new NotFoundError('Partisipan tidak ditemukan')
+
+    await pasien.generateAndSaveNewOtp();
+
+    const data = { otp: pasien.otp };
+
+    await otpMail(email, data, 'otp');
+}
+
 const activatePasien = async (req) => {
     const { otp, email } = req.body;
     const check = await Pasien.findOne({
@@ -507,6 +525,7 @@ const submitResponses = async (req) => {
 
 module.exports = {
     signupPasien,
+    resendOtp,
     activatePasien,
     signinPasien,
     sendResetPasswordEmail,
