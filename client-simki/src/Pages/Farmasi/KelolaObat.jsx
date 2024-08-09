@@ -1,13 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchObat } from '../../redux/pharmacy/index/actions';
+import { deleteObat } from '../../redux/pharmacy/delete/actions';
 import '../../Style/Perawat/KelolaItem.css';
-import SearchBar from "../../components/SearchBar";
-import TambahObat from "./TambahObat";
-import EditObat from "./EditObat";
+import SearchBar from '../../components/SearchBar';
+import TambahObat from './TambahObat';
+import EditObat from './EditObat';
+import Modal from 'react-modal';
 
 const KelolaObat = () => {
-    const [rows, setRows] = useState(Array.from({ length: 20 }));
+    const dispatch = useDispatch();
+    const { data, loading, error } = useSelector((state) => state.getObat);
+    const { loading: deleteLoading, error: deleteError } = useSelector((state) => state.deleteObat);
+
     const [isPopupVisible, setIsPopupVisible] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
+    const [alert, setAlert] = useState({ status: false, message: '', type: '' });
+
+    useEffect(() => {
+        dispatch(fetchObat());
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (!deleteLoading && !deleteError) {
+            dispatch(fetchObat());
+        }
+    }, [deleteLoading, deleteError, dispatch]);
 
     const handleTambahObat = () => {
         setIsPopupVisible(true);
@@ -23,8 +41,41 @@ const KelolaObat = () => {
         setIsPopupVisible(false);
     };
 
-    const hapusObat = (index) => {
-        setRows(rows.filter((_, i) => i !== index));
+    const handleSuccess = () => {
+        dispatch(fetchObat());
+    };
+
+    const hapusObat = async (id) => {
+        try {
+            await dispatch(deleteObat(id));
+            if (deleteError) {
+                setAlert({
+                    status: true,
+                    message: 'Data Obat gagal dihapus!',
+                    type: 'danger'
+                });
+            } else {
+                setAlert({
+                    status: true,
+                    message: 'Data Obat berhasil dihapus!',
+                    type: 'success'
+                });
+            }
+        } catch (error) {
+            setAlert({
+                status: true,
+                message: 'Failed to delete',
+                type: 'danger',
+            });
+        }
+    };
+
+    if (loading || deleteLoading) {
+        return <div>Loading...</div>;
+    }
+
+    const closeModal = () => {
+        setAlert({ status: false, message: '', type: '' });
     };
 
     return (
@@ -35,7 +86,7 @@ const KelolaObat = () => {
                     <div className="header-kelola-item">
                         <h1 className="text_kelola-item">Stok Obat</h1>
                         <div className="header-kelola-item-action">
-                            <button className='tombol_tambahitem' onClick={handleTambahObat}>Tambah Obat</button>
+                            <button className="tombol_tambahitem" onClick={handleTambahObat}>Tambah Obat</button>
                             <SearchBar />
                         </div>
                     </div>
@@ -52,18 +103,16 @@ const KelolaObat = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {rows.map((_, index) => (
-                                    <tr key={index}>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                {data.map((obat) => (
+                                    <tr key={obat.id}>
+                                        <td>{obat.nama_obat}</td>
+                                        <td>{obat.kode_obat}</td>
+                                        <td>{obat.harga_obat}</td>
+                                        <td>{obat.jenis_obat}</td>
+                                        <td>{obat.stok_obat}</td>
                                         <td>
                                             <button className="ubah-jadwal" onClick={handleUbahObat}>Ubah</button>
-                                            <div className="hapus-jadwal" onClick={() => hapusObat(index)}>
-                                                Hapus
-                                            </div>
+                                            <div className="hapus-jadwal" onClick={() => hapusObat(obat.id)}>Hapus</div>
                                         </td>
                                     </tr>
                                 ))}
@@ -72,7 +121,22 @@ const KelolaObat = () => {
                     </div>
                 </div>
             </div>
-            {isPopupVisible && (isEditing ? <EditObat onClose={handleClosePopup} /> : <TambahObat onClose={handleClosePopup} />)}
+            {isPopupVisible && (isEditing ? <EditObat onClose={handleClosePopup} /> : <TambahObat onClose={handleClosePopup} onSuccess={handleSuccess} />)}
+
+            <Modal
+                isOpen={alert.status}
+                onRequestClose={closeModal}
+                contentLabel="Alert Message"
+                className="Modal"
+                overlayClassName="Overlay"
+                shouldCloseOnOverlayClick={true}
+                shouldCloseOnEsc={true}
+            >
+                <div className="modal-content">
+                    <p>{alert.message}</p>
+                    <button onClick={closeModal}>Close</button>
+                </div>
+            </Modal>
         </div>
     );
 };
