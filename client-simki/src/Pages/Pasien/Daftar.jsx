@@ -170,7 +170,7 @@ const Daftar = () => {
           </div>
           <div className='suku'>
             <select 
-              name="Kewarganegaraan" 
+              name="kewarganegaraan" 
               value={userData.kewarganegaraan} 
               onChange={handleChange}
             >

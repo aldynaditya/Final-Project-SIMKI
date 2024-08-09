@@ -24,7 +24,9 @@ import questionReducer from './patient/question/reducer';
 import responseReducer from './patient/response/reducer';
 import getobatReducer from "./pharmacy/index/reducer";
 import createobatReducer from "./pharmacy/create/reducer";
-import deleteObatReducer from './pharmacy/delete/reducer';
+import deleteobatReducer from './pharmacy/delete/reducer';
+import editobatReducer from "./pharmacy/edit/reducer";
+import { editObat } from './pharmacy/edit/actions';
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -47,7 +49,8 @@ const rootReducers = combineReducers({
     responses: responseReducer,
     getObat: getobatReducer,
     createObat: createobatReducer,
-    deleteObat: deleteObatReducer,
+    deleteObat: deleteobatReducer,
+    editObat: editobatReducer,
 });
 const store = createStore(
     rootReducers,

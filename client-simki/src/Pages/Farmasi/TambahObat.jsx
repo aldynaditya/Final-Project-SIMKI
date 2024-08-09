@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import { createObat } from '../../redux/pharmacy/create/actions';
@@ -6,7 +6,7 @@ import '../../Style/Perawat/TambahitemPopup.css';
 
 const TambahObat = ({ onClose, onSuccess }) => {
     const dispatch = useDispatch();
-    const { loading, error } = useSelector(state => state.createObat);
+    const { loading } = useSelector(state => state.createObat);
     const [formData, setFormData] = useState({
         nama_obat: '',
         kode_obat: '',
@@ -46,7 +46,7 @@ const TambahObat = ({ onClose, onSuccess }) => {
                 });
                 setTimeout(() => {
                     setAlert({ status: false, message: '', type: '' });
-                    onSuccess(); // Trigger data fetch in parent component
+                    onSuccess();
                     onClose();
                 }, 2000);
             })
