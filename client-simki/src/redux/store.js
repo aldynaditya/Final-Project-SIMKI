@@ -24,7 +24,11 @@ import questionReducer from './patient/question/reducer';
 import responseReducer from './patient/response/reducer';
 import createPendaftarReducer from './resepsionis/creatependaftar/reducer';
 import pasienReducer from './resepsionis/updatependaftar/reducer';
-
+import getobatReducer from "./pharmacy/index/reducer";
+import createobatReducer from "./pharmacy/create/reducer";
+import deleteobatReducer from './pharmacy/delete/reducer';
+import editobatReducer from "./pharmacy/edit/reducer";
+import { editObat } from './pharmacy/edit/actions';
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -46,7 +50,11 @@ const rootReducers = combineReducers({
     questions: questionReducer,
     responses: responseReducer,
     createPendaftar: createPendaftarReducer,
-    pasien: pasienReducer
+    pasien: pasienReducer,
+    getObat: getobatReducer,
+    createObat: createobatReducer,
+    deleteObat: deleteobatReducer,
+    editObat: editobatReducer,
 });
 const store = createStore(
     rootReducers,
