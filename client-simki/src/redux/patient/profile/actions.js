@@ -1,4 +1,3 @@
-import { getData, patchData } from '../../../utils/fetch';
 import {
     FETCH_PROFILE_REQUEST,
     FETCH_PROFILE_SUCCESS,
@@ -7,8 +6,8 @@ import {
     UPDATE_PROFILE_SUCCESS,
     UPDATE_PROFILE_FAILURE
 } from './constants';
+import { getData, patchData } from '../../../utils/fetch';
 
-// Fetch profile data
 export const fetchProfile = () => async dispatch => {
     dispatch({ type: FETCH_PROFILE_REQUEST });
     try {
@@ -25,14 +24,12 @@ export const updateProfile = (data) => async dispatch => {
     try {
         const res = await patchData('/pasien', data);
         if (res?.data?.data) {
-            dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: res.data.data }); // Notify success
-            dispatch(fetchProfile()); // Refetch profile after successful update
+            dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: res.data.data }); // Notify success// Refetch profile after successful update
         }
     } catch (error) {
         dispatch({
             type: UPDATE_PROFILE_FAILURE,
             payload: error.message,
-        });
-        throw error; // Rethrow error so it can be caught in the component
+        }); // Rethrow error so it can be caught in the component
     }
 };

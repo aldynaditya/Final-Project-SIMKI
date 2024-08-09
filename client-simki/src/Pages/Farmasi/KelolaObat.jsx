@@ -15,6 +15,7 @@ const KelolaObat = () => {
 
     const [isPopupVisible, setIsPopupVisible] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
+    const [selectedObatId, setSelectedObatId] = useState(null);
     const [alert, setAlert] = useState({ status: false, message: '', type: '' });
 
     useEffect(() => {
@@ -30,15 +31,18 @@ const KelolaObat = () => {
     const handleTambahObat = () => {
         setIsPopupVisible(true);
         setIsEditing(false);
+        setSelectedObatId(null); // Reset selected obat id
     };
 
-    const handleUbahObat = () => {
+    const handleUbahObat = (id) => {
         setIsPopupVisible(true);
         setIsEditing(true);
+        setSelectedObatId(id);
     };
 
     const handleClosePopup = () => {
         setIsPopupVisible(false);
+        setSelectedObatId(null);
     };
 
     const handleSuccess = () => {
@@ -111,7 +115,7 @@ const KelolaObat = () => {
                                         <td>{obat.jenis_obat}</td>
                                         <td>{obat.stok_obat}</td>
                                         <td>
-                                            <button className="ubah-jadwal" onClick={handleUbahObat}>Ubah</button>
+                                            <button className="ubah-jadwal" onClick={() => handleUbahObat(obat.id)}>Ubah</button>
                                             <div className="hapus-jadwal" onClick={() => hapusObat(obat.id)}>Hapus</div>
                                         </td>
                                     </tr>
@@ -121,7 +125,11 @@ const KelolaObat = () => {
                     </div>
                 </div>
             </div>
-            {isPopupVisible && (isEditing ? <EditObat onClose={handleClosePopup} /> : <TambahObat onClose={handleClosePopup} onSuccess={handleSuccess} />)}
+            {isPopupVisible && (
+                isEditing 
+                    ? <EditObat onClose={handleClosePopup} obatId={selectedObatId} onSuccess={handleSuccess}/> 
+                    : <TambahObat onClose={handleClosePopup} onSuccess={handleSuccess} />
+            )}
 
             <Modal
                 isOpen={alert.status}

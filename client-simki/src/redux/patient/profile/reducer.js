@@ -1,4 +1,3 @@
-// src/redux/profile/reducer.js
 import {
     FETCH_PROFILE_REQUEST,
     FETCH_PROFILE_SUCCESS,

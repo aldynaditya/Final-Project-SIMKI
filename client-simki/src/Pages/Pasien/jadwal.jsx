@@ -42,7 +42,7 @@ const Jadwal = () => {
   return (
     <div className='jadwal_container'>
       <div className="klinik_dipo_jadwal">
-        <h1 className= "Header-Jadwal" >JADWAL PRAKTEK DOKTER</h1>
+        <h1 className= "Header-Jadwal" >JADWAL PRAKTIK DOKTER</h1>
         <div className="jadwal_table">
           <h2 className="header-umum">Poli Umum</h2>
           <br />
