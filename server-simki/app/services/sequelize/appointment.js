@@ -19,7 +19,7 @@ const getAllAppointment = async () => {
             {
                 model: DataPasien,
                 as: 'datapasien',
-                attributes: ['nik', 'nama_lengkap', 'tempat_lahir', 'tanggal_lahir', 'jenis_kelamin', 'gol_darah', 'suku_bangsa', 'alamat']
+                attributes: ['nik', 'nama_lengkap', 'tempat_lahir', 'tanggal_lahir', 'jenis_kelamin', 'gol_darah', 'kewarganegaraan', 'alamat']
             },
             {
                 model: Schedule,

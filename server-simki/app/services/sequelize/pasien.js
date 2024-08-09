@@ -28,7 +28,7 @@ const {
 } = require('../mail');
 
 const signupPasien = async (req) => {
-    const { nik, nama_lengkap, tempat_lahir, tanggal_lahir, jenis_kelamin, gol_darah, suku_bangsa, alamat, email, password } = req.body;
+    const { nik, nama_lengkap, tempat_lahir, tanggal_lahir, jenis_kelamin, gol_darah, kewarganegaraan, alamat, email, password } = req.body;
 
     let result = await Pasien.findOne({
         where: { email, status: 'tidak aktif' }
@@ -41,7 +41,7 @@ const signupPasien = async (req) => {
         result.tanggal_lahir = tanggal_lahir;
         result.jenis_kelamin = jenis_kelamin;
         result.gol_darah = gol_darah;
-        result.suku_bangsa = suku_bangsa;
+        result.kewarganegaraan = kewarganegaraan;
         result.alamat = alamat;
         result.email = email;
         result.password = password;
@@ -62,7 +62,7 @@ const signupPasien = async (req) => {
                 tanggal_lahir,
                 jenis_kelamin,
                 gol_darah,
-                suku_bangsa,
+                kewarganegaraan,
                 alamat,
                 userId: result.uuid,
             });
@@ -295,7 +295,7 @@ const getDataPasien = async (req) => {
 };
 
 const updateDataPasien = async (req) => {
-    const { nik, nama_lengkap, tempat_lahir, tanggal_lahir, jenis_kelamin, gol_darah, suku_bangsa, alamat } = req.body;
+    const { nik, nama_lengkap, tempat_lahir, tanggal_lahir, jenis_kelamin, gol_darah, kewarganegaraan, alamat } = req.body;
     const { pasienId } = req.pasien;
 
     const [updatedRows] = await DataPasien.update(
@@ -306,7 +306,7 @@ const updateDataPasien = async (req) => {
             tanggal_lahir,
             jenis_kelamin,
             gol_darah,
-            suku_bangsa,
+            kewarganegaraan,
             alamat,
         },
         { where: { userId: pasienId } }
@@ -531,11 +531,6 @@ const submitResponses = async (req) => {
                 emrpasienId: emrpasienId,
             })
         )
-    );
-
-    await EMRPasien.update(
-        { questionnaireCompleted: true },
-        { where: { uuid: emrpasienId } }
     );
 
     return result;

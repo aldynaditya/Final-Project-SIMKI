@@ -16,7 +16,7 @@ const Profile = () => {
         tanggal_lahir: '',
         jenis_kelamin: '',
         gol_darah: '',
-        suku_bangsa: '',
+        kewarganegaraan: '',
         alamat: ''
     });
 
@@ -39,7 +39,7 @@ const Profile = () => {
                 tanggal_lahir: profile.data.tanggal_lahir ? new Date(profile.data.tanggal_lahir).toISOString().split('T')[0] : '',
                 jenis_kelamin: profile.data.jenis_kelamin || '',
                 gol_darah: profile.data.gol_darah || '',
-                suku_bangsa: profile.data.suku_bangsa || '',
+                kewarganegaraan: profile.data.kewarganegaraan || '',
                 alamat: profile.data.alamat || ''
             });
         }
@@ -149,9 +149,9 @@ const Profile = () => {
                         <input
                             type='text'
                             className='kolom-suku-public'
-                            placeholder='Suku Bangsa'
-                            name='suku_bangsa'
-                            value={localProfile.suku_bangsa}
+                            placeholder='Kewarganegaraan'
+                            name='kewarganegaraan'
+                            value={localProfile.kewarganegaraan}
                             onChange={handleChange}
                         />
                     </div>

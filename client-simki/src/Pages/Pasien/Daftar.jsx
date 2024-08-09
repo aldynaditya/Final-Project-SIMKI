@@ -17,7 +17,7 @@ const Daftar = () => {
     tanggal_lahir: '',
     jenis_kelamin: '',
     gol_darah: '',
-    suku_bangsa: '',
+    kewarganegaraan: '',
     alamat: '',
     nik: '',
     email: '',
@@ -170,11 +170,11 @@ const Daftar = () => {
           </div>
           <div className='suku'>
             <select 
-              name="suku_bangsa" 
-              value={userData.suku_bangsa} 
+              name="Kewarganegaraan" 
+              value={userData.kewarganegaraan} 
               onChange={handleChange}
             >
-              <option value="">Pilih Suku Bangsa</option>
+              <option value="">Pilih Kewarganegaraan</option>
               <option value="WNI">WNI</option>
               <option value="WNA">WNA</option>
             </select>
