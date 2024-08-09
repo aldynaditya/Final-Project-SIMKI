@@ -12,7 +12,7 @@ const getAllDataPasien = async () => {
 };
 
 const createDataPasien = async (req) => {
-    const { nik, nama_lengkap, tempat_lahir, tanggal_lahir, jenis_kelamin, gol_darah, suku_bangsa, alamat } = req.body;
+    const { nik, nama_lengkap, tempat_lahir, tanggal_lahir, jenis_kelamin, gol_darah, kewarganegaraan, alamat } = req.body;
 
     const check = await DataPasien.findOne({ where: { nik } });
     if (check) throw new BadRequestError('DataPasien dengan NIK tersebut sudah terdaftar');
@@ -24,7 +24,7 @@ const createDataPasien = async (req) => {
         tanggal_lahir,
         jenis_kelamin,
         gol_darah,
-        suku_bangsa,
+        kewarganegaraan,
         alamat
     });
 
@@ -68,7 +68,7 @@ const getOneDataPasien = async (req) => {
 
 const updateDataPasien = async (req) => {
     const { id } = req.params;
-    const { nik, nama_lengkap, tempat_lahir, tanggal_lahir, jenis_kelamin, gol_darah, suku_bangsa, alamat } = req.body;
+    const { nik, nama_lengkap, tempat_lahir, tanggal_lahir, jenis_kelamin, gol_darah, kewarganegaraan, alamat } = req.body;
 
     const check = await DataPasien.findOne({
         where: {
@@ -80,7 +80,7 @@ const updateDataPasien = async (req) => {
     if (check) throw new BadRequestError('NIK sudah terdaftar');
 
     const result = await DataPasien.update(
-        { nik, nama_lengkap, tempat_lahir, tanggal_lahir, jenis_kelamin, gol_darah, suku_bangsa, alamat },
+        { nik, nama_lengkap, tempat_lahir, tanggal_lahir, jenis_kelamin, gol_darah, kewarganegaraan, alamat },
         { where: { uuid: id }}
     );
 

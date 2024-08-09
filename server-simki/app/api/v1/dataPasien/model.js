@@ -72,7 +72,7 @@ const DataPasien = db.define('dataPasien', {
             },
         },
     },
-    suku_bangsa: {
+    kewarganegaraan: {
         type: DataTypes.ENUM( 'WNA', 'WNI' ),
         allowNull: false,
         validate: {

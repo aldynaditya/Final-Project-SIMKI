@@ -20,7 +20,7 @@ const DetailKunjungan = () => {
 
     useEffect(() => {
         if (data && data.emrId) {
-            dispatch(fetchResponses(data.emrId)); // Fetch responses using the emrId from state
+            dispatch(fetchResponses(data.emrId));
         }
     }, [dispatch, data]);
 
