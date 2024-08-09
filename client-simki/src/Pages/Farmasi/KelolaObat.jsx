@@ -10,7 +10,7 @@ import Modal from 'react-modal';
 
 const KelolaObat = () => {
     const dispatch = useDispatch();
-    const { data, loading, error } = useSelector((state) => state.getObat);
+    const { data, loading } = useSelector((state) => state.getObat);
     const { loading: deleteLoading, error: deleteError } = useSelector((state) => state.deleteObat);
 
     const [isPopupVisible, setIsPopupVisible] = useState(false);
