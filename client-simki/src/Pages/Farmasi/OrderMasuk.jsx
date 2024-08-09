@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import '../../Style/Farmasi/OrderMasuk.css';
-import SearchBar from '../../components/SearchBar';  // Pastikan jalurnya benar
+import SearchBar from '../../components/SearchBar'; 
 
 const OrderMasuk = () => {
     const [rows, setRows] = useState(Array.from({ length: 20 }, () => ({ status: 'Proses' })));

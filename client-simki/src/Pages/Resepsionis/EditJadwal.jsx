@@ -7,14 +7,14 @@ const EditJadwal = ({ onClose, title }) => {
     const handleLinkCancel = (link) => {
         setActiveLink(link);
         if (onClose) {
-            onClose(); // Close the popup
+            onClose(); 
         }
     };
 
     const SimpanJadwal = () => {
         alert('Jadwal Sudah Diperbarui');
         if (onClose) {
-            onClose(); // Close the popup
+            onClose();
         }
     };
 

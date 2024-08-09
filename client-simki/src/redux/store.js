@@ -22,6 +22,8 @@ import scheduleReducer from './patient/schedule/reducer';
 import resendOtpReducer from './patient/resend/reducer';
 import questionReducer from './patient/question/reducer';
 import responseReducer from './patient/response/reducer';
+import createPendaftarReducer from './resepsionis/creatependaftar/reducer';
+import pasienReducer from './resepsionis/updatependaftar/reducer';
 
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -42,7 +44,9 @@ const rootReducers = combineReducers({
     schedule: scheduleReducer,
     resendOtp: resendOtpReducer,
     questions: questionReducer,
-    responses: responseReducer
+    responses: responseReducer,
+    createPendaftar: createPendaftarReducer,
+    pasien: pasienReducer
 });
 const store = createStore(
     rootReducers,
