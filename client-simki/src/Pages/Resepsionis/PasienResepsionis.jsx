@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import '../../Style/Resepsionis/PasienResepsionis.css';
-import SearchBar from "../../components/SearchBar";  // Pastikan nama komponen dan path sesuai
+import SearchBar from "../../components/SearchBar";
 
 const PasienResepsionis = () => {
     const [rows] = useState(Array.from({ length: 20 }));

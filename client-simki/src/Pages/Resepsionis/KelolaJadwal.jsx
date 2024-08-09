@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import '../../Style/Resepsionis/KelolaJadwal.css';
-import TambahJadwal from './JadwalPopup'; // Import komponen TambahJadwal
-import EditJadwal from './EditJadwal'; // Import komponen EditJadwal
+import TambahJadwal from './JadwalPopup';
+import EditJadwal from './EditJadwal'; 
 
 const KelolaJadwal = () => {
     const [baris, setBaris] = useState(Array.from({ length: 12 }));
-    const [tampilkanPopup, setTampilkanPopup] = useState({ show: false, type: '' }); // State untuk mengontrol visibilitas popup
+    const [tampilkanPopup, setTampilkanPopup] = useState({ show: false, type: '' }); 
     const navigate = useNavigate();
 
     const handleTambahJadwal = () => {

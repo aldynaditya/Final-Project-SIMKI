@@ -1,4 +1,3 @@
-// Profile.js
 import React from 'react';
 import '../../Style/Resepsionis/IdentitasPasien.css';
 
@@ -23,8 +22,8 @@ const IdentitasPasien = () => {
                     <div className='blood-perawat'>
                         <input type='text' className='kolom-blood-perawat' placeholder='Golongan Darah'/>
                     </div>
-                    <div className='suku-perawat'>
-                        <input type='text' className='kolom-suku-perawat' placeholder='Suku Bangsa'/>
+                    <div className='bangsa-perawat'>
+                        <input type='text' className='kolom-bangsa-perawat' placeholder='Kewarganegaraan'/>
                     </div>
                     <div className='alamat-perawat'>
                         <input type='text' className='kolom-alamat-perawat' placeholder='Alamat Lengkap'/>

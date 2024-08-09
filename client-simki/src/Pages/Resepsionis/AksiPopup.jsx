@@ -1,23 +1,21 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import '../../Style/Resepsionis/AksiPopup.css';
 
 const UpdateStatus = ({ onClose }) => {
     const [activeLink, setActiveLink] = useState('');
     const [aksi, setAksi] = useState('');
-    const navigate = useNavigate();
 
     const handleLinkCancel = (link) => {
         setActiveLink(link);
         if (onClose) {
-            onClose(); // Close the popup
+            onClose();
         }
     };
 
     const SimpanAksi = () => {
         alert('Status Sudah Diperbarui');
         if (onClose) {
-            onClose(); // Close the popup
+            onClose(); 
         }
     };
 

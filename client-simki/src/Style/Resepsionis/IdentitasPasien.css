@@ -104,7 +104,12 @@ html, body {
     resize: none;
 }
 
-.kolom-ttl-perawat, .kolom-gender-perawat, .kolom-gender-perawat, .kolom-blood-perawat, .kolom-suku-perawat, .kolom-email-perawat{
+.kolom-ttl-perawat, 
+.kolom-gender-perawat, 
+.kolom-gender-perawat, 
+.kolom-blood-perawat, 
+.kolom-bangsa-perawat, 
+.kolom-email-perawat{
     width: 560px;
     height: 50px;
     padding: 12px 20px;

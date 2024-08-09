@@ -33,6 +33,7 @@
     font-size: 24px;
     margin-bottom: 20px;
     margin-top: 30px;
+    text-align: center;
 }
 
 .kolom-pendaftar-baru {
@@ -46,7 +47,7 @@
 
 .kolom-npasien-pendaftar-baru{
     width: 450px;
-    height: 30px;
+    height: 45px;
     padding: 12px 20px;
     box-sizing: border-box;
     border: 2px solid #ccc;
@@ -63,7 +64,7 @@
 
 .kolom-tempat-pendaftar-baru{
     width: 220px;
-    height: 30px;
+    height: 45px;
     padding: 12px 20px;
     box-sizing: border-box;
     border: 2px solid #ccc;
@@ -75,7 +76,7 @@
 
 .kolom-tanggal-pendaftar-baru{
     width: 220px;
-    height: 30px;
+    height: 45px;
     padding: 12px 20px;
     box-sizing: border-box;
     border: 2px solid #ccc;
@@ -86,12 +87,9 @@
 }
 
 .kolom-nik-pendaftar-baru,
-.kolom-gender-pendaftar-baru,
-.kolom-blood-pendaftar-baru,
-.kolom-suku-pendaftar-baru,
 .kolom-alamat-pendaftar-baru {
     width: 450px;
-    height: 30px;
+    height: 45px;
     padding: 12px 20px;
     box-sizing: border-box;
     border: 2px solid #ccc;
@@ -99,16 +97,31 @@
     font-size: 16px;
     resize: none;
     margin-right: 10px;
+    
 }
+
+.kolom-gender-pendaftar-baru,
+.kolom-blood-pendaftar-baru,
+.kolom-bangsa-pendaftar-baru
+{
+    border-radius: 5px;
+    width: 450px;
+    height: 45px;
+    padding: 10px;
+    font-size: 16px;
+    text-align: left;
+    border: 2px solid #ccc;
+}
+
 
 .kolom-alamat-pendaftar-baru {
     width: 450px;
-    height: 30px;
+    height: 45px;
 }
 
 .tambahpendaftar-container {
     display: flex;
-    justify-content: center; /* Center the button horizontally */
+    justify-content: center; 
     margin-top: 20px;
 }
 
