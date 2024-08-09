@@ -172,7 +172,7 @@ const getALlOrderObatbyFarmasi = async() => {
             dateAndTime: orderobat.createdAt,
             noEMR: emr.noEMR,
             namaPasien: datapasien.nama_lengkap,
-            namaDokter: schedule.user_klinik.name,
+            namaDokter: schedule.user_klinik.nama,
             poli: schedule.poli,
             obat: dataobat.nama_obat,
             kuantitas: orderobat.kuantitas,
@@ -183,6 +183,16 @@ const getALlOrderObatbyFarmasi = async() => {
     });
 
     return result;
+}
+
+const updateOrderStatusbyFarmasi = async (req) =>{
+    const { id } = req.params;
+
+    const order = await OrderObat.findByPk(id);
+    if (!order) throw new NotFoundError('Order not found');
+
+    order.status = 'accepted';
+    await order.save();
 }
 
 const createOrderItem = async (req) => {
@@ -321,6 +331,7 @@ const createOrderSuratRujukan = async (req) => {
 module.exports = {
     createOrderObat,
     getALlOrderObatbyFarmasi,
+    updateOrderStatusbyFarmasi,
     getOrderDetailInformation,
     createOrderItem,
     createOrderSuratRujukan,
