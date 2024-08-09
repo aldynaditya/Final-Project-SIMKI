@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import '../../Style/Pimpinan/NotifikasiLead.css';
-import SearchBar from '../../components/SearchBar';  // Pastikan jalurnya benar
+import SearchBar from '../../components/SearchBar'; 
 import { useNavigate } from 'react-router-dom';
 
 const NotifikasiPimpinan = () => {

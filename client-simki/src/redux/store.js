@@ -22,6 +22,8 @@ import scheduleReducer from './patient/schedule/reducer';
 import resendOtpReducer from './patient/resend/reducer';
 import questionReducer from './patient/question/reducer';
 import responseReducer from './patient/response/reducer';
+import createPendaftarReducer from './resepsionis/creatependaftar/reducer';
+import pasienReducer from './resepsionis/updatependaftar/reducer';
 import getobatReducer from "./pharmacy/index/reducer";
 import createobatReducer from "./pharmacy/create/reducer";
 import deleteobatReducer from './pharmacy/delete/reducer';
@@ -47,6 +49,8 @@ const rootReducers = combineReducers({
     resendOtp: resendOtpReducer,
     questions: questionReducer,
     responses: responseReducer,
+    createPendaftar: createPendaftarReducer,
+    pasien: pasienReducer,
     getObat: getobatReducer,
     createObat: createobatReducer,
     deleteObat: deleteobatReducer,

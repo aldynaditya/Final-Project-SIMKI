@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import '../../Style/Resepsionis/PendaftarBaru.css';
 import PendaftarPopup from './PendaftarPopup';
 import SearchBar from "../../components/SearchBar";
+import { fetchPasien } from '../../redux/resepsionis/updatependaftar/actions';
 
 const PendaftarBaru = () => {
-    const [rows, setRows] = useState(Array.from({ length: 20 }, (_, index) => index));
+    const dispatch = useDispatch();
+    const { data: rows, loading, error } = useSelector(state => state.pasien);
+
+    useEffect(() => {
+        dispatch(fetchPasien());
+    }, [dispatch]);
+
     const [showPopup, setShowPopup] = useState(false);
 
     const HapusPendaftar = (index) => {
-        setRows(rows.filter((_, i) => i !== index));
     };
 
     const handleOpenPopup = () => {
@@ -19,11 +26,24 @@ const PendaftarBaru = () => {
         setShowPopup(false);
     };
 
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
     return (
         <div className="pendaftar-baru-wrapper">
-            <div className="navbar-header-pendaftar">
-                {/* Konten Navbar jika ada */}
-            </div>
             <div className="pendaftar-baru-container">
                 <div className="content-wrapper">
                     <div className="header-pendaftar-baru">
@@ -42,19 +62,17 @@ const PendaftarBaru = () => {
                                     <th>Tanggal Lahir</th>
                                     <th>Jenis Kelamin</th>
                                     <th>Alamat</th>
-                                    <th>Email</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {rows.map((row, index) => (
                                     <tr key={index}>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{row.nama_lengkap}</td>
+                                        <td>{row.nik}</td>
+                                        <td>{formatDate(row.tanggal_lahir)}</td>
+                                        <td>{row.jenis_kelamin}</td>
+                                        <td>{row.alamat}</td>
                                         <td>
                                             <div className="hapus-pendaftar" onClick={() => HapusPendaftar(index)}>
                                                 Hapus
