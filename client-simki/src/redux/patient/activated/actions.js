@@ -10,7 +10,7 @@ export const activateAccount = (form) => async (dispatch) => {
 
     try {
         const response = await putData('/active', form);
-        dispatch({ type: ACTIVATE_ACCOUNT_SUCCESS, payload: response.data });
+        dispatch({ type: ACTIVATE_ACCOUNT_SUCCESS, payload: response.data.data });
     } catch (error) {
         dispatch({ type: ACTIVATE_ACCOUNT_FAILURE, payload: error.message });
     }

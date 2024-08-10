@@ -99,6 +99,8 @@ const resendOtp = async (req) => {
     const data = { otp: pasien.otp };
 
     await otpMail(email, data, 'otp');
+
+    return data;
 }
 
 const activatePasien = async (req) => {

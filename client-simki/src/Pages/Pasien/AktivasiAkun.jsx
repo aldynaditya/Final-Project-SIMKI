@@ -12,7 +12,7 @@ const AktivasiAkun = () => {
   const dispatch = useDispatch();
   const { loading, error, data } = useSelector(state => state.activated);
   const { email } = useSelector(state => state.daftar); // Ambil email dari state daftar
-  const { loading: resendLoading, error: resendError, success: resendSuccess } = useSelector(state => state.resendOtp);
+  const { err, success } = useSelector(state => state.resendOtp);
   const [navigateAfterClose, setNavigateAfterClose] = useState(false);
 
   const [form, setForm] = useState({
@@ -71,22 +71,6 @@ const AktivasiAkun = () => {
   }, [error]);
 
   useEffect(() => {
-    if (resendError) {
-      setAlert({
-        status: true,
-        message: resendError,
-        type: 'danger'
-      });
-    } else if (resendSuccess) {
-      setAlert({
-        status: true,
-        message: 'Kode OTP telah dikirim ulang ke email Anda',
-        type: 'success'
-      });
-    }
-  }, [resendError, resendSuccess]);
-
-  useEffect(() => {
     if (data) {
       setAlert({
         status: true,
@@ -101,13 +85,22 @@ const AktivasiAkun = () => {
     if (email.trim() === '') {
       setAlert({
         status: true,
-        message: 'Email tidak ditemukan',
+        message: 'Email tidak ditemukan. Silakan mengisi ulang form Daftar',
         type: 'danger'
       });
-    } else {
-      dispatch(resendOtp(email));
     }
+      dispatch(resendOtp(email));
   };
+
+  useEffect(() => {
+    if (success) {
+      setAlert({
+        status: true,
+        message: 'Kode OTP telah dikirimkan ke Emailmu',
+        type: 'success'
+      });;
+    }
+  }, [success]);
 
   const closeModal = () => {
     setAlert({ status: false, message: '' });

@@ -6,18 +6,18 @@ import {
 
 const initialState = {
     loading: false,
-    data: null,
-    error: null,
+    success: null,
+    err: null,
 };
 
 const resendOtpReducer = (state = initialState, action) => {
     switch (action.type) {
         case RESEND_OTP_REQUEST:
-            return { ...state, loading: true, error: null };
+            return { ...state, loading: true, err: null };
         case RESEND_OTP_SUCCESS:
-            return { ...state, loading: false, data: action.payload, error: null };
+            return { ...state, loading: false, success: action.payload, err: null };
         case RESEND_OTP_FAILURE:
-            return { ...state, loading: false, error: action.payload };
+            return { ...state, loading: false, err: action.payload };
         default:
             return state;
     }
