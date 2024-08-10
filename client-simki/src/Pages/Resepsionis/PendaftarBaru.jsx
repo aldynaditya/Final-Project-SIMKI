@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
+import Modal from 'react-modal';
 import '../../Style/Resepsionis/PendaftarBaru.css';
 import PendaftarPopup from './PendaftarPopup';
 import SearchBar from "../../components/SearchBar";
 import { fetchPasien } from '../../redux/resepsionis/updatependaftar/actions';
+import { deletePendaftar } from '../../redux/resepsionis/deletependaftar/actions';
 
 const PendaftarBaru = () => {
     const dispatch = useDispatch();
     const { data: rows, loading, error } = useSelector(state => state.pasien);
+    const { loading: deleteLoading, error: deleteError, success: deleteSuccess } = useSelector(state => state.deletePendaftar);
 
     useEffect(() => {
         dispatch(fetchPasien());
@@ -15,7 +18,31 @@ const PendaftarBaru = () => {
 
     const [showPopup, setShowPopup] = useState(false);
 
-    const HapusPendaftar = (index) => {
+    const [alert, setAlert] = useState({
+        status: false,
+        message: '',
+        type: '',
+    });
+
+    const HapusPendaftar = async (id) => {
+        try {
+            await dispatch(deletePendaftar(id));
+            setAlert({
+                status: true,
+                message: 'DataPasien berhasil terhapus',
+                type: 'success',
+            });
+        } catch (err) {
+            setAlert({
+                status: true,
+                message: 'Gagal menghapus DataPasien',
+                type: 'danger',
+            });
+        }
+    };
+
+    const closeModal = () => {
+        setAlert({ status: false, message: '', type: '' });
     };
 
     const handleOpenPopup = () => {
@@ -34,12 +61,12 @@ const PendaftarBaru = () => {
         return `${year}-${month}-${day}`;
     };
 
-    if (loading) {
+    if (loading || deleteLoading) {
         return <div>Loading...</div>;
     }
 
-    if (error) {
-        return <div>Error: {error}</div>;
+    if (error || deleteError) {
+        return <div>Error: {error || deleteError}</div>;
     }
 
     return (
@@ -74,7 +101,7 @@ const PendaftarBaru = () => {
                                         <td>{row.jenis_kelamin}</td>
                                         <td>{row.alamat}</td>
                                         <td>
-                                            <div className="hapus-pendaftar" onClick={() => HapusPendaftar(index)}>
+                                            <div className="hapus-pendaftar" onClick={() => HapusPendaftar(row.uuid)}>
                                                 Hapus
                                             </div>
                                         </td>
@@ -86,6 +113,20 @@ const PendaftarBaru = () => {
                 </div>
             </div>
             {showPopup && <PendaftarPopup onClose={handleClosePopup} />}
+            <Modal
+                isOpen={alert.status}
+                onRequestClose={closeModal}
+                contentLabel="Alert Message"
+                className="Modal"
+                overlayClassName="Overlay"
+                shouldCloseOnOverlayClick={true}
+                shouldCloseOnEsc={true}
+            >
+                <div className="modal-content">
+                    <p>{alert.message}</p>
+                    <button onClick={closeModal}>Close</button>
+                </div>
+            </Modal>
         </div>
     );
 };
