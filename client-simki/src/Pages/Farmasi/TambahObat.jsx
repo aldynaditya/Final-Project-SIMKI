@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import { createObat } from '../../redux/pharmacy/create/actions';
@@ -6,7 +6,7 @@ import '../../Style/Perawat/TambahitemPopup.css';
 
 const TambahObat = ({ onClose, onSuccess }) => {
     const dispatch = useDispatch();
-    const { loading } = useSelector(state => state.createObat);
+    const { data, loading, error } = useSelector(state => state.createObat);
     const [formData, setFormData] = useState({
         nama_obat: '',
         kode_obat: '',
@@ -27,7 +27,39 @@ const TambahObat = ({ onClose, onSuccess }) => {
         });
     };
 
-    const handleSubmit = () => {
+    useEffect(() => {
+        // Reset previous alert before setting a new one
+        if (alert.status) {
+            const timer = setTimeout(() => {
+                setAlert({ status: false, message: '', type: '' });
+            }, 2000); // Adjust this timeout duration as needed
+            return () => clearTimeout(timer);
+        }
+    }, [alert.status]);
+
+    useEffect(() => {
+        if (error) {
+            setAlert({
+                status: true,
+                message: error,
+                type: 'danger'
+            });
+        }
+
+        if (data && !loading) {
+            setAlert({
+                status: true,
+                message: 'Data Obat berhasil disimpan!',
+                type: 'success'
+            });
+            setTimeout(() => {
+                onSuccess();
+                onClose();
+            }, 2000);
+        }
+    }, [data, error, loading, onClose, onSuccess]);
+
+    const handleSubmit = async () => {   
         if (!isFormValid()) {
             setAlert({
                 status: true,
@@ -36,27 +68,7 @@ const TambahObat = ({ onClose, onSuccess }) => {
             });
             return;
         }
-
-        dispatch(createObat(formData))
-            .then(() => {
-                setAlert({
-                    status: true,
-                    message: 'Data Obat berhasil disimpan!',
-                    type: 'success'
-                });
-                setTimeout(() => {
-                    setAlert({ status: false, message: '', type: '' });
-                    onSuccess();
-                    onClose();
-                }, 2000);
-            })
-            .catch(() => {
-                setAlert({
-                    status: true,
-                    message: 'Gagal menyimpan data!',
-                    type: 'danger'
-                });
-            });
+        dispatch(createObat(formData));
     };
 
     return (

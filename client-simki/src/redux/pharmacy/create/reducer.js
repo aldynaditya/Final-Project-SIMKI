@@ -28,11 +28,11 @@ const createobatReducer = (state = initialState, action) => {
         case CREATE_OBAT_FAILURE:
             return { 
                 ...state, 
-                loading: false, 
+                loading: false,
                 error: action.payload 
             };
         default:
-            return state;
+            return initialState;
     }
 };
 
