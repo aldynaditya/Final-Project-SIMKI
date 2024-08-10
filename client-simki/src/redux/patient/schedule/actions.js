@@ -8,7 +8,7 @@ import { getData } from '../../../utils/fetch';
 export const getSchedules = () => async (dispatch) => {
     dispatch({type: GET_SCHEDULE_REQUEST});
     try {
-        const response = await getData('/cms/schedule');
+        const response = await getData('/schedule');
         dispatch({ 
             type: GET_SCHEDULES_SUCCESS, 
             payload: response.data.data 

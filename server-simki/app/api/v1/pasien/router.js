@@ -17,6 +17,10 @@ const {
 } = require('./controller');
 
 const {
+    index,
+} = require('../schedule/controller')
+
+const {
     authenticatePasien,
 } = require('../../../middleware/auth');
 
@@ -29,6 +33,7 @@ router.post('/auth/signin', signin);
 router.put('/active', activeAccount);
 router.post('/forgot-password', forgotpassword);
 router.post('/reset-password', resetpassword);
+router.get('/schedule', index);
 router.get('/pasien', authenticatePasien, detail);
 router.patch('/pasien',authenticatePasien, update);
 router.post('/appointment', authenticatePasien, makeAppointment);

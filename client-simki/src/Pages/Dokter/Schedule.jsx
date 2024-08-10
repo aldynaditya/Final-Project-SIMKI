@@ -1,105 +1,88 @@
-import React from "react";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getScheduleP } from '../../redux/nurse/schedule/actions';
 import '../../Style/Perawat/JadwalDokter.css';
 
 const JadwalDokter = () => {
-    return (
-        <div className="jadwal-dokter-wrapper">
-            <div className="navbar-header-jadwal">
-        </div>
-            <div className="jadwal-dokter-container">
-                <div className="content-wrapper-jadwal">
-                    <h1 className="text_jadwal">Jadwal Dokter</h1>
-                    
-                    <div className="poli-section">
-                        <h2 className="text_poli_umum">Poli Umum</h2>
-                        <div className="tabel_jadwal_dokter">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th className="kolom-jam">Jam</th>
-                                        <th>Senin</th>
-                                        <th>Selasa</th>
-                                        <th>Rabu</th>
-                                        <th>Kamis</th>
-                                        <th>Jumat</th>
-                                        <th>Sabtu</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td className="kolom-jam">08.30 - 12.30</td>
-                                        <td>dr. Akhmad Ismail</td>
-                                        <td>dr. Akhmad Ismail</td>
-                                        <td>dr. Neni Susilaningsih</td>
-                                        <td>dr. Farmaditya Eka Putra</td>
-                                        <td>dr. Dea Amarilisa Adespin</td>
-                                        <td>dr. Budi Laksono</td>
-                                    </tr>
-                                    <tr>
-                                        <td className="kolom-jam">14.00-18.00</td>
-                                        <td>dr. Nur Asri</td>
-                                        <td>dr. Nur Asri</td>
-                                        <td>dr. Della Rimawati</td>
-                                        <td>dr. Della Rimawati</td>
-                                        <td>dr. Della Rimawati</td>
-                                        <td>dr. Della Rimawati</td>
-                                    </tr>
-                                    <tr>
-                                        <td className="kolom-jam">18.00-21.00</td>
-                                        <td>dr. Citra Hutami Saraswati</td>
-                                        <td>dr. Citra Hutami Saraswati</td>
-                                        <td>dr. Amalian Puswitasari</td>
-                                        <td>dr. Amalian Puswitasari</td>
-                                        <td>dr. Farmaditya Eka Putra</td>
-                                        <td>dr. Farmaditya Eka Putra</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+    const dispatch = useDispatch();
+    const { schedules, loading, error } = useSelector(state => state.getScheduleP);
 
-                    <div className="poli-section">
-                        <h2 className="text_poli_gigi">Poli Gigi</h2>
-                        <div className="tabel_jadwal_dokter">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th className="kolom-jam">Jam</th>
-                                        <th>Senin</th>
-                                        <th>Selasa</th>
-                                        <th>Rabu</th>
-                                        <th>Kamis</th>
-                                        <th>Jumat</th>
-                                        <th>Sabtu</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td className="kolom-jam">08.30 - 11.30</td>
-                                        <td>drg. Tyas Prihatiningsih</td>
-                                        <td>drg. Tyas Prihatiningsih</td>
-                                        <td>drg. Eghia Laditra Ambarani</td>
-                                        <td>drg. Ahmad Fahmi Fahrobi</td>
-                                        <td>drg. Eghia Laditra Ambarani</td>
-                                        <td>drg. Eghia Laditra Ambarani</td>
-                                    </tr>
-                                    <tr>
-                                        <td className="kolom-jam">16.00 - 20.00</td>
-                                        <td>drg. Ahmad Fahmi Fahrobi</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+    useEffect(() => {
+        dispatch(getScheduleP());
+    }, [dispatch]);
+
+    const dayOrder = {
+        'Senin': 1,
+        'Selasa': 2,
+        'Rabu': 3,
+        'Kamis': 4,
+        'Jumat': 5,
+        'Sabtu': 6,
+        'Minggu': 7
+    };
+
+    const renderTableRows = (poliName) => {
+        return schedules
+        .filter(schedule => schedule.poli === poliName && schedule.status !== 'tidak ada')
+        .sort((a, b) => {
+            if (dayOrder[a.hari] !== dayOrder[b.hari]) {
+            return dayOrder[a.hari] - dayOrder[b.hari];
+            }
+            return a.jam.localeCompare(b.jam);
+        })
+        .map((schedule, index) => (
+            <tr key={index}>
+            <td>{schedule.dokter}</td>
+            <td>{schedule.hari}</td>
+            <td>{schedule.jam}</td>
+            </tr>
+        ));
+    };
+
+    return (
+        <div className='jadwal_container'>
+        <div className="klinik_dipo_jadwal">
+            <h1 className= "Header-Jadwal" >JADWAL PRAKTIK DOKTER</h1>
+            <div className="jadwal_table">
+            <h2 className="header-umum">Poli Umum</h2>
+            <br />
+            <table>
+                <thead>
+                <tr>
+                    <th>Dokter</th>
+                    <th>Hari</th>
+                    <th>Jam</th>
+                </tr>
+                </thead>
+                <tbody>
+                {renderTableRows('Umum')}
+                </tbody>
+            </table>
+            </div>
+            <div className="jadwal_table">
+            <h2 className="header-gigi ">Poli Gigi</h2>
+            <br />
+            <table>
+                <thead>
+                <tr>
+                    <th>Dokter</th>
+                    <th>Hari</th>
+                    <th>Jam</th>
+                </tr>
+                </thead>
+                <tbody>
+                {renderTableRows('Gigi')}
+                </tbody>
+            </table>
             </div>
         </div>
+        <div className="desc-jadwal">
+            <p>
+            {/* Additional description or information can be added here */}
+            </p>
+        </div>
+        </div>
     );
-};
+    }
 
 export default JadwalDokter;
