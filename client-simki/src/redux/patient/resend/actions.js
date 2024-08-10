@@ -10,7 +10,7 @@ export const resendOtp = ( email ) => async (dispatch) => {
 
     try {
         const response = await postData('/resend-otp', { email });
-        dispatch({ type: RESEND_OTP_SUCCESS, payload: response.data });
+        dispatch({ type: RESEND_OTP_SUCCESS, payload: response.data.data });
     } catch (error) {
         dispatch({ type: RESEND_OTP_FAILURE, payload: error.message });
     }
