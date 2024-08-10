@@ -103,7 +103,7 @@ const KelolaObat = () => {
                                     <th>Harga Satuan</th>
                                     <th>Satuan</th>
                                     <th>Stok</th>
-                                    <th>Aksi</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>

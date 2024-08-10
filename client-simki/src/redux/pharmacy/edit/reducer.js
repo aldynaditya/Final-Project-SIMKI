@@ -1,5 +1,3 @@
-// src/redux/pharmacy/edit/reducer.js
-
 import {
     EDIT_OBAT_REQUEST,
     EDIT_OBAT_SUCCESS,

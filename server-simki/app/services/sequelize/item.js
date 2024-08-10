@@ -20,6 +20,7 @@ const getAllItem = async () => {
             nama_item: item.nama_item,
             kode_item: item.kode_item,
             harga_item: item.harga_satuan_item,
+            satuan_item: item.satuan,
             stok_item: item.stok,
             createdBy: item.user.nama
         };
@@ -29,7 +30,7 @@ const getAllItem = async () => {
 };
 
 const createItem = async (req) => {
-    const {nama_item, kode_item, harga_satuan_item, stok } = req.body;
+    const {nama_item, kode_item, harga_satuan_item, satuan, stok } = req.body;
     const userKlinikId = req.user.id;
 
     const check = await Item.findOne({ where: { nama_item } });
@@ -39,6 +40,7 @@ const createItem = async (req) => {
         nama_item: nama_item,
         kode_item: kode_item,
         harga_satuan_item: harga_satuan_item,
+        satuan: satuan,
         stok: stok,
         userKlinikId
     });
@@ -57,10 +59,10 @@ const getOneItem = async (req) => {
 
 const updateItem = async (req) => {
     const { id } = req.params;
-    const { nama_item, kode_item, harga_satuan_item, stok } = req.body;
+    const { nama_item, kode_item, harga_satuan_item, satuan, stok } = req.body;
     
     const result = await Item.update(
-        { nama_item, kode_item, harga_satuan_item, stok },
+        { nama_item, kode_item, harga_satuan_item, satuan, stok },
         { where: { uuid: id }}
     );
 

@@ -1,26 +1,96 @@
-import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchItem } from '../../redux/nurse/index/actions';
+import { deleteItem } from '../../redux/nurse/delete/actions';
 import '../../Style/Perawat/KelolaItem.css';
-import SearchBar from "../../components/SearchBar";  // Pastikan nama komponen dan path sesuai
+import SearchBar from "../../components/SearchBar";
+import TambahItem from './TambahItem';
+import EditItem from './EditItem';
+import Modal from 'react-modal';
 
 const KelolaItem = () => {
-    const [rows] = useState(Array.from({ length: 20 }));
-    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { data, loading } = useSelector((state) => state.getItem);
+    const { loading: deleteLoading, error: deleteError } = useSelector((state) => state.deleteItem);
 
-    const handleTambahItemPopup = () => {
-        navigate('tambah-item-popup');
+    const [isPopupVisible, setIsPopupVisible] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const [selectedItemId, setSelectedItemId] = useState(null);
+    const [alert, setAlert] = useState({ status: false, message: '', type: '' });
+
+    useEffect(() => {
+        dispatch(fetchItem());
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (!deleteLoading && !deleteError) {
+            dispatch(fetchItem());
+        }
+    }, [deleteLoading, deleteError, dispatch]);
+
+    const handleTambahItem = () => {
+        setIsPopupVisible(true);
+        setIsEditing(false);
+        setSelectedItemId(null);
+    };
+
+    const handleUbahItem = (id) => {
+        setIsPopupVisible(true);
+        setIsEditing(true);
+        setSelectedItemId(id);
+    };
+
+    const handleClosePopup = () => {
+        setIsPopupVisible(false);
+        setSelectedItemId(null);
+    };
+
+    const handleSuccess = () => {
+        dispatch(fetchItem());
+    };
+
+    const hapusItem = async (id) => {
+        try {
+            await dispatch(deleteItem(id));
+            if (deleteError) {
+                setAlert({
+                    status: true,
+                    message: 'Data Item gagal dihapus!',
+                    type: 'danger'
+                });
+            } else {
+                setAlert({
+                    status: true,
+                    message: 'Data Item berhasil dihapus!',
+                    type: 'success'
+                });
+            }
+        } catch (error) {
+            setAlert({
+                status: true,
+                message: 'Failed to delete',
+                type: 'danger',
+            });
+        }
+    };
+
+    if (loading || deleteLoading) {
+        return <div>Loading...</div>;
+    }
+
+    const closeModal = () => {
+        setAlert({ status: false, message: '', type: '' });
     };
 
     return (
         <div className="kelola-item-wrapper">
-            <div className="navbar-kelola-item">
-            </div>
-            <div className="kelola-item-container">
+            <div className="navbar-kelola-item"></div>
+            <div className={`kelola-item-container ${isPopupVisible ? 'overlay' : ''}`}>
                 <div className="content-wrapper-kelola-item">
                     <div className="header-kelola-item">
                         <h1 className="text_kelola-item">Stok Item</h1>
                         <div className="header-kelola-item-action">
-                            <button className='tombol_tambahitem' onClick={handleTambahItemPopup}>Tambah Item</button>
+                            <button className="tombol_tambahitem" onClick={handleTambahItem}>Tambah Item</button>
                             <SearchBar />
                         </div>
                     </div>
@@ -33,18 +103,21 @@ const KelolaItem = () => {
                                     <th>Harga Satuan</th>
                                     <th>Satuan</th>
                                     <th>Stok</th>
-                                    <th>Aksi</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {rows.map((_, index) => (
-                                    <tr key={index}>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td><div className="ket_aksi">Aksi</div></td>
+                                {data.map((item) => (
+                                    <tr key={item.id}>
+                                        <td>{item.nama_item}</td>
+                                        <td>{item.kode_item}</td>
+                                        <td>{item.harga_item}</td>
+                                        <td>{item.satuan_item}</td>
+                                        <td>{item.stok_item}</td>
+                                        <td>
+                                            <button className="ubah-jadwal" onClick={() => handleUbahItem(item.id)}>Ubah</button>
+                                            <div className="hapus-jadwal" onClick={() => hapusItem(item.id)}>Hapus</div>
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -52,6 +125,26 @@ const KelolaItem = () => {
                     </div>
                 </div>
             </div>
+            {isPopupVisible && (
+                isEditing 
+                    ? <EditItem onClose={handleClosePopup} itemId={selectedItemId} onSuccess={handleSuccess}/> 
+                    : <TambahItem onClose={handleClosePopup} onSuccess={handleSuccess} />
+            )}
+
+            <Modal
+                isOpen={alert.status}
+                onRequestClose={closeModal}
+                contentLabel="Alert Message"
+                className="Modal"
+                overlayClassName="Overlay"
+                shouldCloseOnOverlayClick={true}
+                shouldCloseOnEsc={true}
+            >
+                <div className="modal-content">
+                    <p>{alert.message}</p>
+                    <button onClick={closeModal}>Close</button>
+                </div>
+            </Modal>
         </div>
     );
 };

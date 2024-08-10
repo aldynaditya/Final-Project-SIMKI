@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
-import { createObat } from '../../redux/pharmacy/create/actions';
+import { createItem } from '../../redux/nurse/create/actions';
 import '../../Style/Perawat/TambahitemPopup.css';
 
-const TambahObat = ({ onClose, onSuccess }) => {
+const TambahItem = ({ onClose, onSuccess }) => {
     const dispatch = useDispatch();
-    const { data, loading, error } = useSelector(state => state.createObat);
+    const { data, loading, error } = useSelector(state => state.createItem);
     const [formData, setFormData] = useState({
-        nama_obat: '',
-        kode_obat: '',
-        harga_satuan_obat: '',
+        nama_item: '',
+        kode_item: '',
+        harga_satuan_item: '',
         satuan: '',
         stok: ''
     });
@@ -48,7 +48,7 @@ const TambahObat = ({ onClose, onSuccess }) => {
         if (data && !loading) {
             setAlert({
                 status: true,
-                message: 'Data Obat berhasil disimpan!',
+                message: 'Data Item berhasil disimpan!',
                 type: 'success'
             });
             setTimeout(() => {
@@ -67,7 +67,7 @@ const TambahObat = ({ onClose, onSuccess }) => {
             });
             return;
         }
-        dispatch(createObat(formData));
+        dispatch(createItem(formData));
     };
 
     return (
@@ -76,19 +76,19 @@ const TambahObat = ({ onClose, onSuccess }) => {
                 <button className='cancel-x' onClick={onClose}>
                     Cancel X
                 </button>
-                <h1 className='text-tambahitem-popup'>Tambah Obat</h1>
+                <h1 className='text-tambahitem-popup'>Tambah Item</h1>
                 <div className='kolom-tambah-item'>
                     <div className='nama-item'>
-                        <span className='text-nama-item'>Nama Obat :</span>
-                        <input type='text' className='kolom-nama-item' name="nama_obat" value={formData.nama_obat} onChange={handleChange} />
+                        <span className='text-nama-item'>Nama Item :</span>
+                        <input type='text' className='kolom-nama-item' name="nama_item" value={formData.nama_item} onChange={handleChange} />
                     </div>
                     <div className='kode-item'>
-                        <span className='text-kode-item'>Kode Obat :</span>
-                        <input type='text' className='kolom-kode-item' name="kode_obat" value={formData.kode_obat} onChange={handleChange} />
+                        <span className='text-kode-item'>Kode Item :</span>
+                        <input type='text' className='kolom-kode-item' name="kode_item" value={formData.kode_item} onChange={handleChange} />
                     </div>
                     <div className='harga-item'>
                         <span className='text-harga-item'>Harga Satuan :</span>
-                        <input type='text' className='kolom-harga-item' name="harga_satuan_obat" value={formData.harga_satuan_obat} onChange={handleChange} />
+                        <input type='text' className='kolom-harga-item' name="harga_satuan_item" value={formData.harga_satuan_item} onChange={handleChange} />
                     </div>
                     <div className='satuan-item'>
                         <span className='text-satuan-item'>Satuan :</span>
@@ -124,4 +124,4 @@ const TambahObat = ({ onClose, onSuccess }) => {
     );
 };
 
-export default TambahObat;
+export default TambahItem;

@@ -36,6 +36,13 @@ const Item = db.define('item', {
             notEmpty: true,
         }
     },
+    satuan:{
+        type: DataTypes. STRING,
+        allowNull: false,
+        validate: {
+            notEmpty: true,
+        }
+    },
     stok:{
         type: DataTypes. INTEGER,
         allowNull: false,
