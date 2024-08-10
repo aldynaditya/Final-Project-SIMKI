@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import Dokter from '../Pages/Dokter';
 import PasienDokter from '../Pages/Dokter/Pasien';
 import NotifikasiDokter from '../Pages/Dokter/Notifikasi';
-import ScheduleDr from '../Pages/Dokter/Schedule';
+import Schedule from '../Pages/Dokter/Schedule';
 import EmrDokter from '../Pages/Dokter/Emr';
 import EntriMasuk from '../Pages/Dokter/EntriMasuk';
 import IsiCppt from '../Pages/Dokter/IsiCppt';
@@ -24,7 +24,7 @@ export function DoctorsRoute() {
             <Route path="/" element={<Dokter />} />
             <Route path="pasien-dokter" element={<PasienDokter />} />
             <Route path="notifikasi-dokter" element={<NotifikasiDokter/>} />
-            <Route path="schedule-dokter" element={<ScheduleDr/>} />
+            <Route path="schedule-dokter" element={<Schedule/>} />
             <Route path="/pasien-dokter/emr-dokter" element={<EmrDokter />} />
             <Route path="/pasien-dokter/emr-dokter/:entri/isi-cppt" element={<IsiCppt />} />
             <Route path="/pasien-dokter/emr-dokter/:entri/order-obat" element={<OrderObat />} />
