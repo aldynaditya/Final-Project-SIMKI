@@ -1,5 +1,3 @@
-// src/redux/pharmacy/edit/actions.js
-
 import {
     EDIT_OBAT_REQUEST,
     EDIT_OBAT_SUCCESS,
@@ -10,7 +8,6 @@ import {
 } from './constants';
 import { getData, patchData } from '../../../utils/fetch';
 
-// Fetch medication data by ID
 export const fetchObatById = (id) => async (dispatch) => {
     dispatch({ type: FETCH_OBAT_BY_ID_REQUEST });
 
@@ -28,7 +25,6 @@ export const fetchObatById = (id) => async (dispatch) => {
     }
 };
 
-// Edit medication data
 export const editObat = (id, data) => async (dispatch) => {
     dispatch({ type: EDIT_OBAT_REQUEST });
 

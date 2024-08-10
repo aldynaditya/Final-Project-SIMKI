@@ -27,7 +27,6 @@ const EditObat = ({ onClose, obatId, onSuccess }) => {
 
     const isFormValid = useCallback(() => {
         return Object.values(formData).every(value => {
-            // Ensure value is a string before calling trim
             return String(value).trim() !== '';
         });
     }, [formData]);

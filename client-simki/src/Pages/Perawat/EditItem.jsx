@@ -1,25 +1,35 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Modal from 'react-modal';
-import { createObat } from '../../redux/pharmacy/create/actions';
+import { fetchItemById, editItem } from '../../redux/nurse/edit/actions';import Modal from 'react-modal';
 import '../../Style/Perawat/TambahitemPopup.css';
 
-const TambahObat = ({ onClose, onSuccess }) => {
+const EditItem = ({ onClose, itemId, onSuccess }) => {
     const dispatch = useDispatch();
-    const { data, loading, error } = useSelector(state => state.createObat);
+    const { item, loading } = useSelector(state => state.editItem);
     const [formData, setFormData] = useState({
-        nama_obat: '',
-        kode_obat: '',
-        harga_satuan_obat: '',
+        nama_item: '',
+        kode_item: '',
+        harga_satuan_item: '',
         satuan: '',
         stok: ''
     });
     const [alert, setAlert] = useState({ status: false, message: '', type: '' });
 
-    const isFormValid = useCallback(() => {
-        return Object.values(formData).every(value => value.trim() !== '');
-    }, [formData]);
+    useEffect(() => {
+        dispatch(fetchItemById(itemId));
+    }, [dispatch, itemId]);
 
+    useEffect(() => {
+        if (item) {
+            setFormData(item);
+        }
+    }, [item]);
+
+    const isFormValid = useCallback(() => {
+        return Object.values(formData).every(value => {
+            return String(value).trim() !== '';
+        });
+    }, [formData]);
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -27,38 +37,7 @@ const TambahObat = ({ onClose, onSuccess }) => {
         });
     };
 
-    useEffect(() => {
-        if (alert.status) {
-            const timer = setTimeout(() => {
-                setAlert({ status: false, message: '', type: '' });
-            }, 2000);
-            return () => clearTimeout(timer);
-        }
-    }, [alert.status]);
-
-    useEffect(() => {
-        if (error) {
-            setAlert({
-                status: true,
-                message: error,
-                type: 'danger'
-            });
-        }
-
-        if (data && !loading) {
-            setAlert({
-                status: true,
-                message: 'Data Obat berhasil disimpan!',
-                type: 'success'
-            });
-            setTimeout(() => {
-                onSuccess();
-                onClose();
-            }, 2000);
-        }
-    }, [data, error, loading, onClose, onSuccess]);
-
-    const handleSubmit = async () => {   
+    const handleSubmit = () => {
         if (!isFormValid()) {
             setAlert({
                 status: true,
@@ -67,8 +46,29 @@ const TambahObat = ({ onClose, onSuccess }) => {
             });
             return;
         }
-        dispatch(createObat(formData));
+    
+        dispatch(editItem(itemId, formData))
+            .then(() => {
+                setAlert({
+                    status: true,
+                    message: 'Data Item berhasil diperbarui!',
+                    type: 'success'
+                });
+                setTimeout(() => {
+                    setAlert({ status: false, message: '', type: '' });
+                    onSuccess();
+                    onClose();
+                }, 2000);
+            })
+            .catch(() => {
+                setAlert({
+                    status: true,
+                    message: 'Gagal memperbarui data!',
+                    type: 'danger'
+                });
+            });
     };
+    
 
     return (
         <div className='tambahitem-popup-container'>
@@ -76,19 +76,19 @@ const TambahObat = ({ onClose, onSuccess }) => {
                 <button className='cancel-x' onClick={onClose}>
                     Cancel X
                 </button>
-                <h1 className='text-tambahitem-popup'>Tambah Obat</h1>
+                <h1 className='text-tambahitem-popup'>Edit Item</h1>
                 <div className='kolom-tambah-item'>
                     <div className='nama-item'>
-                        <span className='text-nama-item'>Nama Obat :</span>
-                        <input type='text' className='kolom-nama-item' name="nama_obat" value={formData.nama_obat} onChange={handleChange} />
+                        <span className='text-nama-item'>Nama Item :</span>
+                        <input type='text' className='kolom-nama-item' name="nama_item" value={formData.nama_item} onChange={handleChange} />
                     </div>
                     <div className='kode-item'>
-                        <span className='text-kode-item'>Kode Obat :</span>
-                        <input type='text' className='kolom-kode-item' name="kode_obat" value={formData.kode_obat} onChange={handleChange} />
+                        <span className='text-kode-item'>Kode Item :</span>
+                        <input type='text' className='kolom-kode-item' name="kode_item" value={formData.kode_item} onChange={handleChange} />
                     </div>
                     <div className='harga-item'>
                         <span className='text-harga-item'>Harga Satuan :</span>
-                        <input type='text' className='kolom-harga-item' name="harga_satuan_obat" value={formData.harga_satuan_obat} onChange={handleChange} />
+                        <input type='text' className='kolom-harga-item' name="harga_satuan_item" value={formData.harga_satuan_item} onChange={handleChange} />
                     </div>
                     <div className='satuan-item'>
                         <span className='text-satuan-item'>Satuan :</span>
@@ -124,4 +124,4 @@ const TambahObat = ({ onClose, onSuccess }) => {
     );
 };
 
-export default TambahObat;
+export default EditItem;
