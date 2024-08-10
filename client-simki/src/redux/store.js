@@ -28,8 +28,11 @@ import getobatReducer from "./pharmacy/index/reducer";
 import createobatReducer from "./pharmacy/create/reducer";
 import deleteobatReducer from './pharmacy/delete/reducer';
 import editobatReducer from "./pharmacy/edit/reducer";
+import { editObat } from './pharmacy/edit/reducer';
+import { deletePendaftarReducer } from './resepsionis/deletependaftar/reducer';
 import orderobatReducer from "./pharmacy/order/reducer";
 import statusorderobatReducer from "./pharmacy/update/reducer";
+
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -56,6 +59,7 @@ const rootReducers = combineReducers({
     createObat: createobatReducer,
     deleteObat: deleteobatReducer,
     editObat: editobatReducer,
+    deletePendaftar: deletePendaftarReducer,
     orderObat: orderobatReducer,
     statusorderObat: statusorderobatReducer
 });
