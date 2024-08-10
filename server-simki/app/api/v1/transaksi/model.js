@@ -26,6 +26,11 @@ const Transaksi = db.define('transaksi', {
         allowNull: false,
         defaultValue: 0,
     },
+    total_order:{
+        type: DataTypes.DECIMAL,
+        allowNull: false,
+        defaultValue: 0,
+    },
     total:{
         type: DataTypes.DECIMAL,
         allowNull: false,

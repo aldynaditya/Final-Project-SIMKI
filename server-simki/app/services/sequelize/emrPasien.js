@@ -166,9 +166,10 @@ const updateAction = async (req) => {
     return previousEpisode;
 }
 
-const finishOrder = async (req) => {
+const finishOrder = async (req, res) => {
     const { id } = req.params;
 
+    // Fetch orders for the episode
     const [ordersObat, ordersProsedur] = await Promise.all([
         OrderObat.findAll({
             where: { episodeId: id },
@@ -188,26 +189,47 @@ const finishOrder = async (req) => {
 
     const episode = await Episode.findOne({
         where: { uuid: id },
+        include: {
+            model: EMRPasien,
+            as: 'emrpasien',
+            include: {
+                model: Appointment,
+                as: 'appointment',
+                include: {
+                    model: Schedule,
+                    as: 'schedule',
+                    attributes: ['poli'],
+                }
+            }
+        }
     });
 
     if (!episode) {
         throw new NotFoundError('Episode tidak ditemukan');
     }
 
+    const poli = episode.emrpasien.appointment.schedule.poli;
     const tindakanArray = episode.tindakan;
-    const isNoAction = tindakanArray.includes('none');
-    const isSurat = tindakanArray.includes('surat');
-    const total = (isNoAction || isSurat) ? 35000 : [...ordersObat, ...ordersProsedur].reduce((acc, order) => acc + parseFloat(order.total), 0);
-    const keterangan = isNoAction ? 'konsultasi' : isSurat ? 'surat' : tindakanArray.join(', ');
-    const emrpasienId = episode.emrPasienId;
+
+    const keteranganItems = tindakanArray.filter(item => item !== 'none');
+    const keterangan = keteranganItems.length > 0 ? keteranganItems.join(', ') : 'konsultasi';
+
+    const total_order = [...ordersObat, ...ordersProsedur].reduce((acc, order) => acc + parseFloat(order.total), 0);
+
+    const doctorFee = poli === 'Umum' ? 30000 : poli === 'Gigi' ? 50000 : 0;
+
+    const total = total_order + doctorFee;
 
     const transaksi = await Transaksi.create({
         episodeId: id,
+        total_order,
         total,
         keterangan,
         userKlinikId: req.user.id,
     });
 
+    // Update the EMR status
+    const emrpasienId = episode.emrPasienId;
     await EMRPasien.update({ 
         status: 'finished',
         finishedAt: new Date(),
@@ -215,6 +237,7 @@ const finishOrder = async (req) => {
 
     return transaksi;
 };
+
 
 
 const getAllMedicalRecord = async (req) => {
