@@ -1,21 +1,38 @@
-import React, { useState } from "react";
-import '../../Style/Resepsionis/PasienResepsionis.css';
+import React, { useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchEmr } from '../../redux/doctor/indexEmr/actions';
 import SearchBar from "../../components/SearchBar"; 
 import '../../Style/Dokter/PasienDokter.css'; 
-import { useNavigate } from 'react-router-dom';
 
 const PasienDokter= () => {
-    const [rows] = useState(Array.from({ length: 20 }));
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { data, loading, error } = useSelector(state => state.getEmr);
 
-    const EmrDokter = () => {
-        navigate('emr-dokter');
+    useEffect(() => {
+        dispatch(fetchEmr());
+    }, [dispatch]);
+
+    const EmrDokter = (id) => {
+        navigate(`/dokter/emr-dokter/${id}`);
     };
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
 
     return (
         <div className="pasien-resepsionis-wrapper">
             <div className="navbar-header-wrapper">
-        </div>
+            </div>
             <div className="pasien-resepsionis-container">
                 <div className="pasien-wrapper">
                     <div className="header-pasien-resepsionis">
@@ -35,16 +52,16 @@ const PasienDokter= () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {rows.map((_, index) => (
-                                    <tr key={index}>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                {data.map((emr) => (
+                                    <tr key={emr.id}>
+                                        <td>{emr.noEMR}</td>
+                                        <td>{emr.nama_pasien}</td>
+                                        <td>{formatDate(emr.tanggal_lahir)}</td>
+                                        <td>{emr.jenis_kelamin}</td>
                                         <td>
-                                            <button className="emr-dokter" onClick={EmrDokter}>EMR</button>
-                                        </td>
-                                        <td></td>
+                                            <button className="emr-dokter" onClick={() => EmrDokter(emr.id)}>EMR</button>
+                                            </td>
+                                        <td>{emr.status}</td>
                                     </tr>
                                 ))}
                             </tbody>

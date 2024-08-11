@@ -1,16 +1,40 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import { fetchdetailEmr } from '../../redux/doctor/detailEmr/actions';
+import { fetchVitalsign } from '../../redux/doctor/vitalSign/actions';
 import RiwayatEpisode from '../../components/RiwayatEps';
-import '../../Style/Resepsionis/EmrResepsionis.css';
-import '../../Style/components/DetailEpisode.css';
 import '../../Style/Dokter/EntriMasuk.css';
 
 const EntriMasuk = () => {
+    const { id } = useParams();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { data, loading, error } = useSelector(state => state.getdetailEmr);
+    const { data: datavs, loading: loadingvs, error: errorvs } = useSelector(state => state.getVital);
+
+    useEffect(() => {
+        dispatch(fetchdetailEmr(id));
+    }, [dispatch, id]);
+
+    useEffect(() => {
+        dispatch(fetchVitalsign(id));
+    }, [dispatch, id]);
 
     const IsiCppt = () => {
         navigate('isi-cppt');
     };
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
 
     return (
         <div className='emr-resepsionis-container'>
@@ -18,40 +42,40 @@ const EntriMasuk = () => {
             <div className='kolom-emr-resepsionis'>
                 <div className='no-emr-rsp'>
                     <span className='text-nemr-rsp'>No. EMR :</span>
-                    <input type='text' className='kolom-nemr-rsp'></input>
+                    <input type='text' className='kolom-nemr-rsp' name="noEMR" value={data.noEMR} readOnly></input>
                 </div>
                 <div className='nama-pasien-rsp'>
                     <span className='text-npasien-rsp'>Nama Pasien :</span>
-                    <input type='text' className='kolom-npasien-rsp'></input>
+                    <input type='text' className='kolom-npasien-rsp' name="nama_pasien" value={data.nama_pasien} readOnly></input>
                 </div>
                 <div className='tgl-lahir-rsp'>
                     <span className='text-ttl-rsp'>Tanggal Lahir :</span>
-                    <input type='date' className='kolom-ttl-rsp'></input>
+                    <input type='text' className='kolom-ttl-rsp' name="tanggal_lahir" value={formatDate(data.tanggal_lahir)} readOnly></input>
                 </div>
                 <div className='gender-goldar-rsp'>
                     <div className='gender-emr-rsp'>
                         <span className='text-gender-rsp'>Jenis Kelamin :</span>
-                        <input type='text' className='kolom-gender-rsp'></input>
+                        <input type='text' className='kolom-gender-rsp' name="jenis_kelamin" value={data.jenis_kelamin} readOnly></input>
                     </div>
                     <div className='goldar-emr-rsp'>
                         <span className='text-goldar-rsp'>Golongan Darah :</span>
-                        <input type='text' className='kolom-goldar-rsp'></input>
+                        <input type='text' className='kolom-goldar-rsp' name="gol_darah" value={data.gol_darah} readOnly></input>
                     </div>
                 </div>
                 <div className='alergi-rsp'>
                     <span className='text-alergi-rsp'>Alergi :</span>
-                    <input type='text' className='kolom-alergi-rsp'></input>
+                    <input type='text' className='kolom-alergi-rsp' name="alergi" value={datavs.alergi} readOnly></input>
                 </div>
             </div>
             <h2 className='text-riwayat-episode'>Entri Masuk :</h2>
             <div className='kolom-detail-eps'>
                 <div className='tgl-detail'>
                     <span className='text-tgl-detail'>Tanggal :</span>
-                    <input type='date' className='kolom-tgl-detail'></input>
+                    <input type='text' className='kolom-tgl-detail' name="tanggal" value={formatDate(data.tanggal)} readOnly></input>
                 </div>
                 <div className='poli-detail'>
                     <span className='text-poli-detail'>Poli :</span>
-                    <input type='text' className='kolom-poli-detail'></input>
+                    <input type='text' className='kolom-poli-detail' name="poli" value={data.poli} readOnly></input>
                 </div>
                 <div className='vital-detail'>
                     <span className='text-vital-detail'>Tanda Vital :</span>
@@ -59,34 +83,34 @@ const EntriMasuk = () => {
                         <div className='atas-vital-detail'>
                             <div className='td-detail'>
                                 <span className='text-td-detail'>TD :</span>
-                                <input type='text' className='kolom-td-detail'></input>
+                                <input type='text' className='kolom-td-detail' name="td" value={datavs.td} readOnly></input>
                             </div>
                             <div className='suhu-detail'>
                                 <span className='text-suhu-detail'>Suhu :</span>
-                                <input type='text' className='kolom-suhu-detail'></input>
+                                <input type='text' className='kolom-suhu-detail' name="suhu" value={datavs.suhu} readOnly></input>
                             </div>
                         </div>
                         <div className='bawah-vital-detail'>
                             <div className='indeks-detail'>
                                 <span className='text-indeks-detail'>Indeks :</span>
-                                <input type='text' className='kolom-indeks-detail'></input>
+                                <input type='text' className='kolom-indeks-detail' name="indeks" value={datavs.indeks} readOnly></input>
                             </div>
                             <div className='napas-detail'>
                                 <span className='text-napas-detail'>Napas :</span>
-                                <input type='text' className='kolom-napas-detail'></input>
+                                <input type='text' className='kolom-napas-detail' name="napas" value={datavs.napas} readOnly></input>
                             </div>
                         </div>
                         <div className='detak-detail'>
                             <span className='text-detak-detail'>Detak :</span>
-                            <input type='text' className='kolom-detak-detail'></input>
+                            <input type='text' className='kolom-detak-detail' name="detak" value={datavs.detak} readOnly></input>
                         </div>
-                    </div>
+                    </div> 
                 </div>
-            </div>
-            <div className='button-entri-masuk'>
+                    <div className='button-entri-masuk'>
                 <button type="isi" className="simpan-entri-masuk" onClick={IsiCppt}>Isi CPPT</button>
             </div>
-            <RiwayatEpisode />
+                <RiwayatEpisode />
+            </div>
         </div>
     );
 };

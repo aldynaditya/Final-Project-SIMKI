@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchdetailEmr } from '../../redux/doctor/detailEmr/actions';
-import { createVital } from '../../redux/nurse/createVital/actions';
+import { createVital } from '../../redux/nurse/vital/actions';
 import Modal from 'react-modal';
 import RiwayatEpisode from '../../components/RiwayatEps';
 import '../../Style/Perawat/EmrPerawat.css';
@@ -38,7 +38,7 @@ const EmrPerawat = () => {
         } else if (vital) {
             setAlert({
                 status: true,
-                message: 'Data Item berhasil diperbarui!',
+                message: 'Data berhasil disimpan!',
                 type: 'success'
             });
         }
@@ -137,11 +137,11 @@ const EmrPerawat = () => {
                         </div>
                     </div> 
                 </div>
-                <RiwayatEpisode />
             </div>
             <div className='button-emr-perawat'>
                 <button type="submit" className="simpan-emr-perawat" onClick={handleSimpan}>Simpan</button>
             </div>
+            <RiwayatEpisode />
 
             <Modal
                 isOpen={alert.status}
