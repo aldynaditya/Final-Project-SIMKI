@@ -36,6 +36,9 @@ import createitemReducer from "./nurse/create/reducer";
 import deleteitemReducer from './nurse/delete/reducer';
 import edititemReducer from "./nurse/edit/reducer";
 import schedulePReducer from './nurse/schedule/reducer';
+import getemrReducer from './doctor/indexEmr/reducer';
+import getdetailemrReducer from './doctor/detailEmr/reducer';
+import createvitalReducer from './nurse/createVital/reducer';
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -69,7 +72,10 @@ const rootReducers = combineReducers({
     createItem: createitemReducer,
     deleteItem: deleteitemReducer,
     editItem: edititemReducer,
-    getScheduleP: schedulePReducer
+    getScheduleP: schedulePReducer,
+    getEmr: getemrReducer,
+    getdetailEmr: getdetailemrReducer,
+    createVital: createvitalReducer
 });
 const store = createStore(
     rootReducers,

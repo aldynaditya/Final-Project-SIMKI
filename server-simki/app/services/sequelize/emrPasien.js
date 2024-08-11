@@ -71,7 +71,8 @@ const getAllEMRPasien = async ( req ) => {
             jenis_kelamin: appointment.datapasien.jenis_kelamin,
             gol_darah: appointment.datapasien.gol_darah,
             pemeriksa: appointment.schedule.user_klinik.nama,
-            poli: appointment.schedule.poli
+            poli: appointment.schedule.poli,
+            status: emr.status
         };
     });
 
@@ -337,7 +338,7 @@ const findOneMedicalRecord = async (req) => {
         jenis_kelamin: appointment.datapasien.jenis_kelamin,
         gol_darah: appointment.datapasien.gol_darah,
         alergi: episode.alergi,
-        tangga: appointment.tanggal,
+        tanggal: appointment.tanggal,
         penjamin: appointment.penjamin,
         pemeriksa: appointment.schedule.user_klinik.nama,
         poli: appointment.schedule.poli,
@@ -357,6 +358,60 @@ const findOneMedicalRecord = async (req) => {
     return result;
 };
 
+const getDataEMRbyId = async (req) => {
+    const { id: uuid } = req.params;
+
+    const emr = await EMRPasien.findOne({
+        where: { uuid },
+        include: [
+            {
+                model: Appointment,
+                as: 'appointment',
+                include: [
+                    {
+                        model: DataPasien,
+                        as: 'datapasien',
+                    },
+                    {
+                        model: Schedule,
+                        as: 'schedule',
+                        include: {
+                            model: UserKlinik,
+                            as: 'user_klinik',
+                        }
+                    }
+                ]
+            },
+            {
+                model: Episode
+            }
+        ],
+    });
+
+    if (!emr) {
+        throw new NotFoundError(`Tidak ada rekam medis dengan uuid: ${uuid}`);
+    }
+
+    const appointment = emr.appointment;
+    const episode = emr.episodes[0];
+
+    const result = {
+        id: emr.uuid,
+        noEMR: emr.noEMR,
+        nama_pasien: appointment.datapasien.nama_lengkap,
+        tanggal_lahir: appointment.datapasien.tanggal_lahir,
+        jenis_kelamin: appointment.datapasien.jenis_kelamin,
+        gol_darah: appointment.datapasien.gol_darah,
+        alergi: episode.alergi,
+        tanggal: appointment.tanggal,
+        penjamin: appointment.penjamin,
+        pemeriksa: appointment.schedule.user_klinik.nama,
+        poli: appointment.schedule.poli
+    };
+
+    return result;
+};
+
 module.exports = {
     getAllEMRPasien,
     getAllMedicalRecord,
@@ -365,5 +420,6 @@ module.exports = {
     updateEpisode,
     createEpisode,
     updateAction,
-    finishOrder
+    finishOrder,
+    getDataEMRbyId
 };
