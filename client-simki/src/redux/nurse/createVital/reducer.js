@@ -7,7 +7,7 @@ import {
 const initialState = {
     loading: false,
     error: null,
-    vital: {},
+    vital: [],
 };
 
 const createvitalReducer = (state = initialState, action) => {
@@ -15,11 +15,11 @@ const createvitalReducer = (state = initialState, action) => {
         case CREATE_VITAL_REQUEST:
             return { ...state, loading: true };
         case CREATE_VITAL_SUCCESS:
-            return { ...state, loading: false };
+            return { ...state, loading: false, vital: 'success', error: null};
         case CREATE_VITAL_FAILURE:
             return { ...state, loading: false, error: action.payload };
         default:
-            return state;
+            return initialState;
     }
 };
 

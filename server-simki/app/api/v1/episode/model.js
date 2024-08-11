@@ -24,6 +24,9 @@ const Episode = db.define('episode', {
         type: DataTypes.STRING,
         defaultValue: "-",
         allowNull: false,
+        validate: {
+            notEmpty: true,
+        },
     },
     riwayat_penyakit: {
         type: DataTypes.TEXT,
@@ -38,22 +41,37 @@ const Episode = db.define('episode', {
     TD: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+            notEmpty: true,
+        },
     },
     indeks: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+            notEmpty: true,
+        },
     },
     detak: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+            notEmpty: true,
+        },
     },
     suhu: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+            notEmpty: true,
+        },
     },
     napas: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+            notEmpty: true,
+        },
     },
     objective: {
         type: DataTypes.TEXT,
