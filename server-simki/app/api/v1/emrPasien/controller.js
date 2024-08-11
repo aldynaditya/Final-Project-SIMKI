@@ -7,7 +7,8 @@ const {
     createEpisode,
     updateAction,
     finishOrder,
-    findOneMedicalRecord
+    findOneMedicalRecord,
+    getDataEMRbyId
 } = require('../../../services/sequelize/emrPasien');
 
 const index = async (req, res, next) => {
@@ -106,11 +107,24 @@ const findformedicalrecord = async (req, res, next) => {
     }
 };
 
+const findOneEMRforPatient = async (req, res, next) => {
+    try {
+        const result = await getDataEMRbyId(req);
+
+    res.status(StatusCodes.OK).json({
+        data: result,
+    });
+    } catch (err) {
+        next(err);
+    }
+};
+
 
 module.exports = {
     index,
     indexformedicalrecord,
     findformedicalrecord,
+    findOneEMRforPatient,
     vitalsign,
     followupepisode,
     episode,
