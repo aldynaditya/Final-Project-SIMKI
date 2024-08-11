@@ -5,17 +5,17 @@ import {
 } from './constants';
 
 const initialState = {
-    loading: false,
+    vital: null,
     error: null,
-    vital: [],
+    loading: false
 };
 
 const createvitalReducer = (state = initialState, action) => {
     switch (action.type) {
         case CREATE_VITAL_REQUEST:
-            return { ...state, loading: true };
+            return { ...state, loading: true, vital: action.payload };
         case CREATE_VITAL_SUCCESS:
-            return { ...state, loading: false, vital: 'success', error: null};
+            return { ...state, loading: false, vital: action.payload, error: null};
         case CREATE_VITAL_FAILURE:
             return { ...state, loading: false, error: action.payload };
         default:

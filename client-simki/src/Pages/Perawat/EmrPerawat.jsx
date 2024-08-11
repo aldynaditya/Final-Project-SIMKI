@@ -11,7 +11,7 @@ const EmrPerawat = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const { data, loading, error } = useSelector(state => state.getdetailEmr);
-    const { error: errorForm, vital} = useSelector(state => state.createVital);
+    const { error: errorForm, vital } = useSelector(state => state.createVital);
 
     const [formData, setFormData] = useState({
         alergi: '',
@@ -28,6 +28,22 @@ const EmrPerawat = () => {
         dispatch(fetchdetailEmr(id));
     }, [dispatch, id]);
 
+    useEffect(() => {
+        if (errorForm) {
+            setAlert({
+                status: true,
+                message: 'Isi seluruh Form Tanda Vital',
+                type: 'danger'
+            });
+        } else if (vital) {
+            setAlert({
+                status: true,
+                message: 'Data Item berhasil diperbarui!',
+                type: 'success'
+            });
+        }
+    }, [errorForm, vital]);
+
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -37,27 +53,8 @@ const EmrPerawat = () => {
 
     const handleSimpan = () => {
         dispatch(createVital(id, formData));
+        setAlert({ status: false, message: '', type: '' });  // Reset alert before dispatching
     };
-
-    useEffect(() => {
-        if (errorForm) {
-            setAlert({
-                status: true,
-                message: 'Isi seluruh Form Tanda Vital',
-                type: 'danger'
-            });
-            setTimeout(() => {
-                window.location.reload();
-            }, 1000);
-        } else if(vital === 'success') {
-            setAlert({
-                status: true,
-                message: 'Data Item berhasil diperbarui!',
-                type: 'success'
-            });
-            
-        }
-    }, [errorForm, vital]);
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -67,8 +64,8 @@ const EmrPerawat = () => {
         return `${year}-${month}-${day}`;
     };
 
-    if ( loading ) return <div>Loading...</div>;
-    if ( error ) return <div>Error: {error }</div>;
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
 
     return (
         <div className='emr-resepsionis-container'>
@@ -140,11 +137,11 @@ const EmrPerawat = () => {
                         </div>
                     </div> 
                 </div>
+                <RiwayatEpisode />
             </div>
             <div className='button-emr-perawat'>
                 <button type="submit" className="simpan-emr-perawat" onClick={handleSimpan}>Simpan</button>
             </div>
-            <RiwayatEpisode />
 
             <Modal
                 isOpen={alert.status}
