@@ -41,7 +41,10 @@ import antrianReducer from './resepsionis/antrian/reducer';
 import identitasReducer from './resepsionis/identitas/reducer';
 import getemrReducer from './doctor/indexEmr/reducer';
 import getdetailemrReducer from './doctor/detailEmr/reducer';
-import createvitalReducer from './nurse/createVital/reducer';
+import createvitalReducer from './nurse/vital/reducer';
+import getvitalsignReducer from './doctor/vitalSign/reducer';
+import createnewentryReducer from './doctor/newEntry/reducer';
+
 
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -82,7 +85,9 @@ const rootReducers = combineReducers({
     identitas: identitasReducer,
     getEmr: getemrReducer,
     getdetailEmr: getdetailemrReducer,
-    createVital: createvitalReducer
+    createVital: createvitalReducer,
+    getVital: getvitalsignReducer,
+    createNewEntry: createnewentryReducer
 });
 const store = createStore(
     rootReducers,

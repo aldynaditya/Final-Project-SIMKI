@@ -8,7 +8,8 @@ const {
     updateAction,
     finishOrder,
     findOneMedicalRecord,
-    getDataEMRbyId
+    getDataEMRbyId,
+    getVitalSignbyDoctor
 } = require('../../../services/sequelize/emrPasien');
 
 const index = async (req, res, next) => {
@@ -26,6 +27,18 @@ const index = async (req, res, next) => {
 const vitalsign = async (req, res, next) => {
     try {
         const result = await createVitalSignbyPerawat(req);
+
+    res.status(StatusCodes.OK).json({
+        data: result,
+    });
+    } catch (err) {
+        next(err);
+    }
+};
+
+const findOnevitalsign = async (req, res, next) => {
+    try {
+        const result = await getVitalSignbyDoctor(req);
 
     res.status(StatusCodes.OK).json({
         data: result,
@@ -126,6 +139,7 @@ module.exports = {
     findformedicalrecord,
     findOneEMRforPatient,
     vitalsign,
+    findOnevitalsign,
     followupepisode,
     episode,
     action,
