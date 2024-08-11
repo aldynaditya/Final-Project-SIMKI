@@ -14,7 +14,7 @@ export function NursesRoute() {
             <Route path="pasien-perawat" element={<PasienPerawat />} />
             <Route path="jadwal-dokter" element={<JadwalDokter />} />
             <Route path="kelola-item" element={<KelolaItem />} />
-            <Route path="/pasien-perawat/emr-perawat" element={<EmrPerawat />} />
+            <Route path="/pasien-perawat/emr-perawat/:id" element={<EmrPerawat />} />
             <Route path="/detail-episode" element={<DetailEpsPer />} />
         </Routes>
     );
