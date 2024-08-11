@@ -108,6 +108,8 @@ body {
 .tabel_pendaftar_baru {
     margin: 20px;
     flex: 1;
+    overflow: auto;
+    max-height: 400px;
 }
 
 .tabel_pendaftar_baru table {
@@ -115,14 +117,14 @@ body {
     border-collapse: collapse;
     margin: 20px 0;
     font-size: 18px;
-    text-align: center;  /* Pusatkan teks secara horizontal */
+    text-align: center;  
 }
 
 .tabel_pendaftar_baru th, .tabel_pendaftar_baru td {
     padding: 8px;
     border-bottom: 1px solid black;
-    text-align: center;  /* Pusatkan teks secara horizontal */
-    vertical-align: middle;  /* Pusatkan teks secara vertikal */
+    text-align: center; 
+    vertical-align: middle;  
 }
 
 .tabel_pendaftar_baru th {
