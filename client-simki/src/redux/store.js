@@ -36,6 +36,9 @@ import createitemReducer from "./nurse/create/reducer";
 import deleteitemReducer from './nurse/delete/reducer';
 import edititemReducer from "./nurse/edit/reducer";
 import schedulePReducer from './nurse/schedule/reducer';
+import buatJanjiReducer from './resepsionis/buatjanji/reducer';
+import antrianReducer from './resepsionis/antrian/reducer';
+import identitasReducer from './resepsionis/identitas/reducer';
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -69,7 +72,10 @@ const rootReducers = combineReducers({
     createItem: createitemReducer,
     deleteItem: deleteitemReducer,
     editItem: edititemReducer,
-    getScheduleP: schedulePReducer
+    getScheduleP: schedulePReducer,
+    buatJanji: buatJanjiReducer,
+    antrian: antrianReducer,
+    identitas: identitasReducer,
 });
 const store = createStore(
     rootReducers,
