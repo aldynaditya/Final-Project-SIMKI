@@ -6,11 +6,11 @@ import {
 import { postData } from '../../../utils/fetch';
 
 
-export const createVital = (id, data) => async (dispatch) => {
+export const createVital = (id, formData) => async (dispatch) => {
     dispatch({ type: CREATE_VITAL_REQUEST });
 
     try {
-        await postData(`/emr/${id}/nurse`, data);
+        await postData(`/cms/emr/${id}/nurse`, formData);
         dispatch({
             type: CREATE_VITAL_SUCCESS,
         });

@@ -8,7 +8,7 @@ import { fetchAntrian } from '../../redux/resepsionis/antrian/actions';
 
 const Antrian = () => {
     const dispatch = useDispatch();
-    const { data: rows, loading, error } = useSelector(state => state.antrian);
+    const { data, loading, error } = useSelector(state => state.antrian);
 
     const [showJanjiPopup, setShowJanjiPopup] = useState(false);
     const [showAksiPopup, setShowAksiPopup] = useState(false);
@@ -67,12 +67,12 @@ const Antrian = () => {
                                         <th>Tanggal</th>
                                         <th>Jam</th>
                                         <th>Penjamin</th>
-                                        <th className>Aksi</th>
+                                        <th >Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {rows.map((row, index) => (
-                                        <tr key={index}>
+                                    {data.map((row) => (
+                                        <tr key={row.id}>
                                             <td>{row.nama_lengkap}</td>
                                             <td>{row.dokter}</td>
                                             <td>{row.poli}</td>

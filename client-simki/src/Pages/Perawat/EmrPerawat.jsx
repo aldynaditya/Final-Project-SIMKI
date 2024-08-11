@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchdetailEmr } from '../../redux/doctor/detailEmr/actions';
 import { createVital } from '../../redux/nurse/createVital/actions';
+import Modal from 'react-modal';
 import RiwayatEpisode from '../../components/RiwayatEps';
 import '../../Style/Perawat/EmrPerawat.css';
 
@@ -10,8 +11,10 @@ const EmrPerawat = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const { data, loading, error } = useSelector(state => state.getdetailEmr);
-    
+    const { error: errorForm, vital} = useSelector(state => state.createVital);
+
     const [formData, setFormData] = useState({
+        alergi: '',
         TD: '',
         indeks: '',
         detak: '',
@@ -25,12 +28,6 @@ const EmrPerawat = () => {
         dispatch(fetchdetailEmr(id));
     }, [dispatch, id]);
 
-    const isFormValid = useCallback(() => {
-        return Object.values(formData).every(value => {
-            return String(value).trim() !== '';
-        });
-    }, [formData]);
-
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -39,31 +36,28 @@ const EmrPerawat = () => {
     };
 
     const handleSimpan = () => {
-        if (!isFormValid) {
+        dispatch(createVital(id, formData));
+    };
+
+    useEffect(() => {
+        if (errorForm) {
             setAlert({
                 status: true,
-                message: 'Isi seluruh form',
+                message: 'Isi seluruh Form Tanda Vital',
                 type: 'danger'
             });
-            return;
-        }
-
-        dispatch(createVital(id, formData))
-        .then(() => {
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        } else if(vital === 'success') {
             setAlert({
                 status: true,
                 message: 'Data Item berhasil diperbarui!',
                 type: 'success'
             });
-        })
-        .catch(() => {
-            setAlert({
-                status: true,
-                message: 'Gagal memperbarui data!',
-                type: 'danger'
-            });
-        });
-};
+            
+        }
+    }, [errorForm, vital]);
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -104,7 +98,7 @@ const EmrPerawat = () => {
                 </div>
                 <div className='alergi-rsp'>
                     <span className='text-alergi-rsp'>Alergi :</span>
-                    <input type='text' className='kolom-alergi-rsp' name="alergi" value={data.alergi} readOnly></input>
+                    <input type='text' className='kolom-alergi-rsp' name="alergi" value={formData.alergi} onChange={handleChange}></input>
                 </div>
             </div>
             <h2 className='text-riwayat-episode'>Entri Baru :</h2>
@@ -151,6 +145,21 @@ const EmrPerawat = () => {
                 <button type="submit" className="simpan-emr-perawat" onClick={handleSimpan}>Simpan</button>
             </div>
             <RiwayatEpisode />
+
+            <Modal
+                isOpen={alert.status}
+                onRequestClose={() => setAlert({ status: false, message: '', type: '' })}
+                contentLabel="Alert Message"
+                className="Modal"
+                overlayClassName="Overlay"
+                shouldCloseOnOverlayClick={true}
+                shouldCloseOnEsc={true}
+            >
+                <div className="modal-content">
+                    <p>{alert.message}</p>
+                    <button onClick={() => setAlert({ status: false, message: '', type: '' })}>Close</button>
+                </div>
+            </Modal>
         </div>
     );
 };
