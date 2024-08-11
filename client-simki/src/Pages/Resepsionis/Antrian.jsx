@@ -1,13 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import BuatJanjiPopup from './BuatJanjiPopup';
 import UpdateStatus from './AksiPopup';
 import '../../Style/Resepsionis/Antrian.css';
 import SearchBar from "../../components/SearchBar";
+import { fetchAntrian } from '../../redux/resepsionis/antrian/actions';
 
 const Antrian = () => {
-    const [rows] = useState(Array.from({ length: 20 }));
+    const dispatch = useDispatch();
+    const { data: rows, loading, error } = useSelector(state => state.antrian);
+
     const [showJanjiPopup, setShowJanjiPopup] = useState(false);
     const [showAksiPopup, setShowAksiPopup] = useState(false);
+
+    useEffect(() => {
+        dispatch(fetchAntrian());
+    }, [dispatch]);
 
     const handleOpenJanjiPopup = () => {
         setShowJanjiPopup(true);
@@ -29,11 +37,17 @@ const Antrian = () => {
         window.open('identitas-pasien', '_blank');
     };
 
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
     return (
         <div className="page-antrian-container">
             <div className="content-wrap-antrian">
-                <div className="navbar-antrian">
-                </div>
                 <div className="antrian-container">
                     <div className="content-wrapper-antrian">
                         <div className="header-antrian">
@@ -47,24 +61,24 @@ const Antrian = () => {
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>Nama</th>
+                                        <th>NIK</th>
                                         <th>Dokter</th>
                                         <th>Poli</th>
                                         <th>Tanggal</th>
                                         <th>Jam</th>
                                         <th>Penjamin</th>
-                                        <th>Aksi</th>
+                                        <th className>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {rows.map((_, index) => (
+                                    {rows.map((row, index) => (
                                         <tr key={index}>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>{row.nama_lengkap}</td>
+                                            <td>{row.dokter}</td>
+                                            <td>{row.poli}</td>
+                                            <td>{row.tanggal}</td>
+                                            <td>{row.jam}</td>
+                                            <td>{row.penjamin}</td>
                                             <td>
                                                 <button className="lihat-identitas" onClick={IdentitasPasien}>Lihat</button>
                                                 <button className="aksi-antrian" onClick={handleOpenAksiPopup}>Aksi</button>
