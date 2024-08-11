@@ -5,7 +5,7 @@ import { createPendaftar } from '../../redux/resepsionis/creatependaftar/actions
 import '../../Style/Resepsionis/PendaftarPopup.css';
 
 
-const TambahPendaftar = ({ onClose }) => {
+const TambahPendaftar = ({ onClose , onSuccess} ) => {
   const dispatch = useDispatch();
   const { loading, error, data } = useSelector(state => state.createPendaftar);
 
@@ -30,6 +30,7 @@ const TambahPendaftar = ({ onClose }) => {
 
   useEffect(() => {
     if (data || error) {
+      onSuccess();
       onClose();
     }
   }, [data, error, onClose]);

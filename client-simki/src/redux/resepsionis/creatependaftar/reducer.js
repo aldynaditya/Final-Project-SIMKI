@@ -20,7 +20,7 @@ const createPendaftarReducer = (state = initialState, action) => {
         case CREATE_PENDAFTAR_FAILURE:
             return { ...state, loading: false, error: action.payload };
         default:
-            return state;
+            return initialState;
     }
 };
 
