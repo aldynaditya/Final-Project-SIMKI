@@ -1,33 +1,60 @@
-import React, { useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import Modal from 'react-modal';
+import { createorderSuratSakit } from '../../redux/doctor/orderSickLetter/actions';
 import '../../Style/Resepsionis/CetakSuratPopup.css';
 
-const SuratSakit = () => {
-    const [activeLink, setActiveLink] = useState('');
-    const navigate = useNavigate();
-    const { entri } = useParams();
+const SuratSakit = ({ onClose }) => {
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    const { data, loading, error } = useSelector(state => state.createorderSuratSakit);
 
-    const SURAT_PATH = `/dokter/pasien-dokter/emr-dokter/${entri}/order-surat`;
+    const [formData, setFormData] = useState({
+        riwayatPenyakit: '',
+        subjective: '',
+        objective: '',
+        assessment: '',
+        plan: '',
+        tindakan: [],
+    });
 
-    const handleLinkCancel = (link) => {
-        setActiveLink(link);
+    const [alert, setAlert] = useState({ status: false, message: '', type: '' });
+
+    useEffect(() => {
+        if (error) {
+            setAlert({
+                status: true,
+                message: 'Isi seluruh Form Entry',
+                type: 'danger'
+            });
+        } else if (data) {
+            setAlert({
+                status: true,
+                message: 'Data berhasil disimpan!',
+                type: 'success'
+            });
+        }
+    }, [error, data]);
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
     };
 
     const handleSuratSakit = () => {
-        alert('Data Tersimpan');
-        navigate(SURAT_PATH);
+        dispatch(createorderSuratSakit(id, formData));
+        setAlert({ status: false, message: '', type: '' });
     };
 
     return (
         <div className='cetaksurat-popup-container'>
             <div className='cetaksurat-popup-content'>
-                <Link 
-                    to={SURAT_PATH}
-                    className={activeLink === 'cancel' ? 'active cancel-link' : 'cancel-x'} 
-                    onClick={() => handleLinkCancel('cancel')}
-                >
+                <button className='cancel-x' onClick={onClose}>
                     Cancel X
-                </Link>
+                </button>
                 <h1 className='text-cetaksurat-popup'>Perpanjang Surat Sakit</h1>
                 <div className='kolom-cetak-surat'>
                     <div className='umur-cetaksurat'>

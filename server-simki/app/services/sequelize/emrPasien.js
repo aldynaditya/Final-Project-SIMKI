@@ -386,7 +386,8 @@ const findOneMedicalRecord = async (req) => {
     const episode = emr.episodes[0];
 
     const result = {
-        id: emr.uuid,
+        id: episode.uuid,
+        emrId: emr.uuid,
         noEMR: emr.noEMR,
         nama_pasien: appointment.datapasien.nama_lengkap,
         tanggal_lahir: appointment.datapasien.tanggal_lahir,

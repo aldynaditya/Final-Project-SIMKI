@@ -47,7 +47,12 @@ import createnewentryReducer from './doctor/newEntry/reducer';
 import transactionReducer from './kasir/index/reducer';
 import createcpptentryReducer from './doctor/cpptEntry/reducer';
 import updateactionReducer from './doctor/action/reducer';
-import createorderReducer from './doctor/order/reducer';
+import createorderReducer from './doctor/finishOrder/reducer';
+import getorderinfoReducer from './doctor/orderInfo/reducer';
+import createorderobatReducer from './doctor/orderMedicine/reducer';
+import createorderprosedurReducer from './doctor/orderProcedure/reducer';
+import createordersuratrujukanReducer from './doctor/orderReferralLetter/reducer';
+import createordersuratsakitReducer from './doctor/orderSickLetter/reducer';
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -94,6 +99,11 @@ const rootReducers = combineReducers({
     createCpptEntry: createcpptentryReducer,
     updateAction: updateactionReducer,
     createOrder: createorderReducer,
+    getorderInfo: getorderinfoReducer,
+    createorderObat: createorderobatReducer,
+    createorderProsedur: createorderprosedurReducer,
+    createorderSuratRujukan: createordersuratrujukanReducer,
+    createorderSuratSakit: createordersuratsakitReducer
 }); 
 
 const store = createStore(

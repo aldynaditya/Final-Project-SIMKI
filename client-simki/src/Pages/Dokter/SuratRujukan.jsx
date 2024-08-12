@@ -1,34 +1,60 @@
-import React, { useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import Modal from 'react-modal';
+import { createorderSuratRujukan } from '../../redux/doctor/orderReferralLetter/actions';
 import '../../Style/Dokter/SuratRujukan.css';
 
-const SuratRujukan = () => {
-    const [activeLink, setActiveLink] = useState('');
-    const navigate = useNavigate();
-    const { entri } = useParams();
+const SuratRujukan = ({ onClose }) => {
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    const { data, loading, error } = useSelector(state => state.createorderObat);
+    
+    const [formData, setFormData] = useState({
+        riwayatPenyakit: '',
+        subjective: '',
+        objective: '',
+        assessment: '',
+        plan: '',
+        tindakan: [],
+    });
 
-    const SURAT_PATH = `/dokter/pasien-dokter/emr-dokter/${entri}/order-surat`;
+    const [alert, setAlert] = useState({ status: false, message: '', type: '' });
 
+    useEffect(() => {
+        if (error) {
+            setAlert({
+                status: true,
+                message: 'Isi seluruh Form Entry',
+                type: 'danger'
+            });
+        } else if (data) {
+            setAlert({
+                status: true,
+                message: 'Data berhasil disimpan!',
+                type: 'success'
+            });
+        }
+    }, [error, data]);
 
-    const handleLinkCancel = (link) => {
-        setActiveLink(link);
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
     };
 
     const SimpanRujukan = () => {
-        alert('Data Tersimpan');
-        navigate(SURAT_PATH); 
+        dispatch(createorderSuratRujukan(id, formData));
+        setAlert({ status: false, message: '', type: '' }); 
     };
 
     return (
         <div className='suratrujukan-container'>
             <div className='suratrujukan-content'>
-                <Link 
-                    to={SURAT_PATH} 
-                    className={activeLink === 'cancel' ? 'active cancel-link' : 'cancel-x'} 
-                    onClick={() => handleLinkCancel('cancel')}
-                >
+            <button className='cancel-x' onClick={onClose}>
                     Cancel X
-                </Link>
+            </button>
                 <h1 className='text-suratrujukan'>Surat Rujukan</h1>
                 <div className='kolom-surat-rujukan'>
                     <div className='tujuan-rujukan'>

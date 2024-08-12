@@ -1,22 +1,53 @@
-import React, { useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import Modal from 'react-modal';
+import { createorderProsedur } from '../../redux/doctor/orderProcedure/actions';
 import '../../Style/Dokter/TambahProsedur.css';
 import search from "../../images/search.png";
 
-const TambahProsedur = () => {
-    const [activeLink, setActiveLink] = useState('');
-    const navigate = useNavigate();
-    const { entri } = useParams();
+const TambahProsedur = ({ onClose }) => {
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    const { data, loading, error } = useSelector(state => state.createorderProsedur);
 
-    const PROSEDUR_PATH = `/dokter/pasien-dokter/emr-dokter/${entri}/order-prosedur`;
+    const [formData, setFormData] = useState({
+        riwayatPenyakit: '',
+        subjective: '',
+        objective: '',
+        assessment: '',
+        plan: '',
+        tindakan: [],
+    });
 
-    const handleLinkCancel = (link) => {
-        setActiveLink(link);
+    const [alert, setAlert] = useState({ status: false, message: '', type: '' });
+
+    useEffect(() => {
+        if (error) {
+            setAlert({
+                status: true,
+                message: 'Isi seluruh Form Entry',
+                type: 'danger'
+            });
+        } else if (data) {
+            setAlert({
+                status: true,
+                message: 'Data berhasil disimpan!',
+                type: 'success'
+            });
+        }
+    }, [error, data]);
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
     };
 
     const SimpanProsedur = () => {
-        alert('Prosedur Tersimpan');
-        navigate(PROSEDUR_PATH); 
+        dispatch(createorderProsedur(id, formData));
+        setAlert({ status: false, message: '', type: '' });
     };
 
     const handleSearch = () => {
@@ -46,13 +77,9 @@ const TambahProsedur = () => {
     return (
         <div className='tambahprosedur-container'>
             <div className='tambahprosedur-content'>
-                <Link 
-                    to={PROSEDUR_PATH} 
-                    className={activeLink === 'cancel' ? 'active cancel-link' : 'cancel-x'} 
-                    onClick={() => handleLinkCancel('cancel')}
-                >
+                <button className='cancel-x' onClick={onClose}>
                     Cancel X
-                </Link>
+                </button>
                 <h1 className='text-tambahprosedur'>Tambah Prosedur</h1>
                 <div className='kolom-tambah-prosedur'>
                     <div className='nama-prosedur-prosedur'>

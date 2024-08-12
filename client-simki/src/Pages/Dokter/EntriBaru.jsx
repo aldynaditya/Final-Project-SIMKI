@@ -71,8 +71,8 @@ const EntriBaru = () => {
                 message: 'Data berhasil disimpan!',
                 type: 'success'
             });
-            dispatch(fetchdetailEmr(id)); // Fetch detail EMR after entry is saved
-            dispatch(fetchVitalsign(id)); // Fetch vital signs after entry is saved
+            dispatch(fetchdetailEmr(id));
+            dispatch(fetchVitalsign(id));
         }
     }, [errorForm, entry, dispatch, id]);
 
@@ -102,12 +102,21 @@ const EntriBaru = () => {
 
     const DropdownOrder = async (event) => {
         const selectedOption = event.target.value;
+
+        if (!datavs.id) {
+            setAlert({
+                status: true,
+                message: 'CPPT masih belum terisi',
+                type: 'danger'
+            });
+            return;
+        }
     
         if (selectedOption) {
             const updatedTindakan = formData.tindakan.filter(item => item !== 'none');
             updatedTindakan.push(selectedOption);
             await dispatch(updateActionEntry(datavs.id, { tindakan: updatedTindakan }));
-            console.log('tindakan:', updatedTindakan); // Mengupdate tindakan di server
+
             switch (selectedOption) {
                 case 'obat':
                     window.open(`/dokter/order-obat/${datavs.id}`, '_blank');
