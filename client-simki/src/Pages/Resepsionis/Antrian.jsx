@@ -4,17 +4,17 @@ import BuatJanjiPopup from './BuatJanjiPopup';
 import UpdateStatus from './AksiPopup';
 import '../../Style/Resepsionis/Antrian.css';
 import SearchBar from "../../components/SearchBar";
-import { fetchAntrian } from '../../redux/resepsionis/antrian/actions';
+import { fetchAppointment } from '../../redux/resepsionis/antrian/actions'; 
 
 const Antrian = () => {
     const dispatch = useDispatch();
-    const { data, loading, error } = useSelector(state => state.antrian);
+    const { data, loading, error } = useSelector(state => state.antrian); 
 
     const [showJanjiPopup, setShowJanjiPopup] = useState(false);
     const [showAksiPopup, setShowAksiPopup] = useState(false);
 
     useEffect(() => {
-        dispatch(fetchAntrian());
+        dispatch(fetchAppointment()); 
     }, [dispatch]);
 
     const handleOpenJanjiPopup = () => {
@@ -35,6 +35,10 @@ const Antrian = () => {
 
     const IdentitasPasien = () => {
         window.open('identitas-pasien', '_blank');
+    };
+
+    const formatDate = (dateString) => {
+        return dateString.split('T')[0]; // Mengambil bagian sebelum 'T' untuk mendapatkan format YYYY-MM-DD
     };
 
     if (loading) {
@@ -61,13 +65,13 @@ const Antrian = () => {
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>NIK</th>
+                                        <th>Nama Pasien</th>
                                         <th>Dokter</th>
                                         <th>Poli</th>
                                         <th>Tanggal</th>
                                         <th>Jam</th>
                                         <th>Penjamin</th>
-                                        <th >Aksi</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -76,7 +80,7 @@ const Antrian = () => {
                                             <td>{row.nama_lengkap}</td>
                                             <td>{row.dokter}</td>
                                             <td>{row.poli}</td>
-                                            <td>{row.tanggal}</td>
+                                            <td>{formatDate(row.tanggal)}</td>
                                             <td>{row.jam}</td>
                                             <td>{row.penjamin}</td>
                                             <td>

@@ -1,16 +1,16 @@
 import { 
-    FETCH_ANTRIAN_REQUEST, 
-    FETCH_ANTRIAN_SUCCESS, 
-    FETCH_ANTRIAN_FAILURE 
+    FETCH_APPOINTMENT_REQUEST, 
+    FETCH_APPOINTMENT_SUCCESS, 
+    FETCH_APPOINTMENT_FAILURE 
 } from './constants';
 import { getData } from '../../../utils/fetch';
 
-export const fetchAntrian = () => async (dispatch) => {
-    dispatch({ type: FETCH_ANTRIAN_REQUEST });
+export const fetchAppointment = () => async (dispatch) => {
+    dispatch({ type: FETCH_APPOINTMENT_REQUEST });
     try {
         const response = await getData('/cms/appointment');
-        dispatch({ type: FETCH_ANTRIAN_SUCCESS, payload: response.data.data });
+        dispatch({ type: FETCH_APPOINTMENT_SUCCESS, payload: response.data.data });
     } catch (error) {
-        dispatch({ type: FETCH_ANTRIAN_FAILURE, payload: error.message });
+        dispatch({ type: FETCH_APPOINTMENT_FAILURE, payload: error.message });
     }
 };

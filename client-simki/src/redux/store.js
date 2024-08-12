@@ -47,6 +47,7 @@ import createnewentryReducer from './doctor/newEntry/reducer';
 
 
 
+
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducers = combineReducers({
@@ -86,9 +87,8 @@ const rootReducers = combineReducers({
     getEmr: getemrReducer,
     getdetailEmr: getdetailemrReducer,
     createVital: createvitalReducer,
-    getVital: getvitalsignReducer,
+      getVital: getvitalsignReducer,
     createNewEntry: createnewentryReducer
-});
 const store = createStore(
     rootReducers,
     composerEnhancer(applyMiddleware(thunk))
