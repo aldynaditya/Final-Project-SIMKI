@@ -6,11 +6,11 @@ import {
 import { postData } from '../../../utils/fetch';
 
 
-export const createNewEntry = (id, formData) => async (dispatch) => {
+export const createOrder = (id, formData) => async (dispatch) => {
     dispatch({ type: CREATE_ORDER_REQUEST });
 
     try {
-        const response = await postData(`/cms/emr/${id}finish-order`, formData);
+        const response = await postData(`/cms/emr/${id}/finish-order`, formData);
         dispatch({
             type: CREATE_ORDER_SUCCESS,
             payload: response.data.data,

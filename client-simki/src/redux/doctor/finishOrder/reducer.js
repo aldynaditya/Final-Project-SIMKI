@@ -5,7 +5,7 @@ import {
 } from './constants';
 
 const initialState = {
-    order: null,
+    data: null,
     error: null,
     loading: false
 };
@@ -15,7 +15,7 @@ const createorderReducer = (state = initialState, action) => {
         case CREATE_ORDER_REQUEST:
             return { ...state, loading: true };
         case CREATE_ORDER_SUCCESS:
-            return { ...state, loading: false, order: action.payload, error: null};
+            return { ...state, loading: false, data: action.payload, error: null};
         case CREATE_ORDER_FAILURE:
             return { ...state, loading: false, error: action.payload };
         default:
