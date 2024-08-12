@@ -4,14 +4,15 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { fetchdetailEmr } from '../../redux/doctor/detailEmr/actions';
 import { fetchVitalsign } from '../../redux/doctor/vitalSign/actions';
 import RiwayatEpisode from '../../components/RiwayatEps';
+import IsiCPPT from './IsiCppt';
 import '../../Style/Dokter/EntriMasuk.css';
 
 const EntriMasuk = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { data, loading, error } = useSelector(state => state.getdetailEmr);
     const { data: datavs, loading: loadingvs, error: errorvs } = useSelector(state => state.getVital);
+    const [isPopupVisible, setIsPopupVisible] = useState(false);
 
     useEffect(() => {
         dispatch(fetchdetailEmr(id));
@@ -21,8 +22,16 @@ const EntriMasuk = () => {
         dispatch(fetchVitalsign(id));
     }, [dispatch, id]);
 
-    const IsiCppt = () => {
-        navigate('isi-cppt');
+    const handlePopUpCPPT = () => {
+        setIsPopupVisible(true);
+    };
+
+    const handleCloseCPPT = () => {
+        setIsPopupVisible(false);
+    };
+
+    const handleCPPTComplete = () => {
+        setIsPopupVisible(false);
     };
 
     const formatDate = (dateString) => {
@@ -73,6 +82,10 @@ const EntriMasuk = () => {
                     <span className='text-tgl-detail'>Tanggal :</span>
                     <input type='text' className='kolom-tgl-detail' name="tanggal" value={formatDate(data.tanggal)} readOnly></input>
                 </div>
+                <div className='pemeriksa-detail'>
+                    <span className='text-pemeriksa-detail'>Pemeriksa :</span>
+                    <input type='text' className='kolom-pemeriksa-detail' name="pemeriksa" value={data.pemeriksa} readOnly></input>
+                </div>
                 <div className='poli-detail'>
                     <span className='text-poli-detail'>Poli :</span>
                     <input type='text' className='kolom-poli-detail' name="poli" value={data.poli} readOnly></input>
@@ -107,8 +120,21 @@ const EntriMasuk = () => {
                     </div> 
                 </div>
                     <div className='button-entri-masuk'>
-                <button type="isi" className="simpan-entri-masuk" onClick={IsiCppt}>Isi CPPT</button>
+                <button 
+                    className="simpan-entri-masuk" 
+                    onClick={handlePopUpCPPT}
+                >
+                    Isi CPPT
+                </button>
             </div>
+            {isPopupVisible &&
+                <IsiCPPT 
+                    id={id}
+                    episodeId={data.episodeId} 
+                    onClose={handleCloseCPPT} 
+                    onComplete={handleCPPTComplete} 
+                />
+            }
                 <RiwayatEpisode />
             </div>
         </div>
