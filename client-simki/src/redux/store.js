@@ -44,6 +44,7 @@ import getdetailemrReducer from './doctor/detailEmr/reducer';
 import createvitalReducer from './nurse/createVital/reducer';
 
 
+
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducers = combineReducers({
@@ -82,7 +83,7 @@ const rootReducers = combineReducers({
     identitas: identitasReducer,
     getEmr: getemrReducer,
     getdetailEmr: getdetailemrReducer,
-    createVital: createvitalReducer
+    createVital: createvitalReducer,
 });
 const store = createStore(
     rootReducers,
