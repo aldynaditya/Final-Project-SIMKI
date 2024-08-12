@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchdetailEmr } from '../../redux/doctor/detailEmr/actions';
 import { createNewEntry } from '../../redux/doctor/newEntry/actions';
+import { updateActionEntry } from '../../redux/doctor/action/actions';
 import Modal from 'react-modal';
 import RiwayatEpisode from '../../components/RiwayatEps';
 import '../../Style/Dokter/EntriBaru.css';
@@ -13,6 +14,7 @@ const EntriBaru = () => {
     const navigate = useNavigate();
     const { data, loading, error } = useSelector(state => state.getdetailEmr);
     const { error: errorForm, entry } = useSelector(state => state.createNewEntry);
+    const { act, erroract } = useSelector(state => state.updateAction);
     
     const [formData, setFormData] = useState({
         alergi: '',
@@ -26,6 +28,7 @@ const EntriBaru = () => {
         objective: '',
         assessment: '',
         plan: '',
+        tindakan: [],
     });
 
     const [alert, setAlert] = useState({ status: false, message: '', type: '' });
@@ -74,10 +77,25 @@ const EntriBaru = () => {
         return `${year}-${month}-${day}`;
     };
 
-    const DropdownOrder = (event) => {
+    const DropdownOrder = async (event) => {
         const selectedOption = event.target.value;
         if (selectedOption) {
-            window.open(selectedOption, '_blank');
+            const updatedTindakan = [...formData.tindakan, selectedOption]; // Menambahkan tindakan ke array
+            await dispatch(updateActionEntry(data.episodeId, { tindakan: updatedTindakan })); // Mengupdate tindakan di server
+
+            switch (selectedOption) {
+                case 'obat':
+                    window.open(`/dokter/order-obat/${data.episodeId}`, '_blank');
+                    break;
+                case 'prosedur':
+                    window.open(`/dokter/order-prosedur/${data.episodeId}`, '_blank');
+                    break;
+                case 'surat':
+                    window.open(`/dokter/order-surat/${data.episodeId}`, '_blank');
+                    break;
+                default:
+                    break;
+            }
         }
     };
 
@@ -185,11 +203,11 @@ const EntriBaru = () => {
                 <div className='tindakan-entri-baru'>
                     <span className='text-tindakan-entri-baru'>Tindakan :</span>
                     <select onChange={DropdownOrder} className='dropdown-entri-baru'>
-                        <option value="">Order</option>
-                        <option value={`/order-obat`}>Obat</option>
-                        <option value={`/order-prosedur`}>Prosedur Medis</option>
-                        <option value={`/order-surat`}>Buat Surat</option>
-                    </select>
+                            <option value="">Order</option>
+                            <option value="obat">Obat</option>
+                            <option value="prosedur">Prosedur Medis</option>
+                            <option value="surat">Buat Surat</option>
+                        </select>
                 </div>
             </div>
             <div className='button-entri-baru'>

@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import Modal from 'react-modal';
 import { createCPPTEntry } from '../../redux/doctor/cpptEntry/actions';
+import { updateActionEntry } from '../../redux/doctor/action/actions';
 import '../../Style/Dokter/IsiCppt.css';
 
 const IsiCppt = ({ episodeId, onClose}) => {
     const dispatch = useDispatch();
     const { cppt, loading, error } = useSelector(state => state.createCpptEntry);
+    const { act, erroract } = useSelector(state => state.updateAction);
 
     const [formData, setFormData] = useState({
         riwayatPenyakit: '',
@@ -15,6 +17,7 @@ const IsiCppt = ({ episodeId, onClose}) => {
         objective: '',
         assessment: '',
         plan: '',
+        tindakan: [],
     });
 
     const [alert, setAlert] = useState({ status: false, message: '', type: '' });
@@ -48,14 +51,31 @@ const IsiCppt = ({ episodeId, onClose}) => {
     };
 
     const SelesaikanOrder = () => {
+
     };
 
-    const DropdownOrder = (event) => {
+    const DropdownOrder = async (event) => {
         const selectedOption = event.target.value;
         if (selectedOption) {
-            window.open(selectedOption, '_blank');
+            const updatedTindakan = [...formData.tindakan, selectedOption]; // Menambahkan tindakan ke array
+            await dispatch(updateActionEntry(episodeId, { tindakan: updatedTindakan })); // Mengupdate tindakan di server
+
+            switch (selectedOption) {
+                case 'obat':
+                    window.open(`/dokter/order-obat/${episodeId}`, '_blank');
+                    break;
+                case 'prosedur':
+                    window.open(`/dokter/order-prosedur/${episodeId}`, '_blank');
+                    break;
+                case 'surat':
+                    window.open(`/dokter/order-surat/${episodeId}`, '_blank');
+                    break;
+                default:
+                    break;
+            }
         }
     };
+    
 
     return (
         <div className='isicppt-popup-container'>
@@ -93,9 +113,9 @@ const IsiCppt = ({ episodeId, onClose}) => {
                         <span className='text-tindakan-cppt'>Tindakan :</span>
                         <select onChange={DropdownOrder} className='dropdown-entri-baru'>
                             <option value="">Order</option>
-                            <option value="order-obat">Obat</option>
-                            <option value="order-prosedur">Prosedur Medis</option>
-                            <option value="order-surat">Buat Surat</option>
+                            <option value="obat">Obat</option>
+                            <option value="prosedur">Prosedur Medis</option>
+                            <option value="surat">Buat Surat</option>
                         </select>
                     </div>
                 </div>
