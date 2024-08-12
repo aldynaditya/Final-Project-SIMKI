@@ -10,6 +10,7 @@ const {
     order,
     findformedicalrecord,
     findOneEMRforPatient,
+    findOnevitalsign,
 } = require('./controller');
 const { 
     authenticateUser, 
@@ -18,6 +19,7 @@ const {
 
 router.get('/emr', authenticateUser, authorizeRoles('dokter', 'perawat', 'resepsionis'), index);
 router.get('/emr/:id', authenticateUser, authorizeRoles('dokter', 'perawat', 'resepsionis'), findOneEMRforPatient);
+router.get('/vitalsign/:id', authenticateUser, authorizeRoles( 'dokter' ), findOnevitalsign);
 router.post('/emr/:id/nurse', authenticateUser, authorizeRoles('perawat'), vitalsign);
 router.post('/emr/:id/doctor/new', authenticateUser, authorizeRoles('dokter'), episode);
 router.patch('/emr/:id/doctor/follow-up', authenticateUser, authorizeRoles('dokter'), followupepisode);

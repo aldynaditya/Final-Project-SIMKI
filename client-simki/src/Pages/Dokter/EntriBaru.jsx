@@ -1,19 +1,77 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import { fetchdetailEmr } from '../../redux/doctor/detailEmr/actions';
+import { createNewEntry } from '../../redux/doctor/newEntry/actions';
+import Modal from 'react-modal';
 import RiwayatEpisode from '../../components/RiwayatEps';
-import '../../Style/Resepsionis/EmrResepsionis.css';
-import '../../Style/components/DetailEpisode.css';
 import '../../Style/Dokter/EntriBaru.css';
 
 const EntriBaru = () => {
-    // Definisikan variabel konstanta untuk path dasar
-    const BASE_PATH = "/dokter/pasien-dokter/emr-dokter/entri-baru";
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { data, loading, error } = useSelector(state => state.getdetailEmr);
+    const { error: errorForm, entry } = useSelector(state => state.createNewEntry);
+    
+    const [formData, setFormData] = useState({
+        alergi: '',
+        riwayatPenyakit: '',
+        subjective: '',
+        TD: '',
+        indeks: '',
+        detak: '',
+        suhu: '',
+        napas: '',
+        objective: '',
+        assessment: '',
+        plan: '',
+    });
+
+    const [alert, setAlert] = useState({ status: false, message: '', type: '' });
+
+    useEffect(() => {
+        dispatch(fetchdetailEmr(id));
+    }, [dispatch, id]);
+
+    useEffect(() => {
+        if (errorForm) {
+            setAlert({
+                status: true,
+                message: 'Isi seluruh Form Entry',
+                type: 'danger'
+            });
+        } else if (entry) {
+            setAlert({
+                status: true,
+                message: 'Data berhasil disimpan!',
+                type: 'success'
+            });
+        }
+    }, [errorForm, entry]);
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
 
     const SimpanEntriBaru = () => {
-        alert('Data Tersimpan');
+        dispatch(createNewEntry(id, formData));
+        setAlert({ status: false, message: '', type: '' });
     };
 
     const SelesaikanOrder = () => {
         alert('Order Tersimpan'); 
+    };
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
     };
 
     const DropdownOrder = (event) => {
@@ -23,62 +81,65 @@ const EntriBaru = () => {
         }
     };
 
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
+
     return (
         <div className='emr-resepsionis-container'>
             <h1 className='text-emr-resepsionis'>EMR Pasien</h1>
             <div className='kolom-emr-resepsionis'>
                 <div className='no-emr-rsp'>
                     <span className='text-nemr-rsp'>No. EMR :</span>
-                    <input type='text' className='kolom-nemr-rsp'></input>
+                    <input type='text' className='kolom-nemr-rsp' name="noEMR" value={data.noEMR} readOnly></input>
                 </div>
                 <div className='nama-pasien-rsp'>
                     <span className='text-npasien-rsp'>Nama Pasien :</span>
-                    <input type='text' className='kolom-npasien-rsp'></input>
+                    <input type='text' className='kolom-npasien-rsp' name="nama_pasien" value={data.nama_pasien} readOnly></input>
                 </div>
                 <div className='tgl-lahir-rsp'>
                     <span className='text-ttl-rsp'>Tanggal Lahir :</span>
-                    <input type='date' className='kolom-ttl-rsp'></input>
+                    <input type='text' className='kolom-ttl-rsp' name="tanggal_lahir" value={formatDate(data.tanggal_lahir)} readOnly></input>
                 </div>
                 <div className='gender-goldar-rsp'>
                     <div className='gender-emr-rsp'>
                         <span className='text-gender-rsp'>Jenis Kelamin :</span>
-                        <input type='text' className='kolom-gender-rsp'></input>
+                        <input type='text' className='kolom-gender-rsp' name="jenis_kelamin" value={data.jenis_kelamin} readOnly></input>
                     </div>
                     <div className='goldar-emr-rsp'>
                         <span className='text-goldar-rsp'>Golongan Darah :</span>
-                        <input type='text' className='kolom-goldar-rsp'></input>
+                        <input type='text' className='kolom-goldar-rsp' name="gol_darah" value={data.gol_darah} readOnly></input>
                     </div>
                 </div>
                 <div className='alergi-rsp'>
                     <span className='text-alergi-rsp'>Alergi :</span>
-                    <input type='text' className='kolom-alergi-rsp'></input>
+                    <input type='text' className='kolom-alergi-rsp' name="alergi" value={formData.alergi} onChange={handleChange}></input>
                 </div>
             </div>
             <h2 className='text-riwayat-episode'>Entri Baru :</h2>
             <div className='kolom-detail-eps'>
-                <div className='tgl-detail'>
+            <div className='tgl-detail'>
                     <span className='text-tgl-detail'>Tanggal :</span>
-                    <input type='date' className='kolom-tgl-detail'></input>
+                    <input type='text' className='kolom-tgl-detail' name="tanggal" value={formatDate(data.tanggal)} readOnly></input>
                 </div>
                 <div className='penjamin-detail'>
                     <span className='text-penjamin-detail'>Penjamin :</span>
-                    <input type='text' className='kolom-penjamin-detail'></input>
+                    <input type='text' className='kolom-penjamin-detail' name="penjamin" value={data.penjamin} readOnly></input>
                 </div>
                 <div className='pemeriksa-detail'>
                     <span className='text-pemeriksa-detail'>Pemeriksa :</span>
-                    <input type='text' className='kolom-pemeriksa-detail'></input>
+                    <input type='text' className='kolom-pemeriksa-detail' name="pemeriksa" value={data.pemeriksa} readOnly></input>
                 </div>
                 <div className='poli-detail'>
                     <span className='text-poli-detail'>Poli :</span>
-                    <input type='text' className='kolom-poli-detail'></input>
+                    <input type='text' className='kolom-poli-detail' name="poli" value={data.poli} readOnly></input>
                 </div>
                 <div className='penyakit-detail'>
                     <span className='text-penyakit-detail'>Riwayat Penyakit :</span>
-                    <input type='text' className='kolom-penyakit-detail'></input>
+                    <input type='text' className='kolom-penyakit-detail' name="riwayatPenyakit" value={formData.riwayatPenyakit} onChange={handleChange}></input>
                 </div>
                 <div className='subjektif-detail'>
                     <span className='text-subjektif-detail'>Subjektif :</span>
-                    <input type='text' className='kolom-subjektif-detail'></input>
+                    <input type='text' className='kolom-subjektif-detail' name="subjective" value={formData.subjective} onChange={handleChange}></input>
                 </div>
                 <div className='vital-detail'>
                     <span className='text-vital-detail'>Tanda Vital :</span>
@@ -86,48 +147,48 @@ const EntriBaru = () => {
                         <div className='atas-vital-detail'>
                             <div className='td-detail'>
                                 <span className='text-td-detail'>TD :</span>
-                                <input type='text' className='kolom-td-detail'></input>
+                                <input type='text' className='kolom-td-detail' name="TD" value={formData.TD} onChange={handleChange}></input>
                             </div>
                             <div className='suhu-detail'>
                                 <span className='text-suhu-detail'>Suhu :</span>
-                                <input type='text' className='kolom-suhu-detail'></input>
+                                <input type='text' className='kolom-suhu-detail' name="suhu" value={formData.suhu} onChange={handleChange}></input>
                             </div>
                         </div>
                         <div className='bawah-vital-detail'>
                             <div className='indeks-detail'>
                                 <span className='text-indeks-detail'>Indeks :</span>
-                                <input type='text' className='kolom-indeks-detail'></input>
+                                <input type='text' className='kolom-indeks-detail' name="indeks" value={formData.indeks} onChange={handleChange}></input>
                             </div>
                             <div className='napas-detail'>
                                 <span className='text-napas-detail'>Napas :</span>
-                                <input type='text' className='kolom-napas-detail'></input>
+                                <input type='text' className='kolom-napas-detail' name="napas" value={formData.napas} onChange={handleChange}></input>
                             </div>
                         </div>
                         <div className='detak-detail'>
                             <span className='text-detak-detail'>Detak :</span>
-                            <input type='text' className='kolom-detak-detail'></input>
+                            <input type='text' className='kolom-detak-detail' name="detak" value={formData.detak} onChange={handleChange}></input>
                         </div>
                     </div>
                 </div>
                 <div className='objektif-detail'>
                     <span className='text-objektif-detail'>Objektif :</span>
-                    <input type='text' className='kolom-objektif-detail'></input>
+                    <input type='text' className='kolom-objektif-detail' name="objective" value={formData.objective} onChange={handleChange}></input>
                 </div>
                 <div className='diagnosis-detail'>
                     <span className='text-diagnosis-detail'>Diagnosis :</span>
-                    <input type='text' className='kolom-diagnosis-detail'></input>
+                    <input type='text' className='kolom-diagnosis-detail' name="assessment" value={formData.assessment} onChange={handleChange}></input>
                 </div>
                 <div className='plan-detail'>
                     <span className='text-plan-detail'>Plan :</span>
-                    <input type='text' className='kolom-plan-detail'></input>
+                    <input type='text' className='kolom-plan-detail' name="plan" value={formData.plan} onChange={handleChange}></input>
                 </div>
                 <div className='tindakan-entri-baru'>
                     <span className='text-tindakan-entri-baru'>Tindakan :</span>
                     <select onChange={DropdownOrder} className='dropdown-entri-baru'>
                         <option value="">Order</option>
-                        <option value={`${BASE_PATH}/order-obat`}>Obat</option>
-                        <option value={`${BASE_PATH}/order-prosedur`}>Prosedur Medis</option>
-                        <option value={`${BASE_PATH}/order-surat`}>Buat Surat</option>
+                        <option value={`/order-obat`}>Obat</option>
+                        <option value={`/order-prosedur`}>Prosedur Medis</option>
+                        <option value={`/order-surat`}>Buat Surat</option>
                     </select>
                 </div>
             </div>
@@ -136,6 +197,20 @@ const EntriBaru = () => {
                 <button className="selesaikan-order-baru" onClick={SelesaikanOrder}>Selesaikan Order</button>
             </div>
             <RiwayatEpisode />
+            <Modal
+                isOpen={alert.status}
+                onRequestClose={() => setAlert({ status: false, message: '', type: '' })}
+                contentLabel="Alert Message"
+                className="Modal"
+                overlayClassName="Overlay"
+                shouldCloseOnOverlayClick={true}
+                shouldCloseOnEsc={true}
+            >
+                <div className="modal-content">
+                    <p>{alert.message}</p>
+                    <button onClick={() => setAlert({ status: false, message: '', type: '' })}>Close</button>
+                </div>
+            </Modal>
         </div>
     );
 };

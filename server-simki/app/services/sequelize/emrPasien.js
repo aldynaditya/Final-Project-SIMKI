@@ -81,12 +81,13 @@ const getAllEMRPasien = async ( req ) => {
 
 const createVitalSignbyPerawat = async ( req ) => {
     const emrPasienId = req.params.id;
-    const { riwayatPenyakit, subjective, TD, indeks, detak, suhu, napas, objective, assessment, plan } = req.body;
+    const { alergi, riwayatPenyakit, subjective, TD, indeks, detak, suhu, napas, objective, assessment, plan } = req.body;
 
     const invoiceNumber = await generateInvoiceNumber(emrPasienId);
 
     const result = await Episode.create({
         emrPasienId,
+        alergi,
         riwayatPenyakit,
         subjective,
         TD,
@@ -102,6 +103,55 @@ const createVitalSignbyPerawat = async ( req ) => {
 
     return result;
 }
+
+const getVitalSignbyDoctor = async (req) => {
+    const { id: uuid } = req.params;
+
+    const emr = await EMRPasien.findOne({
+        where: { uuid },
+        include: [
+            {
+                model: Appointment,
+                as: 'appointment',
+                include: [
+                    {
+                        model: DataPasien,
+                        as: 'datapasien',
+                    },
+                    {
+                        model: Schedule,
+                        as: 'schedule',
+                        include: {
+                            model: UserKlinik,
+                            as: 'user_klinik',
+                        }
+                    }
+                ]
+            },
+            {
+                model: Episode
+            }
+        ],
+    });
+
+    if (!emr) {
+        throw new NotFoundError(`Tidak ada rekam medis dengan uuid: ${uuid}`);
+    }
+
+    const episode = emr.episodes[0];
+
+    const result = {
+        id: emr.uuid,
+        alergi: episode.alergi,
+        td: episode.TD,
+        indeks: episode.indeks,
+        detak: episode.detak,
+        suhu: episode.suhu,
+        napas: episode.napas,
+    };
+
+    return result;
+};
 
 const updateEpisode = async ( req ) => {
     const { id } = req.params;
@@ -381,9 +431,6 @@ const getDataEMRbyId = async (req) => {
                         }
                     }
                 ]
-            },
-            {
-                model: Episode
             }
         ],
     });
@@ -393,7 +440,6 @@ const getDataEMRbyId = async (req) => {
     }
 
     const appointment = emr.appointment;
-    const episode = emr.episodes[0];
 
     const result = {
         id: emr.uuid,
@@ -402,11 +448,10 @@ const getDataEMRbyId = async (req) => {
         tanggal_lahir: appointment.datapasien.tanggal_lahir,
         jenis_kelamin: appointment.datapasien.jenis_kelamin,
         gol_darah: appointment.datapasien.gol_darah,
-        alergi: episode.alergi,
         tanggal: appointment.tanggal,
         penjamin: appointment.penjamin,
         pemeriksa: appointment.schedule.user_klinik.nama,
-        poli: appointment.schedule.poli
+        poli: appointment.schedule.poli,
     };
 
     return result;
@@ -417,6 +462,7 @@ module.exports = {
     getAllMedicalRecord,
     findOneMedicalRecord,
     createVitalSignbyPerawat,
+    getVitalSignbyDoctor,
     updateEpisode,
     createEpisode,
     updateAction,
