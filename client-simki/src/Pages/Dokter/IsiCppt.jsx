@@ -3,13 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import Modal from 'react-modal';
 import { createCPPTEntry } from '../../redux/doctor/cpptEntry/actions';
+import { fetchVitalsign } from '../../redux/doctor/vitalSign/actions';
 import { updateActionEntry } from '../../redux/doctor/action/actions';
 import '../../Style/Dokter/IsiCppt.css';
 
-const IsiCppt = ({ episodeId, onClose}) => {
+const IsiCppt = ({ onClose }) => {
     const dispatch = useDispatch();
     const { cppt, loading, error } = useSelector(state => state.createCpptEntry);
-    const { act, erroract } = useSelector(state => state.updateAction);
+    const { data: act, loading: erroract } = useSelector(state => state.updateAction);
+    const { data: datavs, loading: loadingvs, error: errorvs } = useSelector(state => state.getVital);
 
     const [formData, setFormData] = useState({
         riwayatPenyakit: '',
@@ -21,7 +23,30 @@ const IsiCppt = ({ episodeId, onClose}) => {
     });
 
     const [alert, setAlert] = useState({ status: false, message: '', type: '' });
-    
+
+    useEffect(() => {
+        dispatch(fetchVitalsign(datavs.id));
+    }, [dispatch, datavs.id]);
+
+    useEffect(() => {
+        if (datavs) {
+            setFormData({
+                alergi: datavs.alergi || '',
+                riwayat_penyakit: datavs.riwayat_penyakit || '',
+                subjective: datavs.subjective || '',
+                TD: datavs.td || '',
+                indeks: datavs.indeks || '',
+                detak: datavs.detak || '',
+                suhu: datavs.suhu || '',
+                napas: datavs.napas || '',
+                objective: datavs.objective || '',
+                assessment: datavs.assessment || '',
+                plan: datavs.plan || '',
+                tindakan: datavs.tindakan || [],
+            });
+        }
+    }, [datavs]);
+
     useEffect(() => {
         if (error) {
             setAlert({
@@ -35,8 +60,9 @@ const IsiCppt = ({ episodeId, onClose}) => {
                 message: 'Data berhasil disimpan!',
                 type: 'success'
             });
+            dispatch(fetchVitalsign(datavs.id));
         }
-    }, [error, cppt]);
+    }, [error, cppt, dispatch, datavs.id]);
 
     const handleChange = (e) => {
         setFormData({
@@ -46,7 +72,7 @@ const IsiCppt = ({ episodeId, onClose}) => {
     };
 
     const SimpanCppt = () => {
-        dispatch(createCPPTEntry(episodeId, formData));
+        dispatch(createCPPTEntry(datavs.id, formData));
         setAlert({ status: false, message: '', type: '' });
     };
 
@@ -56,19 +82,21 @@ const IsiCppt = ({ episodeId, onClose}) => {
 
     const DropdownOrder = async (event) => {
         const selectedOption = event.target.value;
+    
         if (selectedOption) {
-            const updatedTindakan = [...formData.tindakan, selectedOption]; // Menambahkan tindakan ke array
-            await dispatch(updateActionEntry(episodeId, { tindakan: updatedTindakan })); // Mengupdate tindakan di server
-
+            const updatedTindakan = formData.tindakan.filter(item => item !== 'none');
+            updatedTindakan.push(selectedOption);
+            await dispatch(updateActionEntry(datavs.id, { tindakan: updatedTindakan }));
+            console.log('tindakan:', updatedTindakan); // Mengupdate tindakan di server
             switch (selectedOption) {
                 case 'obat':
-                    window.open(`/dokter/order-obat/${episodeId}`, '_blank');
+                    window.open(`/dokter/order-obat/${datavs.id}`, '_blank');
                     break;
                 case 'prosedur':
-                    window.open(`/dokter/order-prosedur/${episodeId}`, '_blank');
+                    window.open(`/dokter/order-prosedur/${datavs.id}`, '_blank');
                     break;
                 case 'surat':
-                    window.open(`/dokter/order-surat/${episodeId}`, '_blank');
+                    window.open(`/dokter/order-surat/${datavs.id}`, '_blank');
                     break;
                 default:
                     break;
@@ -91,7 +119,7 @@ const IsiCppt = ({ episodeId, onClose}) => {
                     </div> */}
                     <div className='penyakit-cppt'>
                         <span className='text-penyakit-cppt'>Riwayat Penyakit :</span>
-                        <input type='text' className='kolom-penyakit-cppt' name="riwayatPenyakit" value={formData.riwayatPenyakit} onChange={handleChange}></input>
+                        <input type='text' className='kolom-penyakit-cppt' name="riwayat_penyakit" value={formData.riwayat_penyakit} onChange={handleChange}></input>
                     </div>
                     <div className='subjektif-cppt'>
                         <span className='text-subjektif-cppt'>Subjektif:</span>
