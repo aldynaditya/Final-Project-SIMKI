@@ -6,7 +6,6 @@ import NotifikasiDokter from '../Pages/Dokter/Notifikasi';
 import Schedule from '../Pages/Dokter/Schedule';
 import EmrDokter from '../Pages/Dokter/Emr';
 import EntriMasuk from '../Pages/Dokter/EntriMasuk';
-import IsiCppt from '../Pages/Dokter/IsiCppt';
 import EntriBaru from '../Pages/Dokter/EntriBaru';
 import OrderObat from '../Pages/Dokter/OrderObat';
 import OrderProsedur from '../Pages/Dokter/OrderProsedur';
@@ -28,7 +27,6 @@ export function DoctorsRoute() {
             <Route path="emr-dokter/:id" element={<EmrDokter />} />
             <Route path="entri-masuk/:id" element={<EntriMasuk />} />
             <Route path="entri-baru/:id" element={<EntriBaru />} />
-            <Route path="pasien-dokter/emr-dokter/:id/isi-cppt" element={<IsiCppt />} />
             <Route path="pasien-dokter/emr-dokter/:id/order-obat" element={<OrderObat />} />
             <Route path="pasien-dokter/emr-dokter/:id/order-obat/tambah-obat" element={<TambahObatDr />} />
             <Route path="pasien-dokter/emr-dokter/:id/order-prosedur" element={<OrderProsedur />} />

@@ -121,10 +121,10 @@ const EntriBaru = () => {
                     <span className='text-tgl-detail'>Tanggal :</span>
                     <input type='text' className='kolom-tgl-detail' name="tanggal" value={formatDate(data.tanggal)} readOnly></input>
                 </div>
-                <div className='penjamin-detail'>
+                {/* <div className='penjamin-detail'>
                     <span className='text-penjamin-detail'>Penjamin :</span>
                     <input type='text' className='kolom-penjamin-detail' name="penjamin" value={data.penjamin} readOnly></input>
-                </div>
+                </div> */}
                 <div className='pemeriksa-detail'>
                     <span className='text-pemeriksa-detail'>Pemeriksa :</span>
                     <input type='text' className='kolom-pemeriksa-detail' name="pemeriksa" value={data.pemeriksa} readOnly></input>

@@ -35,7 +35,7 @@ import getitemReducer from "./nurse/index/reducer";
 import createitemReducer from "./nurse/create/reducer";
 import deleteitemReducer from './nurse/delete/reducer';
 import edititemReducer from "./nurse/edit/reducer";
-import schedulePReducer from './nurse/schedule/reducer';
+import schedulePReducer from './resepsionis/jadwal/reducer';
 import buatJanjiReducer from './resepsionis/buatjanji/reducer';
 import antrianReducer from './resepsionis/antrian/reducer';
 import identitasReducer from './resepsionis/identitas/reducer';
@@ -45,6 +45,7 @@ import createvitalReducer from './nurse/vital/reducer';
 import getvitalsignReducer from './doctor/vitalSign/reducer';
 import createnewentryReducer from './doctor/newEntry/reducer';
 import transactionReducer from './kasir/index/reducer';
+import createcpptentryReducer from './doctor/cpptEntry/reducer';
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -87,7 +88,8 @@ const rootReducers = combineReducers({
     createVital: createvitalReducer,
     getVital: getvitalsignReducer,
     createNewEntry: createnewentryReducer,
-    transaction: transactionReducer
+    transaction: transactionReducer,
+    createCpptEntry: createcpptentryReducer,
 }); 
 
 const store = createStore(

@@ -431,6 +431,9 @@ const getDataEMRbyId = async (req) => {
                         }
                     }
                 ]
+            },
+            {
+                model: Episode
             }
         ],
     });
@@ -440,9 +443,11 @@ const getDataEMRbyId = async (req) => {
     }
 
     const appointment = emr.appointment;
+    const episode = emr.episodes[0];
 
     const result = {
         id: emr.uuid,
+        episodeId: episode.uuid,
         noEMR: emr.noEMR,
         nama_pasien: appointment.datapasien.nama_lengkap,
         tanggal_lahir: appointment.datapasien.tanggal_lahir,
