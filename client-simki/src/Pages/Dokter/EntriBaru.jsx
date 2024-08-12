@@ -5,6 +5,7 @@ import { fetchdetailEmr } from '../../redux/doctor/detailEmr/actions';
 import { fetchVitalsign } from '../../redux/doctor/vitalSign/actions';
 import { createNewEntry } from '../../redux/doctor/newEntry/actions';
 import { updateActionEntry } from '../../redux/doctor/action/actions';
+import { createOrder } from '../../redux/doctor/finishOrder/actions';
 import Modal from 'react-modal';
 import RiwayatEpisode from '../../components/RiwayatEps';
 import '../../Style/Dokter/EntriBaru.css';
@@ -16,6 +17,7 @@ const EntriBaru = () => {
     const { data: datavs, loading: loadingvs, error: errorvs } = useSelector(state => state.getVital);
     const { error: errorForm, entry } = useSelector(state => state.createNewEntry);
     const { data: act, loading: erroract } = useSelector(state => state.updateAction);
+    const { error: errorOrder, data: dataOrder } = useSelector(state => state.createOrder);
     
     const [formData, setFormData] = useState({
         alergi: '',
@@ -65,16 +67,28 @@ const EntriBaru = () => {
                 message: 'Isi seluruh Form Entry',
                 type: 'danger'
             });
+        } else if (errorOrder) {
+            setAlert({
+                status: true,
+                message: 'Isi seluruh Form Entry',
+                type: 'danger'
+            });
         } else if (entry) {
             setAlert({
                 status: true,
                 message: 'Data berhasil disimpan!',
                 type: 'success'
             });
-            dispatch(fetchdetailEmr(id));
+        } else if (dataOrder) {
+            setAlert({
+                status: true,
+                message: 'Order Berhasil Dibuat',
+                type: 'success'
+            });
+            // dispatch(fetchdetailEmr(id));
             dispatch(fetchVitalsign(id));
         }
-    }, [errorForm, entry, dispatch, id]);
+    }, [errorForm, entry, errorOrder, dataOrder, dispatch, id]);
 
     const handleChange = (e) => {
         setFormData({
@@ -89,7 +103,8 @@ const EntriBaru = () => {
     };
 
     const SelesaikanOrder = () => {
-        alert('Order Tersimpan'); 
+        dispatch(createOrder(datavs.id));
+        setAlert({ status: false, message: '', type: '' }); 
     };
 
     const formatDate = (dateString) => {

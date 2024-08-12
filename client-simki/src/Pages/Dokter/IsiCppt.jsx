@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 import { createCPPTEntry } from '../../redux/doctor/cpptEntry/actions';
 import { fetchVitalsign } from '../../redux/doctor/vitalSign/actions';
 import { updateActionEntry } from '../../redux/doctor/action/actions';
+import { createOrder } from '../../redux/doctor/finishOrder/actions';
 import '../../Style/Dokter/IsiCppt.css';
 
 const IsiCppt = ({ onClose }) => {
@@ -11,6 +12,7 @@ const IsiCppt = ({ onClose }) => {
     const { cppt, loading, error } = useSelector(state => state.createCpptEntry);
     const { data: act, loading: erroract } = useSelector(state => state.updateAction);
     const { data: datavs, loading: loadingvs, error: errorvs } = useSelector(state => state.getVital);
+    const { error: errorOrder, data: dataOrder } = useSelector(state => state.createOrder);
 
     const [formData, setFormData] = useState({
         riwayatPenyakit: '',
@@ -53,15 +55,27 @@ const IsiCppt = ({ onClose }) => {
                 message: 'Isi seluruh Form Entry',
                 type: 'danger'
             });
+        } else if (errorOrder) {
+            setAlert({
+                status: true,
+                message: 'Isi seluruh Form Entry',
+                type: 'danger'
+            });
         } else if (cppt) {
             setAlert({
                 status: true,
                 message: 'Data berhasil disimpan!',
                 type: 'success'
             });
+        } else if (dataOrder) {
+            setAlert({
+                status: true,
+                message: 'Order Berhasil Dibuat',
+                type: 'success'
+            });
             dispatch(fetchVitalsign(datavs.id));
         }
-    }, [error, cppt, dispatch, datavs.id]);
+    }, [error, cppt, errorOrder, dataOrder, dispatch, datavs.id]);
 
     const handleChange = (e) => {
         setFormData({
@@ -76,7 +90,8 @@ const IsiCppt = ({ onClose }) => {
     };
 
     const SelesaikanOrder = () => {
-
+        dispatch(createOrder(datavs.id));
+        setAlert({ status: false, message: '', type: '' }); 
     };
 
     const DropdownOrder = async (event) => {
