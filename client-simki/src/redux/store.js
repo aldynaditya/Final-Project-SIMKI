@@ -5,7 +5,7 @@ import {
     compose,
 } from 'redux';
 
-import { thunk } from 'redux-thunk';
+import { thunk } from 'redux-thunk'; 
 import authReducer from './auth/reducer';
 import profileReducer from './patient/profile/reducer';
 import daftarReducer from './patient/daftar/reducer';
@@ -44,9 +44,7 @@ import getdetailemrReducer from './doctor/detailEmr/reducer';
 import createvitalReducer from './nurse/vital/reducer';
 import getvitalsignReducer from './doctor/vitalSign/reducer';
 import createnewentryReducer from './doctor/newEntry/reducer';
-
-
-
+import transactionReducer from './kasir/index/reducer';
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -87,8 +85,11 @@ const rootReducers = combineReducers({
     getEmr: getemrReducer,
     getdetailEmr: getdetailemrReducer,
     createVital: createvitalReducer,
-      getVital: getvitalsignReducer,
-    createNewEntry: createnewentryReducer
+    getVital: getvitalsignReducer,
+    createNewEntry: createnewentryReducer,
+    transaction: transactionReducer
+}); 
+
 const store = createStore(
     rootReducers,
     composerEnhancer(applyMiddleware(thunk))
