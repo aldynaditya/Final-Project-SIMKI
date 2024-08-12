@@ -1,16 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import '../../Style/Kasir/TransaksiKasir.css';
 import SearchBar from '../../components/SearchBar';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import DetailFaktur from './DetailFaktur';
+import { fetchTransaction } from '../../redux/kasir/index/actions';
 
 const TransaksiKasir = () => {
-    const [rows] = useState(Array.from({ length: 20 }));
+    const dispatch = useDispatch();
+    const { data: rows, loading, error } = useSelector(state => state.transaction);
+
     const [isDetailFakturVisible, setIsDetailFakturVisible] = useState(false);
 
-    const handleDetailFakturOpen = () => {
-        setIsDetailFakturVisible(true);
+    useEffect(() => {
+        dispatch(fetchTransaction());
+    }, [dispatch]);
+
+    const handleDetailFakturOpen = (index) => {
+        if (rows && rows.length > 0) {
+            const selectedRow = rows[index];
+            if (selectedRow && selectedRow.emrpasien) {
+                setIsDetailFakturVisible(true);
+            } else {
+                console.error("Data 'emrpasien' tidak tersedia.");
+            }
+        }
     };
 
     const handleDetailFakturClose = () => {
@@ -19,6 +34,8 @@ const TransaksiKasir = () => {
 
     const CetakTransaksi = (index) => {
         const element = document.getElementById(`row-${index}`);
+        if (!element) return; 
+        
         const cloneTable = document.createElement('table');
         const cloneThead = document.querySelector('.tabel_transaksi thead').cloneNode(true);
         const cloneRow = element.cloneNode(true);
@@ -51,6 +68,14 @@ const TransaksiKasir = () => {
         });
     };
 
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
     return (
         <div className="transaksi-wrapper">
             <div className="navbar-header-transaksi"></div>
@@ -60,42 +85,50 @@ const TransaksiKasir = () => {
                         <h1 className="text_transaksi">Transaksi</h1>
                         <SearchBar />
                     </div>
-                    <div className="tabel_transaksi">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>No. Faktur</th>
-                                    <th>Tanggal</th>
-                                    <th>No. EMR</th>
-                                    <th>Nama Pasien</th>
-                                    <th>Penjamin</th>
-                                    <th>Metode Bayar</th>
-                                    <th>Total</th>
-                                    <th>Petugas</th>
-                                    <th>Status</th>
-                                    <th>Detail</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {rows.map((_, index) => (
-                                    <tr key={index} id={`row-${index}`}>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td className="detail-faktur-cell">
-                                            <button className="detail-faktur" onClick={handleDetailFakturOpen}>Detail</button>
-                                            <button className="cetak-transaksi" onClick={() => CetakTransaksi(index)}>Cetak</button>
-                                        </td>
+                    <div className="tabel_transaksi_wrapper">
+                        <div className="tabel_transaksi">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>No. Faktur</th>
+                                        <th>Tanggal</th>
+                                        <th>No. EMR</th>
+                                        <th>Nama Pasien</th>
+                                        <th>Penjamin</th>
+                                        <th>Metode Bayar</th>
+                                        <th>Total Jasa</th>
+                                        <th>Total</th>
+                                        <th>Petugas</th>
+                                        <th>Status</th>
+                                        <th>Detail</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {rows && rows.length > 0 ? (
+                                        rows.map((row, index) => (
+                                            <tr key={index} id={`row-${index}`}>
+                                                <td>{row.noInvoice || 'N/A'}</td>
+                                                <td>{row.tanggal || 'N/A'}</td>
+                                                <td>{row.noEMR || 'N/A'}</td>
+                                                <td>{row.namaPasien || 'N/A'}</td>
+                                                <td>{row.penjamin || 'N/A'}</td>
+                                                <td>{row.metodeBayar || 'N/A'}</td>
+                                                <td>{row.totalJasa || 'N/A'}</td>
+                                                <td>{row.total || 'N/A'}</td>
+                                                <td>{row.petugas || 'N/A'}</td>
+                                                <td>{row.status || 'N/A'}</td>
+                                                <td className="detail-faktur-cell">
+                                                    <button className="detail-faktur" onClick={() => handleDetailFakturOpen(index)}>Detail</button>
+                                                    <button className="cetak-transaksi" onClick={() => CetakTransaksi(index)}>Cetak</button>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr><td colSpan="11">Tidak ada data transaksi</td></tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
