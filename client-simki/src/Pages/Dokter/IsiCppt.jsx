@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
 import Modal from 'react-modal';
 import { createCPPTEntry } from '../../redux/doctor/cpptEntry/actions';
 import { fetchVitalsign } from '../../redux/doctor/vitalSign/actions';
@@ -82,12 +81,21 @@ const IsiCppt = ({ onClose }) => {
 
     const DropdownOrder = async (event) => {
         const selectedOption = event.target.value;
+
+        if (!datavs.id) {
+            setAlert({
+                status: true,
+                message: 'CPPT masih belum terisi',
+                type: 'danger'
+            });
+            return;
+        }
     
         if (selectedOption) {
             const updatedTindakan = formData.tindakan.filter(item => item !== 'none');
             updatedTindakan.push(selectedOption);
             await dispatch(updateActionEntry(datavs.id, { tindakan: updatedTindakan }));
-            console.log('tindakan:', updatedTindakan); // Mengupdate tindakan di server
+
             switch (selectedOption) {
                 case 'obat':
                     window.open(`/dokter/order-obat/${datavs.id}`, '_blank');
@@ -113,10 +121,6 @@ const IsiCppt = ({ onClose }) => {
                 </button>
                 <h1 className='text-isicppt-popup'>Isi CPPT</h1>
                 <div className='kolom-isi-cppt'>
-                    {/* <div className='pemeriksa-cppt'>
-                        <span className='text-pemeriksa-cppt'>Pemeriksa :</span>
-                        <input type='text' className='kolom-pemeriksa-cppt'></input>
-                    </div> */}
                     <div className='penyakit-cppt'>
                         <span className='text-penyakit-cppt'>Riwayat Penyakit :</span>
                         <input type='text' className='kolom-penyakit-cppt' name="riwayat_penyakit" value={formData.riwayat_penyakit} onChange={handleChange}></input>

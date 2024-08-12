@@ -1,22 +1,53 @@
-import React, { useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import Modal from 'react-modal';
+import { createorderObat } from '../../redux/doctor/orderMedicine/actions';
 import '../../Style/Dokter/TambahObatDr.css';
 import search from "../../images/search.png";
 
-const TambahObatDr = () => {
-    const [activeLink, setActiveLink] = useState('');
-    const navigate = useNavigate();
-    const { entri } = useParams();
+const TambahObatDr = ({ onClose }) => {
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    const { data, loading, error } = useSelector(state => state.createorderObat);
+    
+    const [formData, setFormData] = useState({
+        riwayatPenyakit: '',
+        subjective: '',
+        objective: '',
+        assessment: '',
+        plan: '',
+        tindakan: [],
+    });
 
-    const OBAT_PATH = `/dokter/pasien-dokter/emr-dokter/${entri}/order-obat`;
+    const [alert, setAlert] = useState({ status: false, message: '', type: '' });
 
-    const handleLinkCancel = (link) => {
-        setActiveLink(link);
+    useEffect(() => {
+        if (error) {
+            setAlert({
+                status: true,
+                message: 'Isi seluruh Form Entry',
+                type: 'danger'
+            });
+        } else if (data) {
+            setAlert({
+                status: true,
+                message: 'Data berhasil disimpan!',
+                type: 'success'
+            });
+        }
+    }, [error, data]);
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
     };
 
     const Simpandokter = () => {
-        alert('Data Tersimpan');
-        navigate(OBAT_PATH); 
+        dispatch(createorderObat(id, formData));
+        setAlert({ status: false, message: '', type: '' });
     };
 
     const handleSearch = () => {
@@ -46,13 +77,9 @@ const TambahObatDr = () => {
     return (
         <div className='tambahobatdr-container'>
             <div className='tambahobatdr-content'>
-                <Link 
-                    to={OBAT_PATH} 
-                    className={activeLink === 'cancel' ? 'active cancel-link' : 'cancel-x'} 
-                    onClick={() => handleLinkCancel('cancel')}
-                >
+            <button className='cancel-x' onClick={onClose}>
                     Cancel X
-                </Link>
+            </button>
                 <h1 className='text-tambahobatdr'>Tambah Obat</h1>
                 <div className='kolom-tambah-dokter'>
                     <div className='nama-obat-dokter'>

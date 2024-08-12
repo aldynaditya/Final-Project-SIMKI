@@ -1,0 +1,3 @@
+export const CREATE_ORDER_PROCEDURE_REQUEST = 'redux/doctor/orderProcedure/CREATE_ORDER_PROCEDURE_REQUEST';
+export const CREATE_ORDER_PROCEDURE_SUCCESS = 'redux/doctor/orderProcedure/CREATE_ORDER_PROCEDURE_SUCCESS';
+export const CREATE_ORDER_PROCEDURE_FAILURE = 'redux/doctor/orderProcedure/CREATE_ORDER_PROCEDURE_FAILURE';

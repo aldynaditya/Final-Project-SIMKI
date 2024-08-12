@@ -8,6 +8,6 @@ const {
     authorizeRoles
 } = require('../../../middleware/auth');
 
-router.post('/order-item/:id',authenticateUser, authorizeRoles('superuser','farmasi','dokter'), orderitem);
+router.post('/order-item/:id',authenticateUser, authorizeRoles('superuser','dokter'), orderitem);
 
 module.exports = router;

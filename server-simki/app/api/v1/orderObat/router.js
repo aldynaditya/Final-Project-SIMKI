@@ -12,6 +12,6 @@ const {
 
 router.get('/order-obat',authenticateUser, authorizeRoles('superuser','farmasi','dokter'), index);
 router.post('/order-obat/:id',authenticateUser, authorizeRoles('superuser','farmasi','dokter'), create);
-router.patch('/order-obat/:id',authenticateUser, authorizeRoles('superuser','farmasi','dokter'), update);
+router.patch('/order-obat/:id',authenticateUser, authorizeRoles('superuser','farmasi'), update);
 
 module.exports = router;
