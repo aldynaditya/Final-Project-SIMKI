@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { fetchdetailEmr } from '../../redux/doctor/detailEmr/actions';
+import { fetchVitalsign } from '../../redux/doctor/vitalSign/actions';
 import { createNewEntry } from '../../redux/doctor/newEntry/actions';
 import { updateActionEntry } from '../../redux/doctor/action/actions';
 import Modal from 'react-modal';
@@ -11,16 +12,16 @@ import '../../Style/Dokter/EntriBaru.css';
 const EntriBaru = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { data, loading, error } = useSelector(state => state.getdetailEmr);
+    const { data: datavs, loading: loadingvs, error: errorvs } = useSelector(state => state.getVital);
     const { error: errorForm, entry } = useSelector(state => state.createNewEntry);
-    const { act, erroract } = useSelector(state => state.updateAction);
+    const { data: act, loading: erroract } = useSelector(state => state.updateAction);
     
     const [formData, setFormData] = useState({
         alergi: '',
-        riwayatPenyakit: '',
+        riwayat_penyakit: '',
         subjective: '',
-        TD: '',
+        TD: '', 
         indeks: '',
         detak: '',
         suhu: '',
@@ -35,7 +36,27 @@ const EntriBaru = () => {
 
     useEffect(() => {
         dispatch(fetchdetailEmr(id));
+        dispatch(fetchVitalsign(id));
     }, [dispatch, id]);
+
+    useEffect(() => {
+        if (datavs) {
+            setFormData({
+                alergi: datavs.alergi || '',
+                riwayat_penyakit: datavs.riwayat_penyakit || '',
+                subjective: datavs.subjective || '',
+                TD: datavs.td || '',
+                indeks: datavs.indeks || '',
+                detak: datavs.detak || '',
+                suhu: datavs.suhu || '',
+                napas: datavs.napas || '',
+                objective: datavs.objective || '',
+                assessment: datavs.assessment || '',
+                plan: datavs.plan || '',
+                tindakan: datavs.tindakan || [],
+            });
+        }
+    }, [datavs]);
 
     useEffect(() => {
         if (errorForm) {
@@ -50,8 +71,10 @@ const EntriBaru = () => {
                 message: 'Data berhasil disimpan!',
                 type: 'success'
             });
+            dispatch(fetchdetailEmr(id)); // Fetch detail EMR after entry is saved
+            dispatch(fetchVitalsign(id)); // Fetch vital signs after entry is saved
         }
-    }, [errorForm, entry]);
+    }, [errorForm, entry, dispatch, id]);
 
     const handleChange = (e) => {
         setFormData({
@@ -79,25 +102,28 @@ const EntriBaru = () => {
 
     const DropdownOrder = async (event) => {
         const selectedOption = event.target.value;
+    
         if (selectedOption) {
-            const updatedTindakan = [...formData.tindakan, selectedOption]; // Menambahkan tindakan ke array
-            await dispatch(updateActionEntry(data.episodeId, { tindakan: updatedTindakan })); // Mengupdate tindakan di server
-
+            const updatedTindakan = formData.tindakan.filter(item => item !== 'none');
+            updatedTindakan.push(selectedOption);
+            await dispatch(updateActionEntry(datavs.id, { tindakan: updatedTindakan }));
+            console.log('tindakan:', updatedTindakan); // Mengupdate tindakan di server
             switch (selectedOption) {
                 case 'obat':
-                    window.open(`/dokter/order-obat/${data.episodeId}`, '_blank');
+                    window.open(`/dokter/order-obat/${datavs.id}`, '_blank');
                     break;
                 case 'prosedur':
-                    window.open(`/dokter/order-prosedur/${data.episodeId}`, '_blank');
+                    window.open(`/dokter/order-prosedur/${datavs.id}`, '_blank');
                     break;
                 case 'surat':
-                    window.open(`/dokter/order-surat/${data.episodeId}`, '_blank');
+                    window.open(`/dokter/order-surat/${datavs.id}`, '_blank');
                     break;
                 default:
                     break;
             }
         }
     };
+    
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
@@ -139,10 +165,6 @@ const EntriBaru = () => {
                     <span className='text-tgl-detail'>Tanggal :</span>
                     <input type='text' className='kolom-tgl-detail' name="tanggal" value={formatDate(data.tanggal)} readOnly></input>
                 </div>
-                {/* <div className='penjamin-detail'>
-                    <span className='text-penjamin-detail'>Penjamin :</span>
-                    <input type='text' className='kolom-penjamin-detail' name="penjamin" value={data.penjamin} readOnly></input>
-                </div> */}
                 <div className='pemeriksa-detail'>
                     <span className='text-pemeriksa-detail'>Pemeriksa :</span>
                     <input type='text' className='kolom-pemeriksa-detail' name="pemeriksa" value={data.pemeriksa} readOnly></input>
@@ -153,7 +175,7 @@ const EntriBaru = () => {
                 </div>
                 <div className='penyakit-detail'>
                     <span className='text-penyakit-detail'>Riwayat Penyakit :</span>
-                    <input type='text' className='kolom-penyakit-detail' name="riwayatPenyakit" value={formData.riwayatPenyakit} onChange={handleChange}></input>
+                    <input type='text' className='kolom-penyakit-detail' name="riwayat_penyakit" value={formData.riwayat_penyakit} onChange={handleChange}></input>
                 </div>
                 <div className='subjektif-detail'>
                     <span className='text-subjektif-detail'>Subjektif :</span>

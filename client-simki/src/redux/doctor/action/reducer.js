@@ -1,22 +1,22 @@
 import {
-    CREATE_ACTION_REQUEST,
-    CREATE_ACTION_SUCCESS,
-    CREATE_ACTION_FAILURE,
+    UPDATE_ACTION_REQUEST,
+    UPDATE_ACTION_SUCCESS,
+    UPDATE_ACTION_FAILURE,
 } from './constants';
 
 const initialState = {
-    act: null,
-    erroract: null,
-    loadingact: false
+    data: null,
+    error: null,
+    loading: false
 };
 
 const updateactionReducer = (state = initialState, action) => {
     switch (action.type) {
-        case CREATE_ACTION_REQUEST:
+        case UPDATE_ACTION_REQUEST:
             return { ...state, loading: true };
-        case CREATE_ACTION_SUCCESS:
-            return { ...state, loading: false, act: action.payload, error: null};
-        case CREATE_ACTION_FAILURE:
+        case UPDATE_ACTION_SUCCESS:
+            return { ...state, loading: false, data: action.payload, error: null};
+        case UPDATE_ACTION_FAILURE:
             return { ...state, loading: false, error: action.payload };
         default:
             return initialState;

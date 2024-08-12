@@ -26,14 +26,14 @@ const checkEMRStatus = async (req, res, next) => {
         const finishedAt = episode.emrpasien.finishedAt;
 
         if (status !== 'finished') {
-            throw new BadRequestError('EMR Pasien belum selesai, tidak dapat mengakses kuisioner');
+            throw new BadRequestError('Kunjungan belum selesai, tidak dapat mengakses kuisioner');
         }
 
         const threeDaysAgo = new Date();
         threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
 
         if (new Date(finishedAt) > threeDaysAgo) {
-            throw new ForbiddenError('Kuisioner hanya bisa diakses 3 hari setelah EMR selesai');
+            throw new ForbiddenError('Kuisioner Hanya Bisa Diakses 3 Hari Setelah Kunjungan');
         }
 
         next();
