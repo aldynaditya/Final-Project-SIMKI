@@ -46,6 +46,8 @@ import getvitalsignReducer from './doctor/vitalSign/reducer';
 import createnewentryReducer from './doctor/newEntry/reducer';
 import transactionReducer from './kasir/index/reducer';
 import createcpptentryReducer from './doctor/cpptEntry/reducer';
+import updateactionReducer from './doctor/action/reducer';
+import createorderReducer from './doctor/order/reducer';
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -90,6 +92,8 @@ const rootReducers = combineReducers({
     createNewEntry: createnewentryReducer,
     transaction: transactionReducer,
     createCpptEntry: createcpptentryReducer,
+    updateAction: updateactionReducer,
+    createOrder: createorderReducer,
 }); 
 
 const store = createStore(

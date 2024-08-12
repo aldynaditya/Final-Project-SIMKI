@@ -220,7 +220,6 @@ const updateAction = async (req) => {
 const finishOrder = async (req, res) => {
     const { id } = req.params;
 
-    // Fetch orders for the episode
     const [ordersObat, ordersProsedur] = await Promise.all([
         OrderObat.findAll({
             where: { episodeId: id },
@@ -279,7 +278,6 @@ const finishOrder = async (req, res) => {
         userKlinikId: req.user.id,
     });
 
-    // Update the EMR status
     const emrpasienId = episode.emrPasienId;
     await EMRPasien.update({ 
         status: 'finished',
