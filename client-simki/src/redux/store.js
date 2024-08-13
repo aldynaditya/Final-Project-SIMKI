@@ -53,6 +53,9 @@ import createorderobatReducer from './doctor/orderMedicine/reducer';
 import createorderprosedurReducer from './doctor/orderProcedure/reducer';
 import createordersuratrujukanReducer from './doctor/orderReferralLetter/reducer';
 import createordersuratsakitReducer from './doctor/orderSickLetter/reducer';
+import indexorderobatReducer from './doctor/indexMedicine/reducer';
+import getorderprosedurReducer from './doctor/indexProcedure/reducer';
+import getordersuratReducer from './doctor/indexLetter/reducer';
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -103,7 +106,10 @@ const rootReducers = combineReducers({
     createorderObat: createorderobatReducer,
     createorderProsedur: createorderprosedurReducer,
     createorderSuratRujukan: createordersuratrujukanReducer,
-    createorderSuratSakit: createordersuratsakitReducer
+    createorderSuratSakit: createordersuratsakitReducer,
+    indexorderObat: indexorderobatReducer,
+    getorderProsedur: getorderprosedurReducer,
+    getorderSurat: getordersuratReducer, 
 }); 
 
 const store = createStore(

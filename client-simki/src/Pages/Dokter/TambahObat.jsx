@@ -84,7 +84,8 @@ const TambahObatDr = ({ onClose }) => {
                 <div className='kolom-tambah-dokter'>
                     <div className='nama-obat-dokter'>
                         <span className='text-obat-dokter'>Nama obat :</span>
-                        <div className="search-bar-obat-container">
+                        <input type='text' className='kolom-kuantitas-dokter'></input>
+                        {/* <div className="search-bar-obat-container">
                             <input 
                                 type="text" 
                                 placeholder="Pencarian" 
@@ -93,7 +94,7 @@ const TambahObatDr = ({ onClose }) => {
                             <button className="search-bar-obat-button" onClick={handleSearch}>
                                 <img src={search} alt="Search" />
                             </button>
-                        </div>
+                        </div> */}
                     </div>
                     <div className='kuantitas-dokter'>
                         <span className='text-kuantitas-dokter'>Kuantitas :</span>
