@@ -90,7 +90,7 @@ const createOrderSuratRujukan = async (req) => {
 const getAllOrderSuratById = async (req) => {
     const { id } = req.params;
 
-    const result = await OrderSurat.findAll({
+    const orders = await OrderSurat.findAll({
         where: { episodeId: id },
         include: [
             {
@@ -104,7 +104,29 @@ const getAllOrderSuratById = async (req) => {
         ]
     });
 
-    if (!result) throw new NotFoundError('Episode tidak ditemukan');
+    if (!orders) throw new NotFoundError('Episode tidak ditemukan');
+
+    const result = orders.map(order => {
+        return {
+            id: order.uuid,
+            tanggal: order.createdAt,
+            jenis_surat: order.jenis_surat,
+            versi_surat: order.versi_surat,
+            status: order.status,
+            suratSakitId: order.suratsakit?.uuid || '',
+            umur: order.suratsakit?.umur || '',
+            pekerjaan: order.suratsakit?.pekerjaan || '',
+            diagnosis_suratsakit: order.suratsakit?.diagnosis || '',
+            periode_start: order.suratsakit?.periode_start || '',
+            periode_end: order.suratsakit?.periode_end || '',
+            suratRujukanId: order.suratrujukan?.uuid || '',
+            tujuan: order.suratrujukan?.tujuan || '',
+            tempat_tujuan: order.suratrujukan?.tempat_tujuan || '',
+            diagnosis_suratrujukan: order.suratrujukan?.diagnosis || '',
+            tindakan: order.suratrujukan?.tindakan || '',
+            keterangan: order.suratrujukan?.keterangan || '',
+        };
+    });
 
     return result;
 };
@@ -114,7 +136,7 @@ const deleteOrderSuratById = async (req) => {
 
     const order = await OrderSurat.findByPk(id);
 
-    if (!order) throw new NotFoundError('Item tidak ditemukan');
+    if (!order) throw new NotFoundError('Surat tidak ditemukan');
 
     if (order.suratSakitId) {
         const suratSakit = await SuratSakit.findOne({ where: { uuid: order.suratSakitId } });

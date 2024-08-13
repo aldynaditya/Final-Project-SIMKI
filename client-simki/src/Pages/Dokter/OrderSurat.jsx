@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchorderInfo } from '../../redux/doctor/orderInfo/actions';
+import { fetchOrderSurat } from '../../redux/doctor/indexLetter/actions';
+import { deleteorderSurat } from '../../redux/doctor/indexDeleteLetter/actions';
 import SuratRujukan from './SuratRujukan';
 import SuratSakit from './SuratSakit';
+import Modal from 'react-modal';
 import '../../Style/Dokter/OrderObat.css';
 import '../../Style/Dokter/OrderProsedur.css';
 
@@ -11,12 +14,24 @@ const OrderSurat = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const { data, loading, error } = useSelector(state => state.getorderInfo);
+    const { data: orderData, loading: orderloading, error: orderError } = useSelector((state) => state.getorderSurat);
+    const { loading: deleteLoading, error: deleteError } = useSelector((state) => state.deleteorderSurat);
+    
     const [isSuratSakitPopupVisible, setIsSuratSakitPopupVisible] = useState(false);
     const [isSuratRujukanPopupVisible, setIsSuratRujukanPopupVisible] = useState(false);
+    const [alert, setAlert] = useState({ status: false, message: '', type: '' });
 
     useEffect(() => {
         dispatch(fetchorderInfo(id));
+        dispatch(fetchOrderSurat(id));
     }, [dispatch, id]);
+
+    useEffect(() => {
+        if (!deleteLoading && !deleteError ) {
+            dispatch(fetchorderInfo(id));
+            dispatch(fetchOrderSurat(id));
+        }
+    }, [deleteLoading, deleteError, id, dispatch]);
 
     const handlePopUpSuratSakit = () => {
         setIsSuratSakitPopupVisible(true);
@@ -30,18 +45,51 @@ const OrderSurat = () => {
 
     const handleCloseSuratSakit = () => {
         setIsSuratSakitPopupVisible(false);
+        dispatch(fetchOrderSurat(id));
     };
 
     const handleSuratSakitComplete = () => {
         setIsSuratSakitPopupVisible(false);
+        dispatch(fetchOrderSurat(id));
     };
 
     const handleCloseSuratRujukan = () => {
         setIsSuratRujukanPopupVisible(false);
+        dispatch(fetchOrderSurat(id));
     };
 
     const handleSuratRujukanComplete = () => {
         setIsSuratRujukanPopupVisible(false);
+        dispatch(fetchOrderSurat(id));
+    };
+
+    const hapusOrderSurat = async (id) => {
+        try {
+            await dispatch(deleteorderSurat(id));
+            if (deleteError) {
+                setAlert({
+                    status: true,
+                    message: 'order gagal dihapus!',
+                    type: 'danger'
+                });
+            } else {
+                setAlert({
+                    status: true,
+                    message: 'Order berhasil dihapus!',
+                    type: 'success'
+                });
+            }
+        } catch (error) {
+            setAlert({
+                status: true,
+                message: 'Failed to delete',
+                type: 'danger',
+            });
+        }
+    };
+
+    const CetakSurat = () => {
+        //untuk menghandle cetak surat
     };
 
     const formatDate = (dateString) => {
@@ -64,9 +112,17 @@ const OrderSurat = () => {
         return `${hours}:${minutes}`;
     };
 
+    if (loading || deleteLoading ) {
+        return <div>Loading...</div>;
+    }
+
+    const closeModal = () => {
+        setAlert({ status: false, message: '', type: '' });
+    };
+
     return (
         <div className='order-obat-container'>
-            <h1 className='text-order-obat'>Order Obat</h1>
+            <h1 className='text-order-obat'>Order Surat</h1>
             <div className='kolom-order-obat'>
                 <div className='baris-satu'>
                     <div className='nemr-order-obat'>
@@ -140,23 +196,40 @@ const OrderSurat = () => {
                             <th>Tujuan</th>
                             <th>Versi Surat</th>
                             <th>Status</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        {/* {rows.map((_, index) => ( */}
-                            <tr 
-                            // key={index}
-                            >
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                    {orderData.map((order) => (
+                            <tr key={order.id}>
+                                <td>{formatDate(order.tanggal)}</td>
+                                <td>{order.jenis_surat}</td>
+                                <td>{order.tujuan}</td>
+                                <td>{order.versi_surat}</td>
+                                <td>{order.status}</td>
+                                <td>
+                                    <div className="hapus-order-surat" onClick={() => hapusOrderSurat(order.id)}>Hapus</div>
+                                    <div className="hapus-order-surat" onClick={() => CetakSurat(order.id)}>Cetak</div>
+                                </td>
                             </tr>
-                        {/* ))} */}
+                        ))}
                     </tbody>
                 </table>
             </div>
+            <Modal
+                isOpen={alert.status}
+                onRequestClose={closeModal}
+                contentLabel="Alert Message"
+                className="Modal"
+                overlayClassName="Overlay"
+                shouldCloseOnOverlayClick={true}
+                shouldCloseOnEsc={true}
+            >
+                <div className="modal-content">
+                    <p>{alert.message}</p>
+                    <button onClick={closeModal}>Close</button>
+                </div>
+            </Modal>
         </div>
     );
 };
