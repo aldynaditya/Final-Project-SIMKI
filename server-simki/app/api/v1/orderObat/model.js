@@ -43,8 +43,8 @@ const OrderObat = db.define('orderObat', {
         }
     },
     status: {
-        type: DataTypes.ENUM( 'in process','accepted' ),
-        defaultValue: 'in process',
+        type: DataTypes.ENUM( 'none', 'in process','accepted' ),
+        defaultValue: 'none',
     },
     obatId: {
         type: DataTypes.UUID,

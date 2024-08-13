@@ -2,7 +2,7 @@ const { StatusCodes } = require('http-status-codes');
 const { 
     getOrderDetailInformation,
     getALlOrderObatbyFarmasi,
-
+    updateOrderStatusbyFarmasi
 } = require('../../../services/sequelize/order');
 
 const index = async (req, res, next) => {

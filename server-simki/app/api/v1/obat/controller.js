@@ -4,7 +4,8 @@ const {
     createObat,
     getOneObat,
     updateObat,
-    deleteObat 
+    deleteObat, 
+    searchObat
 } = require('../../../services/sequelize/obat');
 
 const index = async (req, res, next) => {
@@ -21,7 +22,7 @@ const index = async (req, res, next) => {
 
 const find = async (req, res, next) => {
     try {
-        const result = await getOneObat(req);
+        const result = await searchObat(req);
         
         res.status(StatusCodes.OK).json({
             data: result,
