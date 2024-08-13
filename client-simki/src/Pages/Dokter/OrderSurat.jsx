@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchorderInfo } from '../../redux/doctor/orderInfo/actions';
@@ -7,6 +7,8 @@ import { deleteorderSurat } from '../../redux/doctor/indexDeleteLetter/actions';
 import SuratRujukan from './SuratRujukan';
 import SuratSakit from './SuratSakit';
 import Modal from 'react-modal';
+import { useReactToPrint } from 'react-to-print';
+import FormatSurat from '../../components/FormatSurat';
 import '../../Style/Dokter/OrderObat.css';
 import '../../Style/Dokter/OrderProsedur.css';
 
@@ -88,8 +90,14 @@ const OrderSurat = () => {
         }
     };
 
+    const printRef = useRef();
+
+    const handlePrint = useReactToPrint({
+        content: () => printRef.current,
+    });
+
     const CetakSurat = () => {
-        //untuk menghandle cetak surat
+        handlePrint();
     };
 
     const formatDate = (dateString) => {
@@ -215,6 +223,9 @@ const OrderSurat = () => {
                         ))}
                     </tbody>
                 </table>
+            </div>
+            <div style={{ display: 'none' }}>
+                <FormatSurat ref={printRef} data={{ ...data, orders: orderData }} />
             </div>
             <Modal
                 isOpen={alert.status}
