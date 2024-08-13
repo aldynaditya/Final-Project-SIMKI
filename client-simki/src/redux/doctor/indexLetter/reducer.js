@@ -1,7 +1,7 @@
 import { 
-    GET_INDEX_LETTER_REQUEST, 
-    GET_INDEX_LETTER_SUCCESS,
-    GET_INDEX_LETTER_FAILURE 
+    GET_INDEX_SURAT_REQUEST, 
+    GET_INDEX_SURAT_SUCCESS,
+    GET_INDEX_SURAT_FAILURE 
 } from './constants';
 
 const initialState = {
@@ -10,17 +10,17 @@ const initialState = {
     error: null,
 };
 
-const getorderletterReducer = (state = initialState, action) => {
+const getordersuratReducer = (state = initialState, action) => {
     switch (action.type) {
-        case GET_INDEX_LETTER_REQUEST:
+        case GET_INDEX_SURAT_REQUEST:
             return { ...state, loading: true, error: null };
-        case GET_INDEX_LETTER_SUCCESS:
+        case GET_INDEX_SURAT_SUCCESS:
             return { ...state, loading: false, data: action.payload };
-        case GET_INDEX_LETTER_FAILURE:
+        case GET_INDEX_SURAT_FAILURE:
             return { ...state, loading: false, error: action.payload };
         default:
             return state;
     }
 };
 
-export default getorderletterReducer;
+export default getordersuratReducer;
