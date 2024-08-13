@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const Obat = require('../../api/v1/obat/model');
 const UserKlinik = require('../../api/v1/userKlinik/model');
 const { 
@@ -57,6 +58,28 @@ const getOneObat = async (req) => {
     return result;
 };
 
+const searchObat = async (req) => {
+    const { query } = req.params;
+    const result = await Obat.findAll({
+        where: {
+            nama_obat: {
+                [Op.like]: `%${query}%`
+            },
+            stok: {
+                [Op.gt]: 0
+            }
+        },
+        attributes: ['uuid', 'nama_obat', 'satuan']
+    });
+
+    if (!result.length) throw new NotFoundError(`Tidak ada Obat dengan nama yang mengandung: ${query}`);
+
+    return result.map(obat => ({
+        id: obat.uuid,
+        nama_obat: `${obat.nama_obat} ${obat.satuan}`
+    }));
+};
+
 const updateObat = async (req) => {
     const { id } = req.params;
     const { nama_obat, kode_obat, harga_satuan_obat, satuan, stok } = req.body;
@@ -87,6 +110,7 @@ module.exports = {
     getAllObat,
     createObat,
     getOneObat,
+    searchObat,
     updateObat,
     deleteObat,
 };

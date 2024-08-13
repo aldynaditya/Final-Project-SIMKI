@@ -2,7 +2,8 @@ const { StatusCodes } = require('http-status-codes');
 const { 
     createOrderObat,
     getAllOrderObatById,
-    deleteOrderObatById
+    deleteOrderObatById,
+    updateAllOrderObatStatusById
 } = require('../../../services/sequelize/orderObat');
 
 const create = async (req, res, next) => {
@@ -29,6 +30,18 @@ const find = async (req, res, next) => {
     }
 };
 
+const update = async (req, res, next) => {
+    try {
+        const result = await updateAllOrderObatStatusById(req);
+
+    res.status(StatusCodes.OK).json({
+        data: result,
+    });
+    } catch (err) {
+        next(err);
+    }
+};
+
 const destroy = async (req, res, next) => {
     try {
         const result = await deleteOrderObatById(req);
@@ -44,5 +57,6 @@ const destroy = async (req, res, next) => {
 module.exports = {
     create,
     find,
+    update,
     destroy
 };

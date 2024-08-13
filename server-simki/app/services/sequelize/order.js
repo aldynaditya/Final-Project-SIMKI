@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const EMRPasien = require('../../api/v1/emrPasien/model');
 const Appointment = require('../../api/v1/appointment/model');
 const DataPasien = require('../../api/v1/dataPasien/model');
@@ -68,6 +69,11 @@ const getOrderDetailInformation = async(req) => {
 
 const getALlOrderObatbyFarmasi = async() => {
     const orderObat = await OrderObat.findAll({
+        where: {
+            status: {
+                [Op.or]: ['in process', 'accepted']
+            }
+        },
         include: [
             {
                 model: Episode,

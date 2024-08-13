@@ -24,7 +24,7 @@ const createOrderObat = async (req) => {
         obatId: obat.uuid,
         kuantitas,
         dosis,
-        status: 'in process',
+        status: 'none',
         catatan,
         total: kuantitas * obat.harga_satuan_obat
     });
@@ -37,7 +37,7 @@ const createOrderObat = async (req) => {
 const getAllOrderObatById = async (req) => {
     const { id } = req.params;
 
-    const result = await OrderObat.findAll({
+    const orders = await OrderObat.findAll({
         where: { episodeId: id },
         include: [
             {
@@ -47,7 +47,24 @@ const getAllOrderObatById = async (req) => {
         ]
     });
 
-    if (!result) throw new NotFoundError('Episode tidak ditemukan');
+    if (!orders) throw new NotFoundError('Episode tidak ditemukan');
+
+    const result = orders.map(orders => {
+        return {
+            id: orders.uuid,
+            obatId: orders.dataobat.uuid,
+            nama_obat: orders.dataobat.nama_obat,
+            kode_obat: orders.dataobat.kode_obat,
+            satuan_obat: orders.dataobat.satuan,
+            harga_obat: orders.dataobat.harga_satuan_obat,
+            kuantitas: orders.kuantitas,
+            stok_obat: orders.dataobat.stok,
+            dosis: orders.dosis,
+            catatan: orders.catatan,
+            total: orders.total,
+            status: orders.status,
+        };
+    });
 
     return result;
 };
@@ -76,8 +93,36 @@ const deleteOrderObatById = async (req) => {
     return order;
 };
 
+const updateAllOrderObatStatusById = async (req) => {
+    const { id } = req.params;
+
+    const episode = await Episode.findByPk(id);
+    if (!episode) throw new NotFoundError('Episode tidak ditemukan');
+
+    const orders = await OrderObat.findAll({
+        where: {
+            episodeId: id, 
+            status: 'none' 
+            } 
+        });
+    if (orders.length === 0) throw new NotFoundError('Tidak ada order obat dengan status none untuk episode ini');
+
+    await OrderObat.update({ 
+        status: 'in process' 
+    }, {
+        where: {
+            episodeId: id, 
+            status: 'none' 
+        } 
+    });
+
+    return orders;
+};
+
+
 module.exports = {
     createOrderObat,
     getAllOrderObatById,
     deleteOrderObatById,
+    updateAllOrderObatStatusById,
 };
