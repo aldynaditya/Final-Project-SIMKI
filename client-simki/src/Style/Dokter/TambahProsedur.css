@@ -52,6 +52,7 @@
 .nama-prosedur-prosedur {
     display: flex;
     align-items: center;
+    position: relative;
 }
 
 .text-prosedur-prosedur {
@@ -100,11 +101,11 @@
 
 .tambah-prosedur-container {
     display: flex;
-    justify-content: center; /* Center the button horizontally */
+    justify-content: center;
     margin-top: 20px;
 }
 
-.simpan-prosedur {
+.simpan-order-prosedur {
     padding: 10px;
     background-color: #145149;
     color: white;
@@ -112,10 +113,6 @@
     border-radius: 5px;
     cursor: pointer;
     width: 150px;
-    height: 40px; /* Set a specific height */
-    display: flex;
-    justify-content: center; /* Center text horizontally */
-    align-items: center; /* Center text vertically */
     font-weight: bold;
     letter-spacing: 3px;
 }
@@ -132,6 +129,7 @@
     border-radius: 5px;
     padding: 5px;
     width: 300px;
+    position: relative;
 }
 
 .search-bar-prosedur-input {
@@ -148,4 +146,30 @@
     background: none;
     cursor: pointer;
     padding: 5px;
+}
+
+.search-results-prosedur {
+    position: absolute;
+    top: 100%; /* Position it right below the search bar */
+    left: 0;
+    width: 100%; /* Match the width of the search bar */
+    max-height: 120px; /* Limit the height to fit 3 items */
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 1000; /* Ensure it appears above other elements */
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Optional: Add shadow for better visibility */
+}
+
+.search-results-prosedur li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.search-results-prosedur li:hover {
+    background: #eee;
 }

@@ -49,15 +49,6 @@ const createObat = async (req) => {
     return result
 };
 
-const getOneObat = async (req) => {
-    const { id } = req.params;
-    const result = await Obat.findOne({ where: {uuid: id} });
-
-    if (!result) throw new NotFoundError(`Tidak ada Obat dengan id :  ${id}`);
-
-    return result;
-};
-
 const searchObat = async (req) => {
     const { query } = req.params;
     const result = await Obat.findAll({
@@ -109,7 +100,6 @@ const deleteObat = async (req) => {
 module.exports = {
     getAllObat,
     createObat,
-    getOneObat,
     searchObat,
     updateObat,
     deleteObat,

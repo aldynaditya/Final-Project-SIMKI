@@ -51,7 +51,7 @@
 .nama-obat-dokter {
     display: flex;
     align-items: center;
-    position: relative; /* Add this */
+    position: relative;
 }
 .text-obat-dokter {
     margin-right: 40px;
@@ -96,7 +96,7 @@
 
 .tambah-dokter-container {
     display: flex;
-    justify-content: center; /* Center the button horizontally */
+    justify-content: center;
     margin-top: 20px;
 }
 

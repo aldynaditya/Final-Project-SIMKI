@@ -36,7 +36,7 @@ const createOrderItem = async (req) => {
 const getAllOrderItemById = async (req) => {
     const { id } = req.params;
 
-    const result = await OrderProsedur.findAll({
+    const orders = await OrderProsedur.findAll({
         where: { episodeId: id },
         include: [
             {
@@ -46,7 +46,24 @@ const getAllOrderItemById = async (req) => {
         ]
     });
 
-    if (!result) throw new NotFoundError('Episode tidak ditemukan');
+    if (!orders) throw new NotFoundError('Episode tidak ditemukan');
+
+    const result = orders.map(orders => {
+        return {
+            id: orders.uuid,
+            itemId: orders.dataitem.uuid,
+            nama_item: orders.dataitem.nama_item,
+            kode_item: orders.dataitem.kode_item,
+            satuan_item: orders.dataitem.satuan,
+            harga_item: orders.dataitem.harga_satuan_item,
+            kuantitas: orders.kuantitas,
+            stok_item: orders.dataitem.stok,
+            dosis: orders.dosis,
+            catatan: orders.catatan,
+            total: orders.total,
+            status: orders.status,
+        };
+    });
 
     return result;
 };

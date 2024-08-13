@@ -2,7 +2,6 @@ const { StatusCodes } = require('http-status-codes');
 const { 
     getAllObat,
     createObat,
-    getOneObat,
     updateObat,
     deleteObat, 
     searchObat

@@ -2,9 +2,9 @@ const { StatusCodes } = require('http-status-codes');
 const { 
     getAllItem,
     createItem,
-    getOneItem,
     updateItem,
-    deleteItem 
+    deleteItem,
+    searchItem
 } = require('../../../services/sequelize/item');
 
 const index = async (req, res, next) => {
@@ -21,7 +21,7 @@ const index = async (req, res, next) => {
 
 const find = async (req, res, next) => {
     try {
-        const result = await getOneItem(req);
+        const result = await searchItem(req);
         
         res.status(StatusCodes.OK).json({
             data: result,

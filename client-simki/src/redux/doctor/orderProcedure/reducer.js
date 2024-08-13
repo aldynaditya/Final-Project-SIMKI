@@ -1,7 +1,7 @@
 import {
-    CREATE_ORDER_PROCEDURE_REQUEST,
-    CREATE_ORDER_PROCEDURE_SUCCESS,
-    CREATE_ORDER_PROCEDURE_FAILURE,
+    CREATE_ORDER_PROSEDUR_REQUEST,
+    CREATE_ORDER_PROSEDUR_SUCCESS,
+    CREATE_ORDER_PROSEDUR_FAILURE,
 } from './constants';
 
 const initialState = {
@@ -12,11 +12,11 @@ const initialState = {
 
 const createorderprosedurReducer = (state = initialState, action) => {
     switch (action.type) {
-        case CREATE_ORDER_PROCEDURE_REQUEST:
+        case CREATE_ORDER_PROSEDUR_REQUEST:
             return { ...state, loading: true };
-        case CREATE_ORDER_PROCEDURE_SUCCESS:
+        case CREATE_ORDER_PROSEDUR_SUCCESS:
             return { ...state, loading: false, data: action.payload, error: null};
-        case CREATE_ORDER_PROCEDURE_FAILURE:
+        case CREATE_ORDER_PROSEDUR_FAILURE:
             return { ...state, loading: false, error: action.payload };
         default:
             return initialState;

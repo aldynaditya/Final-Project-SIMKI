@@ -39,3 +39,19 @@
 .tambah-prosedur:hover {
  background-color: #7DAEA8;
 }
+
+.hapus-order-prosedur {
+    background-color: #145149;
+    color: white;
+    width: 70px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 30px;
+    display: inline-block;
+    margin-right: 10px;
+    font-weight: bold;
+}

@@ -2,18 +2,33 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchorderInfo } from '../../redux/doctor/orderInfo/actions';
+import { fetchOrderProsedur } from '../../redux/doctor/indexProcedure/actions';
+import { deleteorderProsedur } from '../../redux/doctor/indexDeleteProcedure/actions';
 import TambahProsedur from './TambahProsedur';
+import Modal from 'react-modal';
 import '../../Style/Dokter/OrderProsedur.css';
 
 const OrderProsedur = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const { data, loading, error } = useSelector(state => state.getorderInfo);
+    const { data: orderData, loading: orderloading, error: orderError } = useSelector((state) => state.getorderProsedur);
+    const { loading: deleteLoading, error: deleteError } = useSelector((state) => state.deleteorderProsedur);
+    
     const [isPopupVisible, setIsPopupVisible] = useState(false);
+    const [alert, setAlert] = useState({ status: false, message: '', type: '' });
 
     useEffect(() => {
         dispatch(fetchorderInfo(id));
+        dispatch(fetchOrderProsedur(id));
     }, [dispatch, id]);
+
+    useEffect(() => {
+        if (!deleteLoading && !deleteError ) {
+            dispatch(fetchorderInfo(id));
+            dispatch(fetchOrderProsedur(id));
+        }
+    }, [deleteLoading, deleteError, id, dispatch]);
 
     const handlePopUpTambahProsedur = () => {
         setIsPopupVisible(true);
@@ -21,10 +36,37 @@ const OrderProsedur = () => {
 
     const handleCloseTambahProsedur = () => {
         setIsPopupVisible(false);
+        dispatch(fetchOrderProsedur(id));
     };
 
     const handleTambahProsedurComplete = () => {
         setIsPopupVisible(false);
+        dispatch(fetchOrderProsedur(id));
+    };
+
+    const hapusOrderProsedur = async (id) => {
+        try {
+            await dispatch(deleteorderProsedur(id));
+            if (deleteError) {
+                setAlert({
+                    status: true,
+                    message: 'order gagal dihapus!',
+                    type: 'danger'
+                });
+            } else {
+                setAlert({
+                    status: true,
+                    message: 'Order berhasil dihapus!',
+                    type: 'success'
+                });
+            }
+        } catch (error) {
+            setAlert({
+                status: true,
+                message: 'Failed to delete',
+                type: 'danger',
+            });
+        }
     };
 
     const formatDate = (dateString) => {
@@ -47,8 +89,12 @@ const OrderProsedur = () => {
         return `${hours}:${minutes}`;
     };
 
-    const SimpanProsedur = () => {
-        alert('Data Tersimpan'); 
+    if (loading || deleteLoading ) {
+        return <div>Loading...</div>;
+    }
+
+    const closeModal = () => {
+        setAlert({ status: false, message: '', type: '' });
     };
 
     return (
@@ -118,28 +164,43 @@ const OrderProsedur = () => {
                             <th>Dosis</th>
                             <th>Catatan</th>
                             <th>Total</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        {/* {rows.map((_, index) => ( */}
-                            <tr 
-                            // key={index}
-                            >
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                    {orderData.map((order) => (
+                            <tr key={order.id}>
+                                <td>{order.nama_item}</td>
+                                <td>{order.kode_item}</td>
+                                <td>{order.satuan_item}</td>
+                                <td>{order.harga_item}</td>
+                                <td>{order.kuantitas}</td>
+                                <td>{order.stok_item}</td>
+                                <td>{order.dosis}</td>
+                                <td>{order.catatan}</td>
+                                <td>{order.total}</td>
+                                <td>
+                                    <div className="hapus-order-prosedur" onClick={() => hapusOrderProsedur(order.id)}>Hapus</div>
+                                </td>
                             </tr>
-                        {/* ))} */}
+                        ))}
                     </tbody>
                 </table>
             </div>
-            <button className="simpan-prosedur" onClick={SimpanProsedur}>Simpan</button>
+            <Modal
+                isOpen={alert.status}
+                onRequestClose={closeModal}
+                contentLabel="Alert Message"
+                className="Modal"
+                overlayClassName="Overlay"
+                shouldCloseOnOverlayClick={true}
+                shouldCloseOnEsc={true}
+            >
+                <div className="modal-content">
+                    <p>{alert.message}</p>
+                    <button onClick={closeModal}>Close</button>
+                </div>
+            </Modal>
         </div>
     );
 };
