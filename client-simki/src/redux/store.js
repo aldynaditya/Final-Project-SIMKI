@@ -59,10 +59,16 @@ import getordersuratReducer from './doctor/indexLetter/reducer';
 import searchobatReducer from './doctor/searchMedicine/reducer';
 import deleteorderobatReducer from './doctor/indexDeleteMedicine/reducer';
 import finishorderobatReducer from './doctor/indexDeleteMedicine/reducer';
+import deleteorderprosedurReducer from './doctor/indexDeleteProcedure/reducer';
+import searchprosedurReducer from './doctor/searchProcedure/reducer';
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducers = combineReducers({
+    //Page Admin
+    user: userReducer,
+    addUser: addUserReducer,
+    //Page Pasien
     auth: authReducer,
     profile: profileReducer,
     daftar: daftarReducer,
@@ -72,50 +78,61 @@ const rootReducers = combineReducers({
     appointments: appointmentReducer,
     history: historyReducer,
     detail: detailReducer,
-    user: userReducer,
-    addUser: addUserReducer,
     createAppointment: createAppointmentReducer,
     schedule: scheduleReducer,
     resendOtp: resendOtpReducer,
     questions: questionReducer,
     responses: responseReducer,
+    //Page Pendaftar Baru
     createPendaftar: createPendaftarReducer,
     pasien: pasienReducer,
+    deletePendaftar: deletePendaftarReducer,
+    //Page Kelola Obat & Order Masuk
     getObat: getobatReducer,
     createObat: createobatReducer,
     deleteObat: deleteobatReducer,
     editObat: editobatReducer,
-    deletePendaftar: deletePendaftarReducer,
     orderObat: orderobatReducer,
     statusorderObat: statusorderobatReducer,
+    //Page Kelola Item
     getItem: getitemReducer,
     createItem: createitemReducer,
     deleteItem: deleteitemReducer,
     editItem: edititemReducer,
+    //Jadwal for Page Dokter, Resepsionis, & Perawat
     getScheduleP: schedulePReducer,
+    //Page buat janji
     buatJanji: buatJanjiReducer,
     antrian: antrianReducer,
     identitas: identitasReducer,
+    //Page EMR
     getEmr: getemrReducer,
     getdetailEmr: getdetailemrReducer,
     createVital: createvitalReducer,
     getVital: getvitalsignReducer,
     createNewEntry: createnewentryReducer,
-    transaction: transactionReducer,
     createCpptEntry: createcpptentryReducer,
     updateAction: updateactionReducer,
     createOrder: createorderReducer,
+    //All Page Order
     getorderInfo: getorderinfoReducer,
+    //Page Order Obat
     createorderObat: createorderobatReducer,
-    createorderProsedur: createorderprosedurReducer,
-    createorderSuratRujukan: createordersuratrujukanReducer,
-    createorderSuratSakit: createordersuratsakitReducer,
     getorderObat: getorderobatReducer,
-    getorderProsedur: getorderprosedurReducer,
-    getorderSurat: getordersuratReducer, 
     searchObat: searchobatReducer,
     deleteorderObat: deleteorderobatReducer,
     finishorderObat: finishorderobatReducer,
+    //Page Order Prosedur
+    getorderProsedur: getorderprosedurReducer,
+    searchProsedur: searchprosedurReducer,
+    createorderProsedur: createorderprosedurReducer,
+    deleteorderProsedur: deleteorderprosedurReducer,
+    //Page Order Surat
+    getorderSurat: getordersuratReducer, 
+    createorderSuratRujukan: createordersuratrujukanReducer,
+    createorderSuratSakit: createordersuratsakitReducer,
+    //Page Transaction
+    transaction: transactionReducer,
 }); 
 
 const store = createStore(

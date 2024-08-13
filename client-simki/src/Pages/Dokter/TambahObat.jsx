@@ -177,7 +177,6 @@ const TambahObatDr = ({ onClose, onComplete }) => {
                     <button className="simpan-dokter" onClick={Simpandokter}>Tambah</button>
                 </div>
             </div>
-
             <Modal
                 isOpen={alert.status}
                 onRequestClose={() => setAlert({ status: false, message: '', type: '' })}
