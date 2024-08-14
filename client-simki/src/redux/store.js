@@ -45,6 +45,13 @@ import createvitalReducer from './nurse/vital/reducer';
 import getvitalsignReducer from './doctor/vitalSign/reducer';
 import createnewentryReducer from './doctor/newEntry/reducer';
 import transactionReducer from './kasir/index/reducer';
+import facturReducer from './kasir/create/reducer';
+import transaksiReducer from './keuangan/indextransaksi/reducer';
+import laporanReducer from './keuangan/create/reducer';
+import notifReducer from './keuangan/indexnotif/reducer';
+import updateStatusReducer from './pimpinan/update/reducer';
+import pimpinanReducer from './pimpinan/index/reducer';
+
 import createcpptentryReducer from './doctor/cpptEntry/reducer';
 import updateactionReducer from './doctor/action/reducer';
 import createorderReducer from './doctor/finishOrder/reducer';
@@ -62,6 +69,7 @@ import finishorderobatReducer from './doctor/indexDeleteMedicine/reducer';
 import deleteorderprosedurReducer from './doctor/indexDeleteProcedure/reducer';
 import searchprosedurReducer from './doctor/searchProcedure/reducer';
 import deleteordersuratReducer from './doctor/indexDeleteLetter/reducer';
+
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -112,29 +120,41 @@ const rootReducers = combineReducers({
     createVital: createvitalReducer,
     getVital: getvitalsignReducer,
     createNewEntry: createnewentryReducer,
+//Page Transaksi
+    transaction: transactionReducer,
+    factur: facturReducer,
+    transaksi: transaksiReducer,
+    laporan: laporanReducer,
+    notif: notifReducer,
+    updateStatus: updateStatusReducer,
+    pimpinan: pimpinanReducer,
+
+    //Page Doctor
     createCpptEntry: createcpptentryReducer,
     updateAction: updateactionReducer,
     createOrder: createorderReducer,
+    
     //All Page Order
     getorderInfo: getorderinfoReducer,
+    
     //Page Order Obat
     createorderObat: createorderobatReducer,
     getorderObat: getorderobatReducer,
     searchObat: searchobatReducer,
     deleteorderObat: deleteorderobatReducer,
     finishorderObat: finishorderobatReducer,
+    
     //Page Order Prosedur
     getorderProsedur: getorderprosedurReducer,
     searchProsedur: searchprosedurReducer,
     createorderProsedur: createorderprosedurReducer,
     deleteorderProsedur: deleteorderprosedurReducer,
+    
     //Page Order Surat
-    getorderSurat: getordersuratReducer, 
+    getorderSurat: getordersuratReducer,
     createorderSuratRujukan: createordersuratrujukanReducer,
     createorderSuratSakit: createordersuratsakitReducer,
     deleteorderSurat: deleteordersuratReducer,
-    //Page Transaksi
-    transaction: transactionReducer,
 }); 
 
 const store = createStore(

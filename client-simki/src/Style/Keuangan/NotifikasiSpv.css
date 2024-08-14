@@ -99,6 +99,10 @@ body {
 .tabel_notif-keuangan {
     margin: 20px;
     flex: 1;
+    overflow: auto;
+    max-height: 400px;
+    border-collapse: collapse;
+    overflow-x: auto;
 }
 
 .tabel_notif-keuangan table {
@@ -106,14 +110,14 @@ body {
     border-collapse: collapse;
     margin: 20px 0;
     font-size: 18px;
-    text-align: center;  /* Pusatkan teks secara horizontal */
+    text-align: center;  
 }
 
 .tabel_notif-keuangan th, .tabel_notif-keuangan td {
     padding: 8px;
     border-bottom: 1px solid black;
-    text-align: center;  /* Pusatkan teks secara horizontal */
-    vertical-align: middle;  /* Pusatkan teks secara vertikal */
+    text-align: center;  
+    vertical-align: middle;  
 }
 
 .tabel_notif-keuangan th {
@@ -160,6 +164,6 @@ body {
 footer {
     width: 100%;
     flex-shrink: 0;
-    background: #f2f2f2; /* Tambahkan warna latar belakang jika diperlukan */
-    padding: 10px 0; /* Tambahkan padding agar terlihat lebih baik */
+    background: #f2f2f2;
+    padding: 10px 0; 
 }

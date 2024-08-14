@@ -7,7 +7,7 @@ export const fetchTransaction = () => async (dispatch) => {
         const response = await getData('/cms/orders');
         dispatch({
             type: FETCH_TRANSACTIONS_SUCCESS,
-            payload: response.data.data
+            payload: response.data
         });
     } catch (error) {
         dispatch({

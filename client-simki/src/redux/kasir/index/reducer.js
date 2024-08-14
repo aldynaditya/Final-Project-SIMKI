@@ -6,7 +6,7 @@ const initialState = {
     error: null
 };
 
-const transactionReducer = (state = initialState, action) => {
+export default function transactionReducer(state = initialState, action) {
     switch (action.type) {
         case FETCH_TRANSACTIONS_REQUEST:
             return {
@@ -28,6 +28,4 @@ const transactionReducer = (state = initialState, action) => {
         default:
             return state;
     }
-};
-
-export default transactionReducer;
+}

@@ -132,7 +132,7 @@ body {
     font-weight: bold;
 }
 
-.laporan-pimpinan:hover {
+.laporan-pimpinan:hover, .ket_terima-pimpinan:hover {
     background-color: #7DAEA8;
 }
 
