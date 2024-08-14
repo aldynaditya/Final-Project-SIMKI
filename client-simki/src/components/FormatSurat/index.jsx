@@ -1,7 +1,8 @@
+// FormatSurat.jsx
 import React from 'react';
 import '../../Style/components/FormatSurat.css';
 
-const PrintSurat = React.forwardRef((props, ref) => {
+const FormatSurat = React.forwardRef((props, ref) => {
     const { data } = props;
 
     const formatDate = (dateString) => {
@@ -14,20 +15,20 @@ const PrintSurat = React.forwardRef((props, ref) => {
 
     const formatTime = (dateString) => {
         const date = new Date(dateString);
-    
+
         const utcOffset = 7 * 60;
         const localDate = new Date(date.getTime() + utcOffset * 60 * 1000);
 
         const hours = String(localDate.getUTCHours()).padStart(2, '0');
         const minutes = String(localDate.getUTCMinutes()).padStart(2, '0');
-    
+
         return `${hours}:${minutes}`;
     };
 
     return (
         <div ref={ref} className="print-surat">
             <header>
-                <h1>Kop Surat</h1>
+                <h1>KLINIK PRATAMA DIPONEGORO I</h1>
                 <p>Alamat, Telepon, Email</p>
             </header>
             <main>
@@ -71,9 +72,23 @@ const PrintSurat = React.forwardRef((props, ref) => {
                         <li key={order.id}>
                             <p><strong>Tanggal:</strong> {formatDate(order.tanggal)}</p>
                             <p><strong>Jenis Surat:</strong> {order.jenis_surat}</p>
-                            <p><strong>Tujuan:</strong> {order.tujuan}</p>
-                            <p><strong>Versi Surat:</strong> {order.versi_surat}</p>
-                            <p><strong>Status:</strong> {order.status}</p>
+                            {order.jenis_surat === 'sakit' ? (
+                                <>
+                                    <p><strong>Umur:</strong> {order.umur}</p>
+                                    <p><strong>Pekerjaan:</strong> {order.pekerjaan}</p>
+                                    <p><strong>Diagnosis Surat Sakit:</strong> {order.diagnosis_suratsakit}</p>
+                                    <p><strong>Periode Start:</strong> {formatDate(order.periode_start)}</p>
+                                    <p><strong>Periode End:</strong> {formatDate(order.periode_end)}</p>
+                                </>
+                            ) : order.jenis_surat === 'rujukan' ? (
+                                <>
+                                    <p><strong>Tujuan:</strong> {order.tujuan}</p>
+                                    <p><strong>Tempat Tujuan:</strong> {order.tempat_tujuan}</p>
+                                    <p><strong>Diagnosis Surat Rujukan:</strong> {order.diagnosis_suratrujukan}</p>
+                                    <p><strong>Tindakan:</strong> {order.tindakan}</p>
+                                    <p><strong>Keterangan:</strong> {order.keterangan}</p>
+                                </>
+                            ) : null}
                         </li>
                     ))}
                 </ul>
@@ -86,4 +101,4 @@ const PrintSurat = React.forwardRef((props, ref) => {
     );
 });
 
-export default PrintSurat;
+export default FormatSurat;

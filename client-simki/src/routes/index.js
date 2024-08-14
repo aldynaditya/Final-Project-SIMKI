@@ -30,6 +30,7 @@ import { AdminRoute } from './adminRoutes';
 
 export function AppRoutes() {
     const Menudokter = [
+        { name: "Dashboard", path: '/dokter' },
         { name: "Jadwal Dokter", path: '/dokter/schedule-dokter' },
         { name: "Pasien", path: '/dokter/pasien-dokter' },
         { name: "Notifikasi", path: '/dokter/notifikasi-dokter' }
