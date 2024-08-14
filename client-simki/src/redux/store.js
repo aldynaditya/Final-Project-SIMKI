@@ -69,7 +69,7 @@ import finishorderobatReducer from './doctor/indexDeleteMedicine/reducer';
 import deleteorderprosedurReducer from './doctor/indexDeleteProcedure/reducer';
 import searchprosedurReducer from './doctor/searchProcedure/reducer';
 import deleteordersuratReducer from './doctor/indexDeleteLetter/reducer';
-
+import getnotifikasiReducer from './doctor/indexNotification/reducer';
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -155,6 +155,9 @@ const rootReducers = combineReducers({
     createorderSuratRujukan: createordersuratrujukanReducer,
     createorderSuratSakit: createordersuratsakitReducer,
     deleteorderSurat: deleteordersuratReducer,
+
+    //Page Notifikasi
+    getnotifikasiSurat: getnotifikasiReducer,
 }); 
 
 const store = createStore(

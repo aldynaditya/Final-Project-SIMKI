@@ -31,7 +31,6 @@ const authenticateUser = async (req, res, next) => {
 const authenticatePasien = async (req, res, next) => {
     try {
         let token;
-        // check header
         const authHeader = req.headers.authorization;
 
         if (authHeader && authHeader.startsWith('Bearer')) {

@@ -1,42 +1,58 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import '../../Style/Dokter/Dokter.css';
+import { fetchNotifikasiSurat, markNotificationsSeen, setNotificationsViewed } from '../../redux/doctor/indexNotification/actions';
 import notif from "../../images/notif.png";
 import user from "../../images/user.png";
 import agenda from "../../images/agenda.png";
 
 const Dokter = () => {
-  const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const updatedCount = useSelector(state => state.getnotifikasiSurat.updatedCount);
+    const notificationsViewed = useSelector(state => state.getnotifikasiSurat.notificationsViewed);
+    const [hasSeenNotifications, setHasSeenNotifications] = useState(false);
 
-  const JADWAL_PATH = 'schedule-dokter';
-  const PASIEN_PATH = 'pasien-dokter';
-  const NOTIFIKASI_PATH = 'notifikasi-dokter';
+    useEffect(() => {
+        dispatch(fetchNotifikasiSurat());
+    }, [dispatch]);
 
-  const handleNavigation = (path) => {
-    navigate(path);
-  };
+    useEffect(() => {
+        if (notificationsViewed) {
+            dispatch(markNotificationsSeen());
+        }
+    }, [notificationsViewed, dispatch]);
 
-  return (
-    <div className='dokter-container'>
-      <div className='main-content-dokter'>
-        <h1 className='text_dokter'>Dashboard</h1>
-        <div className="klik_dokter">
-          <div className="jadwal_dokter" onClick={() => handleNavigation(JADWAL_PATH)}>
-            <img src={agenda} alt='jadwal_dokter' className='icon' />
-            <p>JADWAL DOKTER</p>
-          </div>
-          <div className="pasien" onClick={() => handleNavigation(PASIEN_PATH)}>
-            <img src={user} alt='pasien' className='icon' />
-            <p>PASIEN</p>
-          </div>
-          <div className="notifikasi" onClick={() => handleNavigation(NOTIFIKASI_PATH)}>
-            <img src={notif} alt='notifikasi' className='icon' />
-            <p>NOTIFIKASI</p>
-          </div>
+    const handleNavigation = (path) => {
+        if (path === 'notifikasi-dokter') {
+            dispatch(setNotificationsViewed());
+        }
+        navigate(path);
+    };
+
+    return (
+        <div className='dokter-container'>
+            <div className='main-content-dokter'>
+                <h1 className='text_dokter'>Dashboard</h1>
+                <div className="klik_dokter">
+                    <div className="jadwal_dokter" onClick={() => handleNavigation('schedule-dokter')}>
+                        <img src={agenda} alt='jadwal_dokter' className='icon' />
+                        <p>JADWAL DOKTER</p>
+                    </div>
+                    <div className="pasien" onClick={() => handleNavigation('pasien-dokter')}>
+                        <img src={user} alt='pasien' className='icon' />
+                        <p>PASIEN</p>
+                    </div>
+                    <div className="notifikasi" onClick={() => handleNavigation('notifikasi-dokter')}>
+                        <img src={notif} alt='notifikasi' className='icon' />
+                        <p>NOTIFIKASI</p>
+                        {updatedCount > 0 && <span className='notification-badge'>{updatedCount}</span>}
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default Dokter;

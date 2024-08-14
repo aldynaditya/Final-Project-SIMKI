@@ -4,14 +4,17 @@ const DataPasien = require('../../api/v1/dataPasien/model');
 const Episode = require('../../api/v1/episode/model');
 const OrderSurat = require('../../api/v1/orderSurat/model');
 const SuratSakit = require('../../api/v1/suratSakit/model');
+const UserKlinik = require('../../api/v1/userKlinik/model');
+const Schedule = require('../../api/v1/schedule/model');
 const { 
     NotFoundError, 
 } = require('../../errors');
 const { getNextVersion } = require('../../utils');
 
-const getAllSuratSakit = async () => {
+const getAllSuratSakit = async (req) => {
+    const nama = req.user.nama;
+
     const notifikasi = await OrderSurat.findAll({
-        attributes: ['uuid','status','updatedAt'],
         include: [
             {
                 model: Episode,
@@ -21,11 +24,24 @@ const getAllSuratSakit = async () => {
                     as: 'emrpasien',
                     include: {
                         model: Appointment,
-                        include: {
-                            model: DataPasien,
-                            as: 'datapasien',
-                            attributes: ['nama_lengkap']
-                        }
+                        include: [
+                            {
+                                model: DataPasien,
+                                as: 'datapasien',
+                                attributes: ['nama_lengkap']
+                            },
+                            {
+                                model: Schedule,
+                                as: 'schedule',
+                                include: {
+                                    model: UserKlinik,
+                                    as: 'user_klinik',
+                                    where: {
+                                        nama: nama
+                                    }
+                                }
+                            }
+                        ]
                     }
                 }
             },
@@ -42,15 +58,18 @@ const getAllSuratSakit = async () => {
             const emr = notifikasi.episode.emrpasien;
             const datapasien = emr.appointment.datapasien;
             const suratsakit = notifikasi.suratsakit;
+            const userklinik = emr.appointment.schedule.user_klinik;
 
-            return{
+            return {
                 id: notifikasi.uuid,
                 noEMR: emr.noEMR,
                 namaPasien: datapasien.nama_lengkap,
+                versi_surat: notifikasi.versi_surat,
                 tanggal: notifikasi.updatedAt,
                 status: notifikasi.status,
-                idsuratsakit: suratsakit.uuid
-            }
+                idsuratsakit: suratsakit.uuid,
+                pemeriksa:userklinik.nama
+            };
         });
 
     return result;

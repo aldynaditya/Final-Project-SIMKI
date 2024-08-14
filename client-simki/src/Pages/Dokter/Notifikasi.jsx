@@ -1,9 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchNotifikasiSurat } from '../../redux/doctor/indexNotification/actions';
 import '../../Style/Dokter/Notifikasi.css';
 import SearchBar from "../../components/SearchBar";
 
 const Notifikasi = () => {
-    const [rows] = useState(Array.from({ length: 20 }));
+    const dispatch = useDispatch();
+    const { data, loading, error } = useSelector(state => state.getnotifikasiSurat);
+
+    useEffect(() => {
+        dispatch(fetchNotifikasiSurat());
+    }, [dispatch]);
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error</div>;
+    }
 
     return (
         <div className="notifikasi-wrapper">
@@ -27,13 +50,13 @@ const Notifikasi = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {rows.map((_, index) => (
-                                    <tr key={index}>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                {data.map((row) => (
+                                    <tr key={row.id}>
+                                        <td>{row.noEMR}</td>
+                                        <td>{row.namaPasien}</td>
+                                        <td>{row.versi_surat}</td>
+                                        <td>{formatDate(row.tanggal)}</td>
+                                        <td>{row.status}</td>
                                     </tr>
                                 ))}
                             </tbody>
