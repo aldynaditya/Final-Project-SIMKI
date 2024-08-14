@@ -12,8 +12,8 @@ const {
     authorizeRoles
 } = require('../../../middleware/auth');
 
-router.get('/obat',authenticateUser, authorizeRoles('superuser','farmasi'), index);
-router.get('/obat/:id',authenticateUser, authorizeRoles('superuser','farmasi'),find);
+router.get('/obat',authenticateUser, authorizeRoles('superuser','farmasi','dokter'), index);
+router.get('/obat/:query',authenticateUser, authorizeRoles('superuser','farmasi','dokter'),find);
 router.post('/obat',authenticateUser, authorizeRoles('superuser','farmasi'), create);
 router.patch('/obat/:id',authenticateUser, authorizeRoles('superuser','farmasi'), update);
 router.delete('/obat/:id',authenticateUser, authorizeRoles('superuser','farmasi'), destroy);

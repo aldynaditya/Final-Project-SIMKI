@@ -81,14 +81,14 @@ const getAllEMRPasien = async ( req ) => {
 
 const createVitalSignbyPerawat = async ( req ) => {
     const emrPasienId = req.params.id;
-    const { alergi, riwayatPenyakit, subjective, TD, indeks, detak, suhu, napas, objective, assessment, plan } = req.body;
+    const { alergi, riwayat_penyakit, subjective, TD, indeks, detak, suhu, napas, objective, assessment, plan } = req.body;
 
     const invoiceNumber = await generateInvoiceNumber(emrPasienId);
 
     const result = await Episode.create({
         emrPasienId,
         alergi,
-        riwayatPenyakit,
+        riwayat_penyakit,
         subjective,
         TD,
         indeks,
@@ -141,13 +141,19 @@ const getVitalSignbyDoctor = async (req) => {
     const episode = emr.episodes[0];
 
     const result = {
-        id: emr.uuid,
+        id: episode.uuid,
         alergi: episode.alergi,
+        riwayat_penyakit: episode.riwayat_penyakit,
+        subjective: episode.subjective,
         td: episode.TD,
         indeks: episode.indeks,
         detak: episode.detak,
         suhu: episode.suhu,
         napas: episode.napas,
+        objective: episode.objective,
+        assessment: episode.assessment,
+        plan: episode.plan,
+        tindakan: episode.tindakan,
     };
 
     return result;
@@ -155,13 +161,13 @@ const getVitalSignbyDoctor = async (req) => {
 
 const updateEpisode = async ( req ) => {
     const { id } = req.params;
-    const { riwayatPenyakit, subjective, objective, assessment, plan } = req.body;
+    const { riwayat_penyakit, subjective, objective, assessment, plan } = req.body;
 
     const previousEpisode = await Episode.findByPk(id);
     if (!previousEpisode) throw new NotFoundError('Previous episode not found');
 
     const result = await Episode.update({
-            riwayatPenyakit,
+            riwayat_penyakit,
             subjective,
             objective,
             assessment,
@@ -175,13 +181,14 @@ const updateEpisode = async ( req ) => {
 
 const createEpisode = async ( req ) => {
     const emrPasienId = req.params.id;
-    const { riwayatPenyakit, subjective, TD, indeks, detak, suhu, napas, objective, assessment, plan } = req.body;
+    const { alergi, riwayat_penyakit, subjective, TD, indeks, detak, suhu, napas, objective, assessment, plan } = req.body;
 
     const invoiceNumber = await generateInvoiceNumber(emrPasienId);
 
     const result = await Episode.create({
+        alergi,
         emrPasienId,
-        riwayatPenyakit,
+        riwayat_penyakit,
         subjective,
         TD,
         indeks,
@@ -220,7 +227,6 @@ const updateAction = async (req) => {
 const finishOrder = async (req, res) => {
     const { id } = req.params;
 
-    // Fetch orders for the episode
     const [ordersObat, ordersProsedur] = await Promise.all([
         OrderObat.findAll({
             where: { episodeId: id },
@@ -279,7 +285,6 @@ const finishOrder = async (req, res) => {
         userKlinikId: req.user.id,
     });
 
-    // Update the EMR status
     const emrpasienId = episode.emrPasienId;
     await EMRPasien.update({ 
         status: 'finished',
@@ -381,7 +386,8 @@ const findOneMedicalRecord = async (req) => {
     const episode = emr.episodes[0];
 
     const result = {
-        id: emr.uuid,
+        id: episode.uuid,
+        emrId: emr.uuid,
         noEMR: emr.noEMR,
         nama_pasien: appointment.datapasien.nama_lengkap,
         tanggal_lahir: appointment.datapasien.tanggal_lahir,
@@ -392,7 +398,7 @@ const findOneMedicalRecord = async (req) => {
         penjamin: appointment.penjamin,
         pemeriksa: appointment.schedule.user_klinik.nama,
         poli: appointment.schedule.poli,
-        riwayatPenyakit: episode.riwayatpenyakit,
+        riwayat_penyakit: episode.riwayat_penyakit,
         subjective: episode.subjective,
         td: episode.TD,
         indeks: episode.indeks,
@@ -431,6 +437,9 @@ const getDataEMRbyId = async (req) => {
                         }
                     }
                 ]
+            },
+            {
+                model: Episode
             }
         ],
     });
@@ -440,6 +449,7 @@ const getDataEMRbyId = async (req) => {
     }
 
     const appointment = emr.appointment;
+    const episode = emr.episodes[0];
 
     const result = {
         id: emr.uuid,

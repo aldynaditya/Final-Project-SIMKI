@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getScheduleP } from '../../redux/nurse/schedule/actions';
+import { getScheduleP } from '../../redux/resepsionis/jadwal/actions';
 import '../../Style/Perawat/JadwalDokter.css';
 
 const JadwalDokter = () => {

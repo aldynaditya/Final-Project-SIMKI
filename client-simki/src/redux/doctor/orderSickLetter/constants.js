@@ -1,0 +1,3 @@
+export const CREATE_ORDER_SICK_LETTER_REQUEST = 'redux/doctor/orderSickLetter/CREATE_ORDER_SICK_LETTER_REQUEST';
+export const CREATE_ORDER_SICK_LETTER_SUCCESS = 'redux/doctor/orderSickLetter/CREATE_ORDER_SICK_LETTER_SUCCESS';
+export const CREATE_ORDER_SICK_LETTER_FAILURE = 'redux/doctor/orderSickLetter/CREATE_ORDER_SICK_LETTER_FAILURE';

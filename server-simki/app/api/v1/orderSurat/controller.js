@@ -2,8 +2,9 @@ const { StatusCodes } = require('http-status-codes');
 const { 
     createOrderSuratRujukan,
     createOrderSuratSakit,
-    updateSuratSakit
-} = require('../../../services/sequelize/order');
+    getAllOrderSuratById,
+    deleteOrderSuratById
+} = require('../../../services/sequelize/orderSurat');
 
 const ordersuratsakit = async (req, res, next) => {
     try {
@@ -29,13 +30,25 @@ const ordersuratrujukan = async (req, res, next) => {
     }
 };
 
-const updatesuratsakit = async (req, res, next) => {
+const find = async (req, res, next) => {
     try {
-        const result = await updateSuratSakit(req);
-        
-        res.status(StatusCodes.CREATED).json({
-            data: result,
-        });
+        const result = await getAllOrderSuratById(req);
+
+    res.status(StatusCodes.OK).json({
+        data: result,
+    });
+    } catch (err) {
+        next(err);
+    }
+};
+
+const destroy = async (req, res, next) => {
+    try {
+        const result = await deleteOrderSuratById(req);
+
+    res.status(StatusCodes.OK).json({
+        data: result,
+    });
     } catch (err) {
         next(err);
     }
@@ -44,5 +57,6 @@ const updatesuratsakit = async (req, res, next) => {
 module.exports = {
     ordersuratrujukan,
     ordersuratsakit,
-    updatesuratsakit
+    find,
+    destroy
 };

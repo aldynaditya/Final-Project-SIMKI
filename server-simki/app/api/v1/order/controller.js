@@ -1,6 +1,8 @@
 const { StatusCodes } = require('http-status-codes');
 const { 
-    getOrderDetailInformation
+    getOrderDetailInformation,
+    getALlOrderObatbyFarmasi,
+    updateOrderStatusbyFarmasi
 } = require('../../../services/sequelize/order');
 
 const index = async (req, res, next) => {
@@ -15,6 +17,32 @@ const index = async (req, res, next) => {
     }
 };
 
+const order = async (req, res, next) => {
+    try {
+        const result = await getALlOrderObatbyFarmasi(req);
+
+    res.status(StatusCodes.OK).json({
+        data: result,
+    });
+    } catch (err) {
+        next(err);
+    }
+};
+
+const update = async (req, res, next) => {
+    try {
+        const result = await updateOrderStatusbyFarmasi(req);
+
+    res.status(StatusCodes.OK).json({
+        data: result,
+    });
+    } catch (err) {
+        next(err);
+    }
+};
+
 module.exports = {
-    index
+    index,
+    order,
+    update
 }

@@ -4,14 +4,16 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #D9D9D9;
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: 'Open Sans', sans-serif;
+    box-sizing: border-box;
 }
 
 .tambahobatdr-content {
-    background: #f0f0f0;
+    background: white;
     padding: 20px;
     border-radius: 10px;
     width: 600px; /* Increased width */
@@ -23,7 +25,13 @@
     top: 10px;
     right: 10px;
     text-decoration: none;
-    color: #000;
+    color: #333; /* Darker color for the text */
+    font-size: 20px; /* Increase font size */
+    background: transparent; /* No background */
+    border: none; /* No border */
+    cursor: pointer; /* Pointer cursor */
+    font-family: 'Arial', sans-serif; /* Ensure a clean, sans-serif font */
+    font-weight: normal; 
 }
 
 .text-tambahobatdr {
@@ -43,6 +51,7 @@
 .nama-obat-dokter {
     display: flex;
     align-items: center;
+    position: relative;
 }
 .text-obat-dokter {
     margin-right: 40px;
@@ -87,7 +96,7 @@
 
 .tambah-dokter-container {
     display: flex;
-    justify-content: center; /* Center the button horizontally */
+    justify-content: center;
     margin-top: 20px;
 }
 
@@ -115,6 +124,7 @@
     border-radius: 5px;
     padding: 5px;
     width: 300px;
+    position: relative; /* Add this to ensure dropdown positions relative to this container */
 }
 
 .search-bar-obat-input {
@@ -131,4 +141,30 @@
     background: none;
     cursor: pointer;
     padding: 5px;
+}
+
+.search-results {
+    position: absolute;
+    top: 100%; /* Position it right below the search bar */
+    left: 0;
+    width: 100%; /* Match the width of the search bar */
+    max-height: 120px; /* Limit the height to fit 3 items */
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 1000; /* Ensure it appears above other elements */
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Optional: Add shadow for better visibility */
+}
+
+.search-results li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.search-results li:hover {
+    background: #eee;
 }

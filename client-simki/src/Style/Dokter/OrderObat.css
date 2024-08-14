@@ -142,7 +142,7 @@ html, body {
     font-size: 16px;
 }
 
- .tambah-obat-dokter{
+.tambah-obat-dokter{
     justify-content: flex-start;
     background-color: #145149;
     color: white;
@@ -158,10 +158,10 @@ html, body {
     z-index: 2;
     margin-top: 50px;
     margin-left: 50px;
- }
+}
 
 .tambah-obat-dokter:hover {
- background-color: #7DAEA8;
+    background-color: #7DAEA8;
 }
 
 .tabel-order-obat {
@@ -217,4 +217,64 @@ html, body {
 
 .simpan-obat:hover {
     background-color: #7DAEA8;
+}
+
+.surat-sakit{
+    justify-content: flex-start;
+    background-color: #145149;
+    color: #ffffff;
+    width: 170px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 30px;
+    display: inline-block;
+    z-index: 2;
+    margin-top: 50px;
+    margin-left: 50px;
+}
+
+.surat-sakit:hover {
+    background-color: #7DAEA8;
+}
+
+.surat-rujukan{
+    justify-content: flex-start;
+    background-color: #145149;
+    color: #ffffff;
+    width: 170px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 30px;
+    display: inline-block;
+    z-index: 2;
+    margin-top: 50px;
+    margin-left: 50px;
+}
+
+.surat-rujukan:hover {
+    background-color: #7DAEA8;
+}
+
+.hapus-order-obat {
+    background-color: #145149;
+    color: white;
+    width: 70px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 30px;
+    display: inline-block;
+    margin-right: 10px;
+    font-weight: bold;
 }

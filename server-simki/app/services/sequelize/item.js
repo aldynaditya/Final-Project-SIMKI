@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const Item = require('../../api/v1/item/model');
 const UserKlinik = require('../../api/v1/userKlinik/model');
 const { 
@@ -48,13 +49,26 @@ const createItem = async (req) => {
     return result
 };
 
-const getOneItem = async (req) => {
-    const { id } = req.params;
-    const result = await Item.findOne({ where: {uuid: id} });
+const searchItem = async (req) => {
+    const { query } = req.params;
+    const result = await Item.findAll({
+        where: {
+            nama_item: {
+                [Op.like]: `%${query}%`
+            },
+            stok: {
+                [Op.gt]: 0
+            }
+        },
+        attributes: ['uuid', 'nama_item', 'satuan']
+    });
 
-    if (!result) throw new NotFoundError(`Tidak ada Item dengan id :  ${id}`);
+    if (!result.length) throw new NotFoundError(`Tidak ada Item dengan nama yang mengandung: ${query}`);
 
-    return result;
+    return result.map(item => ({
+        id: item.uuid,
+        nama_item: `${item.nama_item} ${item.satuan}`
+    }));
 };
 
 const updateItem = async (req) => {
@@ -86,7 +100,7 @@ const deleteItem = async (req) => {
 module.exports = {
     getAllItem,
     createItem,
-    getOneItem,
+    searchItem,
     updateItem,
     deleteItem,
 };
