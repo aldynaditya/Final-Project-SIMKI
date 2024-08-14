@@ -77,7 +77,7 @@ const EmrDokter = () => {
                     <p>ENTRI BARU</p>
                 </div>
             </div>
-            <RiwayatEpisode />
+            <RiwayatEpisode noEMR={data.noEMR} />
         </div>
     );
 };

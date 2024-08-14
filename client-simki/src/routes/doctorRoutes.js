@@ -27,7 +27,7 @@ export function DoctorsRoute() {
             <Route path="order-prosedur/:id" element={<OrderProsedur />} />
             <Route path="order-surat/:id" element={<OrderSurat />} />
             <Route path="hasilkuisioner-popup" element={<HasilKuisionerPopup />} />
-            <Route path="detail-episode" element={<DetailEpsDok />} />
+            <Route path="detail-episode/:id" element={<DetailEpsDok />} />
         </Routes>
     );
 }

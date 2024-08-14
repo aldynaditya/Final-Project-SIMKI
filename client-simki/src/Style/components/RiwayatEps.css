@@ -17,6 +17,13 @@ body {
     margin-left: 70px;
 }
 
+.tabel-eps-rsp{
+    width: 100%;
+    border-collapse: collapse;
+    margin-left: 70px;
+    font-size: 18px;
+}
+
 .tabel-eps-rsp table {
     width: 100%;
     border-collapse: collapse;
@@ -27,7 +34,6 @@ body {
 .tabel-eps-rsp th, .tabel-eps-rsp td {
     padding: 12px 15px;
     border: 1px solid #ddd;
-    text-align: left;
 }
 
 .tabel-eps-rsp th {
@@ -45,8 +51,11 @@ body {
 }
 
 .kolom-tgl-eps-rsp{
-    display: flex;
     flex-direction: column;
+}
+
+td.kolom-dr-eps-rsp{
+    text-align: left;
 }
 
 .tgl-eps-rsp{
@@ -83,14 +92,15 @@ body {
     gap: 10px;
 }
 
+.soap-list {
+    list-style-type: none; 
+    padding-left: 0; 
+}
+
+
 .soap-entry {
     display: flex;
     align-items: center;
-}
-
-.soap-entry span {
-    margin-right: 10px;
-    width: 80px;
 }
 
 .s-eps-rsp, .o-eps-rsp, .a-eps-rsp, .p-eps-rsp, .tindakan-eps-rsp{

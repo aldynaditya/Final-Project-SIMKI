@@ -1,15 +1,25 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { fetchEpisodeById } from '../../redux/doctor/DetailEpisodeById/actions';
 import RiwayatEpisode from '../RiwayatEps/index';
 import CetakSuratPopup from '../../Pages/Resepsionis/CetakSuratPopup';
-import HasilKuisionerPopup from '../../Pages/Dokter/HasilKuisionerPopup'; // Assuming you have this component
+import HasilKuisionerPopup from '../../Pages/Dokter/HasilKuisionerPopup'; 
+import { formatDateStrip } from '../../utils/dateUtils';
 import '../../Style/Resepsionis/EmrResepsionis.css';
 import '../../Style/components/DetailEpisode.css';
 
 const DetailEpisode = () => {
+    const { id } = useParams();
+    const dispatch = useDispatch();
     const { role } = useSelector((state) => state.auth);
+    const { data, loading, error } = useSelector(state => state.getoneEpisode);
     const [showCetakSuratPopup, setShowCetakSuratPopup] = useState(false);
     const [showHasilKuisionerPopup, setShowHasilKuisionerPopup] = useState(false);
+
+    useEffect(() => {
+        dispatch(fetchEpisodeById(id));
+    }, [dispatch, id]);
 
     const CetakSurat = () => {
         setShowCetakSuratPopup(true);
@@ -33,102 +43,101 @@ const DetailEpisode = () => {
             <div className='kolom-emr-resepsionis'>
                 <div className='no-emr-rsp'>
                     <span className='text-nemr-rsp'>No. EMR :</span>
-                    <input type='text' className='kolom-nemr-rsp'></input>
+                    <input type='text' className='kolom-nemr-rsp' name="noEMR" value={data.noEMR} readOnly/>
                 </div>
                 <div className='nama-pasien-rsp'>
                     <span className='text-npasien-rsp'>Nama Pasien :</span>
-                    <input type='text' className='kolom-npasien-rsp'></input>
+                    <input type='text' className='kolom-npasien-rsp'  name="nama_pasien" value={data.nama_pasien}/>
                 </div>
                 <div className='tgl-lahir-rsp'>
                     <span className='text-ttl-rsp'>Tanggal Lahir :</span>
-                    <input type='date' className='kolom-ttl-rsp'></input>
+                    <input type='text' className='kolom-ttl-rsp' name="tanggal_lahir" value={formatDateStrip(data.tanggal_lahir)}/>
                 </div>
                 <div className='gender-goldar-rsp'>
                     <div className='gender-emr-rsp'>
                         <span className='text-gender-rsp'>Jenis Kelamin :</span>
-                        <input type='text' className='kolom-gender-rsp'></input>
+                        <input type='text' className='kolom-gender-rsp' name="jenis_kelamin" value={data.jenis_kelamin}/>
                     </div>
                     <div className='goldar-emr-rsp'>
                         <span className='text-goldar-rsp'>Golongan Darah :</span>
-                        <input type='text' className='kolom-goldar-rsp'></input>
+                        <input type='text' className='kolom-goldar-rsp' name="gol_darah" value={data.gol_darah}/>
                     </div>
                 </div>
                 <div className='alergi-rsp'>
                     <span className='text-alergi-rsp'>Alergi :</span>
-                    <input type='text' className='kolom-alergi-rsp'></input>
+                    <input type='text' className='kolom-alergi-rsp' name="alergi" value={data.alergi}/>
                 </div>
             </div>
             <h2 className='text-riwayat-episode'>Detail Episode :</h2>
             <div className='kolom-detail-eps'>
                 <div className='tgl-detail'>
                     <span className='text-tgl-detail'>Tanggal :</span>
-                    <input type='date' className='kolom-tgl-detail'></input>
+                    <input type='text' className='kolom-tgl-detail' name="tanggal" value={formatDateStrip(data.tanggal)}/>
                 </div>
                 <div className='penjamin-detail'>
                     <span className='text-penjamin-detail'>Penjamin :</span>
-                    <input type='text' className='kolom-penjamin-detail'></input>
+                    <input type='text' className='kolom-penjamin-detail' name="penjamin" value={data.penjamin}/>
                 </div>
                 <div className='pemeriksa-detail'>
                     <span className='text-pemeriksa-detail'>Pemeriksa :</span>
-                    <input type='text' className='kolom-pemeriksa-detail'></input>
+                    <input type='text' className='kolom-pemeriksa-detail' name="pemeriksa" value={data.pemeriksa}/>
                 </div>
                 <div className='poli-detail'>
                     <span className='text-poli-detail'>Poli :</span>
-                    <input type='text' className='kolom-poli-detail'></input>
+                    <input type='text' className='kolom-poli-detail' name="poli" value={data.poli}/>
                 </div>
                 <div className='penyakit-detail'>
                     <span className='text-penyakit-detail'>Riwayat Penyakit :</span>
-                    <input type='text' className='kolom-penyakit-detail'></input>
+                    <input type='text' className='kolom-penyakit-detail' name="riwayat_penyakit" value={data.riwayat_penyakit}/>
                 </div>
                 <div className='subjektif-detail'>
                     <span className='text-subjektif-detail'>Subjektif :</span>
-                    <input type='text' className='kolom-subjektif-detail'></input>
+                    <input type='text' className='kolom-subjektif-detail' name="subjective" value={data.subjective}/>
                 </div>
                 <div className='vital-detail'>
-                    <span className='text-vital-detail'>Tanda Vital :</span>
+                <span className='text-vital-detail'>Tanda Vital :</span>
                     <div className='isian-detail-eps'>
                         <div className='atas-vital-detail'>
                             <div className='td-detail'>
                                 <span className='text-td-detail'>TD :</span>
-                                <input type='text' className='kolom-td-detail'></input>
+                                <input type='text' className='kolom-td-detail' name="td" value={data.td} readOnly></input>
                             </div>
                             <div className='suhu-detail'>
                                 <span className='text-suhu-detail'>Suhu :</span>
-                                <input type='text' className='kolom-suhu-detail'></input>
+                                <input type='text' className='kolom-suhu-detail' name="suhu" value={data.suhu} readOnly></input>
                             </div>
                         </div>
                         <div className='bawah-vital-detail'>
                             <div className='indeks-detail'>
                                 <span className='text-indeks-detail'>Indeks :</span>
-                                <input type='text' className='kolom-indeks-detail'></input>
+                                <input type='text' className='kolom-indeks-detail' name="indeks" value={data.indeks} readOnly></input>
                             </div>
                             <div className='napas-detail'>
                                 <span className='text-napas-detail'>Napas :</span>
-                                <input type='text' className='kolom-napas-detail'></input>
+                                <input type='text' className='kolom-napas-detail' name="napas" value={data.napas} readOnly></input>
                             </div>
                         </div>
                         <div className='detak-detail'>
                             <span className='text-detak-detail'>Detak :</span>
-                            <input type='text' className='kolom-detak-detail'></input>
+                            <input type='text' className='kolom-detak-detail' name="detak" value={data.detak} readOnly></input>
                         </div>
                     </div>
-                    
                 </div>
                 <div className='objektif-detail'>
                     <span className='text-objektif-detail'>Objektif :</span>
-                    <input type='text' className='kolom-objektif-detail'></input>
+                    <input type='text' className='kolom-objektif-detail' name="objective" value={data.objective}/>
                 </div>
-                <div className='diagnosis-detail'>
-                    <span className='text-diagnosis-detail'>Diagnosis :</span>
-                    <input type='text' className='kolom-diagnosis-detail'></input>
+                <div className='assestment-detail'>
+                    <span className='text-assestment-detail'>Assestment :</span>
+                    <input type='text' className='kolom-assestment-detail' name="assessment" value={data.assessment}/>
                 </div>
                 <div className='plan-detail'>
                     <span className='text-plan-detail'>Plan :</span>
-                    <input type='text' className='kolom-plan-detail'></input>
+                    <input type='text' className='kolom-plan-detail' name="plan" value={data.plan}/>
                 </div>
                 <div className='tindakan-detail'>
                     <span className='text-tindakan-detail'>Tindakan :</span>
-                    <input type='text' className='kolom-tindakan-detail'></input>
+                    <input type='text' className='kolom-tindakan-detail' name="tindakan" value={data.tindakan}/>
                 </div>
             </div>
             <div className='button-detail'>
@@ -139,7 +148,6 @@ const DetailEpisode = () => {
                     <button className="hasil-kuisioner" onClick={HasilKuisioner}>Hasil Kuisioner</button>
                 )}
             </div>
-            <RiwayatEpisode />
             {showCetakSuratPopup && <CetakSuratPopup onClose={closeCetakSuratPopup} />}
             {showHasilKuisionerPopup && <HasilKuisionerPopup onClose={closeHasilKuisionerPopup} />}
         </div>
