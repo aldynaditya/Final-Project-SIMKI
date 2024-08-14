@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { saveFactur } from '../../redux/kasir/create/actions'; 
 import '../../Style/Kasir/DetailFaktur.css';
 
+
 const DetailFaktur = ({ onClose }) => {
+    const dispatch = useDispatch();
+    const { loading, error, data } = useSelector(state => state.factur);
+
     const [metodePembayaran, setMetodePembayaran] = useState('');
 
     const handleMetodePembayaran = (event) => {
@@ -9,9 +15,15 @@ const DetailFaktur = ({ onClose }) => {
     };
 
     const SimpanFaktur = () => {
-        alert(`Data Tersimpan dengan metode pembayaran: ${metodePembayaran}`);
-        onClose();
+        dispatch(saveFactur({ metodePembayaran }));
     };
+
+    useEffect(() => {
+        if (data || error) {
+            alert(data ? `Data Tersimpan` : error);
+            onClose();
+        }
+    }, [data, error, onClose]);
 
     return (
         <div className='modal-overlay'>
@@ -39,7 +51,7 @@ const DetailFaktur = ({ onClose }) => {
                     </div>
                 </div>
                 <div className='simpan-faktur-container'>
-                    <button className="simpan-faktur" onClick={SimpanFaktur}>Simpan</button>
+                    <button className="simpan-faktur" onClick={SimpanFaktur} disabled={loading}>Simpan</button>
                 </div>
             </div>
         </div>

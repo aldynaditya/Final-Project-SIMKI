@@ -11,11 +11,22 @@ const TransaksiKasir = () => {
     const dispatch = useDispatch();
     const { data: rows, loading, error } = useSelector(state => state.transaction);
 
+
     const [isDetailFakturVisible, setIsDetailFakturVisible] = useState(false);
 
     useEffect(() => {
-        dispatch(fetchTransaction());
+        const fetchData = async () => {
+            try {
+                await dispatch(fetchTransaction());
+            } catch (error) {
+                console.error("Error fetching transaction data:", error);
+                alert("Gagal mengambil data transaksi. Silakan coba lagi nanti.");
+            }
+        };
+    
+        fetchData();
     }, [dispatch]);
+    
 
     const handleDetailFakturOpen = (index) => {
         if (rows && rows.length > 0) {
@@ -24,9 +35,11 @@ const TransaksiKasir = () => {
                 setIsDetailFakturVisible(true);
             } else {
                 console.error("Data 'emrpasien' tidak tersedia.");
+                alert("Data EMR Pasien tidak tersedia.");
             }
         }
     };
+    
 
     const handleDetailFakturClose = () => {
         setIsDetailFakturVisible(false);
@@ -109,7 +122,7 @@ const TransaksiKasir = () => {
                                             <tr key={index} id={`row-${index}`}>
                                                 <td>{row.noInvoice || 'N/A'}</td>
                                                 <td>{row.tanggal || 'N/A'}</td>
-                                                <td>{row.noEMR || 'N/A'}</td>
+                                                <td>{row.EMRPasien || 'Data tidak tersedia'}</td>
                                                 <td>{row.namaPasien || 'N/A'}</td>
                                                 <td>{row.penjamin || 'N/A'}</td>
                                                 <td>{row.metodeBayar || 'N/A'}</td>

@@ -1,14 +1,14 @@
 import React from "react";
-import '../../Style/components/SearchBar.css';  // Pastikan file ini ada untuk styling
+import '../../Style/components/SearchBar.css';  
 import search from "../../images/search.png";
 
 const SearchBar = () => {
     const handleSearch = () => {
-        // Mendapatkan query dari input
+  
         const query = document.querySelector('.search-bar-input').value.toLowerCase();
         console.log("Mencari: ", query);
         
-        // Mendapatkan semua baris dalam tabel
+
         const rows = document.querySelectorAll('table tbody tr');
         
         rows.forEach(row => {

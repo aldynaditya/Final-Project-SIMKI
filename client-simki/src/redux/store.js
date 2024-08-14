@@ -45,6 +45,12 @@ import createvitalReducer from './nurse/vital/reducer';
 import getvitalsignReducer from './doctor/vitalSign/reducer';
 import createnewentryReducer from './doctor/newEntry/reducer';
 import transactionReducer from './kasir/index/reducer';
+import facturReducer from './kasir/create/reducer';
+import transaksiReducer from './keuangan/indextransaksi/reducer';
+import laporanReducer from './keuangan/create/reducer';
+import notifReducer from './keuangan/indexnotif/reducer';
+import updateStatusReducer from './pimpinan/update/reducer';
+import pimpinanReducer from './pimpinan/index/reducer';
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -87,7 +93,13 @@ const rootReducers = combineReducers({
     createVital: createvitalReducer,
     getVital: getvitalsignReducer,
     createNewEntry: createnewentryReducer,
-    transaction: transactionReducer
+    transaction: transactionReducer,
+    factur: facturReducer,
+    transaksi: transaksiReducer,
+    laporan: laporanReducer,
+    notif: notifReducer,
+    updateStatus: updateStatusReducer,
+    pimpinan: pimpinanReducer,
 }); 
 
 const store = createStore(

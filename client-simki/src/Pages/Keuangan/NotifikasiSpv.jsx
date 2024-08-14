@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import '../../Style/Keuangan/NotifikasiSpv.css';
 import SearchBar from '../../components/SearchBar';
 import UploadLaporan from './UploadLaporan';
+import { fetchNotif } from '../../redux/keuangan/indexnotif/actions';
 
 const NotifikasiKeuangan = () => {
-    const [rows] = useState(Array.from({ length: 10 }));
+    const dispatch = useDispatch();
+    const { data: rows, loading } = useSelector(state => state.notif);
     const [isPopupVisible, setIsPopupVisible] = useState(false);
+
+    useEffect(() => {
+        dispatch(fetchNotif());
+    }, [dispatch]);
 
     const UnggahLaporan = () => {
         setIsPopupVisible(true);
@@ -13,6 +20,10 @@ const NotifikasiKeuangan = () => {
 
     const handleClosePopup = () => {
         setIsPopupVisible(false);
+    };
+
+    const formatDate = (dateString) => {
+        return new Date(dateString).toISOString().split('T')[0];
     };
 
     return (
@@ -37,22 +48,28 @@ const NotifikasiKeuangan = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {rows.map((_, index) => (
-                                    <tr key={index}>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td><div className="ket_cetak">Cetak</div></td>
+                                {loading ? (
+                                    <tr>
+                                        <td colSpan="6">Loading...</td>
                                     </tr>
-                                ))}
+                                ) : (
+                                    rows.map((row, index) => (
+                                        <tr key={index}>
+                                            <td>{formatDate(row.tanggal)}</td>
+                                            <td>{row.no_laporan}</td>
+                                            <td>{row.periode}</td>
+                                            <td>{row.keterangan}</td>
+                                            <td>{row.status}</td>
+                                            <td><div className="ket_cetak">Cetak</div></td>
+                                        </tr>
+                                    ))
+                                )}
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            {isPopupVisible && <UploadLaporan onClose={handleClosePopup} />} 
+            {isPopupVisible && <UploadLaporan onClose={handleClosePopup} />}
         </div>
     );
 };
