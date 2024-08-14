@@ -189,6 +189,18 @@ body {
     font-size: 16px;
 }
 
+.text-assestment-detail{
+    margin-right: 70px;
+    font-size: 16px;
+}
+.kolom-assestment-detail{
+    border-radius: 5px;
+    width: 560px;
+    height: 30px;
+    padding: 10px;
+    font-size: 16px;
+}
+
 .kolom-diagnosis-detail{
     border-radius: 5px;
     width: 560px;
@@ -231,6 +243,7 @@ body {
     flex-direction: row;
     gap: 20px;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .cetak-surat, .hasil-kuisioner{

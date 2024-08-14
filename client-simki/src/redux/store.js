@@ -51,7 +51,6 @@ import laporanReducer from './keuangan/create/reducer';
 import notifReducer from './keuangan/indexnotif/reducer';
 import updateStatusReducer from './pimpinan/update/reducer';
 import pimpinanReducer from './pimpinan/index/reducer';
-
 import createcpptentryReducer from './doctor/cpptEntry/reducer';
 import updateactionReducer from './doctor/action/reducer';
 import createorderReducer from './doctor/finishOrder/reducer';
@@ -70,6 +69,8 @@ import deleteorderprosedurReducer from './doctor/indexDeleteProcedure/reducer';
 import searchprosedurReducer from './doctor/searchProcedure/reducer';
 import deleteordersuratReducer from './doctor/indexDeleteLetter/reducer';
 import getnotifikasiReducer from './doctor/indexNotification/reducer';
+import getepisodeReducer from './doctor/indexDetailEpisode/reducer';
+import getoneEpisodeReducer from './doctor/DetailEpisodeById/reducer';
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -128,36 +129,33 @@ const rootReducers = combineReducers({
     notif: notifReducer,
     updateStatus: updateStatusReducer,
     pimpinan: pimpinanReducer,
-
     //Page Doctor
     createCpptEntry: createcpptentryReducer,
     updateAction: updateactionReducer,
     createOrder: createorderReducer,
-    
     //All Page Order
     getorderInfo: getorderinfoReducer,
-    
     //Page Order Obat
     createorderObat: createorderobatReducer,
     getorderObat: getorderobatReducer,
     searchObat: searchobatReducer,
     deleteorderObat: deleteorderobatReducer,
     finishorderObat: finishorderobatReducer,
-    
     //Page Order Prosedur
     getorderProsedur: getorderprosedurReducer,
     searchProsedur: searchprosedurReducer,
     createorderProsedur: createorderprosedurReducer,
     deleteorderProsedur: deleteorderprosedurReducer,
-    
     //Page Order Surat
     getorderSurat: getordersuratReducer,
     createorderSuratRujukan: createordersuratrujukanReducer,
     createorderSuratSakit: createordersuratsakitReducer,
     deleteorderSurat: deleteordersuratReducer,
-
     //Page Notifikasi
     getnotifikasiSurat: getnotifikasiReducer,
+    //Component Riwayat Episode
+    getallEpisode: getepisodeReducer,
+    getoneEpisode: getoneEpisodeReducer,
 }); 
 
 const store = createStore(

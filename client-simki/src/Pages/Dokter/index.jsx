@@ -21,12 +21,14 @@ const Dokter = () => {
     useEffect(() => {
         if (notificationsViewed) {
             dispatch(markNotificationsSeen());
+            setHasSeenNotifications(true)
         }
     }, [notificationsViewed, dispatch]);
 
     const handleNavigation = (path) => {
         if (path === 'notifikasi-dokter') {
             dispatch(setNotificationsViewed());
+            setHasSeenNotifications(true)
         }
         navigate(path);
     };
