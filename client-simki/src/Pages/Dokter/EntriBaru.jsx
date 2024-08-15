@@ -86,7 +86,7 @@ const EntriBaru = () => {
                 type: 'success'
             });
         }
-    }, [errorForm, entry, errorOrder, dataOrder, dispatch, id]);
+    }, [errorForm, entry, errorOrder, dataOrder, id]);
 
     const handleChange = (e) => {
         setFormData({

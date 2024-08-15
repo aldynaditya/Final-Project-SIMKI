@@ -14,8 +14,6 @@ import OrderProsedur from '../Pages/Dokter/OrderProsedur';
 import OrderSurat from '../Pages/Dokter/OrderSurat';
 import HasilKuisionerPopup from '../Pages/Dokter/KuisionerPopUp';
 import DetailEpsDok from '../components/DetailEpisode';
-import SuratSakit from '../Pages/Dokter/TemplateSakit';
-import SuratRujukan from '../Pages/Dokter/TemplateRujukan';
 
 
 export function DoctorsRoute() {
@@ -35,8 +33,6 @@ export function DoctorsRoute() {
             <Route path="order-surat/:id" element={<OrderSurat />} />
             <Route path="hasilkuisioner-popup" element={<HasilKuisionerPopup />} />
             <Route path="detail-episode/:id" element={<DetailEpsDok />} />
-            <Route path="template-surat-sakit" element={<SuratSakit />} />
-            <Route path="template-surat-rujukan" element={<SuratRujukan />} />
         </Routes>
     );
 }

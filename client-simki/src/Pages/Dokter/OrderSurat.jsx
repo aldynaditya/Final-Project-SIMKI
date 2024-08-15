@@ -22,7 +22,7 @@ const OrderSurat = () => {
     const [isSuratSakitPopupVisible, setIsSuratSakitPopupVisible] = useState(false);
     const [isSuratRujukanPopupVisible, setIsSuratRujukanPopupVisible] = useState(false);
     const [alert, setAlert] = useState({ status: false, message: '', type: '' });
-
+    const [printData, setPrintData] = useState(null);
     useEffect(() => {
         dispatch(fetchorderInfo(id));
         dispatch(fetchOrderSurat(id));
@@ -96,7 +96,8 @@ const OrderSurat = () => {
         content: () => printRef.current,
     });
 
-    const CetakSurat = () => {
+    const CetakSurat = (order) => {
+        setPrintData(order);
         handlePrint();
     };
 
@@ -217,7 +218,7 @@ const OrderSurat = () => {
                                 <td>{order.status}</td>
                                 <td>
                                     <div className="hapus-order-surat" onClick={() => hapusOrderSurat(order.id)}>Hapus</div>
-                                    <div className="hapus-order-surat" onClick={() => CetakSurat(order.id)}>Cetak</div>
+                                    <div className="hapus-order-surat" onClick={() => CetakSurat(order)}>Cetak</div>
                                 </td>
                             </tr>
                         ))}
@@ -225,7 +226,7 @@ const OrderSurat = () => {
                 </table>
             </div>
             <div style={{ display: 'none' }}>
-                <FormatSurat ref={printRef} data={{ ...data, orders: orderData }} />
+                <FormatSurat ref={printRef} data={printData} />
             </div>
             <Modal
                 isOpen={alert.status}

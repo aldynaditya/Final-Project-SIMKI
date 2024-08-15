@@ -15,7 +15,7 @@ const PasienPerawat= () => {
     }, [dispatch]);
 
     const EmrPerawat = (id) => {
-        navigate(`emr-perawat/${id}`);
+        navigate(`/perawat/emr-perawat/${id}`);
     };
 
     const formatDate = (dateString) => {
@@ -36,8 +36,7 @@ const PasienPerawat= () => {
             <div className="pasien-resepsionis-container">
                 <div className="pasien-wrapper">
                     <div className="header-pasien-resepsionis">
-                        <h1 className="text_pasien_resepsionis">Pasien</h1>
-                        <SearchBar />
+                        <h1 className="text_pasien_resepsionis">Antrian</h1>
                     </div>
                     <div className="tabel_pasien_resepsionis">
                         <table>
@@ -48,7 +47,6 @@ const PasienPerawat= () => {
                                     <th>Tanggal Lahir</th>
                                     <th>Jenis Kelamin</th>
                                     <th>Aksi</th>
-                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -59,9 +57,8 @@ const PasienPerawat= () => {
                                         <td>{formatDate(emr.tanggal_lahir)}</td>
                                         <td>{emr.jenis_kelamin}</td>
                                         <td>
-                                            <button className="emr-perawat" onClick={() => EmrPerawat(emr.id)}>EMR</button>
+                                            <button className="emr-perawat" onClick={() => EmrPerawat(emr.id)}>Isi CPPT</button>
                                         </td>
-                                        <td>{emr.status}</td>
                                     </tr>
                                 ))}
                             </tbody>
