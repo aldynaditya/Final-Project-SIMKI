@@ -20,7 +20,7 @@ const {
 } = require('../../utils');
 const validTindakanValues = ['obat', 'prosedur', 'surat'];
 
-const getAllEMRPasien = async ( req ) => {
+const getQueue = async ( req ) => {
     const { role, nama } = req.user;
     const query = req.query;
 
@@ -28,12 +28,19 @@ const getAllEMRPasien = async ( req ) => {
     if (role === 'dokter') {
         whereClause = {
             '$appointment.schedule.user_klinik.nama$': nama,
+            status: 'active',
             ...query,
         };
     } else if (role === 'perawat') {
-        whereClause = { ...query };
+        whereClause = { 
+            ...query,
+            status: 'active',
+        };
     } else if (role === 'resepsionis') {
-        whereClause = { ...query };
+        whereClause = {
+            ...query,
+            status: 'active',
+        };
     } else {
         throw new UnauthorizedError('User role is not authorized to fetch EMRPasien.');
     }
@@ -335,14 +342,14 @@ const getAllMedicalRecord = async (req) => {
         const appointment = emr.appointment;
         const episode= emr.episodes[0]
         return {
-            id: emr.uuid,
-            tanggal: appointment.tanggal,
-            pemeriksa: appointment.schedule.user_klinik.nama,
-            subjective: episode.subjective,
-            objective: episode.objective,
-            assessment: episode.assessment,
-            plan: episode.plan,
-            tindakan: episode.tindakan,
+            id: emr.uuid || ' ',
+            tanggal: appointment?.tanggal || ' ',
+            pemeriksa: appointment?.schedule?.user_klinik?.nama || ' ',
+            subjective: episode?.subjective || ' ',
+            objective: episode?.objective || ' ',
+            assessment: episode?.assessment || ' ',
+            plan: episode?.plan || ' ',
+            tindakan: episode?.tindakan || ' ',
         };
     });
 
@@ -387,29 +394,29 @@ const findOneMedicalRecord = async (req) => {
     const episode = emr.episodes[0];
 
     const result = {
-        id: episode.uuid,
-        emrId: emr.uuid,
-        noEMR: emr.noEMR,
-        nama_pasien: appointment.datapasien.nama_lengkap,
-        tanggal_lahir: appointment.datapasien.tanggal_lahir,
-        jenis_kelamin: appointment.datapasien.jenis_kelamin,
-        gol_darah: appointment.datapasien.gol_darah,
-        alergi: episode.alergi,
-        tanggal: appointment.tanggal,
-        penjamin: appointment.penjamin,
-        pemeriksa: appointment.schedule.user_klinik.nama,
-        poli: appointment.schedule.poli,
-        riwayat_penyakit: episode.riwayat_penyakit,
-        subjective: episode.subjective,
-        td: episode.TD,
-        indeks: episode.indeks,
-        detak: episode.detak,
-        suhu: episode.suhu,
-        napas: episode.napas,
-        objective: episode.objective,
-        assessment: episode.assessment,
-        plan: episode.plan,
-        tindakan: episode.tindakan,
+        id: episode.uuid || ' ',
+        emrId: emr.uuid || ' ',
+        noEMR: emr.noEMR || ' ',
+        nama_pasien: appointment.datapasien.nama_lengkap || ' ',
+        tanggal_lahir: appointment.datapasien.tanggal_lahir || ' ',
+        jenis_kelamin: appointment.datapasien.jenis_kelamin || ' ',
+        gol_darah: appointment.datapasien.gol_darah || ' ',
+        alergi: episode.alergi || ' ',
+        tanggal: appointment.tanggal || ' ',
+        penjamin: appointment.penjamin || ' ',
+        pemeriksa: appointment.schedule.user_klinik.nama || ' ',
+        poli: appointment.schedule.poli || ' ',
+        riwayat_penyakit: episode.riwayat_penyakit || ' ',
+        subjective: episode.subjective || ' ',
+        td: episode.TD || ' ',
+        indeks: episode.indeks || ' ',
+        detak: episode.detak || ' ',
+        suhu: episode.suhu || ' ',
+        napas: episode.napas || ' ',
+        objective: episode.objective || ' ',
+        assessment: episode.assessment || ' ',
+        plan: episode.plan || ' ',
+        tindakan: episode.tindakan || ' ',
     };
 
     return result;
@@ -450,7 +457,6 @@ const getDataEMRbyId = async (req) => {
     }
 
     const appointment = emr.appointment;
-    const episode = emr.episodes[0];
 
     const result = {
         id: emr.uuid,
@@ -493,16 +499,44 @@ const getListALlEMRPasien = async (req) => {
                     'pasienId',
                     'status',
                     'finishedAt'
+                ],
+                include: [
+                    {
+                        model: Appointment,
+                        as: 'appointment',
+                        include: [
+                            {
+                                model: DataPasien,
+                                as: 'datapasien',
+                                attributes: ['nama_lengkap', 'tanggal_lahir', 'jenis_kelamin']
+                            }
+                        ]
+                    }
                 ]
             });
         })
     );
 
-    return emrPasienList;
+    const result = emrPasienList.map(emr => {
+        const datapasien = emr.appointment.datapasien;
+        return {
+            id: emr.uuid,
+            noEMR: emr.noEMR,
+            appointmentId: emr.appointmentId,
+            pasienId: emr.pasienId,
+            status: emr.status,
+            finishedAt: emr.finishedAt,
+            nama_pasien: datapasien.nama_lengkap,
+            tanggal_lahir: datapasien.tanggal_lahir,
+            jenis_kelamin: datapasien.jenis_kelamin
+        };
+    });
+
+    return result;
 }
 
 module.exports = {
-    getAllEMRPasien,
+    getQueue,
     getAllMedicalRecord,
     findOneMedicalRecord,
     createVitalSignbyPerawat,

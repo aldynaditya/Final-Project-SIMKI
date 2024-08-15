@@ -1,6 +1,6 @@
 const { StatusCodes } = require('http-status-codes');
 const { 
-    getAllEMRPasien,
+    getQueue,
     getAllMedicalRecord,
     createVitalSignbyPerawat,
     updateEpisode,
@@ -15,7 +15,7 @@ const {
 
 const index = async (req, res, next) => {
     try {
-        const result = await getAllEMRPasien(req);
+        const result = await getQueue(req);
 
     res.status(StatusCodes.OK).json({
         data: result,

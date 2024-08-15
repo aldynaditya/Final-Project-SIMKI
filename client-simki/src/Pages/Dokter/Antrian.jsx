@@ -1,21 +1,20 @@
 import React, { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchListEmr } from '../../redux/doctor/indexListEmr/actions';
-import SearchBar from "../../components/SearchBar"; 
+import { fetchEmr } from '../../redux/doctor/indexEmr/actions';
 import '../../Style/Dokter/AntrianDokter.css'; 
 
-const PasienDokter= () => {
+const AntrianDokter= () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { data, loading, error } = useSelector(state => state.getlistEmr);
+    const { data, loading, error } = useSelector(state => state.getEmr);
 
     useEffect(() => {
-        dispatch(fetchListEmr());
+        dispatch(fetchEmr());
     }, [dispatch]);
 
-    const EmrDokter = (id) => {
-        navigate(`/dokter/emr-pasien/${id}`);
+    const handleIsiCppt = (id) => {
+        navigate(`/dokter/input-cppt/${id}`);
     };
 
     const formatDate = (dateString) => {
@@ -36,8 +35,7 @@ const PasienDokter= () => {
             <div className="pasien-resepsionis-container">
                 <div className="pasien-wrapper">
                     <div className="header-pasien-resepsionis">
-                        <h1 className="text_pasien_resepsionis">Pasien</h1>
-                        <SearchBar />
+                        <h1 className="text_pasien_resepsionis">Antrian</h1>
                     </div>
                     <div className="tabel_pasien_resepsionis">
                         <table>
@@ -58,7 +56,7 @@ const PasienDokter= () => {
                                         <td>{formatDate(emr.tanggal_lahir)}</td>
                                         <td>{emr.jenis_kelamin}</td>
                                         <td>
-                                            <button className="emr-dokter" onClick={() => EmrDokter(emr.id)}>EMR</button>
+                                            <button className="emr-dokter" onClick={() => handleIsiCppt(emr.id)}>Isi CPPT</button>
                                             </td>
                                     </tr>
                                 ))}
@@ -71,4 +69,4 @@ const PasienDokter= () => {
     );
 };
 
-export default PasienDokter;
+export default AntrianDokter;

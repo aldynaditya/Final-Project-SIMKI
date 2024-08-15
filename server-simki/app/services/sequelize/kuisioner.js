@@ -33,11 +33,31 @@ const getResponsesByPatientId = async (req) => {
 
     const result = await Response.findAll({
         where: { emrpasienId: emr.uuid },
-        include: [{
-            model: Question,
-            as: 'question'
-        }],
+        include: [
+            {
+                model: Question,
+                as: 'question',
+            },
+            {
+                model: EMRPasien,
+                as: 'emr',
+            },
+        ],
     });
+
+    return result;
+};
+
+const getFeedbackbyId = async (req) => {
+    const { id: uuid } = req.params;
+
+    const emr = await EMRPasien.findOne({
+        where: { uuid },
+    });
+
+    if (!emr) {
+        throw new NotFoundError('respon tidak ditemukan');
+    }
 
     return result;
 };
@@ -74,5 +94,6 @@ module.exports = {
     getAllQuestions,
     createQuestion,
     getResponsesByPatientId,
+    getFeedbackbyId,
     createFeedBack
 };

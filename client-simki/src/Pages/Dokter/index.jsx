@@ -42,6 +42,10 @@ const Dokter = () => {
                         <img src={agenda} alt='jadwal_dokter' className='icon' />
                         <p>JADWAL DOKTER</p>
                     </div>
+                    <div className="pasien" onClick={() => handleNavigation('antrian-dokter')}>
+                        <img src={user} alt='pasien' className='icon' />
+                        <p>ANTRIAN</p>
+                    </div>
                     <div className="pasien" onClick={() => handleNavigation('pasien-dokter')}>
                         <img src={user} alt='pasien' className='icon' />
                         <p>PASIEN</p>
