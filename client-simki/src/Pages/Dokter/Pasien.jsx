@@ -8,6 +8,7 @@ import '../../Style/Dokter/AntrianDokter.css';
 const PasienDokter= () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { role } = useSelector((state) => state.auth);
     const { data, loading, error } = useSelector(state => state.getlistEmr);
 
     useEffect(() => {
@@ -15,7 +16,13 @@ const PasienDokter= () => {
     }, [dispatch]);
 
     const EmrDokter = (id) => {
-        navigate(`/dokter/emr-pasien/${id}`);
+        if (role === 'dokter'){
+            navigate(`/dokter/emr-pasien/${id}`);
+        } else if (role === 'perawat'){
+            navigate(`/perawat/emr-pasien/${id}`);
+        } else {
+            navigate(`/resepsionis/emr-pasien/${id}`);
+        }
     };
 
     const formatDate = (dateString) => {

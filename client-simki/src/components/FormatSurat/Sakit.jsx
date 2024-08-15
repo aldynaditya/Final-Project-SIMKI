@@ -1,9 +1,8 @@
 import React from 'react';
 import '../../Style/Dokter/TemplateSakit.css';
-import '../../Style/Dokter/TemplateRujukan.css';
 import logoklinik from '../../images/logoklinik.png';
 
-const TemplateSuratRujukan = () => {
+const TemplateSuratSakit = ({ data }) => {
   return (
     <div className="template-surat-sakit-container">
       <div className="template-surat-sakit-header">
@@ -16,40 +15,35 @@ const TemplateSuratRujukan = () => {
         </div>
       </div>
       <div className="content-surat-sakit">
-        <h3 className='judul-surat-sakit'>SURAT RUJUKAN</h3>
-        <div className='isian-rujukan-satu'>
-            <p className='kepada-yth'>Kepada Yth. :</p>
-            <p className=''>Di :</p>
-        </div>
-        <p className='kal-satu-rujukan'>Mohon pemeriksaan dan penanganan lebih lanjut pasien :</p>
+        <h3 className='judul-surat-sakit'>SURAT KETERANGAN SAKIT</h3>
+        <p className='kal-pertama-sakit'>Yang bertanda tangan di bawah ini, menarangkan bahwa:</p>
         <div className='isian-surat-sakit'>
-            <p>Nama Lengkap     :</p>
+            <p>Nama Lengkap     :{data.jenis_surat}</p>
             <div className='ttl-umur-sakit'>
                 <p className='ttl-surat-sakit'>Tanggal Lahir    :</p>
                 <p className='umur-surat-sakit'>Umur    :</p>
             </div>
             <p>Jenis Kelamin    :</p>
+            <p>Pekerjaan        :</p>
+            <p>Alamat           :</p>
+            <p>Diagnosis        :</p>
         </div>
-
-        <div className='isian-surat-rujukan'>
-            <p>Diagnosis    :</p>
-            <p>Tindakan yang</p>
-            <p>telah diberikan  :</p>
-            <p>Keterangan        :</p>
-        </div>
-        <p className='kal-dua-rujukan'>
-            Demikian rujukan ini kami sampaikan atas perhatian dan kerjasamanya kami ucapkan terima 
-            kasih banyak.
+        <p className='kal-kedua-sakit'>
+          Berdasarkan hasil pemeriksaan yang telah dilakukan, pasien perlu diberikan ISTIRAHAT
+          selama <input type="number" /> hari terhitung dari mulai tanggal
+          <input type="date" /> s.d. <input type="date" />
+        </p>
+        <p className='kal-ketiga-sakit'>
+          Demikan surat keterangan ini dibuat untuk dapat dipergunakan sebagai mestinya.
         </p>
       </div>
-      <div className="footer-surat-rujukan">
-        <p>Hormat kami</p>
+      <div className="footer-surat-sakit">
         <p>Semarang, <input type="date" /></p>
         <p>Dokter penanggung jawab</p>
-        <p className='ttd-dokter-rujukan'>(Nama Dokter)</p>
+        <p className='ttd-dokter'>(Nama Dokter)</p>
       </div>
     </div>
   );
 };
 
-export default TemplateSuratRujukan;
+export default TemplateSuratSakit;

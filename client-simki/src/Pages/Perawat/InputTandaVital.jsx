@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchdetailEmr } from '../../redux/doctor/detailEmr/actions';
 import { createVital } from '../../redux/nurse/vital/actions';
+import { fetchVitalsign } from '../../redux/doctor/vitalSign/actions';
 import Modal from 'react-modal';
 import RiwayatEpisode from '../../components/RiwayatEps';
 import '../../Style/Perawat/EmrPerawat.css';
@@ -12,7 +13,8 @@ const EmrPerawat = () => {
     const dispatch = useDispatch();
     const { data, loading, error } = useSelector(state => state.getdetailEmr);
     const { error: errorForm, vital } = useSelector(state => state.createVital);
-
+    const { data: datavs, loading: loadingvs, error: errorvs } = useSelector(state => state.getVital);
+    
     const [formData, setFormData] = useState({
         alergi: '',
         TD: '',
@@ -21,12 +23,26 @@ const EmrPerawat = () => {
         suhu: '',
         napas: '',
     });
-
+    
     const [alert, setAlert] = useState({ status: false, message: '', type: '' });
-
+    
     useEffect(() => {
         dispatch(fetchdetailEmr(id));
+        dispatch(fetchVitalsign(id));
     }, [dispatch, id]);
+
+    useEffect(() => {
+        if (datavs) {
+            setFormData({
+                alergi: datavs.alergi || '',
+                TD: datavs.td || '',
+                indeks: datavs.indeks || '',
+                detak: datavs.detak || '',
+                suhu: datavs.suhu || '',
+                napas: datavs.napas || '',
+            });
+        }
+    }, [datavs]);
 
     useEffect(() => {
         if (errorForm) {
