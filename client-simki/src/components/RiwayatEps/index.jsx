@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { fetchAllEpisode } from '../../redux/doctor/indexDetailEpisode/actions';
 import { formatDateSlash } from '../../utils/dateUtils';
 import '../../Style/components/RiwayatEps.css';
@@ -15,7 +14,6 @@ const RiwayatEpisode = ({ noEMR }) => {
         }
     }, [dispatch, noEMR]);
 
-    const navigate = useNavigate();
     const { role } = useSelector((state) => state.auth);
 
     const LihatDetailEps = (id) => {
@@ -27,7 +25,7 @@ const RiwayatEpisode = ({ noEMR }) => {
         } else if (role === 'perawat') {
             path = `/perawat/detail-episode/${id}`;
         }
-        navigate(path);
+        window.open(path, '_blank');
     };
 
     if (loadingEpisode) return <div>Loading...</div>;

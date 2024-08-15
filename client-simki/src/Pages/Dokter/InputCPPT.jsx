@@ -38,7 +38,7 @@ const InputCPPT = () => {
 
     return (
         <div className='emr-resepsionis-container'>
-            <h1 className='text-emr-resepsionis'>EMR Pasien</h1>
+            <h1 className='text-emr-resepsionis'>CPPT</h1>
             <div className='kolom-emr-resepsionis'>
                 <div className='no-emr-rsp'>
                     <span className='text-nemr-rsp'>No. EMR :</span>

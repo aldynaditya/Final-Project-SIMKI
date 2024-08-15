@@ -73,6 +73,8 @@ import getepisodeReducer from './doctor/indexDetailEpisode/reducer';
 import getoneEpisodeReducer from './doctor/DetailEpisodeById/reducer';
 import createfeedbackReducer from './doctor/createFeedback/reducer';
 import getlistemrReducer from './doctor/indexListEmr/reducer';
+import getresponsebyIdReducer from './doctor/indexResponse/reducer';
+import getfeedbackReducer from './doctor/indexFeedback/reducer';
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -125,6 +127,8 @@ const rootReducers = combineReducers({
     getVital: getvitalsignReducer,
     createNewEntry: createnewentryReducer,
     createFeedback: createfeedbackReducer,
+    getResponse: getresponsebyIdReducer,
+    getFeedback: getfeedbackReducer,
     //Page Transaksi
     transaction: transactionReducer,
     factur: facturReducer,
