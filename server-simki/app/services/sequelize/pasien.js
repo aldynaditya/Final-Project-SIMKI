@@ -486,6 +486,7 @@ const getDetailVisitHistory = async (req) =>  {
 
     const result = {
         emrId: history.emrpasien.uuid,
+        feed_back: history.emrpasien.feed_back,
         tanggal: historyDetail.tanggal,
         dokter: historyDetail.schedule.user_klinik.nama,
         poli: historyDetail.schedule.poli,

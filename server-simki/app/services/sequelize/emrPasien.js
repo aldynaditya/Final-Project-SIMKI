@@ -1,3 +1,4 @@
+const { Op, Sequelize } = require('sequelize');
 const EMRPasien = require('../../api/v1/emrPasien/model');
 const Appointment = require('../../api/v1/appointment/model');
 const DataPasien = require('../../api/v1/dataPasien/model');
@@ -467,6 +468,39 @@ const getDataEMRbyId = async (req) => {
     return result;
 };
 
+const getListALlEMRPasien = async (req) => {
+    const distinctNoEMRList = await EMRPasien.findAll({
+        attributes: [
+            [Sequelize.fn('DISTINCT', Sequelize.col('noEMR')), 'noEMR']
+        ]
+    });
+
+    const noEMRValues = distinctNoEMRList.map(item => item.noEMR);
+
+    const emrPasienList = await Promise.all(
+        noEMRValues.map(async (noEMR) => {
+            return await EMRPasien.findOne({
+                where: {
+                    noEMR
+                },
+                order: [
+                    ['createdAt', 'DESC']
+                ],
+                attributes: [
+                    'uuid',
+                    'noEMR',
+                    'appointmentId',
+                    'pasienId',
+                    'status',
+                    'finishedAt'
+                ]
+            });
+        })
+    );
+
+    return emrPasienList;
+}
+
 module.exports = {
     getAllEMRPasien,
     getAllMedicalRecord,
@@ -477,5 +511,6 @@ module.exports = {
     createEpisode,
     updateAction,
     finishOrder,
-    getDataEMRbyId
+    getDataEMRbyId,
+    getListALlEMRPasien
 };

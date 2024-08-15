@@ -9,7 +9,8 @@ const {
     finishOrder,
     findOneMedicalRecord,
     getDataEMRbyId,
-    getVitalSignbyDoctor
+    getVitalSignbyDoctor,
+    getListALlEMRPasien
 } = require('../../../services/sequelize/emrPasien');
 
 const index = async (req, res, next) => {
@@ -132,6 +133,18 @@ const findOneEMRforPatient = async (req, res, next) => {
     }
 };
 
+const indexListAllEMR = async (req, res, next) => {
+    try {
+        const result = await getListALlEMRPasien(req);
+
+    res.status(StatusCodes.OK).json({
+        data: result,
+    });
+    } catch (err) {
+        next(err);
+    }
+};
+
 
 module.exports = {
     index,
@@ -143,5 +156,6 @@ module.exports = {
     followupepisode,
     episode,
     action,
-    order
+    order,
+    indexListAllEMR
 }
