@@ -2,7 +2,8 @@ const { StatusCodes } = require('http-status-codes');
 const { 
     getAllQuestions,
     createQuestion,
-    getResponsesByPatientId
+    getResponsesByPatientId,
+    createFeedBack
 } = require('../../../services/sequelize/kuisioner');
 
 const index = async (req, res, next) => {
@@ -41,8 +42,21 @@ const indexRes = async (req, res, next) => {
     }
 };
 
+const createFb = async (req, res, next) => {
+    try {
+        const result = await createFeedBack(req);
+
+    res.status(StatusCodes.OK).json({
+        data: result,
+    })
+    } catch (err) {
+        next(err);
+    }
+}
+
 module.exports = {
     index,
     create,
-    indexRes
+    indexRes,
+    createFb,
 };

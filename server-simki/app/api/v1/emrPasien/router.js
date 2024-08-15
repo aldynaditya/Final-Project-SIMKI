@@ -11,6 +11,7 @@ const {
     findformedicalrecord,
     findOneEMRforPatient,
     findOnevitalsign,
+    indexListAllEMR
 } = require('./controller');
 const { 
     authenticateUser, 
@@ -27,6 +28,7 @@ router.patch('/emr/:id/update-action', authenticateUser, authorizeRoles('dokter'
 router.post('/emr/:id/finish-order', authenticateUser, authorizeRoles('dokter'), order);
 router.get('/medical-records/:id', authenticateUser, authorizeRoles('dokter'), indexformedicalrecord);
 router.get('/medical-record/:id', authenticateUser, authorizeRoles('dokter'), findformedicalrecord);
+router.get('/list-emr', authenticateUser, authorizeRoles('dokter', 'perawat', 'resepsionis'), indexListAllEMR);
 
 
 module.exports = router;

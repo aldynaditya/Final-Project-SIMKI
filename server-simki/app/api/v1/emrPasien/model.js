@@ -42,6 +42,10 @@ const EMRPasien = db.define('emrPasien', {
     finishedAt: {
         type: DataTypes.DATE,
         allowNull: true,
+    },
+    feed_back: {
+        type: DataTypes.TEXT,
+        allownull: true,
     }
 }, {
     tableName: 'emrPasien',
