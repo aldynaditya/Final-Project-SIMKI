@@ -3,19 +3,28 @@ import { useDispatch, useSelector } from 'react-redux';
 import { saveFactur } from '../../redux/kasir/create/actions'; 
 import '../../Style/Kasir/DetailFaktur.css';
 
-
 const DetailFaktur = ({ onClose }) => {
     const dispatch = useDispatch();
     const { loading, error, data } = useSelector(state => state.factur);
 
     const [metodePembayaran, setMetodePembayaran] = useState('');
+    const [diskon, setDiskon] = useState('');
+    const [keterangan, setKeterangan] = useState('');
 
     const handleMetodePembayaran = (event) => {
         setMetodePembayaran(event.target.value);
     };
 
+    const handleDiskonChange = (event) => {
+        setDiskon(event.target.value);
+    };
+
+    const handleKeteranganChange = (event) => {
+        setKeterangan(event.target.value);
+    };
+
     const SimpanFaktur = () => {
-        dispatch(saveFactur({ metodePembayaran }));
+        dispatch(saveFactur({ metodePembayaran, diskon, keterangan }));
     };
 
     useEffect(() => {
@@ -43,15 +52,31 @@ const DetailFaktur = ({ onClose }) => {
                     </div>
                     <div className='diskon-faktur'>
                         <span className='text-diskon-faktur'>Diskon:</span>
-                        <input type='text' className='kolom-diskon-faktur' />
+                        <input
+                            type='text'
+                            className='kolom-diskon-faktur'
+                            value={diskon}
+                            onChange={handleDiskonChange}
+                        />
                     </div>
                     <div className='keterangan-faktur'>
                         <span className='text-keterangan-faktur'>Keterangan:</span>
-                        <input type='text' className='kolom-keterangan-faktur' />
+                        <input
+                            type='text'
+                            className='kolom-keterangan-faktur'
+                            value={keterangan}
+                            onChange={handleKeteranganChange}
+                        />
                     </div>
                 </div>
                 <div className='simpan-faktur-container'>
-                    <button className="simpan-faktur" onClick={SimpanFaktur} disabled={loading}>Simpan</button>
+                    <button
+                        className="simpan-faktur"
+                        onClick={SimpanFaktur}
+                        disabled={loading}
+                    >
+                        {loading ? 'Menyimpan...' : 'Simpan'}
+                    </button>
                 </div>
             </div>
         </div>
