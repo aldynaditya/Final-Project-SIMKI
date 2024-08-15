@@ -85,8 +85,6 @@ const EntriBaru = () => {
                 message: 'Order Berhasil Dibuat',
                 type: 'success'
             });
-            // dispatch(fetchdetailEmr(id));
-            dispatch(fetchVitalsign(id));
         }
     }, [errorForm, entry, errorOrder, dataOrder, dispatch, id]);
 
@@ -154,7 +152,7 @@ const EntriBaru = () => {
 
     return (
         <div className='emr-resepsionis-container'>
-            <h1 className='text-emr-resepsionis'>EMR Pasien</h1>
+            <h1 className='text-emr-resepsionis'>CPPT</h1>
             <div className='kolom-emr-resepsionis'>
                 <div className='no-emr-rsp'>
                     <span className='text-nemr-rsp'>No. EMR :</span>
@@ -272,7 +270,10 @@ const EntriBaru = () => {
             >
                 <div className="modal-content">
                     <p>{alert.message}</p>
-                    <button onClick={() => setAlert({ status: false, message: '', type: '' })}>Close</button>
+                    <button  onClick={() => {
+                        setAlert({ status: false, message: '', type: '' });
+                        window.location.reload();
+                    }}>Close</button>
                 </div>
             </Modal>
         </div>

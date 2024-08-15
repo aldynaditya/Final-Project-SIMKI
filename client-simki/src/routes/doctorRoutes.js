@@ -12,7 +12,7 @@ import EntriBaru from '../Pages/Dokter/EntriBaru';
 import OrderObat from '../Pages/Dokter/OrderObat';
 import OrderProsedur from '../Pages/Dokter/OrderProsedur';
 import OrderSurat from '../Pages/Dokter/OrderSurat';
-import HasilKuisionerPopup from '../Pages/Dokter/HasilKuisionerPopup';
+import HasilKuisionerPopup from '../Pages/Dokter/KuisionerPopUp';
 import DetailEpsDok from '../components/DetailEpisode';
 import SuratSakit from '../Pages/Dokter/TemplateSakit';
 import SuratRujukan from '../Pages/Dokter/TemplateRujukan';

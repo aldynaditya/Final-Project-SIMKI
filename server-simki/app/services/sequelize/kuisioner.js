@@ -31,7 +31,7 @@ const getResponsesByPatientId = async (req) => {
         throw new NotFoundError('respon tidak ditemukan');
     }
 
-    const result = await Response.findAll({
+    const response = await Response.findAll({
         where: { emrpasienId: emr.uuid },
         include: [
             {
@@ -45,17 +45,26 @@ const getResponsesByPatientId = async (req) => {
         ],
     });
 
+    const result = response.map(response => {
+        return {
+            id: response.id,
+            question: response.question.text,
+            answer: response.answer,
+        };
+    });
+
     return result;
 };
 
 const getFeedbackbyId = async (req) => {
     const { id: uuid } = req.params;
 
-    const emr = await EMRPasien.findOne({
+    const result = await EMRPasien.findOne({
         where: { uuid },
+        attributes: ['feed_back']
     });
 
-    if (!emr) {
+    if (!result) {
         throw new NotFoundError('respon tidak ditemukan');
     }
 

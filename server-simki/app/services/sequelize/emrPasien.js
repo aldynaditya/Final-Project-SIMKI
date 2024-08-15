@@ -308,7 +308,10 @@ const getAllMedicalRecord = async (req) => {
     const { id: noEMR } = req.params;
 
     const emr = await EMRPasien.findAll({
-        where: { noEMR },
+        where: { 
+            noEMR,
+            status: 'finished'
+        },
         include: [
             {
                 model: Appointment,
@@ -343,13 +346,13 @@ const getAllMedicalRecord = async (req) => {
         const episode= emr.episodes[0]
         return {
             id: emr.uuid || ' ',
-            tanggal: appointment?.tanggal || ' ',
-            pemeriksa: appointment?.schedule?.user_klinik?.nama || ' ',
-            subjective: episode?.subjective || ' ',
-            objective: episode?.objective || ' ',
-            assessment: episode?.assessment || ' ',
-            plan: episode?.plan || ' ',
-            tindakan: episode?.tindakan || ' ',
+            tanggal: appointment.tanggal || ' ',
+            pemeriksa: appointment.schedule.user_klinik.nama || ' ',
+            subjective: episode.subjective || ' ',
+            objective: episode.objective || ' ',
+            assessment: episode.assessment || ' ',
+            plan: episode.plan || ' ',
+            tindakan: episode.tindakan || ' ',
         };
     });
 

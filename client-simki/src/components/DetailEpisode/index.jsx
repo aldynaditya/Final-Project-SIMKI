@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { fetchEpisodeById } from '../../redux/doctor/DetailEpisodeById/actions';
 import RiwayatEpisode from '../RiwayatEps/index';
 import CetakSuratPopup from '../../Pages/Resepsionis/CetakSuratPopup';
-import HasilKuisionerPopup from '../../Pages/Dokter/HasilKuisionerPopup'; 
+import HasilKuisionerPopup from '../../Pages/Dokter/KuisionerPopUp'; 
 import { formatDateStrip } from '../../utils/dateUtils';
 import '../../Style/Resepsionis/EmrResepsionis.css';
 import '../../Style/components/DetailEpisode.css';
@@ -34,6 +34,14 @@ const DetailEpisode = () => {
     };
 
     const closeHasilKuisionerPopup = () => {
+        setShowHasilKuisionerPopup(false);
+    };
+
+    const handleCetakSuratComplete = () => {
+        setShowHasilKuisionerPopup(false);
+    };
+
+    const handleHasilKuisionerComplete = () => {
         setShowHasilKuisionerPopup(false);
     };
 
@@ -148,8 +156,20 @@ const DetailEpisode = () => {
                     <button className="hasil-kuisioner" onClick={HasilKuisioner}>Hasil Kuisioner</button>
                 )}
             </div>
-            {showCetakSuratPopup && <CetakSuratPopup onClose={closeCetakSuratPopup} />}
-            {showHasilKuisionerPopup && <HasilKuisionerPopup onClose={closeHasilKuisionerPopup} />}
+            {showCetakSuratPopup &&
+                <CetakSuratPopup
+                id={id} 
+                onClose={closeCetakSuratPopup}
+                onComplete={handleCetakSuratComplete} 
+                />
+            }
+            {showHasilKuisionerPopup &&
+                <HasilKuisionerPopup
+                id={id} 
+                onClose={closeHasilKuisionerPopup} 
+                onComplete={handleHasilKuisionerComplete} 
+                />
+            }
         </div>
     );
 };

@@ -3,6 +3,7 @@ const {
     getAllQuestions,
     createQuestion,
     getResponsesByPatientId,
+    getFeedbackbyId,
     createFeedBack
 } = require('../../../services/sequelize/kuisioner');
 
@@ -42,6 +43,18 @@ const indexRes = async (req, res, next) => {
     }
 };
 
+const indexfb = async (req, res, next) => {
+    try {
+        const result = await getFeedbackbyId(req);
+
+    res.status(StatusCodes.OK).json({
+        data: result,
+    });
+    } catch (err) {
+        next(err);
+    }
+};
+
 const createFb = async (req, res, next) => {
     try {
         const result = await createFeedBack(req);
@@ -58,5 +71,6 @@ module.exports = {
     index,
     create,
     indexRes,
+    indexfb,
     createFb,
 };
