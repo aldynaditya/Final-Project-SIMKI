@@ -5,6 +5,7 @@ const {
     create,
     indexRes,
     createFb,
+    indexFb,
 } = require("./controller");
 const {
     authenticateUser,

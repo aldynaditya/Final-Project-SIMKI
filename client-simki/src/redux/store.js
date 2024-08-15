@@ -71,6 +71,8 @@ import deleteordersuratReducer from './doctor/indexDeleteLetter/reducer';
 import getnotifikasiReducer from './doctor/indexNotification/reducer';
 import getepisodeReducer from './doctor/indexDetailEpisode/reducer';
 import getoneEpisodeReducer from './doctor/DetailEpisodeById/reducer';
+import createfeedbackReducer from './doctor/createFeedback/reducer';
+import getlistemrReducer from './doctor/indexListEmr/reducer';
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -116,12 +118,14 @@ const rootReducers = combineReducers({
     antrian: antrianReducer,
     identitas: identitasReducer,
     //Page EMR
+    getlistEmr: getlistemrReducer,
     getEmr: getemrReducer,
     getdetailEmr: getdetailemrReducer,
     createVital: createvitalReducer,
     getVital: getvitalsignReducer,
     createNewEntry: createnewentryReducer,
-//Page Transaksi
+    createFeedback: createfeedbackReducer,
+    //Page Transaksi
     transaction: transactionReducer,
     factur: facturReducer,
     transaksi: transaksiReducer,

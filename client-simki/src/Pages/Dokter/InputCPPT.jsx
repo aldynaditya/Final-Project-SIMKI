@@ -3,16 +3,27 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { fetchdetailEmr } from '../../redux/doctor/detailEmr/actions';
 import RiwayatEpisode from '../../components/RiwayatEps';
+import tambah from "../../images/tambah.png";
+import masuk from "../../images/inbox.png";
 import '../../Style/Dokter/InputCPPT.css';
 
-const Emr = () => {
+const InputCPPT = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { data, loading, error } = useSelector(state => state.getdetailEmr);
 
     useEffect(() => {
         dispatch(fetchdetailEmr(id));
     }, [dispatch, id]);
+
+    const EntriMasuk = () => {
+        navigate(`/dokter/entri-masuk/${id}`);
+    };
+
+    const EntriBaru = () => {
+        navigate(`/dokter/entri-baru/${id}`);
+    };
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -56,9 +67,19 @@ const Emr = () => {
                     <input type='text' className='kolom-alergi-rsp' name="alergi" value={data.alergi} readOnly></input>
                 </div>
             </div>
+            <div className='button-emr-dokter'>
+                <div className="entri_masuk" onClick={EntriMasuk}>
+                    <img src={masuk} alt='entri-masuk' className='icon-emr-dokter' />
+                    <p>ENTRI MASUK</p>
+                </div>
+                <div className="entri-baru" onClick={EntriBaru}>
+                    <img src={tambah} alt='entri-baru' className='icon-emr-dokter' />
+                    <p>ENTRI BARU</p>
+                </div>
+            </div>
             <RiwayatEpisode noEMR={data.noEMR} />
         </div>
     );
 };
 
-export default Emr;
+export default InputCPPT;

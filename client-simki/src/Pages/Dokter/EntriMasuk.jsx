@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { fetchdetailEmr } from '../../redux/doctor/detailEmr/actions';
 import { fetchVitalsign } from '../../redux/doctor/vitalSign/actions';
 import RiwayatEpisode from '../../components/RiwayatEps';
-import IsiCPPT from './IsiCppt';
+import PopUpCPPT from './PopUpCPPT';
 import '../../Style/Dokter/EntriMasuk.css';
 
 const EntriMasuk = () => {
@@ -128,7 +128,7 @@ const EntriMasuk = () => {
                 </button>
             </div>
             {isPopupVisible &&
-                <IsiCPPT 
+                <PopUpCPPT 
                     id={id}
                     episodeId={data.episodeId} 
                     onClose={handleCloseCPPT} 

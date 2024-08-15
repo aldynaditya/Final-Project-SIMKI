@@ -5,9 +5,9 @@ import { createCPPTEntry } from '../../redux/doctor/cpptEntry/actions';
 import { fetchVitalsign } from '../../redux/doctor/vitalSign/actions';
 import { updateActionEntry } from '../../redux/doctor/action/actions';
 import { createOrder } from '../../redux/doctor/finishOrder/actions';
-import '../../Style/Dokter/IsiCppt.css';
+import '../../Style/Dokter/PopUpCPPT.css';
 
-const IsiCppt = ({ onClose }) => {
+const PopUpCPPT = ({ onClose }) => {
     const dispatch = useDispatch();
     const { cppt, loading, error } = useSelector(state => state.createCpptEntry);
     const { data: act, loading: erroract } = useSelector(state => state.updateAction);
@@ -189,4 +189,4 @@ const IsiCppt = ({ onClose }) => {
     );
 };
 
-export default IsiCppt;
+export default PopUpCPPT;
