@@ -4,7 +4,8 @@ const {
     createDataPasien,
     getOneDataPasien,
     updateDataPasien,
-    deleteDataPasien 
+    deleteDataPasien, 
+    getDataPasienbyId
 } = require('../../../services/sequelize/dataPasien');
 
 const index = async (req, res, next) => {
@@ -20,6 +21,18 @@ const index = async (req, res, next) => {
 };
 
 const find = async (req, res, next) => {
+    try {
+        const result = await getDataPasienbyId(req);
+        
+        res.status(StatusCodes.OK).json({
+            data: result,
+        });
+    } catch (err) {
+        next(err);
+    }
+};
+
+const search= async (req, res, next) => {
     try {
         const result = await getOneDataPasien(req);
         
@@ -70,6 +83,7 @@ const destroy = async (req, res, next) => {
 module.exports = {
     index,
     find,
+    search,
     update,
     destroy,
     create,

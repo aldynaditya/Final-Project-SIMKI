@@ -7,16 +7,15 @@ import {
 const initialState = {
     loading: false,
     error: null,
-    success: false,
     data: null,
 };
 
-const createPendaftarReducer = (state = initialState, action) => {
+const createpasienReducer = (state = initialState, action) => {
     switch (action.type) {
         case CREATE_PENDAFTAR_REQUEST:
-            return { ...state, loading: true, error: null, success: false };
+            return { ...state, loading: true, error: null};
         case CREATE_PENDAFTAR_SUCCESS:
-            return { ...state, loading: false, success: true, data: action.payload };
+            return { ...state, loading: false, data: action.payload, error: null, };
         case CREATE_PENDAFTAR_FAILURE:
             return { ...state, loading: false, error: action.payload };
         default:
@@ -24,4 +23,4 @@ const createPendaftarReducer = (state = initialState, action) => {
     }
 };
 
-export default createPendaftarReducer;
+export default createpasienReducer;

@@ -3,21 +3,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import '../../Style/Resepsionis/PendaftarBaru.css';
 import PendaftarPopup from './PendaftarPopup';
+import BuatJanjiPopup from './BuatJanjiPopup';
 import SearchBar from "../../components/SearchBar";
-import { fetchPasien } from '../../redux/resepsionis/updatependaftar/actions';
-import { deletePendaftar } from '../../redux/resepsionis/deletependaftar/actions';
+import { fetchPasien } from '../../redux/resepsionis/indexPatient/actions';
+import { deletePasien } from '../../redux/resepsionis/deletePatient/actions';
 
 const PendaftarBaru = () => {
     const dispatch = useDispatch();
-    const { data: rows, loading } = useSelector(state => state.pasien);
-    const { loading: deleteLoading, error: deleteError } = useSelector(state => state.deletePendaftar);
+    const { data, loading, error } = useSelector(state => state.getPatient);
+    const { loading: deleteLoading, error: deleteError } = useSelector(state => state.deletePatient);
 
-    const [isPopupVisible, setIsPopupVisible] = useState(false);
-    const [alert, setAlert] = useState({
-        status: false,
-        message: '',
-        type: '',
-    });
+    const [isTambahPendaftarPopupVisible, setIsTambahPendaftarPopupVisible] = useState(false);
+    const [isBuatJanjiPopupVisible, setIsBuatJanjiPopupVisible] = useState(false);
+    const [alert, setAlert] = useState({status: false,  message: '', type: '' });
 
     useEffect(() => {
         dispatch(fetchPasien());
@@ -30,20 +28,32 @@ const PendaftarBaru = () => {
     }, [deleteLoading, deleteError, dispatch]);
 
     const handleTambahPendaftar = () => {
-        setIsPopupVisible(true);
+        setIsTambahPendaftarPopupVisible(true);
     };
 
-    const handleClosePopup = () => {
-        setIsPopupVisible(false);
-    };
-
-    const handleSuccess = () => {
+    const handleTambahPendaftarClose = () => {
+        setIsTambahPendaftarPopupVisible(false);
         dispatch(fetchPasien());
+    };
+    const handleBuatJanji = () => {
+        setIsBuatJanjiPopupVisible(true);
+    };
+
+    const handleBuatJanjiClose = () => {
+        setIsBuatJanjiPopupVisible(false);
+    };
+
+    const handleTambahPendaftarSuccess = () => {
+        dispatch(fetchPasien());
+    };
+
+    const handleBuatJanjiSuccess = () => {
+
     };
 
     const hapusPendaftar = async (id) => {
         try {
-            await dispatch(deletePendaftar(id));
+            await dispatch(deletePasien(id));
             if (deleteError) {
                 setAlert({
                     status: true,
@@ -87,7 +97,7 @@ const PendaftarBaru = () => {
             <div className="pendaftar-baru-container">
                 <div className="content-wrapper">
                     <div className="header-pendaftar-baru">
-                        <h1 className="text_pendaftar">Pendaftar Baru</h1>
+                        <h1 className="text_pendaftar">Identitas Pasien</h1>
                         <div className="header-pendaftar-action">
                             <button className='tambah_pendaftar' onClick={handleTambahPendaftar} >Tambah</button>
                             <SearchBar />
@@ -106,8 +116,8 @@ const PendaftarBaru = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {rows.map((row, index) => (
-                                    <tr key={index}>
+                                {data.map((row) => (
+                                    <tr key={row.id}>
                                         <td>{row.nama_lengkap}</td>
                                         <td>{row.nik}</td>
                                         <td>{formatDate(row.tanggal_lahir)}</td>
@@ -117,6 +127,9 @@ const PendaftarBaru = () => {
                                             <div className="hapus-pendaftar" onClick={() => hapusPendaftar(row.uuid)}>
                                                 Hapus
                                             </div>
+                                            <div className="hapus-pendaftar" onClick={() => handleBuatJanji(row.uuid)}>
+                                                Buat Janji
+                                            </div>
                                         </td>
                                     </tr>
                                 ))}
@@ -125,8 +138,18 @@ const PendaftarBaru = () => {
                     </div>
                 </div>
             </div>
-            {isPopupVisible && <PendaftarPopup onClose={handleClosePopup} onSuccess={handleSuccess}/>}
-
+            {isTambahPendaftarPopupVisible &&
+                <PendaftarPopup
+                    onClose={handleTambahPendaftarClose} 
+                    onSuccess={handleTambahPendaftarSuccess} 
+                />
+            }
+            {isBuatJanjiPopupVisible &&
+                <BuatJanjiPopup
+                    onClose={handleBuatJanjiClose} 
+                    onSuccess={handleBuatJanjiSuccess} 
+                />
+            }
             <Modal
                 isOpen={alert.status}
                 onRequestClose={closeModal}

@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 
 import Resepsionis from '../Pages/Resepsionis/Resepsionis';
-import PendaftarBaru from '../Pages/Resepsionis/PendaftarBaru';
+import PendaftarBaru from '../Pages/Resepsionis/DataPasien';
 import Antrian from '../Pages/Resepsionis/Antrian';
 import BuatJanjiPopup from '../Pages/Resepsionis/BuatJanjiPopup';
 import IdentitasPasien from '../Pages/Resepsionis/IdentitasPasien';

@@ -22,23 +22,22 @@ import scheduleReducer from './patient/schedule/reducer';
 import resendOtpReducer from './patient/resend/reducer';
 import questionReducer from './patient/question/reducer';
 import responseReducer from './patient/response/reducer';
-import createPendaftarReducer from './resepsionis/creatependaftar/reducer';
-import pasienReducer from './resepsionis/updatependaftar/reducer';
+import createpasienReducer from './resepsionis/createPatient/reducer';
 import getobatReducer from "./pharmacy/index/reducer";
 import createobatReducer from "./pharmacy/create/reducer";
 import deleteobatReducer from './pharmacy/delete/reducer';
 import editobatReducer from "./pharmacy/edit/reducer";
-import { deletePendaftarReducer } from './resepsionis/deletependaftar/reducer';
+import deletepasienReducer from './resepsionis/deletePatient/reducer';
 import orderobatReducer from "./pharmacy/order/reducer";
 import statusorderobatReducer from "./pharmacy/update/reducer";
 import getitemReducer from "./nurse/index/reducer";
 import createitemReducer from "./nurse/create/reducer";
 import deleteitemReducer from './nurse/delete/reducer';
 import edititemReducer from "./nurse/edit/reducer";
-import schedulePReducer from './resepsionis/jadwal/reducer';
-import buatJanjiReducer from './resepsionis/buatjanji/reducer';
-import antrianReducer from './resepsionis/antrian/reducer';
-import identitasReducer from './resepsionis/identitas/reducer';
+import schedulePReducer from './resepsionis/schedule/reducer';
+import createappointmentReducer from './resepsionis/createAppointment/reducer';
+import antrianReducer from './resepsionis/queue/reducer';
+import getpatientReducer from './resepsionis/indexPatient/reducer';
 import getemrReducer from './doctor/indexEmr/reducer';
 import getdetailemrReducer from './doctor/detailEmr/reducer';
 import createvitalReducer from './nurse/vital/reducer';
@@ -75,6 +74,8 @@ import createfeedbackReducer from './doctor/createFeedback/reducer';
 import getlistemrReducer from './doctor/indexListEmr/reducer';
 import getresponsebyIdReducer from './doctor/indexResponse/reducer';
 import getfeedbackReducer from './doctor/indexFeedback/reducer';
+import getonepatientReducer from './resepsionis/indexPatientbyId/reducer';
+
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -98,9 +99,13 @@ const rootReducers = combineReducers({
     questions: questionReducer,
     responses: responseReducer,
     //Page Pendaftar Baru
-    createPendaftar: createPendaftarReducer,
-    pasien: pasienReducer,
-    deletePendaftar: deletePendaftarReducer,
+    createPatient: createpasienReducer,
+    deletePatient: deletepasienReducer,
+    getPatient: getpatientReducer,
+    createAppointmentbyRSP: createappointmentReducer,
+    //Page buat janji
+    antrian: antrianReducer,
+    getonePatient: getonepatientReducer,
     //Page Kelola Obat & Order Masuk
     getObat: getobatReducer,
     createObat: createobatReducer,
@@ -115,10 +120,6 @@ const rootReducers = combineReducers({
     editItem: edititemReducer,
     //Jadwal for Page Dokter, Resepsionis, & Perawat
     getScheduleP: schedulePReducer,
-    //Page buat janji
-    buatJanji: buatJanjiReducer,
-    antrian: antrianReducer,
-    identitas: identitasReducer,
     //Page EMR
     getlistEmr: getlistemrReducer,
     getEmr: getemrReducer,

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createAppointment } from '../../redux/resepsionis/buatjanji/actions';
+import { createAppointment } from '../../redux/resepsionis/createAppointment/actions';
 import '../../Style/Resepsionis/BuatJanjiPopup.css';
 
 const BuatJanjiPopup = ({ onClose }) => {
-    const [nik, setNik] = useState('');
     const [poli, setPoli] = useState('');
     const [dokter, setDokter] = useState('');
     const [tanggal, setTanggal] = useState('');
@@ -12,16 +11,13 @@ const BuatJanjiPopup = ({ onClose }) => {
     const [penjamin, setPenjamin] = useState('Umum');
 
     const dispatch = useDispatch();
-    const { loading, error } = useSelector(state => state.buatJanji);
+    const { loading, error } = useSelector(state => state.createAppointmentbyRSP);
 
     const dokterOptions = {
         Umum: ['dr. Akhmad Ismail', 'dr. Neni Susilaningsih', 'dr. Farmaditya Eka Putra', 'dr. Dea Amarilisa Adespin', 'dr. Budi Laksono', 'dr. Nur Asri', 'dr. Della Rimawati', 'dr. Citra Hutami Saraswati', 'dr. Amalian Puswitasari'],
         Gigi: ['drg. Tyas Prihatiningsih', 'drg. Ahmad Fahmi Fahrobi', 'drg. Eghia Laditra Ambarani']
     };
 
-    const handleNikChange = (e) => {
-        setNik(e.target.value);
-    };
 
     const handleSimpan = () => {
         if (onClose) {
@@ -32,7 +28,6 @@ const BuatJanjiPopup = ({ onClose }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const appointmentData = {
-            nik,
             poli,
             dokter,
             tanggal,
@@ -58,8 +53,7 @@ const BuatJanjiPopup = ({ onClose }) => {
                         NIK:
                         <input
                             type="varchar"
-                            value={nik}
-                            onChange={handleNikChange}
+                            value=''
                             maxLength="16"
                         />
                     </label>

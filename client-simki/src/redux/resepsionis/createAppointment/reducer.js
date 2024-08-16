@@ -10,7 +10,7 @@ const initialState = {
     data: null,
 };
 
-const buatJanjiReducer = (state = initialState, action) => {
+const createappointmentReducer = (state = initialState, action) => {
     switch (action.type) {
         case CREATE_APPOINTMENT_REQUEST:
             return {
@@ -23,6 +23,7 @@ const buatJanjiReducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 data: action.payload,
+                error: null,
             };
         case CREATE_APPOINTMENT_FAILURE:
             return {
@@ -35,4 +36,4 @@ const buatJanjiReducer = (state = initialState, action) => {
     }
 };
 
-export default buatJanjiReducer;
+export default createappointmentReducer;
