@@ -1,4 +1,3 @@
-/* BuatJanjiPopup.css */
 .popup-container {
     position: fixed;
     top: 0;
@@ -9,7 +8,30 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000; /* Memastikan popup di atas elemen lainnya */
+    z-index: 1; /* Memastikan popup di atas elemen lainnya */
+}
+
+.Modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 1000; /* Memastikan modal berada di atas elemen lain */
+    width: 300px;
+    text-align: center;
+}
+
+.Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999; /* Memastikan overlay berada di bawah modal */
 }
 
 .popup-content {

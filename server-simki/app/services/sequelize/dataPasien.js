@@ -6,7 +6,18 @@ const {
 } = require('../../errors');
 
 const getAllDataPasien = async () => {
-    const result = await DataPasien.findAll();
+    const data = await DataPasien.findAll();
+
+    const result = data.map(data => {
+        return {
+            id: data.uuid,
+            nama_lengkap: data.nama_lengkap,
+            nik: data.nik,
+            tanggal_lahir: data.tanggal_lahir,
+            jenis_kelamin: data.jenis_kelamin,
+            alamat: data.alamat,
+        };
+    });
 
     return result;
 };

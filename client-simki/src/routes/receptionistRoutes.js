@@ -3,7 +3,6 @@ import { Route, Routes } from 'react-router-dom';
 import Resepsionis from '../Pages/Resepsionis/Resepsionis';
 import PendaftarBaru from '../Pages/Resepsionis/DataPasien';
 import Antrian from '../Pages/Resepsionis/Antrian';
-import BuatJanjiPopup from '../Pages/Resepsionis/BuatJanjiPopup';
 import IdentitasPasien from '../Pages/Resepsionis/IdentitasPasien';
 import EmrResepsionis from '../Pages/Resepsionis/EmrResepsionis';
 import PasienResepsionis from '../Pages/Resepsionis/PasienResepsionis';
@@ -23,7 +22,6 @@ export function ReceptionistRoute() {
             <Route path="antrian" element={<Antrian />} />
             <Route path="pasien-resepsionis" element={<PasienResepsionis />} />
             <Route path="kelola-jadwal" element={<KelolaJadwal />} />
-            <Route path="antrian/buatjanji-popup" element={<BuatJanjiPopup />} />
             <Route path="antrian/aksi-popup" element={<AksiPopup />} />
             <Route path="identitas-pasien/:id" element={<IdentitasPasien />} />
             <Route path="emr-resepsionis" element={<EmrResepsionis />} />
