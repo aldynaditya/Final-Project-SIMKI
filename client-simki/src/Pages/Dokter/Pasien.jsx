@@ -25,6 +25,10 @@ const PasienDokter= () => {
         }
     };
 
+    const IdentitasPasien = (id) => {
+        window.open(`/resepsionis/identitas-pasien/${id}`, '_blank');
+    };
+
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         const year = date.getFullYear();
@@ -65,8 +69,16 @@ const PasienDokter= () => {
                                         <td>{formatDate(emr.tanggal_lahir)}</td>
                                         <td>{emr.jenis_kelamin}</td>
                                         <td>
+                                        {role === 'resepsionis' && (
+                                                <>
+                                                    <button className="emr-dokter" onClick={() => IdentitasPasien(emr.appointmentId)}>Identitas</button>
+                                                    <button className="emr-dokter" onClick={() => EmrDokter(emr.id)}>EMR</button>
+                                                </>
+                                            )}
+                                        {(role === 'dokter' || role === 'perawat') && (
                                             <button className="emr-dokter" onClick={() => EmrDokter(emr.id)}>EMR</button>
-                                            </td>
+                                        )}
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>
