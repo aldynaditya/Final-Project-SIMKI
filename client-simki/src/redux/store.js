@@ -76,6 +76,9 @@ import getresponsebyIdReducer from './doctor/indexResponse/reducer';
 import getfeedbackReducer from './doctor/indexFeedback/reducer';
 import getonepatientReducer from './resepsionis/indexPatientbyId/reducer';
 import updatestatusappointmentReducer from './resepsionis/updateStatus/reducer';
+import editJadwalReducer from './resepsionis/scheduleEdit/reducer';
+import createjadwalReducer from './resepsionis/scheduleCreate/reducer';
+import deleteJadwalReducer from './resepsionis/scheduleDelete/reducer';
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -107,6 +110,10 @@ const rootReducers = combineReducers({
     antrian: antrianReducer,
     getonePatient: getonepatientReducer,
     updateStatus: updatestatusappointmentReducer,
+    //Page Kelola Jadwal
+    createJadwal: createjadwalReducer,
+    deleteJadwal: deleteJadwalReducer,
+    editJadwal: editJadwalReducer,
     //Page Kelola Obat & Order Masuk
     getObat: getobatReducer,
     createObat: createobatReducer,

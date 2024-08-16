@@ -18,7 +18,7 @@ const Resepsionis = () => {
   };
 
   const handlePasien = () => {
-    navigate('pasien-resepsionis');
+    navigate('pasien-dokter');
   };
 
   const handleAgenda = () => {
