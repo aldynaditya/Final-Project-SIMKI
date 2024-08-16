@@ -15,6 +15,7 @@ const {
 
 const getAllAppointment = async () => {
     const appointment = await Appointment.findAll({
+        where: { status: 'diproses'},
         include: [
             {
                 model: DataPasien,
@@ -53,6 +54,22 @@ const getAllAppointment = async () => {
 
     return result;
 };
+
+const getOneDataPasien = async (req) => {
+    const { id: uuid } = req.params
+
+    const appointment = await Appointment.findOne({
+        where: { uuid }
+    })
+
+    if (!appointment) throw new NotFoundError('Data tidak ditemukan');
+
+    const datapasien = await DataPasien.findOne({
+        wheree: { uuid: appointment.pasienId}
+    })
+
+    return datapasien;
+}
 
 const createAppointment = async (req) => {
     const { id: uuid } = req.params
@@ -167,6 +184,7 @@ const updateAppointment = async (req) => {
 
 module.exports = {
     getAllAppointment,
+    getOneDataPasien,
     createAppointment,
     updateAppointment
 };

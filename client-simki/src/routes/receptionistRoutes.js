@@ -25,7 +25,7 @@ export function ReceptionistRoute() {
             <Route path="kelola-jadwal" element={<KelolaJadwal />} />
             <Route path="antrian/buatjanji-popup" element={<BuatJanjiPopup />} />
             <Route path="antrian/aksi-popup" element={<AksiPopup />} />
-            <Route path="identitas-pasien" element={<IdentitasPasien />} />
+            <Route path="identitas-pasien/:id" element={<IdentitasPasien />} />
             <Route path="emr-resepsionis" element={<EmrResepsionis />} />
             <Route path="detail-episode/:id" element={<DetailEpsResep />} />
             <Route path="cetaksurat-popup" element={<CetakSuratPopup />} />

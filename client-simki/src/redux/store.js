@@ -75,7 +75,7 @@ import getlistemrReducer from './doctor/indexListEmr/reducer';
 import getresponsebyIdReducer from './doctor/indexResponse/reducer';
 import getfeedbackReducer from './doctor/indexFeedback/reducer';
 import getonepatientReducer from './resepsionis/indexPatientbyId/reducer';
-
+import updatestatusappointmentReducer from './resepsionis/updateStatus/reducer';
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -106,6 +106,7 @@ const rootReducers = combineReducers({
     //Page buat janji
     antrian: antrianReducer,
     getonePatient: getonepatientReducer,
+    updateStatus: updatestatusappointmentReducer,
     //Page Kelola Obat & Order Masuk
     getObat: getobatReducer,
     createObat: createobatReducer,

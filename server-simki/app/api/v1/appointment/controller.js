@@ -2,12 +2,25 @@ const { StatusCodes } = require('http-status-codes');
 const { 
     getAllAppointment,
     createAppointment,
-    updateAppointment
+    updateAppointment,
+    getOneDataPasien
 } = require('../../../services/sequelize/appointment');
 
 const index = async (req, res, next) => {
     try {
         const result = await getAllAppointment(req);
+
+    res.status(StatusCodes.OK).json({
+        data: result,
+    });
+    } catch (err) {
+        next(err);
+    }
+};
+
+const find = async (req, res, next) => {
+    try {
+        const result = await getOneDataPasien(req);
 
     res.status(StatusCodes.OK).json({
         data: result,
@@ -43,6 +56,7 @@ const update = async (req, res, next) => {
 
 module.exports = {
     index,
+    find,
     create,
     update
 };

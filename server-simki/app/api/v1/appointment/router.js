@@ -3,7 +3,8 @@ const router = express.Router();
 const {
     index,
     create,
-    update
+    update,
+    find
 } = require("./controller");
 const {
     authenticateUser,
@@ -11,6 +12,7 @@ const {
 } = require('../../../middleware/auth');
 
 router.get('/appointment',authenticateUser, authorizeRoles('superuser','resepsionis'), index);
+router.get('/data-pasien/:id',authenticateUser, authorizeRoles('superuser','resepsionis'), find);
 router.post('/appointment/:id',authenticateUser, authorizeRoles('superuser','resepsionis'), create);
 router.patch('/appointment/:id',authenticateUser, authorizeRoles('superuser','resepsionis'), update);
 

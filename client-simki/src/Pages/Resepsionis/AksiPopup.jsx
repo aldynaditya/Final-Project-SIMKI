@@ -1,45 +1,84 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import '../../Style/Resepsionis/AksiPopup.css';
+import Modal from 'react-modal';
+import { updatestatusAppointment } from '../../redux/resepsionis/updateStatus/actions';
 
-const UpdateStatus = ({ onClose }) => {
-    const [activeLink, setActiveLink] = useState('');
-    const [aksi, setAksi] = useState('');
+const UpdateStatus = ({ id, onClose, onSuccess }) => {
+    const dispatch = useDispatch();
+    const { data, loading, error } = useSelector(state => state.updateStatus);
 
-    const handleLinkCancel = (link) => {
-        setActiveLink(link);
-        if (onClose) {
-            onClose();
-        }
+    const [formData, setFormData] = useState({
+        status: '',
+        keterangan: '',
+    });
+
+    const [alert, setAlert] = useState({ status: false, message: '', type: '' });
+
+    const isFormValid = useCallback(() => {
+        return Object.values(formData).every(value => {
+            return String(value).trim() !== '';
+        });
+    }, [formData]);
+    
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
     };
 
     const SimpanAksi = () => {
-        alert('Status Sudah Diperbarui');
-        if (onClose) {
-            onClose(); 
+        if (!isFormValid()) {
+            setAlert({
+                status: true,
+                message: 'Isi seluruh form',
+                type: 'danger'
+            });
+            return;
         }
+
+        dispatch(updatestatusAppointment(id, formData))
+            .then(() => {
+                setAlert({
+                    status: true,
+                    message: 'Data berhasil diperbarui!',
+                    type: 'success'
+                });
+                setTimeout(() => {
+                    setAlert({ status: false, message: '', type: '' });
+                    onSuccess();
+                    onClose();
+                }, 2000);
+            })
+            .catch(() => {
+                setAlert({
+                    status: true,
+                    message: 'Gagal memperbarui data!',
+                    type: 'danger'
+                });
+            });
     };
 
     return (
         <div className='update-status-container'>
             <div className='update-status-content'>
-                <div 
-                    className={activeLink === 'cancel' ? 'active cancel-link' : 'cancel-x'} 
-                    onClick={() => handleLinkCancel('cancel')}
-                >
+                <button className='cancel-x' onClick={onClose}>
                     Cancel X
-                </div>
+                </button>
                 <h1 className='text-update-status'>Update Status</h1>
                 <div className='kolom-update-status'>
                     <div className='status-aksi'>
                         <span className='text-status-aksi'>Status :</span>
                         <select 
                             className='kolom-status-aksi' 
-                            value={aksi} 
-                            onChange={(e) => setAksi(e.target.value)}
+                            name="status"
+                            value={formData.status} 
+                            onChange={handleChange}
                         >
                             <option value=''>Pilih Aksi</option>
-                            <option value='terima'>Terima</option>
-                            <option value='tolak'>Tolak</option>
+                            <option value='diterima'>Terima</option>
+                            <option value='ditolak'>Tolak</option>
                         </select>
                     </div>
                     <div className='keterangan-aksi'>
@@ -47,6 +86,9 @@ const UpdateStatus = ({ onClose }) => {
                         <textarea 
                             className='kolom-keterangan-aksi' 
                             placeholder='Masukkan keterangan'
+                            name="keterangan" 
+                            value={formData.keterangan} 
+                            onChange={handleChange}
                         />
                     </div>
                 </div>
@@ -54,6 +96,20 @@ const UpdateStatus = ({ onClose }) => {
                     <button className="button-updatestatus" onClick={SimpanAksi}>Simpan</button>
                 </div>
             </div>
+            <Modal
+                isOpen={alert.status}
+                onRequestClose={() => setAlert({ status: false, message: '', type: '' })}
+                contentLabel="Alert Message"
+                className="Modal"
+                overlayClassName="Overlay"
+                shouldCloseOnOverlayClick={true}
+                shouldCloseOnEsc={true}
+            >
+                <div className="modal-content">
+                    <p>{alert.message}</p>
+                    <button onClick={() => setAlert({ status: false, message: '', type: '' })}>Close</button>
+                </div>
+            </Modal>
         </div>
     );
 };

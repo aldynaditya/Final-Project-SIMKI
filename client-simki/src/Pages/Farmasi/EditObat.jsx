@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchObatById, editObat } from '../../redux/pharmacy/edit/actions';import Modal from 'react-modal';
+import { fetchObatById, editObat } from '../../redux/pharmacy/edit/actions';
+import Modal from 'react-modal';
 import '../../Style/Perawat/TambahitemPopup.css';
 
 const EditObat = ({ onClose, obatId, onSuccess }) => {
@@ -30,6 +31,7 @@ const EditObat = ({ onClose, obatId, onSuccess }) => {
             return String(value).trim() !== '';
         });
     }, [formData]);
+    
     const handleChange = (e) => {
         setFormData({
             ...formData,
