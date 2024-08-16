@@ -1,4 +1,8 @@
-import { FETCH_APPOINTMENT_REQUEST, FETCH_APPOINTMENT_SUCCESS, FETCH_APPOINTMENT_FAILURE } from './constants';
+import { 
+    FETCH_APPOINTMENT_REQUEST, 
+    FETCH_APPOINTMENT_SUCCESS, 
+    FETCH_APPOINTMENT_FAILURE 
+} from './constants';
 
 const initialState = {
     data: [],
@@ -6,7 +10,7 @@ const initialState = {
     error: null,
 };
 
-export default function appointmentReducer(state = initialState, action) {
+const appointmentReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_APPOINTMENT_REQUEST:
             return { ...state, loading: true };
@@ -18,3 +22,5 @@ export default function appointmentReducer(state = initialState, action) {
             return state;
     }
 }
+
+export default appointmentReducer;

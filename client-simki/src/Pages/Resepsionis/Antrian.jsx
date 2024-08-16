@@ -1,29 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import BuatJanjiPopup from './BuatJanjiPopup';
 import UpdateStatus from './AksiPopup';
 import '../../Style/Resepsionis/Antrian.css';
-import SearchBar from "../../components/SearchBar";
-import { fetchAppointment } from '../../redux/resepsionis/antrian/actions'; 
+import { fetchAppointment } from '../../redux/resepsionis/queue/actions'; 
 
 const Antrian = () => {
     const dispatch = useDispatch();
     const { data, loading, error } = useSelector(state => state.antrian); 
 
-    const [showJanjiPopup, setShowJanjiPopup] = useState(false);
     const [showAksiPopup, setShowAksiPopup] = useState(false);
 
     useEffect(() => {
         dispatch(fetchAppointment()); 
     }, [dispatch]);
-
-    const handleOpenJanjiPopup = () => {
-        setShowJanjiPopup(true);
-    };
-
-    const handleCloseJanjiPopup = () => {
-        setShowJanjiPopup(false);
-    };
 
     const handleOpenAksiPopup = () => {
         setShowAksiPopup(true);
@@ -38,7 +27,7 @@ const Antrian = () => {
     };
 
     const formatDate = (dateString) => {
-        return dateString.split('T')[0]; // Mengambil bagian sebelum 'T' untuk mendapatkan format YYYY-MM-DD
+        return dateString.split('T')[0];
     };
 
     if (loading) {
@@ -55,10 +44,8 @@ const Antrian = () => {
                 <div className="antrian-container">
                     <div className="content-wrapper-antrian">
                         <div className="header-antrian">
-                            <h1 className="text_antrian">Antrian</h1>
+                            <h1 className="text_antrian">Janji Masuk</h1>
                             <div className="header-antrian-action">
-                                <button className='tombol_buatjanji' onClick={handleOpenJanjiPopup}>Buat Janji</button>
-                                <SearchBar />
                             </div>
                         </div>
                         <div className="tabel_antrian">
@@ -95,7 +82,6 @@ const Antrian = () => {
                     </div>
                 </div>
             </div>
-            {showJanjiPopup && <BuatJanjiPopup onClose={handleCloseJanjiPopup} />}
             {showAksiPopup && <UpdateStatus onClose={handleCloseAksiPopup} />}
         </div>
     );

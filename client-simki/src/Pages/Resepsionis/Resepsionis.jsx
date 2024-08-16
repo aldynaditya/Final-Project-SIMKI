@@ -33,11 +33,11 @@ const Resepsionis = () => {
         <div className="klik_resepsionis">
           <div className='pendaftar-baru' onClick={handlePendaftarBaru}>
             <img src={list} alt='Pendaftar_Baru' className='icon' />
-            <p>PENDAFTAR BARU</p>
+            <p>IDENTITAS PASIEN</p>
           </div>
           <div className="antrian" onClick={handleAntrian}>
             <img src={antrian} alt='Antrian' className='icon' />
-            <p>ANTRIAN</p>
+            <p>JANJI MASUK</p>
           </div>
           <div className="pasien" onClick={handlePasien}>
             <img src={user} alt='pasien' className='icon' />

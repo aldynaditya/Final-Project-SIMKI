@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getIdentitasPasien } from '../../redux/resepsionis/identitas/actions';
+import { fetchPasien } from '../../redux/resepsionis/indexPatient/actions';
 import '../../Style/Resepsionis/IdentitasPasien.css';
 
 const IdentitasPasien = () => {
     const dispatch = useDispatch();
-    const { data, loading, error } = useSelector(state => state.identitas);
+    const { data, loading, error } = useSelector(state => state.getPatient);
 
     useEffect(() => {
-        dispatch(getIdentitasPasien());
+        dispatch(fetchPasien());
     }, [dispatch]);
 
     if (loading) return <div>Loading...</div>;

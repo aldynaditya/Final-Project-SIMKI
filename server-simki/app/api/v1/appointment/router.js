@@ -11,7 +11,7 @@ const {
 } = require('../../../middleware/auth');
 
 router.get('/appointment',authenticateUser, authorizeRoles('superuser','resepsionis'), index);
-router.post('/appointment',authenticateUser, authorizeRoles('superuser','resepsionis'), create);
+router.post('/appointment/:id',authenticateUser, authorizeRoles('superuser','resepsionis'), create);
 router.patch('/appointment/:id',authenticateUser, authorizeRoles('superuser','resepsionis'), update);
 
 module.exports = router;

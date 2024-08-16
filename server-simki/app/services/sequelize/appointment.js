@@ -55,14 +55,15 @@ const getAllAppointment = async () => {
 };
 
 const createAppointment = async (req) => {
-    const { tanggal, keluhan, penjamin, dokter, poli, start_time, end_time, nik } = req.body;
+    const { id: uuid } = req.params
+    const { tanggal, keluhan, penjamin, dokter, poli, start_time, end_time } = req.body;
 
     let dataPasien = await DataPasien.findOne({
-        where: { nik }
+        where: { uuid }
     });
 
     if (!dataPasien) {
-        throw new BadRequestError('Tidak Ada Pasien yang terdaftar dengan NIK tersebut');
+        throw new BadRequestError('Pasien Tidak terdaftar');
     }
 
     const dayOfWeek = getDayOfWeek(tanggal);

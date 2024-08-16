@@ -1,38 +1,39 @@
-import {
-    FETCH_PASIEN_REQUEST,
-    FETCH_PASIEN_SUCCESS,
-    FETCH_PASIEN_FAILURE,
+import { 
+    GET_IDENTITAS_PASIEN_ID_REQUEST,
+    GET_IDENTITAS_PASIEN_ID_SUCCESS, 
+    GET_IDENTITAS_PASIEN_ID_FAILURE 
 } from './constants';
 
 const initialState = {
-    loading: false,
     data: [],
+    loading: true,
     error: null,
 };
 
-const pasienReducer = (state = initialState, action) => {
+const getonepatientReducer = (state = initialState, action) => {
     switch (action.type) {
-        case FETCH_PASIEN_REQUEST:
+        case GET_IDENTITAS_PASIEN_ID_REQUEST:
             return {
                 ...state,
                 loading: true,
                 error: null,
             };
-        case FETCH_PASIEN_SUCCESS:
+        case GET_IDENTITAS_PASIEN_ID_SUCCESS:
             return {
                 ...state,
-                loading: false,
                 data: action.payload,
+                loading: false,
+                error: null,
             };
-        case FETCH_PASIEN_FAILURE:
+        case GET_IDENTITAS_PASIEN_ID_FAILURE:
             return {
                 ...state,
-                loading: false,
                 error: action.payload,
+                loading: false,
             };
         default:
             return state;
     }
 };
 
-export default pasienReducer;
+export default getonepatientReducer;

@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
-import { createPendaftar } from '../../redux/resepsionis/creatependaftar/actions';
+import { createPasien } from '../../redux/resepsionis/createPatient/actions';
 import '../../Style/Resepsionis/PendaftarPopup.css';
-
 
 const TambahPendaftar = ({ onClose , onSuccess} ) => {
   const dispatch = useDispatch();
-  const { loading, error, data } = useSelector(state => state.createPendaftar);
+  const { data, loading, error } = useSelector(state => state.createPatient);
 
   const [formData, setFormData] = useState({
     nama_lengkap: '',
@@ -20,25 +19,59 @@ const TambahPendaftar = ({ onClose , onSuccess} ) => {
     nik: ''
   });
 
+  const [alert, setAlert] = useState({ status: false, message: '', type: '' });
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({ 
+      ...formData, 
+      [e.target.name]: e.target.value 
+    });
   };
 
-  const SimpanPendaftar = () => {
-    dispatch(createPendaftar(formData));
-  };
+  const isFormValid = useCallback(() => {
+    return Object.values(formData).every(value => value.trim() !== '');
+  }, [formData]);
 
   useEffect(() => {
-    if (data || error) {
-      onSuccess();
-      onClose();
+    if (alert.status) {
+        const timer = setTimeout(() => {
+            setAlert({ status: false, message: '', type: '' });
+        }, 2000);
+        return () => clearTimeout(timer);
     }
-  }, [data, error, onClose]);
+  }, [alert.status]);
 
-  const closeModal = () => {
-    onClose();
+  useEffect(() => {
+    if (error) {
+        setAlert({
+            status: true,
+            message: error,
+            type: 'danger'
+        });
+    } else if (data) {
+        setAlert({
+            status: true,
+            message: 'Daftar Berhasil',
+            type: 'success'
+        });
+        setTimeout(() => {
+            onSuccess();
+            onClose();
+        }, 2000);
+    }
+}, [error, data, onClose, onSuccess]);
+
+  const SimpanPendaftar = () => {
+    if (!isFormValid()) {
+      setAlert({
+          status: true,
+          message: 'Isi seluruh form',
+          type: 'danger'
+      });
+      return;
+    }
+    dispatch(createPasien(formData));
   };
-
 
   return (
     <div className='tambah-pendaftar-container'>
@@ -81,18 +114,26 @@ const TambahPendaftar = ({ onClose , onSuccess} ) => {
             <input name='alamat' value={formData.alamat} onChange={handleChange} placeholder='Alamat Lengkap' className='kolom-alamat-pendaftar-baru' />
           </div>
           <div className='nik-pendaftar-baru'>
-            <input name='nik' value={formData.nik} onChange={handleChange} placeholder='NIK'  className='kolom-nik-pendaftar-baru'/>
+            <input name='nik' maxLength="16" value={formData.nik} onChange={handleChange} placeholder='NIK'  className='kolom-nik-pendaftar-baru'/>
           </div>
         </div>
         <div className='tambahpendaftar-container'>
           <button className='button-tambahpendaftar' onClick={SimpanPendaftar} disabled={loading}>Simpan</button>
         </div>
-        <Modal isOpen={!!error} onRequestClose={closeModal}>
-          <div className="modal-content">
-            <p>{error}</p>
-            <button onClick={closeModal}>Close</button>
-          </div>
-        </Modal>  
+        <Modal
+                isOpen={alert.status}
+                onRequestClose={() => setAlert({ status: false, message: '', type: '' })}
+                contentLabel="Alert Message"
+                className="Modal"
+                overlayClassName="Overlay"
+                shouldCloseOnOverlayClick={true}
+                shouldCloseOnEsc={true}
+            >
+                <div className="modal-content">
+                    <p>{alert.message}</p>
+                    <button onClick={() => setAlert({ status: false, message: '', type: '' })}>Close</button>
+                </div>
+            </Modal>
       </div>
     </div>
   );

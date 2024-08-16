@@ -23,6 +23,7 @@ const OrderSurat = () => {
     const [isSuratRujukanPopupVisible, setIsSuratRujukanPopupVisible] = useState(false);
     const [alert, setAlert] = useState({ status: false, message: '', type: '' });
     const [printData, setPrintData] = useState(null);
+    
     useEffect(() => {
         dispatch(fetchorderInfo(id));
         dispatch(fetchOrderSurat(id));

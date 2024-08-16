@@ -31,6 +31,16 @@ const createDataPasien = async (req) => {
     return result;
 };
 
+const getDataPasienbyId = async (req) => {
+    const { id: uuid } = req.params;
+
+    const result = await DataPasien.findOne({
+        where: { uuid },
+    });
+
+    return result;
+};
+
 
 
 const getOneDataPasien = async (req) => {
@@ -105,6 +115,7 @@ const deleteDataPasien = async (req) => {
 module.exports = {
     getAllDataPasien,
     createDataPasien,
+    getDataPasienbyId,
     getOneDataPasien,
     updateDataPasien,
     deleteDataPasien,
