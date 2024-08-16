@@ -1,15 +1,18 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPasien } from '../../redux/resepsionis/indexPatient/actions';
+import { useParams } from 'react-router-dom';
+import { fetchPasienbyId } from '../../redux/resepsionis/indexPatientbyId/actions';
+import { formatDateStrip } from '../../utils/dateUtils';
 import '../../Style/Resepsionis/IdentitasPasien.css';
 
 const IdentitasPasien = () => {
+    const { id } = useParams();
     const dispatch = useDispatch();
-    const { data, loading, error } = useSelector(state => state.getPatient);
+    const { data, loading, error } = useSelector(state => state.getonePatient);
 
     useEffect(() => {
-        dispatch(fetchPasien());
-    }, [dispatch]);
+        dispatch(fetchPasienbyId(id));
+    }, [dispatch, id]);
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
@@ -23,14 +26,11 @@ const IdentitasPasien = () => {
                         <input type='text' className='kolom-npasien-perawat' placeholder='Nama Lengkap' value={data.nama_lengkap} readOnly />
                         <input type='text' className='kolom-nik-perawat' placeholder='NIK' value={data.nik} readOnly />
                     </div>
-                    <div className='ttl-perawat'>
-                        <input
-                            type='text'
-                            className='kolom-ttl-perawat'
-                            placeholder='Tempat, Tanggal Lahir'
-                            value={`${data.tempat_lahir}, ${data.tanggal_lahir}`}
-                            readOnly
-                        />
+                    <div className='gender-perawat'>
+                        <input type='text' className='kolom-gender-perawat' placeholder='tempat_lahir' value={data.tempat_lahir} readOnly />
+                    </div>
+                    <div className='gender-perawat'>
+                        <input type='text' className='kolom-gender-perawat' placeholder='tanggal_lahir' value={formatDateStrip(data.tanggal_lahir)} readOnly />
                     </div>
                     <div className='gender-perawat'>
                         <input type='text' className='kolom-gender-perawat' placeholder='Jenis Kelamin' value={data.jenis_kelamin} readOnly />
@@ -43,9 +43,6 @@ const IdentitasPasien = () => {
                     </div>
                     <div className='alamat-perawat'>
                         <input type='text' className='kolom-alamat-perawat' placeholder='Alamat Lengkap' value={data.alamat} readOnly />
-                    </div>
-                    <div className='email-perawat'>
-                        <input type='email' className='kolom-email-perawat' placeholder='Email' value={data.email} readOnly />
                     </div>
                 </div>
             </div>

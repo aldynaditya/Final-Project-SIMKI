@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import UpdateStatus from './AksiPopup';
+import AksiPopUp from './AksiPopup';
 import '../../Style/Resepsionis/Antrian.css';
 import { fetchAppointment } from '../../redux/resepsionis/queue/actions'; 
 
@@ -8,32 +8,33 @@ const Antrian = () => {
     const dispatch = useDispatch();
     const { data, loading, error } = useSelector(state => state.antrian); 
 
+    const [selectedAppointmentId, setSelectedAppointmentId] = useState(null);
     const [showAksiPopup, setShowAksiPopup] = useState(false);
 
     useEffect(() => {
         dispatch(fetchAppointment()); 
     }, [dispatch]);
 
-    const handleOpenAksiPopup = () => {
+    const handleOpenAksiPopup = (id) => {
         setShowAksiPopup(true);
+        setSelectedAppointmentId(id)
     };
 
     const handleCloseAksiPopup = () => {
         setShowAksiPopup(false);
     };
 
-    const IdentitasPasien = () => {
-        window.open('identitas-pasien', '_blank');
+    const handleAksiSuccess = () => {
+        dispatch(fetchAppointment());
     };
 
-    const formatDate = (dateString) => {
-        return dateString.split('T')[0];
+    const IdentitasPasien = (id) => {
+        window.open(`/resepsionis/identitas-pasien/${id}`, '_blank');
     };
 
     if (loading) {
         return <div>Loading...</div>;
     }
-
     if (error) {
         return <div>Error: {error}</div>;
     }
@@ -67,12 +68,12 @@ const Antrian = () => {
                                             <td>{row.nama_lengkap}</td>
                                             <td>{row.dokter}</td>
                                             <td>{row.poli}</td>
-                                            <td>{formatDate(row.tanggal)}</td>
+                                            <td>{row.tanggal}</td>
                                             <td>{row.jam}</td>
                                             <td>{row.penjamin}</td>
                                             <td>
-                                                <button className="lihat-identitas" onClick={IdentitasPasien}>Lihat</button>
-                                                <button className="aksi-antrian" onClick={handleOpenAksiPopup}>Aksi</button>
+                                                <button className="lihat-identitas" onClick={() => IdentitasPasien(row.id)}>Lihat</button>
+                                                <button className="aksi-antrian" onClick={() => handleOpenAksiPopup(row.id)}>Aksi</button>
                                             </td>
                                         </tr>
                                     ))}
@@ -82,7 +83,13 @@ const Antrian = () => {
                     </div>
                 </div>
             </div>
-            {showAksiPopup && <UpdateStatus onClose={handleCloseAksiPopup} />}
+            {showAksiPopup 
+                && <AksiPopUp
+                    id={selectedAppointmentId}
+                    onClose={handleCloseAksiPopup} 
+                    onSuccess={handleAksiSuccess} 
+                />
+            }
         </div>
     );
 };
