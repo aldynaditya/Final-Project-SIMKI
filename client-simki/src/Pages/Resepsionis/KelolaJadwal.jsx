@@ -72,13 +72,17 @@ const KelolaJadwal = () => {
             });
         }
     };
+    
+    if (loading || deleteLoading) {
+        return <div>Loading...</div>;
+    }
 
     const closeModal = () => {
         setAlert({ status: false, message: '', type: '' });
     };
 
     return (
-        <div className="kelola-jadwal-container">
+        <div className={`kelola-jadwal-container ${isPopupVisible ? 'overlay' : ''}`}>
             <div className="content-wrap-kelola-jadwal">
                 <div className="content-wrapper-kelola-jadwal">
                     <div className="header-kelola-jadwal">
@@ -120,7 +124,7 @@ const KelolaJadwal = () => {
             {isPopupVisible && (
                 isEditing 
                 ? <EditJadwal onClose={handleClosePopup} jadwalId={selectedJadwalId} onSuccess={handleSuccess}/> 
-                : <TambahJadwal onClose={handleClosePopup} onSuccess={handleSuccess} />
+                : <TambahJadwal onClose={handleClosePopup} onSuccess={handleSuccess} schedules={schedules} />
             )}
             <Modal
                 isOpen={alert.status}
