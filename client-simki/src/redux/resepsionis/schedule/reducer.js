@@ -21,7 +21,8 @@ const schedulePReducer = (state = initialState, action) => {
             return { 
                 ...state, 
                 schedules: action.payload, 
-                error: null 
+                error: null,
+                loading: false 
             };
         case GET_SCHEDULEP_ERROR:
             return { 

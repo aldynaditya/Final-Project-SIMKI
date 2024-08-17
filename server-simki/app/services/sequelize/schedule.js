@@ -1,6 +1,7 @@
 const { Op } = require('sequelize');
 const Schedule = require('../../api/v1/schedule/model');
 const UserKlinik = require('../../api/v1/userKlinik/model');
+const Appointment = require('../../api/v1/appointment/model');
 const { 
     BadRequestError, 
     NotFoundError } = require('../../errors');
@@ -39,7 +40,7 @@ const getAllSchedule = async () => {
 };
 
 const createSchedule = async (req) => {
-    const { hari, poli, status, start_time, end_time, namaDokter } = req.body;
+    const { hari, start_time, end_time, namaDokter } = req.body;
 
     const formattedStartTime = validateTimeFormat(start_time);
     const formattedEndTime = validateTimeFormat(end_time);
@@ -71,10 +72,21 @@ const createSchedule = async (req) => {
         }
     }
 
+    const getPoli = await Schedule.findOne({
+        where: {
+            userKlinikId: dokter.uuid
+        },
+        attributes: ['poli']
+    });
+
+    if (!getPoli) {
+        throw new NotFoundError('Poli tidak ditemukan');
+    }
+
     const result = await Schedule.create({
         hari,
-        poli,
-        status,
+        poli: getPoli.poli,
+        status: 'ada',
         start_time: formattedStartTime,
         end_time: formattedEndTime,
         userKlinikId: dokter.uuid
@@ -82,6 +94,8 @@ const createSchedule = async (req) => {
 
     return result;
 };
+
+
 
 
 const updateSchedule = async (req) => {
@@ -122,14 +136,17 @@ const updateSchedule = async (req) => {
 const deleteSchedule = async (req) => {
     const { id } = req.params;
 
-    const result = await Schedule.findOne({ where: {uuid: id} });
+    const result = await Schedule.findOne({ where: { uuid: id } });
 
     if (!result) throw new NotFoundError(`Tidak ada Schedule dengan id :  ${id}`);
+
+    await Appointment.destroy({ where: { scheduleId: id } });
 
     await result.destroy();
 
     return result;
 };
+
 
 module.exports = {
     getAllSchedule,

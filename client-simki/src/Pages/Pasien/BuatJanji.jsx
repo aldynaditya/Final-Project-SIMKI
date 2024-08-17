@@ -140,7 +140,6 @@ const BuatJanji = () => {
                         ))}
                     </select>
                 </div>
-
                 <div className='form_group'>
                     <label htmlFor="dokter">Dokter :</label>
                     <select id="dokter" name="dokter" value={formData.dokter} onChange={handleChange}>

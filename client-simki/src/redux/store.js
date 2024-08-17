@@ -114,6 +114,8 @@ const rootReducers = combineReducers({
     createJadwal: createjadwalReducer,
     deleteJadwal: deleteJadwalReducer,
     editJadwal: editJadwalReducer,
+    //Jadwal for Page Dokter, Resepsionis, & Perawat
+    getScheduleP: schedulePReducer,
     //Page Kelola Obat & Order Masuk
     getObat: getobatReducer,
     createObat: createobatReducer,
@@ -126,8 +128,6 @@ const rootReducers = combineReducers({
     createItem: createitemReducer,
     deleteItem: deleteitemReducer,
     editItem: edititemReducer,
-    //Jadwal for Page Dokter, Resepsionis, & Perawat
-    getScheduleP: schedulePReducer,
     //Page EMR
     getlistEmr: getlistemrReducer,
     getEmr: getemrReducer,

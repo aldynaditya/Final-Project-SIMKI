@@ -31,7 +31,7 @@ const KelolaObat = () => {
     const handleTambahObat = () => {
         setIsPopupVisible(true);
         setIsEditing(false);
-        setSelectedObatId(null); // Reset selected obat id
+        setSelectedObatId(null);
     };
 
     const handleUbahObat = (id) => {
