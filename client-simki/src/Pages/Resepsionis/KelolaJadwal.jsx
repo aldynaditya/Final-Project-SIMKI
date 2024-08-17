@@ -1,28 +1,80 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getScheduleP } from '../../redux/resepsionis/schedule/actions';
+import { deleteJadwal } from '../../redux/resepsionis/scheduleDelete/actions';
 import '../../Style/Resepsionis/KelolaJadwal.css';
 import TambahJadwal from './JadwalPopup';
-import EditJadwal from './EditJadwal'; 
+import EditJadwal from './EditJadwal';
+import Modal from 'react-modal'; 
 
 const KelolaJadwal = () => {
-    const [baris, setBaris] = useState(Array.from({ length: 12 }));
-    const [tampilkanPopup, setTampilkanPopup] = useState({ show: false, type: '' }); 
-    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { schedules, loading } = useSelector((state) => state.getScheduleP);
+    const { loading: deleteLoading, error: deleteError } = useSelector((state) => state.deleteJadwal);
+
+    const [isPopupVisible, setIsPopupVisible] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const [selectedJadwalId, setSelectedJadwalId] = useState(null);
+    const [alert, setAlert] = useState({ status: false, message: '', type: '' });
+
+    useEffect(() => {
+        dispatch(getScheduleP());
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (!deleteLoading && !deleteError) {
+            dispatch(getScheduleP());
+        }
+    }, [deleteLoading, deleteError, dispatch]);
 
     const handleTambahJadwal = () => {
-        setTampilkanPopup({ show: true, type: 'tambah' });
+        setIsPopupVisible(true);
+        setIsEditing(false);
+        setSelectedJadwalId(null);
     };
 
-    const handleTutupPopup = () => {
-        setTampilkanPopup({ show: false, type: '' });
+    const handleUbahJadwal = (id) => {
+        setIsPopupVisible(true);
+        setIsEditing(true);
+        setSelectedJadwalId(id);
     };
 
-    const hapusJadwal = (index) => {
-        setBaris(baris.filter((_, i) => i !== index));
+    const handleClosePopup = () => {
+        setIsPopupVisible(false);
+        setSelectedJadwalId(null);
     };
 
-    const UbahJadwal = () => {
-        setTampilkanPopup({ show: true, type: 'edit' });
+    const handleSuccess = () => {
+        dispatch(getScheduleP());
+    };
+
+    const hapusJadwal = async (id) => {
+        try {
+            await dispatch(deleteJadwal(id));
+            if (deleteError) {
+                setAlert({
+                    status: true,
+                    message: 'Jadwal gagal dihapus!',
+                    type: 'danger'
+                });
+            } else {
+                setAlert({
+                    status: true,
+                    message: 'Jadwal berhasil dihapus!',
+                    type: 'success'
+                });
+            }
+        } catch (error) {
+            setAlert({
+                status: true,
+                message: 'Failed to delete',
+                type: 'danger',
+            });
+        }
+    };
+
+    const closeModal = () => {
+        setAlert({ status: false, message: '', type: '' });
     };
 
     return (
@@ -32,6 +84,7 @@ const KelolaJadwal = () => {
                     <div className="header-kelola-jadwal">
                         <h1 className="text_kelola-jadwal">Kelola Jadwal</h1>
                         <button className='tombol_tambah-jadwal' onClick={handleTambahJadwal}>Tambah Jadwal</button>
+                        
                     </div>
                     <div className="tabel_kelola-jadwal">
                         <table>
@@ -41,21 +94,21 @@ const KelolaJadwal = () => {
                                     <th>Poli</th>
                                     <th>Hari</th>
                                     <th>Jam</th>
+                                    <th>Status</th>
                                     <th className="aksi-column">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {baris.map((_, index) => (
-                                    <tr key={index}>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                            {schedules.map((jadwal) => (
+                                    <tr key={jadwal.id}>
+                                        <td>{jadwal.dokter}</td>
+                                        <td>{jadwal.poli}</td>
+                                        <td>{jadwal.hari}</td>
+                                        <td>{jadwal.jam}</td>
+                                        <td>{jadwal.status}</td>
                                         <td>
-                                            <button className="ubah-jadwal" onClick={UbahJadwal}>Ubah</button>
-                                            <div className="hapus-jadwal" onClick={() => hapusJadwal(index)}>
-                                                Hapus
-                                            </div>
+                                            <button className="ubah-jadwal" onClick={() => handleUbahJadwal(jadwal.id)}>Ubah</button>
+                                            <div className="hapus-jadwal" onClick={() => hapusJadwal(jadwal.id)}>Hapus</div>
                                         </td>
                                     </tr>
                                 ))}
@@ -64,13 +117,25 @@ const KelolaJadwal = () => {
                     </div>
                 </div>
             </div>
-            {tampilkanPopup.show && (
-                tampilkanPopup.type === 'tambah' ? (
-                    <TambahJadwal onClose={handleTutupPopup} title="Tambah Jadwal" />
-                ) : (
-                    <EditJadwal onClose={handleTutupPopup} title="Edit Jadwal" />
-                )
+            {isPopupVisible && (
+                isEditing 
+                ? <EditJadwal onClose={handleClosePopup} jadwalId={selectedJadwalId} onSuccess={handleSuccess}/> 
+                : <TambahJadwal onClose={handleClosePopup} onSuccess={handleSuccess} />
             )}
+            <Modal
+                isOpen={alert.status}
+                onRequestClose={closeModal}
+                contentLabel="Alert Message"
+                className="Modal"
+                overlayClassName="Overlay"
+                shouldCloseOnOverlayClick={true}
+                shouldCloseOnEsc={true}
+            >
+                <div className="modal-content">
+                    <p>{alert.message}</p>
+                    <button onClick={closeModal}>Close</button>
+                </div>
+            </Modal>
         </div>
     );
 };

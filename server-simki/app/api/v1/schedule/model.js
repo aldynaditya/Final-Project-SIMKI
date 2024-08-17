@@ -13,11 +13,11 @@ const Schedule = db.define('schedule', {
         }
     },
     hari: {
-        type: DataTypes.ENUM( 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu' ),
+        type: DataTypes.ENUM( 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu' ),
         allowNull: false,
         validate: {
             isIn: {
-                args: [[ 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu' ]],
+                args: [[ 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu' ]],
                 msg: 'Pilihan tidak valid',
             },
         },
