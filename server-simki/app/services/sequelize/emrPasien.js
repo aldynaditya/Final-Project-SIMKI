@@ -521,7 +521,8 @@ const getListALlEMRPasien = async (req) => {
     );
 
     const result = emrPasienList.map(emr => {
-        const datapasien = emr.appointment.datapasien;
+        const appointment = emr.appointment;
+        const datapasien = appointment ? appointment.datapasien : null;
         return {
             id: emr.uuid,
             noEMR: emr.noEMR,
@@ -529,9 +530,9 @@ const getListALlEMRPasien = async (req) => {
             pasienId: emr.pasienId,
             status: emr.status,
             finishedAt: emr.finishedAt,
-            nama_pasien: datapasien.nama_lengkap,
-            tanggal_lahir: datapasien.tanggal_lahir,
-            jenis_kelamin: datapasien.jenis_kelamin
+            nama_pasien: datapasien ? datapasien.nama_lengkap : null,
+            tanggal_lahir: datapasien ? datapasien.tanggal_lahir : null,
+            jenis_kelamin: datapasien ? datapasien.jenis_kelamin : null
         };
     });
 

@@ -15,18 +15,20 @@ const schedulePReducer = (state = initialState, action) => {
         case GET_SCHEDULEP_REQUEST:
             return { 
                 ...state, 
-                loading: true 
+                loading: true,
+                error: null, 
             };
         case GET_SCHEDULEP_SUCCESS:
             return { 
-                ...state, 
-                schedules: action.payload, 
+                ...state,
+                loading: false,
+                schedules: action.payload,
                 error: null,
-                loading: false 
             };
         case GET_SCHEDULEP_ERROR:
             return { 
-                ...state, 
+                ...state,
+                loading: false, 
                 error: action.payload 
             };
         default:

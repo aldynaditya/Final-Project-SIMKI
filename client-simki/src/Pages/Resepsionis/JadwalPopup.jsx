@@ -2,12 +2,10 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import { createJadwal } from '../../redux/resepsionis/scheduleCreate/actions';
-import { getScheduleP } from '../../redux/resepsionis/schedule/actions';
 import '../../Style/Resepsionis/JadwalPopup.css';
 
-const TambahJadwal = ({ onClose, onSuccess }) => {
+const TambahJadwal = ({ onClose, onSuccess, schedules }) => {
     const dispatch = useDispatch();
-    const { schedules } = useSelector((state) => state.getScheduleP);
     const { data, loading, error } = useSelector(state => state.createObat);
     const [formData, setFormData] = useState({
         hari: '',
@@ -15,10 +13,6 @@ const TambahJadwal = ({ onClose, onSuccess }) => {
         end_time: '',
         namaDokter: '',
     });
-
-    useEffect(() => {
-        dispatch(getScheduleP());
-    }, [dispatch]);
 
     const [alert, setAlert] = useState({ status: false, message: '', type: '' });
 
@@ -42,28 +36,6 @@ const TambahJadwal = ({ onClose, onSuccess }) => {
         }
     }, [alert.status]);
 
-    useEffect(() => {
-        if (error) {
-            setAlert({
-                status: true,
-                message: error,
-                type: 'danger'
-            });
-        }
-
-        if (data && !loading) {
-            setAlert({
-                status: true,
-                message: 'Jadwal berhasil disimpan!',
-                type: 'success'
-            });
-            setTimeout(() => {
-                onSuccess();
-                onClose();
-            }, 2000);
-        }
-    }, [data, error, loading, onClose, onSuccess]);
-
     const handleSubmit = async () => {   
         if (!isFormValid()) {
             setAlert({
@@ -73,7 +45,26 @@ const TambahJadwal = ({ onClose, onSuccess }) => {
             });
             return;
         }
-        dispatch(createJadwal(formData));
+        dispatch(createJadwal(formData))
+        .then(() => {
+            setAlert({
+                status: true,
+                message: 'Data berhasil diperbarui!',
+                type: 'success'
+            });
+            setTimeout(() => {
+                setAlert({ status: false, message: '', type: '' });
+                onSuccess();
+                onClose();
+            }, 2000);
+        })
+        .catch(() => {
+            setAlert({
+                status: true,
+                message: 'Gagal memperbarui data!',
+                type: 'danger'
+            });
+        });
     };
 
     const generateTimeOptions = () => {
@@ -154,7 +145,9 @@ const TambahJadwal = ({ onClose, onSuccess }) => {
                     </div>
                 </div>
                 <div className='tambahjadwal-container'>
-                    <button className="button-tambahjadwal" onClick={handleSubmit}>Simpan</button>
+                    <button className="button-tambahjadwal" onClick={handleSubmit}>
+                        {loading ? 'Loading...' : 'Simpan'}
+                    </button>
                 </div>
             </div>
             <Modal

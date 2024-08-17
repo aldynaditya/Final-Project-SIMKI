@@ -91,11 +91,7 @@ const KelolaObat = () => {
                         <h1 className="text_kelola-item">Stok Obat</h1>
                         <div className="header-kelola-item-action">
                             <button className="tombol_tambahitem" onClick={handleTambahObat}>Tambah Obat</button>
-                            {isPopupVisible && (
-                                isEditing 
-                                    ? <EditObat onClose={handleClosePopup} obatId={selectedObatId} onSuccess={handleSuccess}/> 
-                                    : <TambahObat onClose={handleClosePopup} onSuccess={handleSuccess} />
-                            )}
+                            
                             <SearchBar />
                         </div>
                     </div>
@@ -130,6 +126,11 @@ const KelolaObat = () => {
                     </div>
                 </div>
             </div>
+            {isPopupVisible && (
+                isEditing 
+                    ? <EditObat onClose={handleClosePopup} obatId={selectedObatId} onSuccess={handleSuccess}/> 
+                    : <TambahObat onClose={handleClosePopup} onSuccess={handleSuccess} />
+                )}
             <Modal
                 isOpen={alert.status}
                 onRequestClose={closeModal}
