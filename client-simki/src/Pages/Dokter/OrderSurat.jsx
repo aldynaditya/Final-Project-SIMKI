@@ -98,7 +98,11 @@ const OrderSurat = () => {
     });
 
     const CetakSurat = (order) => {
-        setPrintData(order);
+        const combinedData = {
+            orderInfo: data, // data from getorderInfo selector
+            orderDetails: order, // individual order from orderData
+        };
+        setPrintData(combinedData);
         handlePrint();
     };
 

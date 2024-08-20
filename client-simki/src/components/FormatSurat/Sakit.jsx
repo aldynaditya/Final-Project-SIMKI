@@ -1,8 +1,13 @@
 import React from 'react';
 import '../../Style/Dokter/TemplateSakit.css';
 import logoklinik from '../../images/logoklinik.png';
+import { formatDateStrip } from '../../utils/dateUtils';
+import { differenceInDays } from 'date-fns';
 
-const TemplateSuratSakit = ({ data }) => {
+const TemplateSuratSakit = ({ orderInfo, orderDetails }) => {
+  const jumlahHariIstirahat = differenceInDays(new Date(orderDetails.periode_end), new Date(orderDetails.periode_start)) + 1;
+  const formattedDiagnosis = orderDetails.diagnosis_suratsakit.match(/.{1,50}/g).join('\n');
+
   return (
     <div className="template-surat-sakit-container">
       <div className="template-surat-sakit-header">
@@ -16,31 +21,27 @@ const TemplateSuratSakit = ({ data }) => {
       </div>
       <div className="content-surat-sakit">
         <h3 className='judul-surat-sakit'>SURAT KETERANGAN SAKIT</h3>
-        <p className='kal-pertama-sakit'>Yang bertanda tangan di bawah ini, menarangkan bahwa:</p>
+        <p className='kal-pertama-sakit'>Yang bertanda tangan di bawah ini, menerangkan bahwa:</p>
         <div className='isian-surat-sakit'>
-            <p>Nama Lengkap     :{data.jenis_surat}</p>
-            <div className='ttl-umur-sakit'>
-                <p className='ttl-surat-sakit'>Tanggal Lahir    :</p>
-                <p className='umur-surat-sakit'>Umur    :</p>
-            </div>
-            <p>Jenis Kelamin    :</p>
-            <p>Pekerjaan        :</p>
-            <p>Alamat           :</p>
-            <p>Diagnosis        :</p>
+          <p><span>Nama Lengkap</span><span>: {orderInfo.namaPasien}</span></p>
+          <p><span>Tanggal Lahir</span><span>: {formatDateStrip(orderInfo.tanggalLahir)}</span></p>
+          <p><span>Umur</span><span>: {orderDetails.umur}</span></p>
+          <p><span>Jenis Kelamin</span><span>: {orderInfo.jenisKelamin}</span></p>
+          <p><span>Pekerjaan</span><span>: {orderDetails.pekerjaan}</span></p>
+          <p><span>Alamat</span><span>: {orderInfo.alamat}</span></p>
+          <p><span>Diagnosis</span><span>: {formattedDiagnosis}</span></p>
         </div>
         <p className='kal-kedua-sakit'>
-          Berdasarkan hasil pemeriksaan yang telah dilakukan, pasien perlu diberikan ISTIRAHAT
-          selama <input type="number" /> hari terhitung dari mulai tanggal
-          <input type="date" /> s.d. <input type="date" />
+          Berdasarkan hasil pemeriksaan yang telah dilakukan, pasien perlu diberikan <b>ISTIRAHAT</b> selama {jumlahHariIstirahat} hari terhitung dari mulai tanggal {formatDateStrip(orderDetails.periode_start)} s.d. {formatDateStrip(orderDetails.periode_end)}
         </p>
         <p className='kal-ketiga-sakit'>
           Demikan surat keterangan ini dibuat untuk dapat dipergunakan sebagai mestinya.
         </p>
       </div>
       <div className="footer-surat-sakit">
-        <p>Semarang, <input type="date" /></p>
+        <p>Semarang, {formatDateStrip(orderDetails.tanggal)}</p>
         <p>Dokter penanggung jawab</p>
-        <p className='ttd-dokter'>(Nama Dokter)</p>
+        <p className='ttd-dokter'>{orderInfo.pemeriksa}</p>
       </div>
     </div>
   );
