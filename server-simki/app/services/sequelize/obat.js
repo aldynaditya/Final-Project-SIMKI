@@ -60,14 +60,14 @@ const searchObat = async (req) => {
                 [Op.gt]: 0
             }
         },
-        attributes: ['uuid', 'nama_obat', 'satuan']
+        attributes: ['uuid', 'nama_obat']
     });
 
     if (!result.length) throw new NotFoundError(`Tidak ada Obat dengan nama yang mengandung: ${query}`);
 
     return result.map(obat => ({
         id: obat.uuid,
-        nama_obat: `${obat.nama_obat} ${obat.satuan}`
+        nama_obat: `${obat.nama_obat}`
     }));
 };
 

@@ -98,7 +98,6 @@ const updateSuratSakit = async (req) => {
     if (updateVersion) {
         const versi_surat = await getNextVersion(SuratSakit, 'suratsakitId', suratSakit.uuid);
 
-        console.log('Versi Surat baru:', versi_surat)
         await OrderSurat.update(
             { versi_surat, status: 'updated' }, 
             { where: { suratsakitId: suratSakit.uuid } });
@@ -113,24 +112,7 @@ const updateSuratSakit = async (req) => {
     return { suratsakit: updatedSuratSakit, ordersurat: orderSurat };
 };
 
-const updateStatusbyDoctor = async (req) => {
-    const { id } = req.params;
-
-    const suratSakit = await SuratSakit.findByPk(id);
-    if (!suratSakit) throw new NotFoundError('Surat Sakit tidak ditemukan');
-
-    await OrderSurat.update({ status: 'updated' }, { where: { suratsakitId: suratSakit.uuid } });
-
-    const updatedOrderSurat = await OrderSurat.findOne({
-        where: { suratsakitId: suratSakit.uuid },
-        attributes: ['status']
-    });
-
-    return updatedOrderSurat;
-};
-
 module.exports = {
     getAllSuratSakit,
     updateSuratSakit,
-    updateStatusbyDoctor
 }

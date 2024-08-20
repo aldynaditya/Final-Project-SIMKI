@@ -60,14 +60,14 @@ const searchItem = async (req) => {
                 [Op.gt]: 0
             }
         },
-        attributes: ['uuid', 'nama_item', 'satuan']
+        attributes: ['uuid', 'nama_item']
     });
 
     if (!result.length) throw new NotFoundError(`Tidak ada Item dengan nama yang mengandung: ${query}`);
 
     return result.map(item => ({
         id: item.uuid,
-        nama_item: `${item.nama_item} ${item.satuan}`
+        nama_item: `${item.nama_item}`
     }));
 };
 

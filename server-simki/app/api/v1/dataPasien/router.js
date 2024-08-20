@@ -5,7 +5,6 @@ const {
     find,
     create,
     search,
-    update,
     destroy,
 } = require("./controller");
 const {
@@ -15,9 +14,8 @@ const {
 
 router.get('/datapasien',authenticateUser, authorizeRoles('superuser', 'resepsionis', 'perawat'), index);
 router.get('/datapasien/:id',authenticateUser, authorizeRoles('superuser', 'resepsionis', 'perawat'),find);
-router.get('/search',authenticateUser, authorizeRoles('superuser', 'resepsionis', 'perawat'),search);
+router.get('/datapasien/search/:query',authenticateUser, authorizeRoles('superuser', 'resepsionis', 'perawat'),search);
 router.post('/datapasien',authenticateUser, authorizeRoles('superuser', 'resepsionis'), create);
-router.patch('/datapasien/:id',authenticateUser, authorizeRoles('superuser', 'resepsionis', 'perawat'), update);
 router.delete('/datapasien/:id',authenticateUser, authorizeRoles('superuser', 'resepsionis'), destroy);
 
 module.exports = router;

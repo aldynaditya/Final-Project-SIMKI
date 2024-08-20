@@ -95,9 +95,6 @@ const createSchedule = async (req) => {
     return result;
 };
 
-
-
-
 const updateSchedule = async (req) => {
     const { id } = req.params;
     const { status, hari, start_time, end_time } = req.body;

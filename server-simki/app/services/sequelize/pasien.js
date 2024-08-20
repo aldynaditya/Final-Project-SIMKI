@@ -504,7 +504,6 @@ const getDetailVisitHistory = async (req) =>  {
     return result;
 };
 
-
 const submitResponses = async (req) => {
     const { id } = req.params;
     const { responses } = req.body;

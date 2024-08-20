@@ -1,4 +1,4 @@
-const db = require('../../../db/index'); // Sesuaikan path ke instance Sequelize Anda
+const db = require('../../../db/index');
 const argon2 = require('argon2');
 const { DataTypes } = require('sequelize');
 

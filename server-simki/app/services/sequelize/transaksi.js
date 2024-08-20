@@ -193,18 +193,18 @@ const filterAllTransactionByPeriod = async (req) => {
     }
 
     const result = transaksi.map(transaksi => {
-        // const episode = transaksi.episode;
-        // const emr = episode.emrpasien;
-        // const appointment = emr.appointment;
-        // const datapasien = appointment.datapasien;
+        const episode = transaksi.episode;
+        const emr = episode.emrpasien;
+        const appointment = emr.appointment;
+        const datapasien = appointment.datapasien;
 
         return{
             id: transaksi.uuid,
-            // noInvoice: episode.invoiceNumber,
-            // tanggal: transaksi.createdAt,
-            // noEMR: emr.noEMR,
-            // namaPasien: datapasien.nama_lengkap,
-            // penjamin: appointment.penjamin,
+            noInvoice: episode.invoiceNumber,
+            tanggal: transaksi.createdAt,
+            noEMR: emr.noEMR,
+            namaPasien: datapasien.nama_lengkap,
+            penjamin: appointment.penjamin,
             metodeBayar: transaksi.metodeBayar,
             total: transaksi.total,
             petugas: transaksi.user.nama
