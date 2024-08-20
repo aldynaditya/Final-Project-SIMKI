@@ -15,6 +15,20 @@ const createOrderSuratSakit = async (req) => {
     const episode = await Episode.findByPk(id);
     if (!episode) throw new NotFoundError('Episode tidak ditemukan');
 
+    const existingSuratSakit = await SuratSakit.findOne({
+        include: [
+            {
+                model: OrderSurat,
+                as: 'ordersuratsakit',
+                where: { 
+                    episodeId: episode.uuid, 
+                    jenis_surat: 'sakit' 
+                }
+            }
+        ]
+    });
+    if (existingSuratSakit) throw new BadRequestError('setiap order hanya bisa membuat 1 surat sakit');
+
     const suratSakit = await SuratSakit.create({
         umur,
         pekerjaan,
@@ -55,6 +69,20 @@ const createOrderSuratRujukan = async (req) => {
 
     const episode = await Episode.findByPk(id);
     if (!episode) throw new NotFoundError('Episode tidak ditemukan');
+
+    const existingSuratRujukan = await SuratRujukan.findOne({
+        include: [
+            {
+                model: OrderSurat,
+                as: 'ordersuratrujukan',
+                where: { 
+                    episodeId: episode.uuid, 
+                    jenis_surat: 'rujukan' 
+                }
+            }
+        ]
+    });
+    if (existingSuratRujukan) throw new BadRequestError('setiap order hanya bisa membuat 1 surat rujukan');
 
     const suratRujukan = await SuratRujukan.create({
         tujuan,

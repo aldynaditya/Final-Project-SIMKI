@@ -29,12 +29,12 @@ const checkEMRStatus = async (req, res, next) => {
             throw new BadRequestError('Kunjungan belum selesai, tidak dapat mengakses kuisioner');
         }
 
-        // const threeDaysAgo = new Date();
-        // threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+        const threeDaysAgo = new Date();
+        threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
 
-        // if (new Date(finishedAt) > threeDaysAgo) {
-        //     throw new ForbiddenError('Kuisioner Hanya Bisa Diakses 3 Hari Setelah Kunjungan');
-        // }
+        if (new Date(finishedAt) > threeDaysAgo) {
+            throw new ForbiddenError('Kuisioner Hanya Bisa Diakses 3 Hari Setelah Kunjungan');
+        }
 
         next();
     } catch (error) {

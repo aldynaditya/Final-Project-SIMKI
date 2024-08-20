@@ -52,64 +52,30 @@ const getDataPasienbyId = async (req) => {
     return result;
 };
 
-
-
 const getOneDataPasien = async (req) => {
-    const { id } = req.params;
-    const { name, nik } = req.body;
+    const { query } = req.params;
 
-    const whereCondition = [];
-
-    if (id) {
-        whereCondition.push({ uuid: id });
-    }
-
-    if (name) {
-        whereCondition.push({ nama_lengkap: { [Op.like]: `%${name}%` } });
-    }
-
-    if (nik) {
-        whereCondition.push({ nik: { [Op.like]: `%${nik}%` } });
-    }
-
-    if (whereCondition.length === 0) {
-        throw new Error('setidaknya sediakan 1 parameter pencarian');
-    }
-
-    const result = await DataPasien.findOne({
+    const result = await DataPasien.findAll({
         where: {
-            [Op.or]: whereCondition
+            [Op.or]: [
+                {
+                    nama_lengkap: {
+                        [Op.like]: `%${query}%`
+                    }
+                },
+                {
+                    nik: {
+                        [Op.like]: `%${query}%`
+                    }
+                }
+            ]
         }
     });
 
-    if (!result) throw new NotFoundError(`Tidak ada DataPasien dengan id/nama/nik yang sesuai`);
+    if (!result) throw new NotFoundError(`Tidak ada DataPasien dengan nama/nik yang sesuai`);
 
     return result;
 };
-
-const updateDataPasien = async (req) => {
-    const { id } = req.params;
-    const { nik, nama_lengkap, tempat_lahir, tanggal_lahir, jenis_kelamin, gol_darah, kewarganegaraan, alamat } = req.body;
-
-    const check = await DataPasien.findOne({
-        where: {
-            nik,
-            uuid: { [Op.ne]: id },
-        },
-    });
-
-    if (check) throw new BadRequestError('NIK sudah terdaftar');
-
-    const result = await DataPasien.update(
-        { nik, nama_lengkap, tempat_lahir, tanggal_lahir, jenis_kelamin, gol_darah, kewarganegaraan, alamat },
-        { where: { uuid: id }}
-    );
-
-    if (!result[0]) throw new NotFoundError(`Tidak ada DataPasien dengan id: ${id}`);
-
-    return result;
-};
-
 
 const deleteDataPasien = async (req) => {
     const { id } = req.params;
@@ -128,6 +94,5 @@ module.exports = {
     createDataPasien,
     getDataPasienbyId,
     getOneDataPasien,
-    updateDataPasien,
     deleteDataPasien,
 };

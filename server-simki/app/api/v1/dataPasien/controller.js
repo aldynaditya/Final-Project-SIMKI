@@ -56,18 +56,6 @@ const create = async (req, res, next) => {
     }
 };
 
-const update = async (req, res, next) => {
-    try {
-        const result = await updateDataPasien(req);
-
-        res.status(StatusCodes.OK).json({
-            data: result,
-        });
-    } catch (err) {
-        next(err);
-    }
-};
-
 const destroy = async (req, res, next) => {
     try {
         const result = await deleteDataPasien(req);
@@ -84,7 +72,6 @@ module.exports = {
     index,
     find,
     search,
-    update,
     destroy,
     create,
 };

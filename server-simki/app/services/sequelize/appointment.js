@@ -154,7 +154,7 @@ const updateAppointment = async (req) => {
             if (existingEMR) {
                 noEMR = existingEMR.noEMR;
             } else {
-                noEMR = await generateNoEMR(); // Panggil generateNoEMR secara asynchronous
+                noEMR = await generateNoEMR();
             }
 
             emrData = await EMRPasien.create({

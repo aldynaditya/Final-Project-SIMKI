@@ -3,7 +3,7 @@ const validateTimeFormat = (time) => {
     if (!timeRegex.test(time)) {
         throw new Error('Invalid time format. Use HH:mm.');
     }
-    return `${time}:00`; // Convert HH:mm to HH:mm:ss
+    return `${time}:00`;
 };
 
 const timesOverlap = (start1, end1, start2, end2) => {

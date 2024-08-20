@@ -43,7 +43,7 @@ const authenticatePasien = async (req, res, next) => {
 
         const payload = isTokenValid({ token });
         console.log("Payload:", payload)
-        // Attach the user and his permissions to the req object
+        
         req.pasien = {
             email: payload.email,
             role: payload.role,

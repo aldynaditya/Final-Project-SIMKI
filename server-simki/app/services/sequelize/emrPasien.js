@@ -303,8 +303,6 @@ const finishOrder = async (req, res) => {
     return transaksi;
 };
 
-
-
 const getAllMedicalRecord = async (req) => {
     const { id: noEMR } = req.params;
 

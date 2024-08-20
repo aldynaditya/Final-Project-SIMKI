@@ -70,4 +70,16 @@ OrderSurat.belongsTo(Episode, {
     as: 'episode'
 });
 
+SuratRujukan.hasOne(OrderSurat, { 
+    foreignKey: 'suratRujukanId',
+    targetKey: 'uuid', 
+    as: 'ordersuratrujukan' 
+});
+
+SuratSakit.hasOne(OrderSurat, { 
+    foreignKey: 'suratSakitId',
+    targetKey: 'uuid', 
+    as: 'ordersuratsakit' 
+});
+
 module.exports = OrderSurat;
