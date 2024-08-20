@@ -146,9 +146,10 @@ const getVitalSignbyDoctor = async (req) => {
         throw new NotFoundError(`Tidak ada rekam medis dengan uuid: ${uuid}`);
     }
 
-    const episode = emr.episodes[0];
+    const episode = emr.episode
 
     const result = {
+        emrPasienId: emr.uuid,
         id: episode.uuid,
         alergi: episode.alergi,
         riwayat_penyakit: episode.riwayat_penyakit,
@@ -343,9 +344,9 @@ const getAllMedicalRecord = async (req) => {
 
     const result = emr.map(emr => {
         const appointment = emr.appointment;
-        const episode= emr.episodes[0]
+        const episode= emr.episode
         return {
-            id: emr.uuid || ' ',
+            id: emr.uuid,
             tanggal: appointment.tanggal || ' ',
             pemeriksa: appointment.schedule.user_klinik.nama || ' ',
             subjective: episode.subjective || ' ',
@@ -394,11 +395,11 @@ const findOneMedicalRecord = async (req) => {
     }
 
     const appointment = emr.appointment;
-    const episode = emr.episodes[0];
+    const episode = emr.episode;
 
     const result = {
+        emrPasienId: emr.uuid,
         id: episode.uuid || ' ',
-        emrId: emr.uuid || ' ',
         noEMR: emr.noEMR || ' ',
         nama_pasien: appointment.datapasien.nama_lengkap || ' ',
         tanggal_lahir: appointment.datapasien.tanggal_lahir || ' ',

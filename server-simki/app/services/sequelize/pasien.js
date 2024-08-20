@@ -26,6 +26,9 @@ const {
 const { 
     otpMail 
 } = require('../mail');
+const { 
+    urlResetPassword 
+} = require('../../config');
 
 const signupPasien = async (req) => {
     const { nik, nama_lengkap, tempat_lahir, tanggal_lahir, jenis_kelamin, gol_darah, kewarganegaraan, alamat, email, password } = req.body;
@@ -154,7 +157,7 @@ const sendResetPasswordEmail = async (req, res) => {
 
     const token = createJWT({ payload: createTokenPassword(user) });
 
-    const resetUrl = `http://localhost:3000/ganti-password?token=${token}`;
+    const resetUrl = `${urlResetPassword}?token=${token}`;
 
     const data = { resetUrl };
 
