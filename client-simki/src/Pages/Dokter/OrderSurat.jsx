@@ -99,12 +99,17 @@ const OrderSurat = () => {
 
     const CetakSurat = (order) => {
         const combinedData = {
-            orderInfo: data, // data from getorderInfo selector
-            orderDetails: order, // individual order from orderData
+            orderInfo: data,
+            orderDetails: order,
         };
         setPrintData(combinedData);
-        handlePrint();
     };
+
+    useEffect(() => {
+        if (printData) {
+            handlePrint();
+        }
+    }, [handlePrint, printData]);
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
