@@ -45,21 +45,10 @@ const Transaksi = db.define('transaksi', {
         type: DataTypes.ENUM( 'Awaiting Payment','Completed' ),
         defaultValue: 'Awaiting Payment',
     },
-    orderObatId: {
-        type: DataTypes.UUID,
-        allowNull: true,
-    },
-    orderSuratId: {
-        type: DataTypes.UUID,
-        allowNull: true,
-    },
-    orderProsedurId: {
-        type: DataTypes.UUID,
-        allowNull: true,
-    },
     episodeId: {
         type: DataTypes.UUID,
         allowNull: false,
+        unique: true,
     }, 
     userKlinikId: {
         type: DataTypes.UUID,
@@ -68,25 +57,6 @@ const Transaksi = db.define('transaksi', {
 }, {
     timestamps: true,
     tableName: 'transaksi'
-});
-
-
-Transaksi.belongsTo(OrderSurat, {
-    foreignKey: 'orderSuratId',
-    targetKey: 'uuid',
-    as: 'ordersurat'
-});
-
-Transaksi.belongsTo(OrderObat, {
-    foreignKey: 'orderObatId',
-    targetKey: 'uuid',
-    as: 'orderobat'
-});
-
-Transaksi.belongsTo(OrderProsedur, {
-    foreignKey: 'orderProsedurId',
-    targetKey: 'uuid',
-    as: 'orderprosedur'
 });
 
 Transaksi.belongsTo(Episode, {

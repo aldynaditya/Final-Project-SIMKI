@@ -15,6 +15,7 @@ const Episode = db.define('episode', {
     emrPasienId: {
         type: DataTypes.UUID,
         allowNull: false,
+        unique: true,
         references: {
             model: EMRPasien,
             key: 'uuid',
@@ -110,6 +111,6 @@ const Episode = db.define('episode', {
 });
 
 Episode.belongsTo(EMRPasien, { foreignKey: 'emrPasienId', as: 'emrpasien' });
-EMRPasien.hasMany(Episode, { foreignKey: 'emrPasienId' });
+EMRPasien.hasOne(Episode, { foreignKey: 'emrPasienId' });
 
 module.exports = Episode;

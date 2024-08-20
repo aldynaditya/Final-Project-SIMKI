@@ -65,6 +65,7 @@ const QuestionnairePopup = ({ id, onClose, onComplete }) => {
     const handleCloseModal = () => {
         setAlert({ status: false, message: '' });
         onClose();
+        window.location.reload();
     };
 
     return (
