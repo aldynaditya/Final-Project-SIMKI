@@ -60,6 +60,9 @@ const getOrderDetailInformation = async(req) => {
         jam: episode.createdAt,
         pemeriksa: detail.schedule.user_klinik.nama,
         namaPasien: datapasien.nama_lengkap,
+        tanggalLahir: datapasien.tanggal_lahir,
+        jenisKelamin: datapasien.jenis_kelamin,
+        alamat: datapasien.alamat,
         nomorFaktur: episode.invoiceNumber,
         poli: detail.schedule.poli,
     };

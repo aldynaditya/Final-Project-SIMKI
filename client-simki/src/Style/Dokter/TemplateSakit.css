@@ -1,10 +1,6 @@
 .template-surat-sakit-container {
-    width: 800px;
-    height: 1100px;
-    margin: 40px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 210mm;
+    height: 283mm;
     font-family: "Times New Roman", Times, serif;
     line-height: 1.5;
   }
@@ -14,15 +10,15 @@
     flex-direction: row;
     border-bottom: 2px solid black;
     margin-left: 70px;
-    margin-right: 60px;
+    margin-right: 70px;
     text-align: center;
     margin-bottom: 20px;
     margin-top: 50px;
   }
 
   .content-surat-sakit{
-    margin-left: 80px;
-    margin-right: 50px;
+    margin-left: 70px;
+    margin-right: 70px;
   }
 
   .ket-header {
@@ -51,17 +47,32 @@
     margin-bottom: 30px;
 }
 
-.ttl-umur-sakit{
-    display: flex;
-    flex-direction: row;
-}
-.ttl-surat-sakit{
-    margin-right: 350px;
+.isian-surat-sakit {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px 10px;
+  margin-bottom: 30px;
+  margin-left: 50px;
 }
 
+.isian-surat-sakit p {
+  display: contents;
+  line-height: 1;
+}
 
-.isian-surat-sakit{
-    margin-bottom: 20px;
+.isian-surat-sakit p span:first-child {
+  justify-self: start;
+}
+
+.isian-surat-sakit p span:last-child {
+  justify-self: start;
+  white-space: pre-line;
+  word-wrap: break-word;
+  text-indent: -10px;
+}
+
+.isian-surat-sakit p span:first-child {
+  margin-right: 10px;
 }
 
 .kal-kedua-sakit, .isian-surat-rujukan{
@@ -75,9 +86,8 @@
     flex-direction: column;
     align-items: flex-end; 
     text-align: left; 
-    margin-right: 50px; 
+    margin-right: 70px; 
 }
-
 
 .ttd-dokter{
     margin-top: 90px;

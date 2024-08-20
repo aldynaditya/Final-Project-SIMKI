@@ -6,11 +6,16 @@ import SuratRujukan from './Rujukan';
 const FormatSurat = React.forwardRef(({ data }, ref) => {
     if (!data) return null;
 
-    const { jenis_surat } = data;
+    const { orderInfo, orderDetails } = data;
+    const { jenis_surat } = orderDetails;
 
     return (
         <div ref={ref}>
-            {jenis_surat === 'sakit' ? <SuratSakit data={data} /> : <SuratRujukan data={data} />}
+            {jenis_surat === 'sakit' ? (
+                <SuratSakit orderInfo={orderInfo} orderDetails={orderDetails} />
+            ) : (
+                <SuratRujukan orderInfo={orderInfo} orderDetails={orderDetails} />
+            )}
         </div>
     );
 });
