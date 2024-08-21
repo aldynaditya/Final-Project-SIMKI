@@ -2,9 +2,14 @@ import React from 'react';
 import '../../Style/Dokter/TemplateSakit.css';
 import '../../Style/Dokter/TemplateRujukan.css';
 import logoklinik from '../../images/logoklinik.png';
-import { formatDateStrip } from '../../utils/dateUtils';
+import { 
+  formatDateStrip,
+  calculateAge
+} from '../../utils/dateUtils';
 
 const TemplateSuratRujukan = ({ orderInfo, orderDetails }) => {
+  const age = calculateAge(orderInfo.tanggalLahir);
+
   return (
     <div className="template-surat-sakit-container">
       <div className="template-surat-sakit-header">
@@ -26,7 +31,7 @@ const TemplateSuratRujukan = ({ orderInfo, orderDetails }) => {
         <div className='isian-surat-sakit'>
             <p><span>Nama Lengkap</span><span>: {orderInfo.namaPasien}</span></p>
             <p><span>Tanggal Lahir</span><span>: {formatDateStrip(orderInfo.tanggalLahir)}</span></p>
-            <p><span>Umur</span><span>: {orderDetails.umur}</span></p>
+            <p><span>Umur</span><span>: {age}</span></p>
             <p><span>Jenis Kelamin</span><span>: {orderInfo.jenisKelamin}</span></p>
         </div>
 

@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import '../../Style/Pasien/DetailKunjungan.css';
 import { fetchDetail } from '../../redux/patient/detail/actions';
 import { fetchResponses } from '../../redux/patient/response/actions';
+import { formatDateStrip } from '../../utils/dateUtils';
 import QuestionnairePopup from './QuestionnairePopup';
 import FeedbackPopUp from './FeedbackPopUp';
 
@@ -54,14 +55,6 @@ const DetailKunjungan = () => {
         setFeedbackPopUpOpen(false);
     };
 
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    };
-
     if (loading || responsesLoading) return <div>Loading...</div>;
     if (error || responsesError) return <div>Error: {error || responsesError}</div>;
 
@@ -72,7 +65,7 @@ const DetailKunjungan = () => {
                 <div className="form_field">
                     <div className="tanggal_kunjungan">
                         <span className="text_tanggal_kunjungan">Tanggal:</span>
-                        <input type="text" value={formatDate(data.tanggal) || ''} readOnly />
+                        <input type="text" value={formatDateStrip(data.tanggal) || ''} readOnly />
                     </div>
                     <div className="dokter_dikunjungin">
                         <span className="text_dokter_dikunjungin">Dokter:</span>

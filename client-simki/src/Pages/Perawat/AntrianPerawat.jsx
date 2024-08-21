@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchEmr } from '../../redux/doctor/indexEmr/actions';
+import { formatDateStrip } from "../../utils/dateUtils";
 import SearchBar from "../../components/SearchBar"; 
 import '../../Style/Perawat/PasienPerawat.css'; 
 
@@ -16,14 +17,6 @@ const PasienPerawat= () => {
 
     const EmrPerawat = (id) => {
         navigate(`/perawat/emr-perawat/${id}`);
-    };
-
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
     };
 
     if (loading) return <div>Loading...</div>;
@@ -54,7 +47,7 @@ const PasienPerawat= () => {
                                     <tr key={emr.id}>
                                         <td>{emr.noEMR}</td>
                                         <td>{emr.nama_pasien}</td>
-                                        <td>{formatDate(emr.tanggal_lahir)}</td>
+                                        <td>{formatDateStrip(emr.tanggal_lahir)}</td>
                                         <td>{emr.jenis_kelamin}</td>
                                         <td>
                                             <button className="emr-perawat" onClick={() => EmrPerawat(emr.id)}>Isi CPPT</button>

@@ -6,6 +6,7 @@ import BuatJanjiPopup from './BuatJanjiPopup';
 import SearchBar from "../../components/SearchBar";
 import { fetchPasien } from '../../redux/resepsionis/indexPatient/actions';
 import { deletePasien } from '../../redux/resepsionis/deletePatient/actions';
+import { formatDateStrip } from "../../utils/dateUtils";
 import Modal from 'react-modal';
 
 const PendaftarBaru = () => {
@@ -87,14 +88,6 @@ const PendaftarBaru = () => {
         setAlert({ status: false, message: '', type: '' });
     };
 
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    };
-
     return (
         <div className="pendaftar-baru-wrapper">
             <div className="pendaftar-baru-container">
@@ -123,7 +116,7 @@ const PendaftarBaru = () => {
                                     <tr key={row.id}>
                                         <td>{row.nama_lengkap}</td>
                                         <td>{row.nik}</td>
-                                        <td>{formatDate(row.tanggal_lahir)}</td>
+                                        <td>{formatDateStrip(row.tanggal_lahir)}</td>
                                         <td>{row.jenis_kelamin}</td>
                                         <td>{row.alamat}</td>
                                         <td>

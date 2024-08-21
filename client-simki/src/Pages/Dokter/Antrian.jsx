@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchEmr } from '../../redux/doctor/indexEmr/actions';
 import '../../Style/Dokter/AntrianDokter.css'; 
+import { formatDateStrip } from "../../utils/dateUtils";
 
 const AntrianDokter= () => {
     const navigate = useNavigate();
@@ -15,14 +16,6 @@ const AntrianDokter= () => {
 
     const handleIsiCppt = (id) => {
         navigate(`/dokter/input-cppt/${id}`);
-    };
-
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
     };
 
     if (loading) return <div>Loading...</div>;
@@ -53,7 +46,7 @@ const AntrianDokter= () => {
                                     <tr key={emr.id}>
                                         <td>{emr.noEMR}</td>
                                         <td>{emr.nama_pasien}</td>
-                                        <td>{formatDate(emr.tanggal_lahir)}</td>
+                                        <td>{formatDateStrip(emr.tanggal_lahir)}</td>
                                         <td>{emr.jenis_kelamin}</td>
                                         <td>
                                             <button className="emr-dokter" onClick={() => handleIsiCppt(emr.id)}>Isi CPPT</button>

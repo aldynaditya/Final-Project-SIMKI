@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { fetchdetailEmr } from '../../redux/doctor/detailEmr/actions';
 import { createVital } from '../../redux/nurse/vital/actions';
 import { fetchVitalsign } from '../../redux/doctor/vitalSign/actions';
+import { formatDateStrip } from '../../utils/dateUtils';
 import Modal from 'react-modal';
 import RiwayatEpisode from '../../components/RiwayatEps';
 import '../../Style/Perawat/EmrPerawat.css';
@@ -69,15 +70,7 @@ const EmrPerawat = () => {
 
     const handleSimpan = () => {
         dispatch(createVital(id, formData));
-        setAlert({ status: false, message: '', type: '' });  // Reset alert before dispatching
-    };
-
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
+        setAlert({ status: false, message: '', type: '' });
     };
 
     if (loading) return <div>Loading...</div>;
@@ -97,7 +90,7 @@ const EmrPerawat = () => {
                 </div>
                 <div className='tgl-lahir-rsp'>
                     <span className='text-ttl-rsp'>Tanggal Lahir :</span>
-                    <input type='text' className='kolom-ttl-rsp' name="tanggal_lahir" value={formatDate(data.tanggal_lahir)} readOnly></input>
+                    <input type='text' className='kolom-ttl-rsp' name="tanggal_lahir" value={formatDateStrip(data.tanggal_lahir)} readOnly></input>
                 </div>
                 <div className='gender-goldar-rsp'>
                     <div className='gender-emr-rsp'>
@@ -118,7 +111,7 @@ const EmrPerawat = () => {
             <div className='kolom-detail-eps'>
                 <div className='tgl-detail'>
                     <span className='text-tgl-detail'>Tanggal :</span>
-                    <input type='text' className='kolom-tgl-detail' name="tanggal" value={formatDate(data.tanggal)} readOnly></input>
+                    <input type='text' className='kolom-tgl-detail' name="tanggal" value={formatDateStrip(data.tanggal)} readOnly></input>
                 </div>
                 <div className='poli-detail'>
                     <span className='text-poli-detail'>Poli :</span>

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchNotifikasiSurat } from '../../redux/doctor/indexNotification/actions';
+import { formatDateStrip } from "../../utils/dateUtils";
 import '../../Style/Dokter/Notifikasi.css';
 import SearchBar from "../../components/SearchBar";
 
@@ -11,14 +12,6 @@ const Notifikasi = () => {
     useEffect(() => {
         dispatch(fetchNotifikasiSurat());
     }, [dispatch]);
-
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    };
 
     if (loading) {
         return <div>Loading...</div>;
@@ -55,7 +48,7 @@ const Notifikasi = () => {
                                         <td>{row.noEMR}</td>
                                         <td>{row.namaPasien}</td>
                                         <td>{row.versi_surat}</td>
-                                        <td>{formatDate(row.tanggal)}</td>
+                                        <td>{formatDateStrip(row.tanggal)}</td>
                                         <td>{row.status}</td>
                                     </tr>
                                 ))}
