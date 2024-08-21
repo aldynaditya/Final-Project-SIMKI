@@ -5,14 +5,17 @@ import '../../Style/Pasien/DetailKunjungan.css';
 import { fetchDetail } from '../../redux/patient/detail/actions';
 import { fetchResponses } from '../../redux/patient/response/actions';
 import QuestionnairePopup from './QuestionnairePopup';
+import FeedbackPopUp from './FeedbackPopUp';
 
 const DetailKunjungan = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const { data, loading, error } = useSelector(state => state.detail);
     const { responses, loading: responsesLoading, error: responsesError } = useSelector(state => state.responses);
-    const [isQuestionnaireOpen, setIsQuestionnaireOpen] = useState(false);
+    const [isKuisionerPopUpOpen, setIsKuisionerPopUpOpen] = useState(false);
+    const [isFeedbackPopUpOpen, setFeedbackPopUpOpen] = useState(false);
     const [completed, setCompleted] = useState(false);
+    const isFeedbackAvailable = data.feed_back && data.feed_back.length > 0;
 
     useEffect(() => {
         dispatch(fetchDetail(id));
@@ -31,16 +34,24 @@ const DetailKunjungan = () => {
     }, [responses]);
 
     const handleKuisioner = () => {
-        setIsQuestionnaireOpen(true);
+        setIsKuisionerPopUpOpen(true);
     };
 
     const handleCloseQuestionnaire = () => {
-        setIsQuestionnaireOpen(false);
+        setIsKuisionerPopUpOpen(false);
     };
 
     const handleQuestionnaireComplete = () => {
         setCompleted(true);
-        setIsQuestionnaireOpen(false);
+        setIsKuisionerPopUpOpen(false);
+    };
+
+    const handleFeedback = () => {
+        setFeedbackPopUpOpen(true);
+    };
+
+    const handleCloseFeedback = () => {
+        setFeedbackPopUpOpen(false);
     };
 
     const formatDate = (dateString) => {
@@ -83,20 +94,36 @@ const DetailKunjungan = () => {
                         <span className="text_tindakan_pasien">Tindakan yang Diberikan:</span>
                         <input type="text" value={data.tindakan || ''} readOnly />
                     </div>
-                    <button
-                        className='kuisioner'
-                        onClick={handleKuisioner}
-                        disabled={completed}
-                    >
-                        Isi Kuisioner
-                    </button>
+                    </div>
+                    <div className="button_container_detailkunjungan">
+                        <button
+                            className='kuisioner'
+                            onClick={handleKuisioner}
+                            disabled={completed}
+                        >
+                            Isi Kuisioner
+                        </button>
+                        <button
+                            className={`feedback ${!isFeedbackAvailable ? 'disabled' : ''}`}
+                            onClick={handleFeedback}
+                            disabled={!isFeedbackAvailable}
+                            title={!isFeedbackAvailable ? 'Feedback belum ada' : ''}
+                        >
+                            Feedback
+                        </button>
                 </div>
             </div>
-            {isQuestionnaireOpen && 
+            {isKuisionerPopUpOpen && 
                 <QuestionnairePopup 
                     id={id} 
                     onClose={handleCloseQuestionnaire} 
                     onComplete={handleQuestionnaireComplete} 
+                />
+            }
+            {isFeedbackPopUpOpen && 
+                <FeedbackPopUp
+                data={data.feed_back} 
+                onClose={handleCloseFeedback}
                 />
             }
         </div>

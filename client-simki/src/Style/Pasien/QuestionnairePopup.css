@@ -19,8 +19,7 @@
     padding: 20px;
     border-radius: 10px;
     text-align: center;
-    max-width: 90%; /* Membuat kontainer popup sedikit lebih kecil untuk perangkat kecil */
-    width: 100%;
+    max-width: 90%;
     box-sizing: border-box;
     border: 1px solid #ccc;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -33,6 +32,20 @@
     width: 100%;
     margin-bottom: 20px;
     font-size: 16px;
+}
+
+.cancel-x-kuisioner {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    text-decoration: none;
+    color: #333; /* Darker color for the text */
+    font-size: 20px; /* Increase font size */
+    background: transparent; /* No background */
+    border: none; /* No border */
+    cursor: pointer; /* Pointer cursor */
+    font-family: 'Arial', sans-serif; /* Ensure a clean, sans-serif font */
+    font-weight: normal; 
 }
 
 /* Konten opsi */
@@ -96,103 +109,4 @@
     cursor: pointer;
 }
 
-/* Penyesuaian Responsif */
 
-/* Untuk perangkat dengan layar kecil (misalnya, ponsel) */
-@media (max-width: 600px) {
-    .questionnaire_content {
-        padding: 15px;
-        max-width: 95%; /* Memastikan kontainer popup tidak terlalu besar pada layar kecil */
-    }
-
-    .questionnaire_header {
-        font-size: 14px; /* Ukuran font header lebih kecil pada perangkat kecil */
-    }
-
-    .option_container {
-        width: 50px; /* Ukuran opsi yang lebih kecil pada perangkat kecil */
-    }
-
-    .option_circle {
-        width: 25px; /* Ukuran lingkaran lebih kecil pada perangkat kecil */
-        height: 25px;
-    }
-
-    .option_label {
-        font-size: 10px; /* Ukuran font label lebih kecil pada perangkat kecil */
-    }
-
-    .legend {
-        font-size: 10px; /* Ukuran font legend lebih kecil pada perangkat kecil */
-    }
-
-    .next_button {
-        font-size: 14px; /* Ukuran font tombol lebih kecil pada perangkat kecil */
-    }
-}
-
-/* Untuk perangkat dengan layar menengah (misalnya, tablet) */
-@media (min-width: 601px) and (max-width: 1023px) {
-    .questionnaire_content {
-        padding: 20px;
-        max-width: 80%; /* Memastikan kontainer popup cukup besar pada tablet */
-    }
-
-    .questionnaire_header {
-        font-size: 16px; /* Ukuran font header sesuai pada perangkat menengah */
-    }
-
-    .option_container {
-        width: 60px; /* Ukuran opsi yang sesuai pada perangkat menengah */
-    }
-
-    .option_circle {
-        width: 30px; /* Ukuran lingkaran sesuai pada perangkat menengah */
-        height: 30px;
-    }
-
-    .option_label {
-        font-size: 14px; /* Ukuran font label sesuai pada perangkat menengah */
-    }
-
-    .legend {
-        font-size: 14px; /* Ukuran font legend sesuai pada perangkat menengah */
-    }
-
-    .next_button {
-        font-size: 16px; /* Ukuran font tombol sesuai pada perangkat menengah */
-    }
-}
-
-/* Untuk perangkat dengan layar besar (misalnya, PC) */
-@media (min-width: 1024px) {
-    .questionnaire_content {
-        padding: 30px;
-        max-width: 500px; /* Memastikan kontainer popup cukup besar pada layar besar */
-    }
-
-    .questionnaire_header {
-        font-size: 18px; /* Ukuran font header lebih besar pada perangkat besar */
-    }
-
-    .option_container {
-        width: 70px; /* Ukuran opsi lebih besar pada perangkat besar */
-    }
-
-    .option_circle {
-        width: 40px; /* Ukuran lingkaran lebih besar pada perangkat besar */
-        height: 40px;
-    }
-
-    .option_label {
-        font-size: 16px; /* Ukuran font label lebih besar pada perangkat besar */
-    }
-
-    .legend {
-        font-size: 16px; /* Ukuran font legend lebih besar pada perangkat besar */
-    }
-
-    .next_button {
-        font-size: 18px; /* Ukuran font tombol lebih besar pada perangkat besar */
-    }
-}
