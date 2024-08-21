@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchdetailEmr } from '../../redux/doctor/detailEmr/actions';
 import { fetchVitalsign } from '../../redux/doctor/vitalSign/actions';
+import { formatDateStrip } from '../../utils/dateUtils';
 import RiwayatEpisode from '../../components/RiwayatEps';
 import PopUpCPPT from './PopUpCPPT';
 import '../../Style/Dokter/EntriMasuk.css';
@@ -34,14 +35,6 @@ const EntriMasuk = () => {
         setIsPopupVisible(false);
     };
 
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    };
-
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
 
@@ -59,7 +52,7 @@ const EntriMasuk = () => {
                 </div>
                 <div className='tgl-lahir-rsp'>
                     <span className='text-ttl-rsp'>Tanggal Lahir :</span>
-                    <input type='text' className='kolom-ttl-rsp' name="tanggal_lahir" value={formatDate(data.tanggal_lahir)} readOnly></input>
+                    <input type='text' className='kolom-ttl-rsp' name="tanggal_lahir" value={formatDateStrip(data.tanggal_lahir)} readOnly></input>
                 </div>
                 <div className='gender-goldar-rsp'>
                     <div className='gender-emr-rsp'>
@@ -80,7 +73,7 @@ const EntriMasuk = () => {
             <div className='kolom-detail-eps'>
                 <div className='tgl-detail'>
                     <span className='text-tgl-detail'>Tanggal :</span>
-                    <input type='text' className='kolom-tgl-detail' name="tanggal" value={formatDate(data.tanggal)} readOnly></input>
+                    <input type='text' className='kolom-tgl-detail' name="tanggal" value={formatDateStrip(data.tanggal)} readOnly></input>
                 </div>
                 <div className='pemeriksa-detail'>
                     <span className='text-pemeriksa-detail'>Pemeriksa :</span>

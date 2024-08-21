@@ -9,6 +9,7 @@ import SuratSakit from './SuratSakit';
 import Modal from 'react-modal';
 import { useReactToPrint } from 'react-to-print';
 import FormatSurat from '../../components/FormatSurat';
+import { formatDateStrip, formatTime } from '../../utils/dateUtils';
 import '../../Style/Dokter/OrderObat.css';
 import '../../Style/Dokter/OrderProsedur.css';
 
@@ -111,26 +112,6 @@ const OrderSurat = () => {
         }
     }, [handlePrint, printData]);
 
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    };
-
-    const formatTime = (dateString) => {
-        const date = new Date(dateString);
-    
-        const utcOffset = 7 * 60;
-        const localDate = new Date(date.getTime() + utcOffset * 60 * 1000);
-
-        const hours = String(localDate.getUTCHours()).padStart(2, '0');
-        const minutes = String(localDate.getUTCMinutes()).padStart(2, '0');
-    
-        return `${hours}:${minutes}`;
-    };
-
     if (loading || deleteLoading ) {
         return <div>Loading...</div>;
     }
@@ -156,7 +137,7 @@ const OrderSurat = () => {
                 <div className='baris-dua'>
                     <div className='tanggal-order-obat'>
                         <span className='text-tanggal-obat'>Tanggal :</span>
-                        <input type="date" className='kolom-tanggal-obat' name="tanggal" value={formatDate(data.tanggal)} readOnly/>
+                        <input type="date" className='kolom-tanggal-obat' name="tanggal" value={formatDateStrip(data.tanggal)} readOnly/>
                     </div>
                     <div className='nfaktur-order-obat'>
                         <span className='text-nfaktur-obat'>Nomor Faktur :</span>
@@ -221,7 +202,7 @@ const OrderSurat = () => {
                     <tbody>
                     {orderData.map((order) => (
                             <tr key={order.id}>
-                                <td>{formatDate(order.tanggal)}</td>
+                                <td>{formatDateStrip(order.tanggal)}</td>
                                 <td>{order.jenis_surat}</td>
                                 <td>{order.tujuan}</td>
                                 <td>{order.versi_surat}</td>

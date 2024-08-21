@@ -8,6 +8,7 @@ import buatjanji from "../../images/buatjanji.png";
 import riwayat from "../../images/riwayat.png";
 import { fetchProfile } from '../../redux/patient/profile/actions';
 import { fetchAppointments } from '../../redux/patient/appointment/actions';
+import { formatDateStrip } from "../../utils/dateUtils";
 import Modal from 'react-modal';
 
 const HalamanPasien = () => {
@@ -41,14 +42,6 @@ const HalamanPasien = () => {
             });
         }
     }, [profile]);
-
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    };
 
     const PROFILE_PATH = 'profile';
     const BUATJANJI_PATH = 'buat-janji';
@@ -113,7 +106,7 @@ const HalamanPasien = () => {
                     <tbody>
                         {sortedAppointments.map((appointment, index) => (
                             <tr key={index}>
-                                <td>{formatDate(appointment.tanggal)}</td>
+                                <td>{formatDateStrip(appointment.tanggal)}</td>
                                 <td>{appointment.nama_dokter}</td>
                                 <td>{appointment.poli}</td>
                                 <td>{appointment.jam}</td>

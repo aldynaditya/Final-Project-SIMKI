@@ -5,6 +5,7 @@ import { fetchorderInfo } from '../../redux/doctor/orderInfo/actions';
 import { fetchOrderObat } from '../../redux/doctor/indexMedicine/actions';
 import { deleteorderObat } from '../../redux/doctor/indexDeleteMedicine/actions';
 import { finishorderObat } from '../../redux/doctor/finishOrderObat/actions';
+import { formatDateStrip, formatTime } from '../../utils/dateUtils';
 import TambahObat from './TambahObat';
 import Modal from 'react-modal';
 import '../../Style/Dokter/OrderObat.css';
@@ -70,26 +71,6 @@ const OrderObat = () => {
         }
     };
 
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    };
-
-    const formatTime = (dateString) => {
-        const date = new Date(dateString);
-    
-        const utcOffset = 7 * 60;
-        const localDate = new Date(date.getTime() + utcOffset * 60 * 1000);
-
-        const hours = String(localDate.getUTCHours()).padStart(2, '0');
-        const minutes = String(localDate.getUTCMinutes()).padStart(2, '0');
-    
-        return `${hours}:${minutes}`;
-    };
-
     const SimpanObat = async () => {
         try {
             await dispatch(finishorderObat(id));
@@ -141,7 +122,7 @@ const OrderObat = () => {
                 <div className='baris-dua'>
                     <div className='tanggal-order-obat'>
                         <span className='text-tanggal-obat'>Tanggal :</span>
-                        <input type="date" className='kolom-tanggal-obat' name="tanggal" value={formatDate(data.tanggal)} readOnly/>
+                        <input type="date" className='kolom-tanggal-obat' name="tanggal" value={formatDateStrip(data.tanggal)} readOnly/>
                     </div>
                     <div className='nfaktur-order-obat'>
                         <span className='text-nfaktur-obat'>Nomor Faktur :</span>
