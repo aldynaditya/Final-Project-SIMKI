@@ -79,6 +79,7 @@ import updatestatusappointmentReducer from './resepsionis/updateStatus/reducer';
 import editJadwalReducer from './resepsionis/scheduleEdit/reducer';
 import createjadwalReducer from './resepsionis/scheduleCreate/reducer';
 import deleteJadwalReducer from './resepsionis/scheduleDelete/reducer';
+import editperiodeReducer from './resepsionis/editPeriodSickLetter/reducer';
 
 const composerEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -101,6 +102,7 @@ const rootReducers = combineReducers({
     resendOtp: resendOtpReducer,
     questions: questionReducer,
     responses: responseReducer,
+    editPeriode: editperiodeReducer,
     //Page Pendaftar Baru
     createPatient: createpasienReducer,
     deletePatient: deletepasienReducer,
@@ -109,7 +111,7 @@ const rootReducers = combineReducers({
     //Page buat janji
     antrian: antrianReducer,
     getonePatient: getonepatientReducer,
-    updateStatus: updatestatusappointmentReducer,
+    updateStatusAppointment: updatestatusappointmentReducer,
     //Page Kelola Jadwal
     createJadwal: createjadwalReducer,
     deleteJadwal: deleteJadwalReducer,

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchEpisodeById } from '../../redux/doctor/DetailEpisodeById/actions';
-import RiwayatEpisode from '../RiwayatEps/index';
 import CetakSuratPopup from '../../Pages/Resepsionis/CetakSuratPopup';
 import HasilKuisionerPopup from '../../Pages/Dokter/KuisionerPopUp'; 
 import { formatDateStrip } from '../../utils/dateUtils';
@@ -158,7 +157,7 @@ const DetailEpisode = () => {
             </div>
             {showCetakSuratPopup &&
                 <CetakSuratPopup
-                id={id} 
+                id={data.id} 
                 onClose={closeCetakSuratPopup}
                 onComplete={handleCetakSuratComplete} 
                 />

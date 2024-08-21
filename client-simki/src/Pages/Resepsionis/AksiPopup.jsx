@@ -6,7 +6,7 @@ import { updatestatusAppointment } from '../../redux/resepsionis/updateStatus/ac
 
 const UpdateStatus = ({ id, onClose, onSuccess }) => {
     const dispatch = useDispatch();
-    const { data, loading, error } = useSelector(state => state.updateStatus);
+    const { data, loading, error } = useSelector(state => state.updateStatusAppointment);
 
     const [formData, setFormData] = useState({
         status: '',

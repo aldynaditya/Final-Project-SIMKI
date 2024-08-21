@@ -1,70 +1,133 @@
-import React, { useState } from 'react';
-import jsPDF from 'jspdf';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchorderInfo } from '../../redux/doctor/orderInfo/actions';
+import { fetchOrderSurat } from '../../redux/doctor/indexLetter/actions';
+import { editPeriode } from '../../redux/resepsionis/editPeriodSickLetter/actions'
+import Modal from 'react-modal';
+import { useReactToPrint } from 'react-to-print';
+import FormatSurat from '../../components/FormatSurat';
+import { formatDateToInput } from '../../utils/dateUtils';
 import '../../Style/Resepsionis/CetakSuratPopup.css';
 
-const CetakSuratPopup = ({ onClose, nama }) => {
-    const [activeLink, setActiveLink] = useState('');
-    const [umur, setUmur] = useState('');
-    const [job, setJob] = useState('');
-    const [diagnosis, setDiagnosis] = useState('');
-    const [periode, setPeriode] = useState('');
-    const [hingga, setHingga] = useState('');
+const CetakSuratPopup = ({ id, onClose }) => {
+    const dispatch = useDispatch();
+    const { data, loading, error } = useSelector(state => state.getorderInfo);
+    const { data: orderData, loading: orderloading, error: orderError } = useSelector((state) => state.getorderSurat);
+    const { data: periodData, loading: periodloading, error: periodError } = useSelector((state) => state.editPeriode);
 
-    const handleLinkCancel = (link) => {
-        setActiveLink(link);
-        onClose(); // Close the popup
+    const [formData, setFormData] = useState({
+        periode_start: '',
+        periode_end: '',
+    });
+
+    const [alert, setAlert] = useState({ status: false, message: '', type: '' });
+    const [printData, setPrintData] = useState(null);
+
+    const isFormValid = useCallback(() => {
+        return Object.values(formData).every(value => {
+            return String(value).trim() !== '';
+        });
+    }, [formData]);
+
+    useEffect(() => {
+        dispatch(fetchorderInfo(id));
+        dispatch(fetchOrderSurat(id));
+    }, [dispatch, id]);
+
+    useEffect(() => {
+        if (orderData) {
+            const sakitData = orderData.find(item => item.jenis_surat === 'sakit')|| {};
+    
+            if (sakitData) {
+                setFormData({
+                    periode_start: formatDateToInput(sakitData.periode_start),
+                    periode_end: formatDateToInput(sakitData.periode_end),
+                });
+            } 
+        }
+    }, [orderData]);
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
     };
 
-    const handlePerubahan = () => {
-        alert('Data Tersimpan');
-        onClose(); // Close the popup
+    const sakitData = orderData.find(item => item.jenis_surat === 'sakit') || {};
+
+    const handleSimpanPerubahan = () => {
+        if (!isFormValid()) {
+            setAlert({
+                status: true,
+                message: 'Isi seluruh form',
+                type: 'danger'
+            });
+            return;
+        } 
+        dispatch(editPeriode(sakitData.suratSakitId, formData))
+            .then(() => {
+                setAlert({
+                    status: true,
+                    message: 'Data berhasil diperbarui!',
+                    type: 'success'
+                });
+            })
+            dispatch(fetchorderInfo(id))
+            dispatch(fetchOrderSurat(id))
+            .catch(() => {
+                setAlert({
+                    status: true,
+                    message: 'Gagal memperbarui data!',
+                    type: 'danger'
+                });
+            });
     };
 
-    const handleCetakSurat = () => {
-        const doc = new jsPDF();
+    const printRef = useRef();
 
-        doc.setFontSize(12);
-        doc.text('KLINIK PRATAMA DIPONEGORO1', 20, 20);
-        doc.text('Alamat : Tembalang, Kec. Tembalang, Kota Semarang, Jawa Tengah 50275', 20, 30);
-        doc.setFontSize(14);
-        doc.text('SURAT KETERANGAN DOKTER', 75, 40);
+    const handlePrint = useReactToPrint({
+        content: () => printRef.current,
+    });
 
-        doc.setFontSize(12);
-        doc.text('Yang bertanda tangan di bawah ini menerangkan bahwa :', 20, 50);
-        doc.text(`Nama : ${nama}`, 20, 60);
-        doc.text(`Jenis Kelamin : ...........................................`, 20, 70);
-        doc.text(`Tgl. Lahir : ......................................................`, 20, 80);
-        doc.text(`Umur : ${umur}`, 20, 90);
-        doc.text(`Pekerjaan : ${job}`, 20, 100);
-        doc.text(`Alamat : .........................................................`, 20, 110);
-
-        doc.text('Berdasarkan hasil pemeriksaan yang telah dilakukan, Pasien tersebut', 20, 120);
-        doc.text('dalam keadaan sakit. Sehingga perlu beristirahat selama ......... hari,', 20, 130);
-        doc.text(`dari tanggal ${periode} s/d ${hingga}`, 20, 140);
-
-        doc.text(`Diagnosa : ${diagnosis}`, 20, 150);
-
-        doc.text('Demikian surat keterangan ini diberikan untuk diketahui dan', 20, 160);
-        doc.text('dipergunakan sebagaimana mestinya.', 20, 170);
-
-        doc.text('Semarang, ..............................................', 140, 180);
-        doc.text('Dokter,', 140, 190);
-        doc.text('( Nama Dokter )', 140, 200);
-
-        doc.save('Surat_Sakit.pdf');
-
-        onClose(); // Close the popup
+    const CetakSurat = () => {
+        if (data && orderData) {
+            const filteredOrderData = orderData.find(item => item.jenis_surat === 'sakit');
+    
+            if (filteredOrderData) {
+                const combinedData = {
+                    orderInfo: data,
+                    orderDetails: filteredOrderData,
+                };
+                setPrintData(combinedData);
+            } else {
+                setAlert({
+                    status: true,
+                    message: "Tidak ada data surat sakit yang tersedia.",
+                    type: "error"
+                });
+            }
+        } else {
+            setAlert({
+                status: true,
+                message: "Data tidak tersedia untuk dicetak.",
+                type: "error"
+            });
+        }
     };
+    
+    useEffect(() => {
+        if (printData) {
+            handlePrint();
+        }
+    }, [printData, handlePrint]);
 
     return (
         <div className='cetaksurat-popup-container'>
             <div className='cetaksurat-popup-content'>
-                <span 
-                    className={activeLink === 'cancel' ? 'active cancel-link' : 'cancel-x'} 
-                    onClick={() => handleLinkCancel('cancel')}
-                >
+                <button className='cancel-x' onClick={onClose}>
                     Cancel X
-                </span>
+                </button>
                 <h1 className='text-cetaksurat-popup'>Perpanjang Surat Sakit</h1>
                 <div className='kolom-cetak-surat'>
                     <div className='umur-cetaksurat'>
@@ -72,17 +135,19 @@ const CetakSuratPopup = ({ onClose, nama }) => {
                         <input 
                             type='text' 
                             className='kolom-umur-cetaksurat' 
-                            value={umur} 
-                            onChange={(e) => setUmur(e.target.value)}
+                            name='umur'
+                            value={sakitData.umur} 
+                            readOnly
                         />
                     </div>
                     <div className='job-surat'>
                         <span className='text-job-surat'>Pekerjaan :</span>
                         <input 
                             type='text' 
-                            className='kolom-job-surat' 
-                            value={job} 
-                            onChange={(e) => setJob(e.target.value)}
+                            className='kolom-job-surat'
+                            name='pekerjaan' 
+                            value={sakitData.pekerjaan} 
+                            readOnly
                         />
                     </div>
                     <div className='diagnosis-surat'>
@@ -90,8 +155,9 @@ const CetakSuratPopup = ({ onClose, nama }) => {
                         <input 
                             type='text' 
                             className='kolom-diagnosis-surat' 
-                            value={diagnosis} 
-                            onChange={(e) => setDiagnosis(e.target.value)}
+                            name='diagnosis' 
+                            value={sakitData.diagnosis_suratsakit} 
+                            readOnly
                         />
                     </div>
                     <div className='kadaluarsa-extendsurat'>
@@ -99,9 +165,10 @@ const CetakSuratPopup = ({ onClose, nama }) => {
                             <span className='text-periode-extendsurat'>Periode :</span>
                             <input 
                                 type='date' 
-                                className='kolom-periode-extendsurat' 
-                                value={periode} 
-                                onChange={(e) => setPeriode(e.target.value)}
+                                className='kolom-periode-extendsurat'
+                                name="periode_start" 
+                                value={formData.periode_start} 
+                                onChange={handleChange}
                             />
                         </div>
                         <div className='hingga-surat'>
@@ -109,17 +176,35 @@ const CetakSuratPopup = ({ onClose, nama }) => {
                             <input 
                                 type='date' 
                                 className='kolom-hingga-surat' 
-                                value={hingga} 
-                                onChange={(e) => setHingga(e.target.value)}
+                                name="periode_end"
+                                value={formData.periode_end} 
+                                onChange={handleChange}
                             />
                         </div>
                     </div>
                 </div>
                 <div className='perubahan-surat-container'>
-                    <button className="perubahan-surat" onClick={handlePerubahan}>Simpan Perubahan</button>
-                    <button className="cetak-surat-popup" onClick={handleCetakSurat}>Cetak</button>
+                    <button className="perubahan-surat" onClick={handleSimpanPerubahan}>Simpan Perubahan</button>
+                    <button className="cetak-surat-popup" onClick={() => CetakSurat(orderData)}>Cetak</button>
                 </div>
             </div>
+            <div style={{ display: 'none' }}>
+                <FormatSurat ref={printRef} data={printData} />
+            </div>
+            <Modal
+                isOpen={alert.status}
+                onRequestClose={() => setAlert({ status: false, message: '', type: '' })}
+                contentLabel="Alert Message"
+                className="Modal"
+                overlayClassName="Overlay"
+                shouldCloseOnOverlayClick={true}
+                shouldCloseOnEsc={true}
+            >
+                <div className="modal-content">
+                    <p>{alert.message}</p>
+                    <button onClick={() => setAlert({ status: false, message: '', type: '' })}>Close</button>
+                </div>
+            </Modal>
         </div>
     );
 };
