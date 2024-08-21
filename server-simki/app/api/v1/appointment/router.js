@@ -12,7 +12,7 @@ const {
 } = require('../../../middleware/auth');
 
 router.get('/appointment',authenticateUser, authorizeRoles('superuser','resepsionis'), index);
-router.get('/data-pasien/:id',authenticateUser, authorizeRoles('superuser','resepsionis'), find);
+router.get('/appointment/:id',authenticateUser, authorizeRoles('superuser','resepsionis'), find);
 router.post('/appointment/:id',authenticateUser, authorizeRoles('superuser','resepsionis'), create);
 router.patch('/appointment/:id',authenticateUser, authorizeRoles('superuser','resepsionis'), update);
 

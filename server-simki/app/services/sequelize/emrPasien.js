@@ -8,6 +8,8 @@ const Transaksi = require('../../api/v1/transaksi/model');
 const UserKlinik = require('../../api/v1/userKlinik/model');
 const OrderObat = require('../../api/v1/orderObat/model');
 const OrderProsedur = require('../../api/v1/orderProsedur/model');
+const OrderSurat = require('../../api/v1/orderSurat/model');
+const SuratSakit = require('../../api/v1/suratSakit/model');
 const Obat = require('../../api/v1/obat/model');
 const Item = require('../../api/v1/item/model');
 const { 
@@ -392,8 +394,8 @@ const findOneMedicalRecord = async (req) => {
         throw new NotFoundError(`Tidak ada rekam medis dengan uuid: ${uuid}`);
     }
 
-    const appointment = emr.appointment;
     const episode = emr.episode;
+    const appointment = emr.appointment;
 
     const result = {
         emrPasienId: emr.uuid,
