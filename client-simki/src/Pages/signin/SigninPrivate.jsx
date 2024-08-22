@@ -143,8 +143,6 @@ const SigninPrivate = () => {
                     <p>© copyright {new Date().getFullYear()} Universitas Diponegoro. All rights reserved.</p>
                 </div>
             </footer>
-
-            {/* Modal for displaying error messages */}
             <Modal
                 isOpen={alert.status}
                 onRequestClose={closeModal}

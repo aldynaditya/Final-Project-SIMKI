@@ -76,7 +76,7 @@ const Daftar = () => {
       tanggal_lahir: new Date(userData.tanggal_lahir).toISOString()
     };
 
-    setAlert({ status: false, message: '' }); // Reset alert before dispatching
+    setAlert({ status: false, message: '' });
     dispatch(daftarUser(formattedUserData));
   };
 

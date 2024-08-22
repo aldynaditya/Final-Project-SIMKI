@@ -96,7 +96,7 @@ const TambahProsedur = ({ onClose, onComplete }) => {
         if (searchResults.length > 0) {
             const formattedResults = searchResults.map(item => ({
                 ...item,
-                formattedName: `${item.nama_item} ${item.satuan}` // Add formattedName field
+                formattedName: `${item.nama_item} ${item.satuan}`
             }));
             setAllItem(formattedResults);
         }

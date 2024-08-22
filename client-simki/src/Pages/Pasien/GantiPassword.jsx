@@ -38,7 +38,7 @@ const GantiPassword = () => {
     }
 
     const token = new URLSearchParams(window.location.search).get('token');
-    setAlert({ status: false, message: '' }); // Reset alert before dispatching
+    setAlert({ status: false, message: '' }); 
     dispatch(changePassword(token, newPassword, confirmPassword));
   };
 

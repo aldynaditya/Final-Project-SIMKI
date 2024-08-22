@@ -1,4 +1,3 @@
-/* CSS umum untuk halaman */
 html, body {
     height: 100%;
     margin: 0;
@@ -28,7 +27,7 @@ body {
     margin-left: 70px;
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Menambahkan jarak antar kolom */
+    gap: 10px;
 }
 
 .no-emr-rsp, .nama-pasien-rsp, .tgl-lahir-rsp, .gender-emr-rsp, .goldar-emr-rsp, .alergi-rsp {

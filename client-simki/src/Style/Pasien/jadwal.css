@@ -57,12 +57,12 @@ th {
 td:first-child {
   text-align: left;
   white-space: nowrap;
-  overflow: hidden; /* Hide overflow text */
+  overflow: hidden;
   text-overflow: ellipsis;
 }
 
 td {
-  text-align: center; /* Center other cells */
+  text-align: center;
 }
 
 .desc-jadwal {

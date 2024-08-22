@@ -1,4 +1,3 @@
-// src/components/FormatSurat.jsx
 import React from 'react';
 import SuratSakit from './Sakit';
 import SuratRujukan from './Rujukan';

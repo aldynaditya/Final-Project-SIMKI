@@ -1,4 +1,3 @@
-// PrintTemplate.js
 import React, { useRef, useEffect } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import TemplateSuratSakit from '../FormatSurat/Sakit';

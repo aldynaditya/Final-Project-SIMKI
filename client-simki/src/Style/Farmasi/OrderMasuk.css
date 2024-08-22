@@ -59,7 +59,7 @@ body {
     border-radius: 5px;
     padding: 5px;
     width: 400px;
-    margin-left: 50px;  /* Menempatkan di ujung kanan */
+    margin-left: 50px;
 }
 
 .search-bar-input {
@@ -79,27 +79,27 @@ body {
 }
 
 .tabel-pendaftar-baru-wrapper {
-    overflow-x: auto; /* Enable horizontal scrolling */
+    overflow-x: auto;
     flex: 1;
 }
 
 .tabel_pendaftar_baru {
     margin: 20px;
-    min-width: 1200px; /* Ensure the table takes minimum width to avoid squishing */
+    min-width: 1200px;
 }
 
 .tabel_pendaftar_baru table {
     width: 100%;
     border-collapse: collapse;
     font-size: 18px;
-    text-align: center;  /* Pusatkan teks secara horizontal */
+    text-align: center;
 }
 
 .tabel_pendaftar_baru th, .tabel_pendaftar_baru td {
     padding: 8px;
     border-bottom: 1px solid black;
-    text-align: center;  /* Pusatkan teks secara horizontal */
-    vertical-align: middle;  /* Pusatkan teks secara vertikal */
+    text-align: center;
+    vertical-align: middle;
 }
 
 .tabel_pendaftar_baru th {
@@ -145,6 +145,6 @@ body {
 footer {
     width: 100%;
     flex-shrink: 0;
-    background: #f2f2f2; /* Tambahkan warna latar belakang jika diperlukan */
-    padding: 10px 0; /* Tambahkan padding agar terlihat lebih baik */
+    background: #f2f2f2;
+    padding: 10px 0;
 }

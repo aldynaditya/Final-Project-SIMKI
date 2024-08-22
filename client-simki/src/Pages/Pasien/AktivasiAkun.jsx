@@ -11,7 +11,7 @@ const AktivasiAkun = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { loading, error, data } = useSelector(state => state.activated);
-  const { email } = useSelector(state => state.daftar); // Ambil email dari state daftar
+  const { email } = useSelector(state => state.daftar);
   const { err, success } = useSelector(state => state.resendOtp);
   const [navigateAfterClose, setNavigateAfterClose] = useState(false);
 
@@ -56,7 +56,7 @@ const AktivasiAkun = () => {
       return;
     }
 
-    setAlert({ status: false, message: '' }); // Reset alert before dispatching
+    setAlert({ status: false, message: '' });
     dispatch(activateAccount({ email, otp: form.otp }));
   };
 

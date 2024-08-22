@@ -95,7 +95,7 @@ const BuatJanji = () => {
             end_time
         };
 
-        setAlert({ status: false, message: '' }); // Reset alert before dispatching
+        setAlert({ status: false, message: '' });
         dispatch(createAppointment(appointmentData));
 
         if (errorform) {

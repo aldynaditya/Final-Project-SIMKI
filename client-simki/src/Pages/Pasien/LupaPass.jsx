@@ -27,7 +27,7 @@ const LupaPass = () => {
       });
       return;
     }
-    setAlert({ status: false, message: '' }); // Reset alert before dispatching
+    setAlert({ status: false, message: '' });
     dispatch(forgotPassword(email));
   };
 

@@ -36,7 +36,7 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Memastikan konten mengisi ruang yang ada */
+    justify-content: space-between;
 }
 
 .header-notifikasi {
@@ -58,7 +58,7 @@ body {
     border-radius: 5px;
     padding: 5px;
     width: 350px;
-    margin-left: auto;  /* Menempatkan di ujung kanan */
+    margin-left: auto;
 }
 
 .search-bar-input {
@@ -87,14 +87,14 @@ body {
     border-collapse: collapse;
     margin: 20px 0;
     font-size: 18px;
-    text-align: center;  /* Pusatkan teks secara horizontal */
+    text-align: center;
 }
 
 .tabel_notifikasi th, .tabel_notifikasi td {
     padding: 8px;
     border-bottom: 1px solid black;
-    text-align: center;  /* Pusatkan teks secara horizontal */
-    vertical-align: middle;  /* Pusatkan teks secara vertikal */
+    text-align: center;
+    vertical-align: middle;
 }
 
 .tabel_notifikasi th {
@@ -123,7 +123,7 @@ body {
     text-align: center;
     line-height: 30px;
     display: inline-block;
-    font-family: 'Open Sans', sans-serif; /* Mengatur font ke Open Sans */
+    font-family: 'Open Sans', sans-serif;
 }
 
 .loader {
@@ -136,6 +136,6 @@ body {
 footer {
     width: 100%;
     flex-shrink: 0;
-    background: #f2f2f2; /* Tambahkan warna latar belakang jika diperlukan */
-    padding: 10px 0; /* Tambahkan padding agar terlihat lebih baik */
+    background: #f2f2f2;
+    padding: 10px 0;
 }
