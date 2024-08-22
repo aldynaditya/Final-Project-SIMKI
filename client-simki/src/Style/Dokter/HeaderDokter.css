@@ -1,8 +1,8 @@
 .headerdokter-container {
     display: flex;
-    justify-content: space-between; /* Menempatkan elemen di ujung kiri dan kanan */
-    align-items: center; /* Sejajarkan secara vertikal */
-    padding: 10px; /* Atur padding sesuai kebutuhan */
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
     background-color: #D9D9D9;
     font-family: 'Open Sans', sans-serif;
 }
@@ -15,12 +15,12 @@
 
 .info-dokter {
     display: flex;
-    align-items: center; /* Sejajarkan teks secara vertikal */
+    align-items: center;
 }
 
 .nama_dokter {
-    font-size: 16px; /* Sesuaikan dengan ukuran yang diinginkan */
-    margin-left: 20px; /* Jarak antara teks dan gambar profil */
+    font-size: 16px;
+    margin-left: 20px;
     margin-right: 100px;
 }
 
@@ -35,18 +35,18 @@
 
 .button-container-dokter {
     display: flex;
-    align-items: center; /* Sejajarkan tombol secara vertikal */
+    align-items: center;
     gap: 50px; 
     margin-right: 50px;
 }
 
 .menu-dropdown-dokter {
-    position: relative; /* Untuk menempatkan dropdown di bawah tombol */
+    position: relative;
 }
 
 .dropdown-dokter {
     position: absolute;
-    top: 50px; /* Posisi dropdown di bawah tombol */
+    top: 50px;
     width: 150px;
     left: 0;
     background-color: #7DAEA8;
@@ -77,14 +77,14 @@
     width: 100px;
     height: 30px;
     border: none;
-    border-radius: 10px; /* Lengkungan sudut 10px */
+    border-radius: 10px;
     font-size: 16px;
     cursor: pointer;
     display: flex;
     justify-content: center;
-    align-items: center; /* Pusatkan item secara vertikal */
-    margin-top: 20px; /* Tambahkan margin atas untuk memberi jarak dari input fields */
-    position: relative; /* Diperlukan untuk memposisikan ikon */
+    align-items: center;
+    margin-top: 20px;
+    position: relative;
 }
 
 .tombol_menu_dokter_container:hover, .tombol_keluar:hover {
@@ -93,14 +93,14 @@
 
 .icon_dropdown_dokter {
     position: absolute;
-    right: 10px; /* Sesuaikan sesuai kebutuhan */
-    pointer-events: none; /* Pastikan ikon tidak mengganggu klik tombol */
+    right: 10px;
+    pointer-events: none;
     display: flex;
-    align-items: center; /* Pusatkan ikon secara vertikal */
+    align-items: center;
 }
 
 .text_menu_dokter {
-    flex-grow: 1; /* Pastikan teks mengambil sisa ruang */
-    text-align: left; /* Pusatkan teks */
+    flex-grow: 1;
+    text-align: left;
     margin-left: 10px;
 }

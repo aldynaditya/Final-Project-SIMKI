@@ -21,8 +21,8 @@ const TambahObatDr = ({ onClose, onComplete }) => {
     });
 
     const [alert, setAlert] = useState({ status: false, message: '', type: '' });
-    const [showResults, setShowResults] = useState(false); // State to control visibility of search results
-    const [allObat, setAllObat] = useState([]); // State to store all obat data
+    const [showResults, setShowResults] = useState(false);
+    const [allObat, setAllObat] = useState([]);
 
     const handleChange = (e) => {
         setFormData({
@@ -36,28 +36,27 @@ const TambahObatDr = ({ onClose, onComplete }) => {
         setFormData({ ...formData, namaObat: query });
 
         if (query.trim()) {
-            // Filter search results based on query
             const filteredResults = allObat.filter(obat =>
                 obat.nama_obat.toLowerCase().includes(query.toLowerCase())
             );
-            setShowResults(true); // Show results when user starts typing
-            dispatch(searchObat(query)); // Trigger search with current query
+            setShowResults(true);
+            dispatch(searchObat(query));
         } else {
-            setShowResults(false); // Hide results if query is empty
+            setShowResults(false);
         }
     };
 
     const handleSearchClick = () => {
-        setShowResults(true); // Show results when search bar is clicked
+        setShowResults(true);
         if (allObat.length === 0) {
-            dispatch(searchObat('')); // Fetch all obat if not already fetched
+            dispatch(searchObat(''));
         }
     };
 
     const handleSearchSelect = (selectedObat) => {
-        const [namaObat] = selectedObat.split(' '); // Split and take the first part as namaObat
+        const [namaObat] = selectedObat.split(' ');
         setFormData({ ...formData, namaObat });
-        setShowResults(false); // Hide results after selection
+        setShowResults(false);
     };
 
     const isFormValid = useCallback(() => {
@@ -97,10 +96,9 @@ const TambahObatDr = ({ onClose, onComplete }) => {
 
     useEffect(() => {
         if (searchResults.length > 0) {
-            // Format the data to include both nama_obat and satuan
             const formattedResults = searchResults.map(obat => ({
                 ...obat,
-                formattedName: `${obat.nama_obat} ${obat.satuan}` // Add formattedName field
+                formattedName: `${obat.nama_obat} ${obat.satuan}`
             }));
             setAllObat(formattedResults);
         }
@@ -135,7 +133,7 @@ const TambahObatDr = ({ onClose, onComplete }) => {
                                 className="search-bar-obat-input" 
                                 value={formData.namaObat}
                                 onChange={handleSearchChange}
-                                onClick={handleSearchClick} // Show results on click
+                                onClick={handleSearchClick}
                             />
                             <button className="search-bar-obat-button">
                                 <img src={search} alt="Search" />

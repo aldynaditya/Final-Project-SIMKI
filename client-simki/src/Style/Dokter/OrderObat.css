@@ -29,13 +29,13 @@ html, body {
     margin-left: 50px;
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Menambahkan jarak antar kolom */
+    gap: 10px;
     border-radius: 5px;
 }
 
 .baris-satu {
     display: flex;
-    align-items: center; /* Menambahkan ini untuk meratakan secara vertikal */
+    align-items: center;
 }
 
 .nemr-order-obat{
@@ -68,7 +68,7 @@ html, body {
 
 .baris-dua {
     display: flex;
-    align-items: center; /* Menambahkan ini untuk meratakan secara vertikal */
+    align-items: center;
 }
 
 .tanggal-order-obat{
@@ -100,7 +100,7 @@ html, body {
 
 .baris-tiga {
     display: flex;
-    align-items: center; /* Menambahkan ini untuk meratakan secara vertikal */
+    align-items: center;
 }
 
 .jam-order-obat{
@@ -175,14 +175,14 @@ html, body {
     border-collapse: collapse;
     margin: 20px 0;
     font-size: 18px;
-    text-align: center;  /* Pusatkan teks secara horizontal */
+    text-align: center;
 }
 
 .tabel-order-obat th, .tabel-order-obat td {
     padding: 8px;
     border-bottom: 1px solid black;
-    text-align: center;  /* Pusatkan teks secara horizontal */
-    vertical-align: middle;  /* Pusatkan teks secara vertikal */
+    text-align: center;
+    vertical-align: middle;
 }
 
 .tabel-order-obat th {

@@ -4,18 +4,18 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000; /* Ensure it's on top */
+    z-index: 1000;
 }
 
 .tambahlaporan-popup-content {
     background: #f0f0f0;
     padding: 20px;
     border-radius: 10px;
-    width: 600px; /* Increased width */
+    width: 600px;
     position: relative;
 }
 
@@ -100,7 +100,7 @@
 
 .tambah-laporan-container {
     display: flex;
-    justify-content: center; /* Center the button horizontally */
+    justify-content: center;
     margin-top: 20px;
 }
 

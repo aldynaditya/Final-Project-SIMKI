@@ -8,7 +8,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1; /* Memastikan popup di atas elemen lainnya */
+    z-index: 1;
 }
 
 .Modal {
@@ -19,7 +19,7 @@
     background-color: white;
     padding: 20px;
     border-radius: 10px;
-    z-index: 1000; /* Memastikan modal berada di atas elemen lain */
+    z-index: 1000;
     width: 300px;
     text-align: center;
 }
@@ -31,7 +31,7 @@
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999; /* Memastikan overlay berada di bawah modal */
+    z-index: 999;
 }
 
 .popup-content {
@@ -39,8 +39,8 @@
     padding: 20px;
     border-radius: 10px;
     text-align: center;
-    width: 500px; /* Adjust width as needed */
-    max-width: 90%; /* Ensure it doesn't exceed the viewport width */
+    width: 500px;
+    max-width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;

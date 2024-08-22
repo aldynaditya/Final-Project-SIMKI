@@ -18,18 +18,17 @@ export const fetchProfile = () => async dispatch => {
     }
 };
 
-// Update profile data
 export const updateProfile = (data) => async dispatch => {
-    dispatch({ type: UPDATE_PROFILE_REQUEST }); // Notify that update has started
+    dispatch({ type: UPDATE_PROFILE_REQUEST });
     try {
         const res = await patchData('/pasien', data);
         if (res?.data?.data) {
-            dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: res.data.data }); // Notify success// Refetch profile after successful update
+            dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: res.data.data });
         }
     } catch (error) {
         dispatch({
             type: UPDATE_PROFILE_FAILURE,
             payload: error.message,
-        }); // Rethrow error so it can be caught in the component
+        });
     }
 };

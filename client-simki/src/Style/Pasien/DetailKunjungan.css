@@ -1,4 +1,3 @@
-/* Atur html dan body untuk menghilangkan margin dan padding serta mengatur tinggi */
 body, html {
     margin: 0;
     padding: 0;
@@ -7,24 +6,21 @@ body, html {
     background-color: #f9f9f9;
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Menjamin tinggi minimal 100% dari viewport */
+    min-height: 100vh;
 }
 
-/* Kontainer utama */
 .detail_kunjungan_container {
     display: flex;
     flex-direction: column;
-    flex: 1; /* Membiarkan kontainer ini mengambil ruang yang tersisa */
+    flex: 1;
 }
 
-/* Judul halaman */
 .text_detail {
     font-size: 24px;
     margin-bottom: 20px;
-    text-align: center; /* Pusatkan judul untuk tampilan yang lebih baik di layar kecil dan besar */
+    text-align: center;
 }
 
-/* Kontainer formulir */
 .form_container {
     display: flex;
     flex-direction: column;
@@ -34,7 +30,6 @@ body, html {
     margin: 0 auto;
 }
 
-/* Formulir field */
 .form_field {
     display: flex;
     flex-direction: column;
@@ -61,7 +56,7 @@ body, html {
 }
 
 .obat_pasien input, .tindakan_pasien input {
-    height: 70px; /* Tinggi input untuk obat dan tindakan yang lebih besar */
+    height: 70px;
 }
 
 .button_container_detailkunjungan {
@@ -70,7 +65,6 @@ body, html {
     margin-bottom: 150px;
 }
 
-/* Tombol kuisioner */
 .kuisioner, .feedback {
     background-color: #145149;
     color: white;
@@ -94,12 +88,11 @@ body, html {
     cursor: not-allowed;
 }
 
-/* Footer */
 footer {
     background-color: #f1f1f1;
     width: 100%;
     padding: 10px 0;
     text-align: center;
-    margin-top: auto; /* memastikan footer tetap di bawah */
+    margin-top: auto;
 }
 

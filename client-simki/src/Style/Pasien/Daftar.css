@@ -120,7 +120,7 @@
   -moz-appearance: none;
   appearance: none; 
   background-color: white; 
-  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%204%205%27%3E%3Cpath%20fill%3D%27%23ccc%27%20d%3D%27M2%200L0%202h4L2%200z%20M2%205l2-2H0l2%202z%27/%3E%3C/svg%3E'); /* Add custom dropdown icon */
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%204%205%27%3E%3Cpath%20fill%3D%27%23ccc%27%20d%3D%27M2%200L0%202h4L2%200z%20M2%205l2-2H0l2%202z%27/%3E%3C/svg%3E');
   background-repeat: no-repeat;
   background-position: right 10px center;
   background-size: 10px;
@@ -135,5 +135,5 @@
 .form-fields .gender,
 .form-fields .blood,
 .form-fields .suku {
-  margin-bottom: 0px; /* Maintain spacing consistency */
+  margin-bottom: 0px;
 }

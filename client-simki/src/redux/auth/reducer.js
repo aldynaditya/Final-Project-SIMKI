@@ -1,4 +1,3 @@
-// reducer.js
 import { USER_LOGIN, USER_LOGOUT } from './constants';
 
 let initialState = localStorage.getItem('auth')

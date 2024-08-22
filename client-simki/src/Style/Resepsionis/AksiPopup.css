@@ -18,7 +18,7 @@
     padding: 20px;
     border-radius: 10px;
     width: 600px;
-    position: relative;/* Ensure it appears above the background */
+    position: relative;
 }
 
 .cancel-x {
@@ -67,14 +67,12 @@
     height: 100px;
     padding: 10px;
     font-size: 16px;
-    /* Ensure text is aligned to the top */
     vertical-align: top;
-    resize: vertical; /* Allow vertical resizing */
-    overflow: auto; /* Add scroll if content overflows */
+    resize: vertical;
+    overflow: auto;
     margin-right: 20px;
 }
 
-/* Ensure the textarea has top alignment */
 textarea {
     box-sizing: border-box;
     padding: 10px;
@@ -88,7 +86,7 @@ textarea {
 
 .updateaksi-container {
     display: flex;
-    justify-content: center; /* Center the button horizontally */
+    justify-content: center;
     margin-top: 20px;
 }
 

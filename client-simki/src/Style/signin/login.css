@@ -79,7 +79,7 @@ html, body {
   margin-bottom: 50px;
   color: rgb(87, 87, 87);
   font-size: 15px;
-  text-align: center; /* Menempatkan teks di tengah */
+  text-align: center;
 }
 
 .forgot-password span {
@@ -91,7 +91,7 @@ html, body {
   display: flex;
   justify-content: center;
   margin-top: 20px;
-  gap: 30px; /* Menambahkan jarak antara tombol */
+  gap: 30px;
   margin-bottom: 200px;
 }
 
@@ -102,13 +102,13 @@ html, body {
   width: 220px;
   height: 59px;
   color: #fff;
-  background: #7DAEA8; /* Default color for both buttons */
+  background: #7DAEA8;
   border-radius: 50px;
   font-size: 19px;
   font-weight: 700;
   cursor: pointer;
-  border: none; /* For HTML buttons */
-  text-decoration: none; /* If using styled links as buttons */
+  border: none;
+  text-decoration: none;
 }
 
 .submit:hover {

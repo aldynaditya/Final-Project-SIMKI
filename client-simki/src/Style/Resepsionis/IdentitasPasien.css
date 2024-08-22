@@ -1,4 +1,3 @@
-/* profile.css */
 html, body {
     height: 100%;
     margin: 0;
@@ -14,7 +13,7 @@ html, body {
 }
 
 .content-identitas-pasien {
-    flex: 1; /* Konten utama akan mengambil semua ruang yang tersedia */
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -24,12 +23,12 @@ html, body {
 .text_identitas_pasien {
     width: 100%;
     display: flex;
-    justify-content: center; /* Pusatkan secara horizontal */
+    justify-content: center;
     align-items: center;
     margin-bottom: 0px;
-    font-size: 35px; /* Sesuaikan ukuran font sesuai kebutuhan */
-    font-weight: bold; /* Membuat teks lebih tebal */
-    margin-left: 0; /* Menghapus margin kiri */
+    font-size: 35px;
+    font-weight: bold;
+    margin-left: 0;
     margin-top: 120px;
 }
 
@@ -64,7 +63,7 @@ html, body {
 }
 
 .biodata-fields-perawat {
-    width: 100%;   /* Lebar penuh untuk memanfaatkan ruang sebaik mungkin */
+    width: 100%;
     max-width: 600px;
     background: #fff;
     padding: 20px;
@@ -137,5 +136,5 @@ html, body {
     text-align: center;
     padding: 10px 0;
     width: 100%;
-    flex-shrink: 0; /* Pastikan footer tidak mengecil */
+    flex-shrink: 0;
 }

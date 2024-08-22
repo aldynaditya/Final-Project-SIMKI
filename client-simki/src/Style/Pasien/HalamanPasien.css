@@ -1,4 +1,3 @@
-/* Atur html dan body untuk menghilangkan margin dan padding serta mengatur tinggi */
 html, body {
     height: 100%;
     margin: 0;
@@ -7,14 +6,12 @@ html, body {
     flex-direction: column;
 }
 
-/* Kontainer utama yang akan mengatur layout */
 .halaman_pasien_container {
     display: flex;
     flex-direction: column;
-    flex: 1; /* Memastikan kontainer ini mengisi ruang yang tersedia */
+    flex: 1;
 }
 
-/* Pastikan header dan konten lainnya tidak mempengaruhi footer */
 .center_text {
     display: flex;
     justify-content: space-between;
@@ -25,7 +22,7 @@ html, body {
 
 .nama_pasien {
     margin-left: 60px;
-    margin-bottom: 20px; /* Sesuaikan margin sesuai kebutuhan */
+    margin-bottom: 20px;
 }
 
 .keluar {
@@ -58,7 +55,7 @@ html, body {
     margin-left: 70px;
     margin-right: 70px;
     flex: 1;
-    max-height: 300px; /* Set fixed height for the table container */
+    max-height: 300px;
     overflow: auto;
 }
 
@@ -67,15 +64,15 @@ html, body {
     border-collapse: collapse;
     font-size: 18px;
     text-align: center;
-    max-height: 300px; /* Set fixed height for the table container */
-    overflow: auto;  /* Pusatkan teks secara horizontal */
+    max-height: 300px;
+    overflow: auto;
 }
 
 .tabel_transaksi_pasien th, .tabel_transaksi_pasien td {
     padding: 8px;
     border-bottom: 1px solid black;
-    text-align: center;  /* Pusatkan teks secara horizontal */
-    vertical-align: middle;  /* Pusatkan teks secara vertikal */
+    text-align: center;
+    vertical-align: middle;
 }
 
 .tabel_transaksi_pasien th {
@@ -94,12 +91,12 @@ html, body {
 
 .klik_pasien {
     display: flex;
-    justify-content: space-around; /* Distribute space evenly between buttons */
+    justify-content: space-around;
     padding: 20px;
-    gap: 20px; /* Adjust gap as needed */
+    gap: 20px;
     margin-bottom: 50px;
-    margin-top: 20px; /* Adjust margin-top as needed */
-    width: calc(100% - 100px); /* Ensure the width matches the table container */
+    margin-top: 20px;
+    width: calc(100% - 100px);
     margin-left: auto;
     margin-right: auto;
 }
@@ -109,7 +106,7 @@ html, body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: calc((100% - 40px) / 3); /* Adjust to fit 3 buttons */
+    width: calc((100% - 40px) / 3);
     height: 150px;
     background-color: #C6E6E1;
     border: 1px solid #C6E6E1;
@@ -150,9 +147,6 @@ html, body {
     width: 100%;
 }
 
-/* Penyesuaian Responsif */
-
-/* Untuk perangkat dengan layar kecil (misalnya, ponsel) */
 @media (max-width: 600px) {
     .center_text {
         flex-direction: column;
@@ -211,9 +205,6 @@ html, body {
     }
 }
 
-
-
-/* Untuk perangkat dengan layar lebih besar (misalnya, tablet dan PC) */
 @media (min-width: 1024px) {
     .center_text {
         flex-direction: row;

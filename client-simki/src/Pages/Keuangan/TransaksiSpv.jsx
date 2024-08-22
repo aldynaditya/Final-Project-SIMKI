@@ -9,7 +9,6 @@ const TransaksiKeuangan = () => {
     const dispatch = useDispatch();
     const { data: rows, loading, error } = useSelector(state => state.transaksi);
 
-    // Initialize state for periodeSurat and hinggaSurat
     const [periodeSurat, setPeriodeSurat] = useState('');
     const [hinggaSurat, setHinggaSurat] = useState('');
 
@@ -31,12 +30,12 @@ const TransaksiKeuangan = () => {
         try {
             const canvas = await html2canvas(element);
             const imgData = canvas.toDataURL('image/png');
-            const pdf = new jsPDF('landscape', 'mm', 'a4'); // Landscape A4
+            const pdf = new jsPDF('landscape', 'mm', 'a4');
 
             const pdfWidth = pdf.internal.pageSize.getWidth();
             const pdfHeight = pdf.internal.pageSize.getHeight();
             const imgProps = pdf.getImageProperties(imgData);
-            const imgWidth = pdfWidth - 40; // 20 mm margin on each side
+            const imgWidth = pdfWidth - 40;
             const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
             const xOffset = (pdfWidth - imgWidth) / 2;
             const yOffset = (pdfHeight - imgHeight) / 2;

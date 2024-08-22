@@ -78,7 +78,7 @@ const JadwalDokter = () => {
         </div>
         <div className="desc-jadwal">
             <p>
-            {/* Additional description or information can be added here */}
+            {/* keterangan tambahan */}
             </p>
         </div>
         </div>

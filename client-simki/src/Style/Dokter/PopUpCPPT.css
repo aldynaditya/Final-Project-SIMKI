@@ -16,7 +16,7 @@
     background: white;
     padding: 20px;
     border-radius: 10px;
-    width: 600px; /* Increased width */
+    width: 600px;
     position: relative;
 }
 
@@ -25,13 +25,13 @@
     top: 10px;
     right: 10px;
     text-decoration: none;
-    color: #333; /* Darker color for the text */
-    font-size: 20px; /* Increase font size */
-    background: transparent; /* No background */
-    border: none; /* No border */
-    cursor: pointer; /* Pointer cursor */
-    font-family: 'Arial', sans-serif; /* Ensure a clean, sans-serif font */
-    font-weight: normal; /* Normal weight to match the image */
+    color: #333;
+    font-size: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: 'Arial', sans-serif;
+    font-weight: normal;
 }
 
 .text-isicppt-popup {
@@ -149,7 +149,7 @@
 
 .simpan-cppt-container {
     display: flex;
-    justify-content: center; /* Center the button horizontally */
+    justify-content: center;
     margin-top: 20px;
     gap: 40px;
 }
