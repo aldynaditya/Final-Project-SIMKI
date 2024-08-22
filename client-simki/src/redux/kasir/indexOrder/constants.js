@@ -1,0 +1,3 @@
+export const FETCH_TRANSACTIONS_REQUEST = '/redux/kasir/indexOrder/FETCH_TRANSACTIONS_REQUEST';
+export const FETCH_TRANSACTIONS_SUCCESS = '/redux/kasir/indexOrder/FETCH_TRANSACTIONS_SUCCESS';
+export const FETCH_TRANSACTIONS_FAILURE = '/redux/kasir/indexOrder/FETCH_TRANSACTIONS_FAILURE';

@@ -1,35 +1,38 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchNotifikasi, updateStatus } from '../../redux/pimpinan/index/actions';
+import { fetchNotifikasiLaporan } from "../../redux/pimpinan/index/actions";
+import { updateStatus } from "../../redux/pimpinan/update/actions";
 import '../../Style/Pimpinan/NotifikasiLead.css';
 import SearchBar from '../../components/SearchBar';
+import Modal from 'react-modal';
 import { useNavigate } from 'react-router-dom';
 
 const NotifikasiPimpinan = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const { data, loading, error } = useSelector((state) => state.getlaporanbyPimpinan);
 
-
-    const { data: rows, loading, error } = useSelector(state => state.pimpinan);
+    const [alert, setAlert] = React.useState({ status: false, message: '', type: '' });
 
     useEffect(() => {
-        dispatch(fetchNotifikasi());
+        dispatch(fetchNotifikasiLaporan());
     }, [dispatch]);
 
-
-    const TerimaLaporan = (id) => {
-        dispatch(updateStatus(id, 'accepted'));
+    const handleProsesClick = async (id) => {
+        try {
+            await dispatch(updateStatus(id));
+            dispatch(fetchNotifikasiLaporan()); 
+        } catch (error) {
+            console.error('Error updating order status:', error);
+        }
     };
 
-
-    const LihatLaporan = () => {
-        navigate('notifikasi-pimpinan');
+    const closeModal = () => {
+        setAlert({ status: false, message: '', type: '' });
     };
 
     if (loading) {
         return <div>Loading...</div>;
     }
-
 
     if (error) {
         return <div>Error: {error}</div>;
@@ -57,8 +60,8 @@ const NotifikasiPimpinan = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {Array.isArray(rows) && rows.length > 0 ? (
-                                    rows.map((row, index) => (
+                                {data.map((row, index) => {
+                                    return(
                                         <tr key={index}>
                                             <td>{row.tanggal}</td>
                                             <td>{row.no_laporan}</td>
@@ -68,21 +71,38 @@ const NotifikasiPimpinan = () => {
                                             <td className="notif-laporan-cell">
                                                 <button 
                                                     className="ket_terima-pimpinan" 
-                                                    onClick={() => TerimaLaporan(row.id)}>Terima</button>
-                                                <button className="laporan-pimpinan" onClick={LihatLaporan}>Lihat</button>
+                                                    onClick={() =>handleProsesClick(row.uuid)}
+                                                >
+                                                    Terima
+                                                </button>
+                                                <button 
+                                                    className="laporan-pimpinan"
+                                                >
+                                                    Lihat
+                                                </button>
                                             </td>
                                         </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td colSpan="6">Tidak ada data tersedia</td>
-                                    </tr>
-                                )}
+                                    );
+                                })}
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+            <Modal
+                isOpen={alert.status}
+                onRequestClose={closeModal}
+                contentLabel="Alert Message"
+                className="Modal"
+                overlayClassName="Overlay"
+                shouldCloseOnOverlayClick={true}
+                shouldCloseOnEsc={true}
+            >
+                <div className="modal-content">
+                    <p>{alert.message}</p>
+                    <button onClick={closeModal}>Close</button>
+                </div>
+            </Modal>
         </div>
     );
 };

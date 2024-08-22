@@ -43,13 +43,14 @@ import getdetailemrReducer from './doctor/detailEmr/reducer';
 import createvitalReducer from './nurse/vital/reducer';
 import getvitalsignReducer from './doctor/vitalSign/reducer';
 import createnewentryReducer from './doctor/newEntry/reducer';
-import transactionReducer from './kasir/index/reducer';
-import facturReducer from './kasir/create/reducer';
+import getallorderbycashierReducer from './kasir/indexOrder/reducer';
+import updateordertotransactionReducer from './kasir/updateOrder/reducer';
+import getdetailorderReducer from './kasir/indexOrderDetail/reducer';
 import transaksiReducer from './keuangan/indextransaksi/reducer';
 import laporanReducer from './keuangan/create/reducer';
 import notifReducer from './keuangan/indexnotif/reducer';
 import updateStatusReducer from './pimpinan/update/reducer';
-import pimpinanReducer from './pimpinan/index/reducer';
+import notifikasilaporanbypimpinanReducer from './pimpinan/index/reducer';
 import createcpptentryReducer from './doctor/cpptEntry/reducer';
 import updateactionReducer from './doctor/action/reducer';
 import createorderReducer from './doctor/finishOrder/reducer';
@@ -140,14 +141,18 @@ const rootReducers = combineReducers({
     createFeedback: createfeedbackReducer,
     getResponse: getresponsebyIdReducer,
     getFeedback: getfeedbackReducer,
-    //Page Transaksi
-    transaction: transactionReducer,
-    factur: facturReducer,
+    //Page Transaksi(Kasir)
+    getallOrder: getallorderbycashierReducer,
+    updateOrder: updateordertotransactionReducer,
+    getdetailOrder: getdetailorderReducer,
+    //Page Transaksi(SPV)
     transaksi: transaksiReducer,
+    //Page Laporan(SPV)
     laporan: laporanReducer,
     notif: notifReducer,
+    //Page Laporan (Pimpinan)
     updateStatus: updateStatusReducer,
-    pimpinan: pimpinanReducer,
+    getlaporanbyPimpinan: notifikasilaporanbypimpinanReducer,
     //Page Doctor
     createCpptEntry: createcpptentryReducer,
     updateAction: updateactionReducer,

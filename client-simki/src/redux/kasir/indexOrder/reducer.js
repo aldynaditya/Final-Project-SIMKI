@@ -1,30 +1,30 @@
-import {
-    FETCH_NOTIFIKASI_REQUEST,
-    FETCH_NOTIFIKASI_SUCCESS,
-    FETCH_NOTIFIKASI_FAILURE,
+import { 
+    FETCH_TRANSACTIONS_REQUEST, 
+    FETCH_TRANSACTIONS_SUCCESS, 
+    FETCH_TRANSACTIONS_FAILURE 
 } from './constants';
 
 const initialState = {
     data: [],
     loading: false,
-    error: null,
+    error: null
 };
 
-const notifikasilaporanbypimpinanReducer = (state = initialState, action) => {
+const getallorderbycashierReducer = ( state = initialState, action) => {
     switch (action.type) {
-        case FETCH_NOTIFIKASI_REQUEST:
+        case FETCH_TRANSACTIONS_REQUEST:
             return {
                 ...state,
                 loading: true
             };
-        case FETCH_NOTIFIKASI_SUCCESS:
+        case FETCH_TRANSACTIONS_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 data: action.payload,
                 error: null
             };
-        case FETCH_NOTIFIKASI_FAILURE:
+        case FETCH_TRANSACTIONS_FAILURE:
             return {
                 ...state,
                 loading: false,
@@ -35,4 +35,4 @@ const notifikasilaporanbypimpinanReducer = (state = initialState, action) => {
     }
 };
 
-export default notifikasilaporanbypimpinanReducer;
+export default getallorderbycashierReducer;

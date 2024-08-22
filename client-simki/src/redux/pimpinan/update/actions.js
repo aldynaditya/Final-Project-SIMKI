@@ -1,14 +1,17 @@
+import { 
+    UPDATE_STATUS_REQUEST, 
+    UPDATE_STATUS_SUCCESS, 
+    UPDATE_STATUS_FAILURE 
+} from './constants';
 import { patchData } from '../../../utils/fetch';
-import { UPDATE_STATUS_REQUEST, UPDATE_STATUS_SUCCESS, UPDATE_STATUS_FAILURE } from './constants';
 
-export const updateStatus = (id, status) => async (dispatch) => {
+export const updateStatus = (id) => async (dispatch) => {
     dispatch({ type: UPDATE_STATUS_REQUEST });
-
     try {
-        const result = await patchData(`/cms/laporan/${id}/status`, { status });
+        const response = await patchData(`/cms/laporan/${id}/status`);
         dispatch({
             type: UPDATE_STATUS_SUCCESS,
-            payload: result.data,
+            payload: response.data.data,
         });
     } catch (error) {
         dispatch({

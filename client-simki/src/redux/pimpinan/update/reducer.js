@@ -1,31 +1,34 @@
-import { UPDATE_STATUS_REQUEST, UPDATE_STATUS_SUCCESS, UPDATE_STATUS_FAILURE } from './constants';
+import { 
+    UPDATE_STATUS_REQUEST, 
+    UPDATE_STATUS_SUCCESS, 
+    UPDATE_STATUS_FAILURE 
+} from './constants';
 
 const initialState = {
+    data: [],
     loading: false,
-    data: null,
     error: null,
 };
 
 const updateStatusReducer = (state = initialState, action) => {
     switch (action.type) {
         case UPDATE_STATUS_REQUEST:
-            return {
-                ...state,
-                loading: true,
-                error: null,
+            return { 
+                ...state, 
+                loading: true 
             };
         case UPDATE_STATUS_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 data: action.payload,
-                error: null,
+                error: null
             };
         case UPDATE_STATUS_FAILURE:
-            return {
-                ...state,
-                loading: false,
-                error: action.payload,
+            return { 
+                ...state, 
+                loading: false, 
+                error: action.payload 
             };
         default:
             return state;
