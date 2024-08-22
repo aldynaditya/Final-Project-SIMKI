@@ -1,4 +1,8 @@
-import { FETCH_TRANSACTIONS_REQUEST, FETCH_TRANSACTIONS_SUCCESS, FETCH_TRANSACTIONS_FAILURE } from './constants';
+import { 
+    FETCH_DETAIL_TRANSACTIONS_REQUEST, 
+    FETCH_DETAIL_TRANSACTIONS_SUCCESS, 
+    FETCH_DETAIL_TRANSACTIONS_FAILURE 
+} from './constants';
 
 const initialState = {
     data: [],
@@ -6,20 +10,21 @@ const initialState = {
     error: null
 };
 
-export default function transactionReducer(state = initialState, action) {
+const getdetailorderReducer = ( state = initialState, action) => {
     switch (action.type) {
-        case FETCH_TRANSACTIONS_REQUEST:
+        case FETCH_DETAIL_TRANSACTIONS_REQUEST:
             return {
                 ...state,
                 loading: true
             };
-        case FETCH_TRANSACTIONS_SUCCESS:
+        case FETCH_DETAIL_TRANSACTIONS_SUCCESS:
             return {
                 ...state,
                 loading: false,
-                data: action.payload
+                data: action.payload,
+                error: null
             };
-        case FETCH_TRANSACTIONS_FAILURE:
+        case FETCH_DETAIL_TRANSACTIONS_FAILURE:
             return {
                 ...state,
                 loading: false,
@@ -28,4 +33,6 @@ export default function transactionReducer(state = initialState, action) {
         default:
             return state;
     }
-}
+};
+
+export default getdetailorderReducer;

@@ -13,7 +13,10 @@ const initialState = {
 const statusorderobatReducer = (state = initialState, action) => {
     switch (action.type) {
         case UPDATE_ORDER_STATUS_REQUEST:
-            return { ...state, loading: true };
+            return { 
+                ...state, 
+                loading: true 
+            };
         case UPDATE_ORDER_STATUS_SUCCESS:
             return {
                 ...state,
@@ -22,7 +25,11 @@ const statusorderobatReducer = (state = initialState, action) => {
                 error: null
             };
         case UPDATE_ORDER_STATUS_FAILURE:
-            return { ...state, loading: false, error: action.payload };
+            return { 
+                ...state, 
+                loading: false, 
+                error: action.payload 
+            };
         default:
             return state;
     }

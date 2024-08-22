@@ -1,38 +1,62 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { saveFactur } from '../../redux/kasir/create/actions'; 
+import Modal from 'react-modal';
+import { updateOrdertoTransaction } from '../../redux/kasir/updateOrder/actions';
 import '../../Style/Kasir/DetailFaktur.css';
 
-const DetailFaktur = ({ onClose }) => {
+const PopUpDetailFaktur = ({ id, onClose, onSuccess }) => {
     const dispatch = useDispatch();
-    const { loading, error, data } = useSelector(state => state.factur);
+    const { data, loading, error } = useSelector(state => state.updateOrder);
 
-    const [metodePembayaran, setMetodePembayaran] = useState('');
-    const [diskon, setDiskon] = useState('');
-    const [keterangan, setKeterangan] = useState('');
+    const [formData, setFormData] = useState({
+        metode_bayar: '',
+        diskon: '',
+        keterangan: ''
+    });
+    const [alert, setAlert] = useState({ status: false, message: '', type: '' });
 
-    const handleMetodePembayaran = (event) => {
-        setMetodePembayaran(event.target.value);
+    const isFormValid = useCallback(() => {
+        return Object.values(formData).every(value => value.trim() !== '');
+    }, [formData]);
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
     };
 
-    const handleDiskonChange = (event) => {
-        setDiskon(event.target.value);
-    };
-
-    const handleKeteranganChange = (event) => {
-        setKeterangan(event.target.value);
-    };
-
-    const SimpanFaktur = () => {
-        dispatch(saveFactur({ metodePembayaran, diskon, keterangan }));
-    };
-
-    useEffect(() => {
-        if (data || error) {
-            alert(data ? `Data Tersimpan` : error);
-            onClose();
+    const handleSubmit = () => {
+        if (!isFormValid()) {
+            setAlert({
+                status: true,
+                message: 'Isi seluruh form',
+                type: 'danger'
+            });
+            return;
         }
-    }, [data, error, onClose]);
+    
+        dispatch(updateOrdertoTransaction(id, formData))
+            .then(() => {
+                setAlert({
+                    status: true,
+                    message: 'Transaksi berhasil dibuat!',
+                    type: 'success'
+                });
+                setTimeout(() => {
+                    setAlert({ status: false, message: '', type: '' });
+                    onSuccess();
+                    onClose();
+                }, 2000);
+            })
+            .catch(() => {
+                setAlert({
+                    status: true,
+                    message: 'Gagal memperbarui data!',
+                    type: 'danger'
+                });
+            });
+    };
 
     return (
         <div className='modal-overlay'>
@@ -44,43 +68,63 @@ const DetailFaktur = ({ onClose }) => {
                 <div className='kolom-detail-faktur'>
                     <div className='metode-pembayaran'>
                         <span className='text-metode-pembayaran'>Metode Pembayaran:</span>
-                        <select onChange={handleMetodePembayaran} className='dropdown-pembayaran'>
+                        <select  
+                            className='dropdown-pembayaran'
+                            name="metode_bayar"
+                            value={formData.metode_bayar}
+                            onChange={handleChange}
+                        >
                             <option value="">Pilih Pembayaran</option>
-                            <option value="Cash">Cash</option>
-                            <option value="Bank">Bank</option>
+                            <option value="cash">Cash</option>
+                            <option value="bank">Bank</option>
                         </select>
                     </div>
                     <div className='diskon-faktur'>
                         <span className='text-diskon-faktur'>Diskon:</span>
                         <input
-                            type='text'
                             className='kolom-diskon-faktur'
-                            value={diskon}
-                            onChange={handleDiskonChange}
+                            type='number'
+                            name="diskon"
+                            value={formData.diskon} 
+                            onChange={handleChange}
                         />
                     </div>
                     <div className='keterangan-faktur'>
                         <span className='text-keterangan-faktur'>Keterangan:</span>
                         <input
-                            type='text'
                             className='kolom-keterangan-faktur'
-                            value={keterangan}
-                            onChange={handleKeteranganChange}
+                            type='text'
+                            name="keterangan"
+                            value={formData.keterangan} 
+                            onChange={handleChange}
                         />
                     </div>
                 </div>
                 <div className='simpan-faktur-container'>
                     <button
                         className="simpan-faktur"
-                        onClick={SimpanFaktur}
-                        disabled={loading}
+                        onClick={handleSubmit}
                     >
                         {loading ? 'Menyimpan...' : 'Simpan'}
                     </button>
                 </div>
             </div>
+            <Modal
+                isOpen={alert.status}
+                onRequestClose={() => setAlert({ status: false, message: '', type: '' })}
+                contentLabel="Alert Message"
+                className="Modal"
+                overlayClassName="Overlay"
+                shouldCloseOnOverlayClick={true}
+                shouldCloseOnEsc={true}
+            >
+                <div className="modal-content">
+                    <p>{alert.message}</p>
+                    <button onClick={() => setAlert({ status: false, message: '', type: '' })}>Close</button>
+                </div>
+            </Modal>
         </div>
     );
 };
 
-export default DetailFaktur;
+export default PopUpDetailFaktur;

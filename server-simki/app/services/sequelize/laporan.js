@@ -45,21 +45,14 @@ const getAllLaporanByPimpinan = async () => {
     return result;
 };
 
-const updateStatusLaporan = async (req, res) => {
+const updateStatusLaporan = async (req) => {
     const { id } = req.params;
-    const { status } = req.body;
-
-    if (status !== 'accepted' && status !== 'rejected') {
-        throw new BadRequestError( 'status harus "accepted" atau "rejected"' );
-    }
 
     const laporan = await Laporan.findByPk(id);
 
-    if (!laporan) {
-        throw new NotFoundError( 'Laporan tidak ditemukan' );
-    }
+    if (!laporan) throw new NotFoundError( 'Laporan tidak ditemukan' );
 
-    laporan.status = status;
+    laporan.status = 'accepted';
     await laporan.save();
 
     return laporan;

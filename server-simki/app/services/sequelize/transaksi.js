@@ -52,7 +52,7 @@ const getAllOrders = async () => {
             noEMR: emr.noEMR,
             namaPasien: datapasien.nama_lengkap,
             penjamin: appointment.penjamin,
-            metodeBayar: transaksi.metodeBayar,
+            metodeBayar: transaksi.metode_bayar,
             status: transaksi.status,
             total: transaksi.total,
             petugas: transaksi.user.nama

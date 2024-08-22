@@ -144,6 +144,8 @@ const updateOrderStatusbyFarmasi = async (req) =>{
 
     order.status = 'accepted';
     await order.save();
+
+    return order;
 }
 
 module.exports = {
