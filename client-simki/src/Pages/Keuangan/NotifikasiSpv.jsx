@@ -3,11 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import '../../Style/Keuangan/NotifikasiSpv.css';
 import SearchBar from '../../components/SearchBar';
 import UploadLaporan from './UploadLaporan';
+import { formatDateSlash } from '../../utils/dateUtils';
 import { fetchNotif } from '../../redux/keuangan/indexnotif/actions';
 
 const NotifikasiKeuangan = () => {
     const dispatch = useDispatch();
-    const { data: rows, loading } = useSelector(state => state.notif);
+    const { data, loading, error } = useSelector(state => state.notif);
     const [isPopupVisible, setIsPopupVisible] = useState(false);
 
     useEffect(() => {
@@ -20,10 +21,6 @@ const NotifikasiKeuangan = () => {
 
     const handleClosePopup = () => {
         setIsPopupVisible(false);
-    };
-
-    const formatDate = (dateString) => {
-        return new Date(dateString).toISOString().split('T')[0];
     };
 
     return (
@@ -48,14 +45,20 @@ const NotifikasiKeuangan = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {loading ? (
+                                {!data ? (
                                     <tr>
-                                        <td colSpan="6">Loading...</td>
+                                        <td colSpan="6">Tidak terdapat data</td>
+                                    </tr>
+                                ) : error ? (
+                                    <tr>
+                                        <td colSpan="8" className="empty-message">
+                                            {error || 'Terjadi kesalahan saat memuat data.'}
+                                        </td>
                                     </tr>
                                 ) : (
-                                    rows.map((row, index) => (
-                                        <tr key={index}>
-                                            <td>{formatDate(row.tanggal)}</td>
+                                    data.map((row) => (
+                                        <tr key={row.id}>
+                                            <td>{formatDateSlash(row.tanggal)}</td>
                                             <td>{row.no_laporan}</td>
                                             <td>{row.periode}</td>
                                             <td>{row.keterangan}</td>

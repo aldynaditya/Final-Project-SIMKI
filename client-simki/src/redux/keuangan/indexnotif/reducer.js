@@ -1,4 +1,8 @@
-import { GET_NOTIF_REQUEST, GET_NOTIF_SUCCESS, GET_NOTIF_FAILURE } from './constants';
+import { 
+    GET_NOTIF_REQUEST, 
+    GET_NOTIF_SUCCESS, 
+    GET_NOTIF_FAILURE 
+} from './constants';
 
 const initialState = {
     data: [],
@@ -19,6 +23,7 @@ const notifReducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 data: action.payload,
+                error: null,
             };
         case GET_NOTIF_FAILURE:
             return {

@@ -1,62 +1,73 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import '../../Style/Keuangan/TransaksiSpv.css';
+import { fetchTransaksi } from '../../redux/keuangan/indextransaksi/actions';
+import { formatDateSlash, formatDateStrip } from "../../utils/dateUtils";
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import { fetchTransaksi } from '../../redux/keuangan/indextransaksi/actions';
 
 const TransaksiKeuangan = () => {
     const dispatch = useDispatch();
-    const { data: rows, loading, error } = useSelector(state => state.transaksi);
+    const { data, loading, error } = useSelector(state => state.getTransaksi);
 
-    const [periodeSurat, setPeriodeSurat] = useState('');
-    const [hinggaSurat, setHinggaSurat] = useState('');
+    const [formData, setFormData] = useState({
+        startDate: '',
+        endDate: '',
+    });
 
     useEffect(() => {
-        dispatch(fetchTransaksi());
-    }, [dispatch]);
+        if (formData.startDate && formData.endDate) {
+            dispatch(fetchTransaksi({
+                startDate: formData.startDate,
+                endDate: formData.endDate
+            }));
+        }
+    }, [dispatch, formData.startDate, formData.endDate]);
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
 
     const BuatLaporan = async () => {
-        const element = document.querySelector('.tabel_transaksi-keuangan');
-        const button = document.querySelector('.buat-laporan');
+        const doc = new jsPDF();
 
-        if (!element || !button) {
-            console.error("Element or button not found!");
-            return;
+        doc.setFont("times", "bold");
+        doc.setFontSize(12);
+
+        const title = `Laporan Periode ${formatDateStrip(formData.startDate)} hingga ${formatDateStrip(formData.endDate)}`;
+
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const textWidth = doc.getTextWidth(title);
+        const titleX = (pageWidth - textWidth) / 2;
+
+        doc.text(title, titleX, 10);
+
+        const table = document.querySelector('.tabel_transaksi-keuangan table');
+        const canvas = await html2canvas(table);
+        const imgData = canvas.toDataURL('image/png');
+
+        const imgWidth = 190; // PDF page width is 210mm
+        const pageHeight = 290; // PDF page height is 297mm
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        let position = 20;
+    
+        if (imgHeight > pageHeight) {
+            doc.addImage(imgData, 'PNG', 10, position, imgWidth, pageHeight - position);
+            doc.addPage();
+            position = 10;
+            doc.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight - (pageHeight - position));
+        } else {
+            doc.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
         }
-
-        button.classList.add('clicked');
-
-        try {
-            const canvas = await html2canvas(element);
-            const imgData = canvas.toDataURL('image/png');
-            const pdf = new jsPDF('landscape', 'mm', 'a4');
-
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = pdf.internal.pageSize.getHeight();
-            const imgProps = pdf.getImageProperties(imgData);
-            const imgWidth = pdfWidth - 40;
-            const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
-            const xOffset = (pdfWidth - imgWidth) / 2;
-            const yOffset = (pdfHeight - imgHeight) / 2;
-
-            pdf.addImage(imgData, 'PNG', xOffset, yOffset, imgWidth, imgHeight);
-            pdf.save("laporan_transaksi.pdf");
-        } catch (error) {
-            console.error("Error generating PDF:", error);
-        } finally {
-            setTimeout(() => {
-                button.classList.remove('clicked');
-            }, 200);
-        }
+        
+        doc.save(`Laporan_Transaksi_${formData.startDate}_hingga_${formData.endDate}.pdf`);
     };
 
     if (loading) {
         return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error: {error}</div>;
     }
 
     return (
@@ -68,25 +79,28 @@ const TransaksiKeuangan = () => {
                         <div className="periode-surat">
                             <span className="text-periode-surat">Periode :</span>
                             <input
-                                type="date"
-                                value={periodeSurat}
-                                onChange={(e) => setPeriodeSurat(e.target.value)}
                                 className="kolom-periode-surat"
+                                type="date"
+                                name="startDate"
+                                value={formData.startDate}
+                                onChange={handleChange}
                             />
                         </div>
-
+    
                         <div className="hingga-surat">
                             <span className="text-hingga-surat">Hingga :</span>
                             <input
-                                type="date"
-                                value={hinggaSurat}
-                                onChange={(e) => setHinggaSurat(e.target.value)}
                                 className="kolom-hingga-surat"
+                                type="date"
+                                name="endDate"
+                                value={formData.endDate}
+                                onChange={handleChange}
                             />
                         </div>
                     </div>
+                    
                     <div className="tabel_transaksi-keuangan">
-                        <table>
+                        <table id="transaksi-table">
                             <thead>
                                 <tr>
                                     <th>No. Faktur</th>
@@ -95,33 +109,46 @@ const TransaksiKeuangan = () => {
                                     <th>Nama Pasien</th>
                                     <th>Penjamin</th>
                                     <th>Metode Bayar</th>
-                                    <th>Total Jasa</th>
                                     <th>Total</th>
                                     <th>Petugas</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {rows.map((row, index) => (
-                                    <tr key={row.id || index}>
-                                        <td>{row.noFaktur}</td>
-                                        <td>{row.tanggal}</td>
-                                        <td>{row.noEMR}</td>
-                                        <td>{row.nama_lengkap}</td>
-                                        <td>{row.penjamin}</td>
-                                        <td>{row.metode_bayar}</td>
-                                        <td>{row.total_order}</td>
-                                        <td>{row.total}</td>
-                                        <td>{row.petugas}</td>
-                                    </tr>
-                                ))}
+                            {(!formData.startDate || !formData.endDate) ? (
+                                <tr>
+                                    <td colSpan="8" className="empty-message">
+                                        Tolong masukkan periode untuk menampilkan transaksi.
+                                    </td>
+                                </tr>
+                            ) : error ? (
+                                <tr>
+                                    <td colSpan="8" className="empty-message">
+                                        {error || 'Terjadi kesalahan saat memuat data.'}
+                                    </td>
+                                </tr>
+                            ) : (
+                                    data.map((row) => (
+                                        <tr key={row.id}>
+                                            <td>{row.noInvoice}</td>
+                                            <td>{formatDateSlash(row.tanggal)}</td>
+                                            <td>{row.noEMR}</td>
+                                            <td>{row.namaPasien}</td>
+                                            <td>{row.penjamin}</td>
+                                            <td>{row.metodeBayar}</td>
+                                            <td>{row.total}</td>
+                                            <td>{row.petugas}</td>
+                                        </tr>
+                                    ))
+                                )}
                             </tbody>
                         </table>
                     </div>
+                    
                     <button className="buat-laporan" onClick={BuatLaporan}>Buat Laporan</button>
                 </div>
             </div>
         </div>
     );
-};
+}  
 
 export default TransaksiKeuangan;

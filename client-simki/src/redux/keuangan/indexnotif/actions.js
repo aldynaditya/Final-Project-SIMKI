@@ -1,4 +1,8 @@
-import { GET_NOTIF_REQUEST, GET_NOTIF_SUCCESS, GET_NOTIF_FAILURE } from './constants';
+import { 
+    GET_NOTIF_REQUEST, 
+    GET_NOTIF_SUCCESS, 
+    GET_NOTIF_FAILURE 
+} from './constants';
 import { getData } from '../../../utils/fetch';
 
 export const fetchNotif = () => async (dispatch) => {
