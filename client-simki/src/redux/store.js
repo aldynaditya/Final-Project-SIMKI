@@ -46,7 +46,7 @@ import createnewentryReducer from './doctor/newEntry/reducer';
 import getallorderbycashierReducer from './kasir/indexOrder/reducer';
 import updateordertotransactionReducer from './kasir/updateOrder/reducer';
 import getdetailorderReducer from './kasir/indexOrderDetail/reducer';
-import transaksiReducer from './keuangan/indextransaksi/reducer';
+import gettransaksiReducer from './keuangan/indextransaksi/reducer';
 import laporanReducer from './keuangan/create/reducer';
 import notifReducer from './keuangan/indexnotif/reducer';
 import updateStatusReducer from './pimpinan/update/reducer';
@@ -146,7 +146,7 @@ const rootReducers = combineReducers({
     updateOrder: updateordertotransactionReducer,
     getdetailOrder: getdetailorderReducer,
     //Page Transaksi(SPV)
-    transaksi: transaksiReducer,
+    getTransaksi: gettransaksiReducer,
     //Page Laporan(SPV)
     laporan: laporanReducer,
     notif: notifReducer,

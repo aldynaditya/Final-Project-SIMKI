@@ -1,5 +1,9 @@
+import { 
+    FETCH_TRANSAKSI_REQUEST, 
+    FETCH_TRANSAKSI_SUCCESS, 
+    FETCH_TRANSAKSI_FAILURE 
+} from './constants';
 import { getData } from '../../../utils/fetch';
-import { FETCH_TRANSAKSI_REQUEST, FETCH_TRANSAKSI_SUCCESS, FETCH_TRANSAKSI_FAILURE } from './constants';
 
 export const fetchTransaksi = (params) => async (dispatch) => {
     dispatch({ type: FETCH_TRANSAKSI_REQUEST });
