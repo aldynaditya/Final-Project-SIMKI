@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useReactToPrint } from 'react-to-print';
+import Invoice from '../../components/Receipt';
 import '../../Style/Kasir/TransaksiKasir.css';
 import SearchBar from '../../components/SearchBar';
 import { fetchAllOrder } from "../../redux/kasir/indexOrder/actions";
+import { fetchDetailOrderbyId } from "../../redux/kasir/indexOrderDetail/actions";
 import { formatDateSlash } from "../../utils/dateUtils";
 import PopUpDetailFaktur from './DetailFaktur';
 import Modal from 'react-modal';
@@ -14,16 +17,32 @@ const TransaksiKasir = () => {
     const [isDetailFakturVisible, setIsDetailFakturVisible] = useState(false);
     const [selectedFakturId, setSelectedFakturId] = useState(null);
     const [alert, setAlert] = useState({ status: false, message: '', type: '' });
+    const [printData, setPrintData] = useState(null);
 
     useEffect(() => {
         dispatch(fetchAllOrder());
     }, [dispatch]);
-    
+
+    const printRef = useRef();
+
+    const handlePrint = useReactToPrint({
+        content: () => printRef.current,
+    });
+
+    const CetakTransaksi = (row) => {
+        setPrintData(row); // Pass the specific row data to be printed
+    };
+
+    useEffect(() => {
+        if (printData) {
+            handlePrint();
+        }
+    }, [handlePrint, printData]);
+
     const handleDetailFakturOpen = (id) => {
         setSelectedFakturId(id);
         setIsDetailFakturVisible(true);
     };
-    
 
     const handleDetailFakturClose = () => {
         setIsDetailFakturVisible(false);
@@ -34,12 +53,9 @@ const TransaksiKasir = () => {
         dispatch(fetchAllOrder());
     };
 
-    const CetakTransaksi = (index) => {
-    };
-
-    if (loading) {
-        return <div>Loading...</div>;
-    }
+    // if (loading) {
+    //     return <div>Loading...</div>;
+    // }
 
     if (error) {
         return <div>Error: {error}</div>;
@@ -77,27 +93,30 @@ const TransaksiKasir = () => {
                                 </thead>
                                 <tbody>
                                     {data.map((row) => (
-                                            <tr key={row.id}>
-                                                <td>{row.noInvoice}</td>
-                                                <td>{formatDateSlash(row.tanggal)}</td>
-                                                <td>{row.noEMR}</td>
-                                                <td>{row.namaPasien}</td>
-                                                <td>{row.penjamin}</td>
-                                                <td>{row.metodeBayar}</td>
-                                                <td>{row.total}</td>
-                                                <td>{row.petugas}</td>
-                                                <td>{row.status}</td>
-                                                <td className="detail-faktur-cell">
-                                                    <button className="detail-faktur" onClick={() => handleDetailFakturOpen(row.id)}>Detail</button>
-                                                    <button className="cetak-transaksi" onClick={() => CetakTransaksi(row.id)}>Cetak</button>
-                                                </td>
-                                            </tr>
-                                        ))}
+                                        <tr key={row.id}>
+                                            <td>{row.noInvoice}</td>
+                                            <td>{formatDateSlash(row.tanggaldaftar)}</td>
+                                            <td>{row.noEMR}</td>
+                                            <td>{row.namaPasien}</td>
+                                            <td>{row.penjamin}</td>
+                                            <td>{row.metodeBayar}</td>
+                                            <td>{row.total}</td>
+                                            <td>{row.petugas}</td>
+                                            <td>{row.status}</td>
+                                            <td className="detail-faktur-cell">
+                                                <button className="detail-faktur" onClick={() => handleDetailFakturOpen(row.id)}>Detail</button>
+                                                <button className="cetak-transaksi" onClick={() => CetakTransaksi(row)}>Cetak</button>
+                                            </td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div style={{ display: 'none' }}>
+                <Invoice ref={printRef} data={printData} />
             </div>
             {isDetailFakturVisible && 
                 <PopUpDetailFaktur 
@@ -120,6 +139,8 @@ const TransaksiKasir = () => {
                     <button onClick={closeModal}>Close</button>
                 </div>
             </Modal>
+            {/* Invoice component that will be printed */}
+            {/* {printableOrder && <Invoice ref={invoiceRef} detailOrder={printableOrder} />} */}
         </div>
     );
 };

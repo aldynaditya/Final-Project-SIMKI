@@ -1,6 +1,7 @@
 const Appointment = require('../../api/v1/appointment/model');
 const UserKlinik = require('../../api/v1/userKlinik/model');
 const DataPasien = require('../../api/v1/dataPasien/model');
+const Schedule = require('../../api/v1/schedule/model');
 const EMRPasien = require('../../api/v1/emrPasien/model');
 const Episode = require('../../api/v1/episode/model');
 const Transaksi = require('../../api/v1/transaksi/model');
@@ -14,7 +15,7 @@ const {
 const { Op } = require('sequelize');
 
 const getAllOrders = async () => {
-    const order = await Transaksi.findAll({
+    const orders = await Transaksi.findAll({
         include: [
             {
                 model: Episode,
@@ -24,11 +25,21 @@ const getAllOrders = async () => {
                     as: 'emrpasien',
                     include: {
                         model: Appointment,
-                        include: {
-                            model: DataPasien,
-                            as: 'datapasien',
-                            attributes: ['nama_lengkap']
-                        }
+                        include: [
+                            {
+                                model: DataPasien,
+                                as: 'datapasien',
+                                attributes: ['nama_lengkap', 'alamat']
+                            },
+                            {
+                                model: Schedule,
+                                as: 'schedule',
+                                include: {
+                                    model: UserKlinik,
+                                    as: 'user_klinik'
+                                }
+                            }
+                        ]
                     }
                 }
             },
@@ -39,25 +50,69 @@ const getAllOrders = async () => {
         ]
     });
 
-    const result = order.map(transaksi => {
-        const episode = transaksi.episode;
-        const emr = episode.emrpasien;
-        const appointment = emr.appointment;
-        const datapasien = appointment.datapasien;
+    const result = await Promise.all(
+        orders.map(async (transaksi) => {
+            const episodeId = transaksi.episodeId;
 
-        return{
-            id: transaksi.uuid,
-            noInvoice: episode.invoiceNumber,
-            tanggal: appointment.tanggal,
-            noEMR: emr.noEMR,
-            namaPasien: datapasien.nama_lengkap,
-            penjamin: appointment.penjamin,
-            metodeBayar: transaksi.metode_bayar,
-            status: transaksi.status,
-            total: transaksi.total,
-            petugas: transaksi.user.nama
-        }
-    });
+            const [ordersObat, ordersProsedur] = await Promise.all([
+                OrderObat.findAll({
+                    where: { episodeId },
+                    include: [
+                        {
+                            model: Obat,
+                            as: 'dataobat'
+                        }
+                    ]
+                }),
+                OrderProsedur.findAll({
+                    where: { episodeId },
+                    include: [
+                        {
+                            model: Item,
+                            as: 'dataitem'
+                        }
+                    ]
+                })
+            ]);
+
+            return {
+                id: transaksi.uuid,
+                noInvoice: transaksi.episode.invoiceNumber,
+                tanggaldaftar: transaksi.episode.emrpasien.appointment.tanggal,
+                tanggalpembayaran: transaksi.updatedAt,
+                tanggaldibuat: transaksi.episode.updatedAt,
+                noEMR: transaksi.episode.emrpasien.noEMR,
+                namaPasien: transaksi.episode.emrpasien.appointment.datapasien.nama_lengkap,
+                alamatPasien: transaksi.episode.emrpasien.appointment.datapasien.alamat,
+                penjamin: transaksi.episode.emrpasien.appointment.penjamin,
+                metodeBayar: transaksi.metode_bayar,
+                status: transaksi.status,
+                totalOrder: transaksi.total_order,
+                total: transaksi.total,
+                petugas: transaksi.user.nama,
+                poli: transaksi.episode.emrpasien.appointment.schedule.poli,
+                dokter: transaksi.episode.emrpasien.appointment.schedule.user_klinik.nama,
+                ordersObat: ordersObat.map(order => ({
+                    uuid: order.uuid,
+                    kuantitas: order.kuantitas,
+                    dosis: order.dosis,
+                    catatan: order.catatan,
+                    total: order.total,
+                    namaobat: order.dataobat.nama_obat,
+                    kodeobat: order.dataobat.kode_obat
+                })),
+                ordersProsedur: ordersProsedur.map(order => ({
+                    uuid: order.uuid,
+                    kuantitas: order.kuantitas,
+                    dosis: order.dosis,
+                    catatan: order.catatan,
+                    total: order.total,
+                    namaitem: order.dataitem.nama_item,
+                    kodeitem: order.dataitem.kode_item
+                }))
+            };
+        })
+    );
 
     return result;
 };
@@ -65,7 +120,42 @@ const getAllOrders = async () => {
 const getOrderDetails = async (req) => {
     const { id } = req.params;
 
-    const transaksi = await Transaksi.findOne({ where: { uuid: id }});
+    const transaksi = await Transaksi.findOne({
+        where: { uuid: id },
+        include: [
+            {
+                model: Episode,
+                as: 'episode',
+                include: {
+                    model: EMRPasien,
+                    as: 'emrpasien',
+                    include: {
+                        model: Appointment,
+                        include: [
+                            {
+                                model: DataPasien,
+                                as: 'datapasien',
+                                attributes: ['nama_lengkap']
+                            },
+                            {
+                                model: Schedule,
+                                as: 'schedule',
+                                include: {
+                                    model: UserKlinik,
+                                    as: 'user_klinik'
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                model: UserKlinik,
+                as: 'user',
+            }
+        ]
+    });
+
     if (!transaksi) throw new NotFoundError('Transaksi tidak ditemukan');
 
     const episodeId = transaksi.episodeId;
@@ -95,8 +185,17 @@ const getOrderDetails = async (req) => {
         transaksi: {
             uuid: transaksi.uuid,
             episodeId: transaksi.episodeId,
+            noinvoice: transaksi.episode.invoiceNumber,
+            noEMR: transaksi.episode.emrpasien.noEMR,
+            nama: transaksi.episode.emrpasien.appointment.datapasien.nama_lengkap,
+            alamat: transaksi.episode.emrpasien.appointment.datapasien.alamat,
+            tanggaldaftar: transaksi.episode.emrpasien.appointment.tanggal,
+            tanggalpembayaran: transaksi.updatedAt,
+            poli: transaksi.episode.emrpasien.appointment.schedule.poli,
+            dokter: transaksi.episode.emrpasien.appointment.schedule.user_klinik.nama,
             total: transaksi.total,
             metodeBayar: transaksi.metodeBayar,
+            diskon: transaksi.diskon,
             status: transaksi.status,
             userKlinikId: transaksi.userKlinikId,
             createdAt: transaksi.createdAt
@@ -107,10 +206,8 @@ const getOrderDetails = async (req) => {
             dosis: order.dosis,
             catatan: order.catatan,
             total: order.total,
-            obat: {
-                nama: order.dataobat.nama_obat,
-                kode: order.dataobat.kode_obat
-            }
+            namaobat: order.dataobat.nama_obat,
+            kodeobat: order.dataobat.kode_obat
         })),
         ordersProsedur: ordersProsedur.map(order => ({
             uuid: order.uuid,
@@ -118,10 +215,8 @@ const getOrderDetails = async (req) => {
             dosis: order.dosis,
             catatan: order.catatan,
             total: order.total,
-            item: {
-                nama: order.dataitem.nama_item,
-                kode: order.dataitem.kode_item
-            }
+            namaitem: order.dataitem.nama_item,
+            kodeitem: order.dataitem.kode_item
         }))
     };
 

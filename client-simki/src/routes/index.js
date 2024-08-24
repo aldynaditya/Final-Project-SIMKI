@@ -8,6 +8,7 @@ import FooterPrivate from '../components/FooterPrivate';
 import Header from '../components/Header';
 
 import Home from '../Pages/Pasien/Home';
+import Invoice from '../components/Receipt';
 import Layanan from '../Pages/Pasien/layanan';
 import KebijakanPrivasi from '../Pages/Pasien/KebijakanPrivasi';
 import LupaPass from '../Pages/Pasien/LupaPass';
@@ -83,6 +84,14 @@ export function AppRoutes() {
                         <Navbar />
                         <Layanan />
                         <Footer />
+                    </>
+                }
+            />
+            <Route
+                path="/faktur"
+                element={
+                    <>
+                        <Invoice />
                     </>
                 }
             />

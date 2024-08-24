@@ -26,6 +26,15 @@ const NotifikasiPimpinan = () => {
         }
     };
 
+    const handleUnduh = (filePath) => {
+        const fileUrl = `http://localhost:9000/uploads/${filePath}`;
+        const printWindow = window.open(fileUrl, '_blank');
+    
+        setTimeout(() => {
+            printWindow.focus();
+        }, 1000);
+    };
+
     const closeModal = () => {
         setAlert({ status: false, message: '', type: '' });
     };
@@ -76,9 +85,9 @@ const NotifikasiPimpinan = () => {
                                                     Terima
                                                 </button>
                                                 <button 
-                                                    className="laporan-pimpinan"
+                                                    className="laporan-pimpinan" onClick={() => handleUnduh(row.file_path)}
                                                 >
-                                                    Lihat
+                                                    Unduh
                                                 </button>
                                             </td>
                                         </tr>
