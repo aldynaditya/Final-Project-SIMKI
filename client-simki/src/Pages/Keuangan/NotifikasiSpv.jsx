@@ -23,6 +23,16 @@ const NotifikasiKeuangan = () => {
         setIsPopupVisible(false);
     };
 
+    const handleUnduh = (filePath) => {
+        const fileUrl = `http://localhost:9000/uploads/${filePath}`;
+        const printWindow = window.open(fileUrl, '_blank');
+    
+        setTimeout(() => {
+            printWindow.focus();
+        }, 1000);
+    };
+    
+
     return (
         <div className="notif-keuangan-wrapper">
             <div className="notif-keuangan-container">
@@ -51,19 +61,25 @@ const NotifikasiKeuangan = () => {
                                     </tr>
                                 ) : error ? (
                                     <tr>
-                                        <td colSpan="8" className="empty-message">
+                                        <td colSpan="6" className="empty-message">
                                             {error || 'Terjadi kesalahan saat memuat data.'}
                                         </td>
                                     </tr>
                                 ) : (
                                     data.map((row) => (
-                                        <tr key={row.id}>
+                                        <tr key={row.uuid}>
                                             <td>{formatDateSlash(row.tanggal)}</td>
                                             <td>{row.no_laporan}</td>
                                             <td>{row.periode}</td>
                                             <td>{row.keterangan}</td>
                                             <td>{row.status}</td>
-                                            <td><div className="ket_cetak">Cetak</div></td>
+                                            <td>
+                                                {row.file_path && (
+                                                    <button className="ket_cetak" onClick={() => handleUnduh(row.file_path)}>
+                                                        Unduh
+                                                    </button>
+                                                )}
+                                            </td>
                                         </tr>
                                     ))
                                 )}

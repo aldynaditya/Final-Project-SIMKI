@@ -1,0 +1,125 @@
+/* Container for the invoice */
+.invoice-container {
+    font-family: 'Arial', sans-serif;
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+}
+
+/* Header styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.left-header {
+    text-align: left;
+}
+
+.left-header h2 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.left-header p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+}
+
+.right-header {
+    text-align: left;
+}
+
+/* Info row styles */
+.info-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.info-label {
+    font-weight: bold;
+    min-width: 200px; /* Adjust the width as needed */
+    text-align: left;
+}
+
+.info-value {
+    text-align: left;
+}
+
+/* Additional styles for other components */
+.invoice-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.invoice-info .left,
+.invoice-info .right {
+    width: 45%;
+    font-size: 0.9rem;
+}
+
+.invoice-details {
+    margin-top: 20px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.invoice-details table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.invoice-details td {
+    padding: 5px;
+    font-size: 0.9rem;
+}
+
+.invoice-details tr:not(:last-child) td {
+    border-bottom: 1px solid #ddd;
+}
+
+.right-align {
+    text-align: right;
+}
+
+.total {
+    margin-top: 30px;
+}
+
+.total table {
+    width: 100%;
+    font-size: 0.9rem;
+}
+
+.total td {
+    padding: 5px;
+    font-weight: bold;
+}
+
+.total .right-align {
+    text-align: right;
+}
+
+@media print {
+    .invoice-container {
+        width: 100%;
+        box-sizing: border-box;
+        page-break-inside: avoid;
+    }
+
+    @page {
+        size: A4;
+    }
+}
+
+

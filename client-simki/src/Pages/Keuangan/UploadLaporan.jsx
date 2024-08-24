@@ -4,26 +4,49 @@ import { createLaporan } from '../../redux/keuangan/create/actions';
 import '../../Style/Keuangan/UploadLaporan.css';
 
 const UploadLaporan = ({ onClose }) => {
-    const [no_laporan, setNoLaporan] = useState('');
-    const [tanggal, setTanggal] = useState('');
-    const [periode, setPeriode] = useState('');
-    const [selectedFile, setSelectedFile] = useState(null);
+    const [formData, setFormData] = useState({
+        noLaporan: '',
+        periode: '',
+        file: null
+    });
+    
     const dispatch = useDispatch();
     const { loading, error, data } = useSelector((state) => state.laporan);
 
-    const handleFileChange = (event) => {
-        setSelectedFile(event.target.files[0]);
+    const handleChange = (e) => {
+        const { name, value, type, files } = e.target;
+        if (type === 'file') {
+            setFormData({
+                ...formData,
+                [name]: files[0]
+            });
+        } else {
+            setFormData({
+                ...formData,
+                [name]: value
+            });
+        }
     };
 
     const TambahLaporan = () => {
-        if (selectedFile) {
-            const formData = new FormData();
-            formData.append('file', selectedFile);
-            formData.append('no_laporan', no_laporan);
-            formData.append('tanggal', tanggal);
-            formData.append('periode', periode);
+        if (!formData.noLaporan || !formData.periode) {
+            alert('Silakan isi semua kolom sebelum mengunggah laporan.');
+            return;
+        }
 
-            dispatch(createLaporan(formData));
+        if (formData.file) {
+            const form = new FormData();
+            form.append('file', formData.file);
+            form.append('noLaporan', formData.noLaporan);
+            form.append('periode', formData.periode);
+
+            console.log('Submitting form with:', {
+                noLaporan: formData.noLaporan,
+                periode: formData.periode,
+                file: formData.file
+            });
+
+            dispatch(createLaporan(form));
         } else {
             alert('Silakan unggah laporan terlebih dahulu.');
         }
@@ -37,21 +60,13 @@ const UploadLaporan = ({ onClose }) => {
                 </button>
                 <h1 className='text-tambahlaporan-popup'>Tambah Laporan</h1>
                 <div className='kolom-tambah-laporan'>
-                    <div className='tgl-laporan'>
-                        <span className='text-tgl-laporan'>Tanggal :</span>
-                        <input
-                            type='date'
-                            value={tanggal}
-                            onChange={(e) => setTanggal(e.target.value)}
-                            className='kolom-tgl-laporan'
-                        />
-                    </div>
                     <div className='no-laporan'>
                         <span className='text-no-laporan'>No. Laporan :</span>
                         <input
                             type='text'
-                            value={no_laporan}
-                            onChange={(e) => setNoLaporan(e.target.value)}
+                            name='noLaporan'
+                            value={formData.noLaporan}
+                            onChange={handleChange}
                             className='kolom-no-laporan'
                         />
                     </div>
@@ -59,8 +74,9 @@ const UploadLaporan = ({ onClose }) => {
                         <span className='text-periode-laporan'>Periode :</span>
                         <input
                             type='text'
-                            value={periode}
-                            onChange={(e) => setPeriode(e.target.value)}
+                            name='periode'
+                            value={formData.periode}
+                            onChange={handleChange}
                             className='kolom-periode-laporan'
                         />
                     </div>
@@ -68,9 +84,10 @@ const UploadLaporan = ({ onClose }) => {
                         <span className='text-unggah-laporan'>Unggah Laporan:</span>
                         <input
                             type='file'
+                            name='file'
                             className='kolom-unggah-laporan'
                             accept='application/pdf'
-                            onChange={handleFileChange}
+                            onChange={handleChange}
                         />
                     </div>
                 </div>

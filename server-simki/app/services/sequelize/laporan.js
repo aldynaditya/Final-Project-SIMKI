@@ -1,3 +1,4 @@
+const path = require('path');
 const Laporan = require('../../api/v1/laporan/model');
 const { 
     BadRequestError, 
@@ -30,7 +31,8 @@ const createLaporan = async (req, res) => {
     });
 
     if (req.file) {
-        newLaporan.file_path = req.file.path;
+        const fileName = path.basename(req.file.path);
+        newLaporan.file_path = fileName;
         await newLaporan.save();
     }
 
