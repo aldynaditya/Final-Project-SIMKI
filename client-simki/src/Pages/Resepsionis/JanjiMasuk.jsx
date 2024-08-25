@@ -4,7 +4,7 @@ import AksiPopUp from './AksiPopup';
 import '../../Style/Resepsionis/Antrian.css';
 import { fetchAppointment } from '../../redux/resepsionis/queue/actions'; 
 
-const Antrian = () => {
+const JanjiMasuk = () => {
     const dispatch = useDispatch();
     const { data, loading, error } = useSelector(state => state.antrian); 
 
@@ -32,13 +32,6 @@ const Antrian = () => {
         window.open(`/resepsionis/identitas-pasien/${id}`, '_blank');
     };
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
-
     return (
         <div className="page-antrian-container">
             <div className="content-wrap-antrian">
@@ -63,20 +56,28 @@ const Antrian = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {data.map((row) => (
-                                        <tr key={row.id}>
-                                            <td>{row.nama_lengkap}</td>
-                                            <td>{row.dokter}</td>
-                                            <td>{row.poli}</td>
-                                            <td>{row.tanggal}</td>
-                                            <td>{row.jam}</td>
-                                            <td>{row.penjamin}</td>
-                                            <td>
-                                                <button className="lihat-identitas" onClick={() => IdentitasPasien(row.id)}>Lihat</button>
-                                                <button className="aksi-antrian" onClick={() => handleOpenAksiPopup(row.id)}>Aksi</button>
+                                    {data.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="7" className="empty-message">
+                                                Tidak ada janji masuk
                                             </td>
                                         </tr>
-                                    ))}
+                                    ) : (
+                                        data.map((row) => (
+                                            <tr key={row.id}>
+                                                <td>{row.nama_lengkap}</td>
+                                                <td>{row.dokter}</td>
+                                                <td>{row.poli}</td>
+                                                <td>{row.tanggal}</td>
+                                                <td>{row.jam}</td>
+                                                <td>{row.penjamin}</td>
+                                                <td>
+                                                    <button className="lihat-identitas" onClick={() => IdentitasPasien(row.id)}>Lihat</button>
+                                                    <button className="aksi-antrian" onClick={() => handleOpenAksiPopup(row.id)}>Aksi</button>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    )}
                                 </tbody>
                             </table>
                         </div>
@@ -94,4 +95,4 @@ const Antrian = () => {
     );
 };
 
-export default Antrian;
+export default JanjiMasuk;

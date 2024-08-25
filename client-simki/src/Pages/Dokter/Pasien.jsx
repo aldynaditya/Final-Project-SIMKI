@@ -30,9 +30,6 @@ const PasienDokter= () => {
         window.open(`/resepsionis/identitas-pasien/${id}`, '_blank');
     };
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
-
     return (
         <div className="pasien-resepsionis-wrapper">
             <div className="navbar-header-wrapper">
@@ -55,25 +52,32 @@ const PasienDokter= () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {data.map((emr) => (
-                                    <tr key={emr.id}>
-                                        <td>{emr.noEMR}</td>
-                                        <td>{emr.nama_pasien}</td>
-                                        <td>{formatDateStrip(emr.tanggal_lahir)}</td>
-                                        <td>{emr.jenis_kelamin}</td>
-                                        <td>
-                                        {role === 'resepsionis' && (
-                                                <>
-                                                    <button className="emr-dokter" onClick={() => IdentitasPasien(emr.appointmentId)}>Identitas</button>
+                                {data.length === 0 ? 
+                                <tr>
+                                    <td colSpan="5" className="empty-message">
+                                        Belum ada data pasien yang terdaftar
+                                    </td>
+                                </tr> : (
+                                    data.map((emr) => (
+                                        <tr key={emr.id}>
+                                            <td>{emr.noEMR}</td>
+                                            <td>{emr.nama_pasien}</td>
+                                            <td>{formatDateStrip(emr.tanggal_lahir)}</td>
+                                            <td>{emr.jenis_kelamin}</td>
+                                            <td>
+                                                {role === 'resepsionis' && (
+                                                    <>
+                                                        <button className="emr-dokter" onClick={() => IdentitasPasien(emr.appointmentId)}>Identitas</button>
+                                                        <button className="emr-dokter" onClick={() => EmrDokter(emr.id)}>EMR</button>
+                                                    </>
+                                                )}
+                                                {(role === 'dokter' || role === 'perawat') && (
                                                     <button className="emr-dokter" onClick={() => EmrDokter(emr.id)}>EMR</button>
-                                                </>
-                                            )}
-                                        {(role === 'dokter' || role === 'perawat') && (
-                                            <button className="emr-dokter" onClick={() => EmrDokter(emr.id)}>EMR</button>
-                                        )}
-                                        </td>
-                                    </tr>
-                                ))}
+                                                )}
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
                             </tbody>
                         </table>
                     </div>

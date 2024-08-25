@@ -149,22 +149,29 @@ const OrderProsedur = () => {
                         </tr>
                     </thead>
                     <tbody>
-                    {orderData.map((order) => (
-                            <tr key={order.id}>
-                                <td>{order.nama_item}</td>
-                                <td>{order.kode_item}</td>
-                                <td>{order.satuan_item}</td>
-                                <td>{order.harga_item}</td>
-                                <td>{order.kuantitas}</td>
-                                <td>{order.stok_item}</td>
-                                <td>{order.dosis}</td>
-                                <td>{order.catatan}</td>
-                                <td>{order.total}</td>
-                                <td>
-                                    <div className="hapus-order-prosedur" onClick={() => hapusOrderProsedur(order.id)}>Hapus</div>
+                        {orderData.length === 0 ? 
+                            <tr>
+                                <td colSpan="10" className="empty-message">
+                                    Silakan melakukan order
                                 </td>
-                            </tr>
-                        ))}
+                            </tr> : (
+                            orderData.map((order) => (
+                                <tr key={order.id}>
+                                    <td>{order.nama_item}</td>
+                                    <td>{order.kode_item}</td>
+                                    <td>{order.satuan_item}</td>
+                                    <td>{order.harga_item}</td>
+                                    <td>{order.kuantitas}</td>
+                                    <td>{order.stok_item}</td>
+                                    <td>{order.dosis}</td>
+                                    <td>{order.catatan}</td>
+                                    <td>{order.total}</td>
+                                    <td>
+                                        <div className="hapus-order-prosedur" onClick={() => hapusOrderProsedur(order.id)}>Hapus</div>
+                                    </td>
+                                </tr>
+                            ))
+                        )}
                     </tbody>
                 </table>
             </div>

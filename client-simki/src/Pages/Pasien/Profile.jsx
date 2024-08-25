@@ -45,10 +45,20 @@ const Profile = () => {
     }, [profile]);
 
     const handleChange = (e) => {
-        setLocalProfile({
-            ...localProfile,
-            [e.target.name]: e.target.value,
-        });
+        const { name, value } = e.target;
+    
+        if (name === 'nik') {
+            const numericValue = value.replace(/[^0-9]/g, '');
+            setLocalProfile({
+                ...localProfile,
+                [name]: numericValue
+            });
+        } else {
+            setLocalProfile({
+                ...localProfile,
+                [name]: value
+            });
+        }
     };
 
     const closeModal = () => {
@@ -72,14 +82,6 @@ const Profile = () => {
             });
         }
     };
-
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
 
     return (
         <div className='profile_container'>

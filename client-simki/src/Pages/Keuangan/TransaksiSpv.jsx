@@ -66,10 +66,6 @@ const TransaksiKeuangan = () => {
         doc.save(`Laporan_Transaksi_${formData.startDate}_hingga_${formData.endDate}.pdf`);
     };
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
     return (
         <div className="transaksi-keuangan-wrapper">
             <div className="transaksi-keuangan-container">

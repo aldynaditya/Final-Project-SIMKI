@@ -238,7 +238,17 @@ const getpasienAppointments = async (req) => {
 const createAppointment = async (req) => {
     const { tanggal, keluhan, penjamin, dokter, poli, start_time, end_time } = req.body;
     const { pasienId } = req.pasien;
-    
+
+    const today = new Date();
+    const appointmentDate = new Date(tanggal);
+
+    const oneDayBefore = new Date(appointmentDate);
+    oneDayBefore.setDate(oneDayBefore.getDate() - 1);
+
+    if (today > oneDayBefore) {
+        throw new Error('Janji temu harus dibuat paling lambat satu hari sebelum tanggal yang dipilih');
+    }
+
     const dayOfWeek = getDayOfWeek(tanggal);
     const schedule = await Schedule.findOne({
         where: {

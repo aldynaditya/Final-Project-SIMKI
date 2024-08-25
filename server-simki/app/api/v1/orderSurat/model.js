@@ -31,8 +31,8 @@ const OrderSurat = db.define('orderSurat', {
         defaultValue: 'v1.0'
     },
     status: {
-        type: DataTypes.ENUM('updated','not confirm', 'in process','confirm'),
-        defaultValue: 'in process',
+        type: DataTypes.ENUM('updated','done'),
+        defaultValue: 'done',
     },
     suratSakitId: {
         type: DataTypes.UUID,

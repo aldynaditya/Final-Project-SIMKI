@@ -52,7 +52,15 @@ const RiwayatKunjungan = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {rows}
+                        {historyData.length === 0 ? (
+                            <tr>
+                                <td colSpan="5" className="empty-message">
+                                    Belum ada Riwayat kunjungan
+                                </td>
+                            </tr>
+                        ) : (
+                            rows
+                        )}
                     </tbody>
                 </table>
             </div>

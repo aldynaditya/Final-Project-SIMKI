@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import Resepsionis from '../Pages/Resepsionis/Resepsionis';
 import PendaftarBaru from '../Pages/Resepsionis/DataPasien';
-import Antrian from '../Pages/Resepsionis/Antrian';
+import JanjiMasuk from '../Pages/Resepsionis/JanjiMasuk';
 import IdentitasPasien from '../Pages/Resepsionis/IdentitasPasien';
 import Emr from '../Pages/Dokter/Emr';
 import PasienDokter from '../Pages/Dokter/Pasien';
@@ -15,7 +15,7 @@ export function ReceptionistRoute() {
         <Routes>
             <Route path="/" element={<Resepsionis />} />
             <Route path="pendaftar-baru" element={<PendaftarBaru />} />
-            <Route path="antrian" element={<Antrian />} />
+            <Route path="antrian" element={<JanjiMasuk />} />
             <Route path="pasien-dokter" element={<PasienDokter />} />
             <Route path="kelola-jadwal" element={<KelolaJadwal />} />
             <Route path="identitas-pasien/:id" element={<IdentitasPasien />} />

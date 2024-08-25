@@ -117,112 +117,6 @@ const getAllOrders = async () => {
     return result;
 };
 
-const getOrderDetails = async (req) => {
-    const { id } = req.params;
-
-    const transaksi = await Transaksi.findOne({
-        where: { uuid: id },
-        include: [
-            {
-                model: Episode,
-                as: 'episode',
-                include: {
-                    model: EMRPasien,
-                    as: 'emrpasien',
-                    include: {
-                        model: Appointment,
-                        include: [
-                            {
-                                model: DataPasien,
-                                as: 'datapasien',
-                                attributes: ['nama_lengkap']
-                            },
-                            {
-                                model: Schedule,
-                                as: 'schedule',
-                                include: {
-                                    model: UserKlinik,
-                                    as: 'user_klinik'
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            {
-                model: UserKlinik,
-                as: 'user',
-            }
-        ]
-    });
-
-    if (!transaksi) throw new NotFoundError('Transaksi tidak ditemukan');
-
-    const episodeId = transaksi.episodeId;
-
-    const [ordersObat, ordersProsedur] = await Promise.all([
-        OrderObat.findAll({
-            where: { episodeId },
-            include: [
-                {
-                    model: Obat,
-                    as: 'dataobat'
-                }
-            ]
-        }),
-        OrderProsedur.findAll({
-            where: { episodeId },
-            include: [
-                {
-                    model: Item,
-                    as: 'dataitem'
-                }
-            ]
-        })
-    ]);
-
-    const result = {
-        transaksi: {
-            uuid: transaksi.uuid,
-            episodeId: transaksi.episodeId,
-            noinvoice: transaksi.episode.invoiceNumber,
-            noEMR: transaksi.episode.emrpasien.noEMR,
-            nama: transaksi.episode.emrpasien.appointment.datapasien.nama_lengkap,
-            alamat: transaksi.episode.emrpasien.appointment.datapasien.alamat,
-            tanggaldaftar: transaksi.episode.emrpasien.appointment.tanggal,
-            tanggalpembayaran: transaksi.updatedAt,
-            poli: transaksi.episode.emrpasien.appointment.schedule.poli,
-            dokter: transaksi.episode.emrpasien.appointment.schedule.user_klinik.nama,
-            total: transaksi.total,
-            metodeBayar: transaksi.metodeBayar,
-            diskon: transaksi.diskon,
-            status: transaksi.status,
-            userKlinikId: transaksi.userKlinikId,
-            createdAt: transaksi.createdAt
-        },
-        ordersObat: ordersObat.map(order => ({
-            uuid: order.uuid,
-            kuantitas: order.kuantitas,
-            dosis: order.dosis,
-            catatan: order.catatan,
-            total: order.total,
-            namaobat: order.dataobat.nama_obat,
-            kodeobat: order.dataobat.kode_obat
-        })),
-        ordersProsedur: ordersProsedur.map(order => ({
-            uuid: order.uuid,
-            kuantitas: order.kuantitas,
-            dosis: order.dosis,
-            catatan: order.catatan,
-            total: order.total,
-            namaitem: order.dataitem.nama_item,
-            kodeitem: order.dataitem.kode_item
-        }))
-    };
-
-    return result;
-};
-
 const updateTransaction = async (req) => {
     const { id } = req.params;
     const { metode_bayar, diskon, keterangan } = req.body;
@@ -311,7 +205,6 @@ const filterAllTransactionByPeriod = async (req) => {
 
 module.exports = {
     getAllOrders,
-    getOrderDetails,
     updateTransaction,
     filterAllTransactionByPeriod
 }

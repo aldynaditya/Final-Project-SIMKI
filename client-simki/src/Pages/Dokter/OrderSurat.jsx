@@ -200,19 +200,27 @@ const OrderSurat = () => {
                         </tr>
                     </thead>
                     <tbody>
-                    {orderData.map((order) => (
-                            <tr key={order.id}>
-                                <td>{formatDateStrip(order.tanggal)}</td>
-                                <td>{order.jenis_surat}</td>
-                                <td>{order.tujuan}</td>
-                                <td>{order.versi_surat}</td>
-                                <td>{order.status}</td>
-                                <td>
-                                    <div className="hapus-order-surat" onClick={() => hapusOrderSurat(order.id)}>Hapus</div>
-                                    <div className="hapus-order-surat" onClick={() => CetakSurat(order)}>Cetak</div>
+                        {orderData.length === 0 ? (
+                            <tr>
+                                <td colSpan="6" className="empty-message">
+                                    Tidak ada data surat
                                 </td>
                             </tr>
-                        ))}
+                        ) : (
+                            orderData.map((order) => (
+                                <tr key={order.id}>
+                                    <td>{formatDateStrip(order.tanggal)}</td>
+                                    <td>{order.jenis_surat}</td>
+                                    <td>{order.tujuan}</td>
+                                    <td>{order.versi_surat}</td>
+                                    <td>{order.status}</td>
+                                    <td>
+                                        <div className="hapus-order-surat" onClick={() => hapusOrderSurat(order.id)}>Hapus</div>
+                                        <div className="hapus-order-surat" onClick={() => CetakSurat(order)}>Cetak</div>
+                                    </td>
+                                </tr>
+                            ))
+                        )}
                     </tbody>
                 </table>
             </div>

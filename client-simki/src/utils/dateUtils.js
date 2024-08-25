@@ -39,3 +39,9 @@ export const formatTime = (dateString) => {
     const minutes = String(localDate.getUTCMinutes()).padStart(2, '0');
     return `${hours}:${minutes}`;
 };
+
+export const getMinDate = () => {
+    const today = new Date();
+    today.setDate(today.getDate() + 1); 
+    return today.toISOString().split('T')[0];
+};

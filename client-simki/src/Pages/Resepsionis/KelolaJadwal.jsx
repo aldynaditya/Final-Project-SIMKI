@@ -103,19 +103,27 @@ const KelolaJadwal = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                            {schedules.map((jadwal) => (
-                                    <tr key={jadwal.id}>
-                                        <td>{jadwal.dokter}</td>
-                                        <td>{jadwal.poli}</td>
-                                        <td>{jadwal.hari}</td>
-                                        <td>{jadwal.jam}</td>
-                                        <td>{jadwal.status}</td>
-                                        <td>
-                                            <button className="ubah-jadwal" onClick={() => handleUbahJadwal(jadwal.id)}>Ubah</button>
-                                            <div className="hapus-jadwal" onClick={() => hapusJadwal(jadwal.id)}>Hapus</div>
+                                {schedules.length === 0 ? (
+                                    <tr>
+                                        <td colSpan="6" className="empty-message">
+                                            Jadwal belum ada
                                         </td>
                                     </tr>
-                                ))}
+                                ) : (
+                                    schedules.map((jadwal) => (
+                                        <tr key={jadwal.id}>
+                                            <td>{jadwal.dokter}</td>
+                                            <td>{jadwal.poli}</td>
+                                            <td>{jadwal.hari}</td>
+                                            <td>{jadwal.jam}</td>
+                                            <td>{jadwal.status}</td>
+                                            <td>
+                                                <button className="ubah-jadwal" onClick={() => handleUbahJadwal(jadwal.id)}>Ubah</button>
+                                                <div className="hapus-jadwal" onClick={() => hapusJadwal(jadwal.id)}>Hapus</div>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
                             </tbody>
                         </table>
                     </div>

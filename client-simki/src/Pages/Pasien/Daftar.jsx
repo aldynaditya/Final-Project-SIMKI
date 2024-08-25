@@ -46,10 +46,20 @@ const Daftar = () => {
   }, [userData, isFormValid]);
 
   const handleChange = (e) => {
-    setUserData({
-      ...userData,
-      [e.target.name]: e.target.value
-    });
+    const { name, value } = e.target;
+  
+    if (name === 'nik') {
+      const numericValue = value.replace(/[^0-9]/g, '');
+      setUserData({
+        ...userData,
+        [name]: numericValue
+      });
+    } else {
+      setUserData({
+        ...userData,
+        [name]: value
+      });
+    }
   };
 
   const handleDaftar = async () => {

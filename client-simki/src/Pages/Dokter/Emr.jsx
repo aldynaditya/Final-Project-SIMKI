@@ -15,9 +15,6 @@ const Emr = () => {
         dispatch(fetchdetailEmr(id));
     }, [dispatch, id]);
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
-
     return (
         <div className='emr-resepsionis-container'>
             <h1 className='text-emr-resepsionis'>EMR Pasien</h1>
