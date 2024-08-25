@@ -112,23 +112,31 @@ const PendaftarBaru = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {data.map((row) => (
-                                    <tr key={row.id}>
-                                        <td>{row.nama_lengkap}</td>
-                                        <td>{row.nik}</td>
-                                        <td>{formatDateStrip(row.tanggal_lahir)}</td>
-                                        <td>{row.jenis_kelamin}</td>
-                                        <td>{row.alamat}</td>
-                                        <td>
-                                            <div className="hapus-pendaftar" onClick={() => hapusPendaftar(row.id)}>
-                                                Hapus
-                                            </div>
-                                            <div className="hapus-pendaftar" onClick={() => handleBuatJanji(row.id)}>
-                                                Buat Janji
-                                            </div>
+                                {data.length === 0 ? (
+                                    <tr>
+                                        <td colSpan="6" className="empty-message">
+                                            Data pasien belum tersedia
                                         </td>
                                     </tr>
-                                ))}
+                                ) : (
+                                    data.map((row) => (
+                                        <tr key={row.id}>
+                                            <td>{row.nama_lengkap}</td>
+                                            <td>{row.nik}</td>
+                                            <td>{formatDateStrip(row.tanggal_lahir)}</td>
+                                            <td>{row.jenis_kelamin}</td>
+                                            <td>{row.alamat}</td>
+                                            <td>
+                                                <div className="hapus-pendaftar" onClick={() => hapusPendaftar(row.id)}>
+                                                    Hapus
+                                                </div>
+                                                <div className="buat-janji" onClick={() => handleBuatJanji(row.id)}>
+                                                    Buat Janji
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
                             </tbody>
                         </table>
                     </div>

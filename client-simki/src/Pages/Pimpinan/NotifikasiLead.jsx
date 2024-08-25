@@ -39,14 +39,6 @@ const NotifikasiPimpinan = () => {
         setAlert({ status: false, message: '', type: '' });
     };
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
-
     return (
         <div className="notif-pimpinan-wrapper">
             <div className="navbar-header-notif-pimpinan"></div>
@@ -69,9 +61,15 @@ const NotifikasiPimpinan = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {data.map((row, index) => {
-                                    return(
-                                        <tr key={index}>
+                                {data.length === 0 ? (
+                                    <tr>
+                                        <td colSpan="6" className="empty-message">
+                                            Belum ada laporan yang masuk
+                                        </td>
+                                    </tr>
+                                ) : (
+                                    data.map((row) => (
+                                        <tr key={row.uuid}>
                                             <td>{row.tanggal}</td>
                                             <td>{row.no_laporan}</td>
                                             <td>{row.periode}</td>
@@ -79,20 +77,21 @@ const NotifikasiPimpinan = () => {
                                             <td>{row.status}</td>
                                             <td className="notif-laporan-cell">
                                                 <button 
-                                                    className="ket_terima-pimpinan" 
-                                                    onClick={() =>handleProsesClick(row.uuid)}
+                                                    className="ket-terima-pimpinan" 
+                                                    onClick={() => handleProsesClick(row.uuid)}
                                                 >
                                                     Terima
                                                 </button>
                                                 <button 
-                                                    className="laporan-pimpinan" onClick={() => handleUnduh(row.file_path)}
+                                                    className="laporan-pimpinan" 
+                                                    onClick={() => handleUnduh(row.file_path)}
                                                 >
                                                     Unduh
                                                 </button>
                                             </td>
                                         </tr>
-                                    );
-                                })}
+                                    ))
+                                )}
                             </tbody>
                         </table>
                     </div>

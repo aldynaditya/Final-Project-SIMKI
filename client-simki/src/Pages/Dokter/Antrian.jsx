@@ -18,9 +18,6 @@ const AntrianDokter= () => {
         navigate(`/dokter/input-cppt/${id}`);
     };
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
-
     return (
         <div className="pasien-resepsionis-wrapper">
             <div className="navbar-header-wrapper">
@@ -42,17 +39,24 @@ const AntrianDokter= () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {data.map((emr) => (
-                                    <tr key={emr.id}>
-                                        <td>{emr.noEMR}</td>
-                                        <td>{emr.nama_pasien}</td>
-                                        <td>{formatDateStrip(emr.tanggal_lahir)}</td>
-                                        <td>{emr.jenis_kelamin}</td>
-                                        <td>
-                                            <button className="emr-dokter" onClick={() => handleIsiCppt(emr.id)}>Isi CPPT</button>
+                                {data.length === 0 ? 
+                                    <tr>
+                                        <td colSpan="5" className="empty-message">
+                                            Belum ada antrian yang masuk
+                                        </td>
+                                    </tr> : (
+                                    data.map((emr) => (
+                                        <tr key={emr.id}>
+                                            <td>{emr.noEMR}</td>
+                                            <td>{emr.nama_pasien}</td>
+                                            <td>{formatDateStrip(emr.tanggal_lahir)}</td>
+                                            <td>{emr.jenis_kelamin}</td>
+                                            <td>
+                                                <button className="emr-dokter" onClick={() => handleIsiCppt(emr.id)}>Isi CPPT</button>
                                             </td>
-                                    </tr>
-                                ))}
+                                        </tr>
+                                    ))
+                                )}
                             </tbody>
                         </table>
                     </div>

@@ -70,10 +70,6 @@ const HalamanPasien = () => {
         }
     }, [error]);
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
     const sortedAppointments = [...appointments].sort((a, b) => {
         const createdComparison = new Date(b.dibuat) - new Date(a.dibuat);
         if (createdComparison !== 0) {
@@ -104,17 +100,32 @@ const HalamanPasien = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {sortedAppointments.map((appointment, index) => (
-                            <tr key={index}>
-                                <td>{formatDateStrip(appointment.tanggal)}</td>
-                                <td>{appointment.nama_dokter}</td>
-                                <td>{appointment.poli}</td>
-                                <td>{appointment.jam}</td>
-                                <td>{appointment.keterangan}</td>
-                                <td><div className={`tombol_${appointment.status.toLowerCase()}`}>{appointment.status}</div></td>
+                        {sortedAppointments.length === 0 && !error ? (
+                            <tr>
+                                <td colSpan="6" className="empty-message">
+                                    Belum ada janji yang dibuat.
+                                </td>
                             </tr>
-                        ))}
+                        ) : error ? (
+                            <tr>
+                                <td colSpan="6" className="empty-message">
+                                    {error || 'Terjadi kesalahan saat memuat data.'}
+                                </td>
+                            </tr>
+                        ) : (
+                            sortedAppointments.map((appointment, index) => (
+                                <tr key={index}>
+                                    <td>{formatDateStrip(appointment.tanggal)}</td>
+                                    <td>{appointment.nama_dokter}</td>
+                                    <td>{appointment.poli}</td>
+                                    <td>{appointment.jam}</td>
+                                    <td>{appointment.keterangan}</td>
+                                    <td><div className={`tombol_${appointment.status.toLowerCase()}`}>{appointment.status}</div></td>
+                                </tr>
+                            ))
+                        )}
                     </tbody>
+
                 </table>
             </div>
             <div className="klik_pasien">

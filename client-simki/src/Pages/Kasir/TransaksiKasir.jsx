@@ -5,7 +5,6 @@ import Invoice from '../../components/Receipt';
 import '../../Style/Kasir/TransaksiKasir.css';
 import SearchBar from '../../components/SearchBar';
 import { fetchAllOrder } from "../../redux/kasir/indexOrder/actions";
-import { fetchDetailOrderbyId } from "../../redux/kasir/indexOrderDetail/actions";
 import { formatDateSlash } from "../../utils/dateUtils";
 import PopUpDetailFaktur from './DetailFaktur';
 import Modal from 'react-modal';
@@ -30,7 +29,7 @@ const TransaksiKasir = () => {
     });
 
     const CetakTransaksi = (row) => {
-        setPrintData(row); // Pass the specific row data to be printed
+        setPrintData(row);
     };
 
     useEffect(() => {
@@ -52,10 +51,6 @@ const TransaksiKasir = () => {
     const handleSuccess = () => {
         dispatch(fetchAllOrder());
     };
-
-    // if (loading) {
-    //     return <div>Loading...</div>;
-    // }
 
     if (error) {
         return <div>Error: {error}</div>;
@@ -92,23 +87,31 @@ const TransaksiKasir = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {data.map((row) => (
-                                        <tr key={row.id}>
-                                            <td>{row.noInvoice}</td>
-                                            <td>{formatDateSlash(row.tanggaldaftar)}</td>
-                                            <td>{row.noEMR}</td>
-                                            <td>{row.namaPasien}</td>
-                                            <td>{row.penjamin}</td>
-                                            <td>{row.metodeBayar}</td>
-                                            <td>{row.total}</td>
-                                            <td>{row.petugas}</td>
-                                            <td>{row.status}</td>
-                                            <td className="detail-faktur-cell">
-                                                <button className="detail-faktur" onClick={() => handleDetailFakturOpen(row.id)}>Detail</button>
-                                                <button className="cetak-transaksi" onClick={() => CetakTransaksi(row)}>Cetak</button>
+                                    {data.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="10" className="empty-message">
+                                                Tidak ada data transaksi
                                             </td>
                                         </tr>
-                                    ))}
+                                    ) : (
+                                        data.map((row) => (
+                                            <tr key={row.id}>
+                                                <td>{row.noInvoice}</td>
+                                                <td>{formatDateSlash(row.tanggaldaftar)}</td>
+                                                <td>{row.noEMR}</td>
+                                                <td>{row.namaPasien}</td>
+                                                <td>{row.penjamin}</td>
+                                                <td>{row.metodeBayar}</td>
+                                                <td>{row.total}</td>
+                                                <td>{row.petugas}</td>
+                                                <td>{row.status}</td>
+                                                <td className="detail-faktur-cell">
+                                                    <button className="detail-faktur" onClick={() => handleDetailFakturOpen(row.id)}>Detail</button>
+                                                    <button className="cetak-transaksi" onClick={() => CetakTransaksi(row)}>Cetak</button>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    )}
                                 </tbody>
                             </table>
                         </div>
@@ -139,8 +142,6 @@ const TransaksiKasir = () => {
                     <button onClick={closeModal}>Close</button>
                 </div>
             </Modal>
-            {/* Invoice component that will be printed */}
-            {/* {printableOrder && <Invoice ref={invoiceRef} detailOrder={printableOrder} />} */}
         </div>
     );
 };

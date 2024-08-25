@@ -14,13 +14,10 @@ const IdentitasPasien = () => {
         dispatch(fetchPasienbyId(id));
     }, [dispatch, id]);
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
-
     return (
         <div className='identitas_pasien_container'>
             <div className="content-identitas-pasien">
-                <h1 className='text_identitas_pasien'>Identitas Pasien</h1>
+                <h1 className='text_identitas_pasien'>Pendaftar Baru</h1>
                 <div className='biodata-pasien-perawat'>
                     <div className='nama-nik-perawat'>
                         <input type='text' className='kolom-npasien-perawat' placeholder='Nama Lengkap' value={data.nama_lengkap} readOnly />

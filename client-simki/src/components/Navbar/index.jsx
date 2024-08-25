@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../Style/components/Navbar.css';
 import logoklinik from '../../images/logoklinik.png';
 import undip from '../../images/undip.png';
@@ -9,6 +9,22 @@ import '../../Style/components/reset.css';
 
 const Navbar = () => {
   const [activeLink, setActiveLink] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const auth = localStorage.getItem('auth');
+    if (auth) {
+      try {
+        const authData = JSON.parse(auth);
+        setIsLoggedIn(!!authData.token);
+      } catch (error) {
+        console.error('Failed to parse auth data:', error);
+        setIsLoggedIn(false);
+      }
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
 
   const handleLinkClick = (link) => {
     setActiveLink(link);
@@ -33,24 +49,28 @@ const Navbar = () => {
       </div>
       <nav>
         <ul>
-          <li>
-            <Link 
-              to="/" 
-              className={activeLink === 'home' ? 'active' : ''} 
-              onClick={() => handleLinkClick('home')}
-            >
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link 
-              to="/layanan" 
-              className={activeLink === 'layanan' ? 'active' : ''} 
-              onClick={() => handleLinkClick('layanan')}
-            >
-              Layanan
-            </Link>
-          </li>
+          {!isLoggedIn && (
+            <>
+              <li>
+                <Link 
+                  to="/" 
+                  className={activeLink === 'home' ? 'active' : ''} 
+                  onClick={() => handleLinkClick('home')}
+                >
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/layanan" 
+                  className={activeLink === 'layanan' ? 'active' : ''} 
+                  onClick={() => handleLinkClick('layanan')}
+                >
+                  Layanan
+                </Link>
+              </li>
+            </>
+          )}
           <li>
             <Link 
               to="/jadwal" 
@@ -60,15 +80,27 @@ const Navbar = () => {
               Dokter
             </Link>
           </li>
-          <li>
-            <Link 
-              to="/login" 
-              className={activeLink === 'login' ? 'active' : ''} 
-              onClick={() => handleLinkClick('login')}
-            >
-              Login
-            </Link>
-          </li>
+          {isLoggedIn ? (
+            <li>
+              <Link 
+                to="/pasien" 
+                className={activeLink === 'pasien' ? 'active' : ''} 
+                onClick={() => handleLinkClick('pasien')}
+              >
+                Dashboard
+              </Link>
+            </li>
+          ) : (
+            <li>
+              <Link 
+                to="/login" 
+                className={activeLink === 'login' ? 'active' : ''} 
+                onClick={() => handleLinkClick('login')}
+              >
+                Login
+              </Link>
+            </li>
+          )}
         </ul>
       </nav>
     </div>

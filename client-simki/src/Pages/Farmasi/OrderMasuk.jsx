@@ -52,10 +52,6 @@ const OrderMasuk = () => {
         setAlert({ status: false, message: '', type: '' });
     };
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
     return (
         <div className="order-masuk-wrapper">
             <div className="navbar-header-masuk"></div>
@@ -85,32 +81,39 @@ const OrderMasuk = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {data.map((row, index) => {
-                                        const { formattedDate, formattedTime } = formatDateTime(row.dateAndTime);
-                                        return (
-                                            <tr key={index}>
-                                                <td>{row.noInvoice}</td>
-                                                <td>{formattedDate}</td>
-                                                <td>{formattedTime}</td>
-                                                <td>{row.noEMR}</td>
-                                                <td>{row.namaPasien}</td>
-                                                <td>{row.namaDokter}</td>
-                                                <td>{row.poli}</td>
-                                                <td>{row.obat}</td>
-                                                <td>{row.kuantitas}</td>
-                                                <td>{row.dosis}</td>
-                                                <td>{row.catatan}</td>
-                                                <td>
-                                                    <div
-                                                        className="proses-obat"
-                                                        onClick={() => handleProsesClick(row.id)}
-                                                    >
-                                                        {row.status}
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        );
-                                    })}
+                                    {data.length === 0 ? 
+                                        <tr>
+                                            <td colSpan="12" className="empty-message">
+                                                Belum ada order yang masuk
+                                            </td>
+                                        </tr> : (
+                                        data.map((row, index) => {
+                                            const { formattedDate, formattedTime } = formatDateTime(row.dateAndTime);
+                                            return (
+                                                <tr key={index}>
+                                                    <td>{row.noInvoice}</td>
+                                                    <td>{formattedDate}</td>
+                                                    <td>{formattedTime}</td>
+                                                    <td>{row.noEMR}</td>
+                                                    <td>{row.namaPasien}</td>
+                                                    <td>{row.namaDokter}</td>
+                                                    <td>{row.poli}</td>
+                                                    <td>{row.obat}</td>
+                                                    <td>{row.kuantitas}</td>
+                                                    <td>{row.dosis}</td>
+                                                    <td>{row.catatan}</td>
+                                                    <td>
+                                                        <div
+                                                            className="proses-obat"
+                                                            onClick={() => handleProsesClick(row.id)}
+                                                        >
+                                                            {row.status}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })
+                                    )}
                                 </tbody>
                             </table>
                         </div>

@@ -45,7 +45,6 @@ import getvitalsignReducer from './doctor/vitalSign/reducer';
 import createnewentryReducer from './doctor/newEntry/reducer';
 import getallorderbycashierReducer from './kasir/indexOrder/reducer';
 import updateordertotransactionReducer from './kasir/updateOrder/reducer';
-import getdetailorderReducer from './kasir/indexOrderDetail/reducer';
 import gettransaksiReducer from './keuangan/indextransaksi/reducer';
 import laporanReducer from './keuangan/create/reducer';
 import notifReducer from './keuangan/indexnotif/reducer';
@@ -144,7 +143,6 @@ const rootReducers = combineReducers({
     //Page Transaksi(Kasir)
     getallOrder: getallorderbycashierReducer,
     updateOrder: updateordertotransactionReducer,
-    getdetailOrder: getdetailorderReducer,
     //Page Transaksi(SPV)
     getTransaksi: gettransaksiReducer,
     //Page Laporan(SPV)

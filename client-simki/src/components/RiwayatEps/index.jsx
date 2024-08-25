@@ -28,9 +28,6 @@ const RiwayatEpisode = ({ noEMR }) => {
         window.open(path, '_blank');
     };
 
-    if (loadingEpisode) return <div>Loading...</div>;
-    if (errorEpisode) return <div>Error: {errorEpisode}</div>;
-
     return (
         <div className='tabel-eps-rsp'>
             <h2 className='h2-riwayat-eps-rsp'>Riwayat Episode</h2>

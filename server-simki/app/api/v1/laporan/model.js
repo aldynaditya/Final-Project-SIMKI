@@ -37,7 +37,7 @@ const Laporan = db.define('laporan', {
         defaultValue: 'v1.0'
     },
     status: {
-        type: DataTypes.ENUM('rejected','in process', 'accepted'),
+        type: DataTypes.ENUM('in process', 'accepted'),
         defaultValue: 'in process',
     },
     userKlinikId: {

@@ -4,7 +4,7 @@ import './faktur.css';
 
 const Invoice = React.forwardRef(({ data }, ref) => {
     if (!data) {
-        return null; // Return null or some loading/error state
+        return null;
     }
 
     const formatDateTime = (dateString) => {
@@ -87,14 +87,12 @@ const Invoice = React.forwardRef(({ data }, ref) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* Special Row for Konsultasi */}
                         <tr>
                             <td>{formatDateSlash(data.tanggaldibuat)}</td>
                             <td>{konsultasiRow.keterangan}</td>
                             <td>{konsultasiRow.jumlah}</td>
                             <td>{konsultasiRow.nilai}</td>
                         </tr>
-                        {/* Orders Obat */}
                         {data.ordersObat.map((order) => (
                             <tr key={order.uuid}>
                                 <td>{formatDateSlash(data.tanggaldibuat)}</td>
@@ -103,7 +101,6 @@ const Invoice = React.forwardRef(({ data }, ref) => {
                                 <td>{order.total}</td>
                             </tr>
                         ))}
-                        {/* Orders Prosedur */}
                         {data.ordersProsedur.map((order) => (
                             <tr key={order.uuid}>
                                 <td>{formatDateSlash(data.tanggaldibuat)}</td>

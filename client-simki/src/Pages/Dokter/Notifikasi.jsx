@@ -13,14 +13,6 @@ const Notifikasi = () => {
         dispatch(fetchNotifikasiSurat());
     }, [dispatch]);
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error</div>;
-    }
-
     return (
         <div className="notifikasi-wrapper">
             <div className="navbar-header-notifikasi">
@@ -43,15 +35,22 @@ const Notifikasi = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {data.map((row) => (
-                                    <tr key={row.id}>
-                                        <td>{row.noEMR}</td>
-                                        <td>{row.namaPasien}</td>
-                                        <td>{row.versi_surat}</td>
-                                        <td>{formatDateStrip(row.tanggal)}</td>
-                                        <td>{row.status}</td>
-                                    </tr>
-                                ))}
+                                {data.length === 0 ? 
+                                <tr>
+                                    <td colSpan="5" className="empty-message">
+                                        Belum ada history perpanjangan surat
+                                    </td>
+                                </tr> : (
+                                    data.map((row) => (
+                                        <tr key={row.id}>
+                                            <td>{row.noEMR}</td>
+                                            <td>{row.namaPasien}</td>
+                                            <td>{row.versi_surat}</td>
+                                            <td>{formatDateStrip(row.tanggal)}</td>
+                                            <td>{row.status}</td>
+                                        </tr>
+                                    ))
+                                )}
                             </tbody>
                         </table>
                     </div>

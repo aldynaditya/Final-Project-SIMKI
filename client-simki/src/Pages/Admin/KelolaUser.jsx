@@ -45,14 +45,6 @@ const KelolaUser = () => {
         setAlert({ status: false, message: '', type: '' });
     };
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
-
     return (
         <div className="kelola-item-wrapper">
             <div className="navbar-kelola-item">
@@ -72,7 +64,6 @@ const KelolaUser = () => {
                                     <th>No</th>
                                     <th>Nama</th>
                                     <th>Email</th>
-                                    <th>Password</th>
                                     <th>Role</th>
                                     <th></th>
                                 </tr>
@@ -83,7 +74,6 @@ const KelolaUser = () => {
                                         <td>{index + 1}</td>
                                         <td>{user.nama}</td>
                                         <td>{user.email}</td>
-                                        <td>{user.password}</td>
                                         <td>{user.role}</td>
                                         <td><div className="ket_aksi" onClick={() => handleDeleteUser(user.id)}>Delete</div></td>
                                     </tr>

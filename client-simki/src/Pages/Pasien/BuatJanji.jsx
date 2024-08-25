@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import { createAppointment } from '../../redux/patient/create/actions';
 import { getSchedules } from '../../redux/patient/schedule/actions';
 import { getDayString } from '../../utils/convertfunction';
+import { getMinDate } from '../../utils/dateUtils';
 import '../../Style/Pasien/BuatJanji.css';
 
 const BuatJanji = () => {
@@ -15,6 +16,7 @@ const BuatJanji = () => {
     const errorform = useSelector(state => state.createAppointment.error);
     const [alert, setAlert] = useState({ status: false, message: '' });
     const [navigateAfterClose, setNavigateAfterClose] = useState(false);
+    const minDate = getMinDate();
 
     const [formData, setFormData] = useState({
         poli: '',
@@ -26,6 +28,7 @@ const BuatJanji = () => {
     });
 
     const [formError, setFormError] = useState('');
+    const [doctorUnavailable, setDoctorUnavailable] = useState(false);
 
     const isFormValid = useCallback(() => {
         return Object.values(formData).every(value => value.trim() !== '');
@@ -68,6 +71,7 @@ const BuatJanji = () => {
 
             const times = [...new Set(filtered.map(schedule => schedule.jam))];
             setTimeOptions(times);
+            setDoctorUnavailable(times.length === 0);
         }
     }, [formData.tanggal, formData.dokter, formData.poli, schedules]);
 
@@ -134,7 +138,7 @@ const BuatJanji = () => {
                 <div className='form_group'>
                     <label htmlFor="poli">Poli :</label>
                     <select id="poli" name="poli" value={formData.poli} onChange={handleChange}>
-                        <option value="">Pilih Poli</option>
+                        <option value="" disabled hidden>Pilih Poli</option>
                         {Array.isArray(schedules) && schedules.length > 0 && [...new Set(schedules.map(schedule => schedule.poli))].map(poli => (
                             <option key={poli} value={poli}>{poli}</option>
                         ))}
@@ -143,7 +147,7 @@ const BuatJanji = () => {
                 <div className='form_group'>
                     <label htmlFor="dokter">Dokter :</label>
                     <select id="dokter" name="dokter" value={formData.dokter} onChange={handleChange}>
-                        <option value="">Pilih Dokter</option>
+                        <option value="" disabled hidden>Pilih Dokter</option>
                         {filteredDokters.map(dokter => (
                             <option key={dokter} value={dokter}>{dokter}</option>
                         ))}
@@ -151,21 +155,32 @@ const BuatJanji = () => {
                 </div>
                 <div className='form_group'>
                     <label htmlFor="tanggal">Tanggal :</label>
-                    <input type="date" id="tanggal" name="tanggal" value={formData.tanggal} onChange={handleChange} />
+                    <input 
+                        type="date" 
+                        id="tanggal" 
+                        name="tanggal" 
+                        value={formData.tanggal} 
+                        onChange={handleChange} 
+                        min={minDate}
+                    />
                 </div>
                 <div className='form_group'>
                     <label htmlFor="jam">Jam :</label>
                     <select id="jam" name="jam" value={formData.jam} onChange={handleChange}>
-                        <option value="">Pilih Jam</option>
-                        {timeOptions.map(jam => (
-                            <option key={jam} value={jam}>{jam}</option>
-                        ))}
+                        <option value="" disabled hidden>Pilih Jam</option>
+                        {doctorUnavailable ? (
+                            <option value="" disabled>Dokter tidak tersedia pada hari itu</option>
+                        ) : (
+                            timeOptions.map(jam => (
+                                <option key={jam} value={jam}>{jam}</option>
+                            ))
+                        )}
                     </select>
                 </div>
                 <div className='form_group'>
                     <label htmlFor="penjamin">Penjamin :</label>
                     <select id="penjamin" name="penjamin" value={formData.penjamin} onChange={handleChange}>
-                        <option value="">Pilih Penjamin</option>
+                        <option value="" disabled hidden>Pilih Penjamin</option>
                         <option value="umum">Umum</option>
                         <option value="asuransi">Asuransi</option>
                     </select>
@@ -176,7 +191,7 @@ const BuatJanji = () => {
                 </div>
 
                 <div className='button_container'>
-                    <button className='klik_buatjanji' onClick={handleSubmit} disabled={!isFormValid()}>Buat Janji</button>
+                    <button className='klik_buatjanji' onClick={handleSubmit} disabled={!isFormValid() || doctorUnavailable}>Buat Janji</button>
                     {formError && <p className="error_message">{formError}</p>}
                 </div>
                 

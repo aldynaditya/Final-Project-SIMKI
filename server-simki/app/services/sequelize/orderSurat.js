@@ -43,7 +43,7 @@ const createOrderSuratSakit = async (req) => {
     const orderSurat = await OrderSurat.create({
         episodeId: episode.uuid,
         suratSakitId: suratSakit.uuid,
-        status: 'confirm',
+        status: 'done',
         jenis_surat: 'sakit',
         versi_surat,
         total: 0
@@ -95,7 +95,7 @@ const createOrderSuratRujukan = async (req) => {
     const orderSurat = await OrderSurat.create({
         episodeId: episode.uuid,
         suratRujukanId: suratRujukan.uuid,
-        status: 'confirm',
+        status: 'done',
         jenis_surat: 'rujukan',
         versi_surat: 'v1.0',
         total: 0

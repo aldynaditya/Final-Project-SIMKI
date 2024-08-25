@@ -177,23 +177,30 @@ const OrderObat = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {orderData.map((order) => (
-                            <tr key={order.id}>
-                                <td>{order.nama_obat}</td>
-                                <td>{order.kode_obat}</td>
-                                <td>{order.satuan_obat}</td>
-                                <td>{order.harga_obat}</td>
-                                <td>{order.kuantitas}</td>
-                                <td>{order.stok_obat}</td>
-                                <td>{order.dosis}</td>
-                                <td>{order.catatan}</td>
-                                <td>{order.total}</td>
-                                <td>{order.status}</td>
-                                <td>
-                                    <div className="hapus-order-obat" onClick={() => hapusOrderObat(order.id)}>Hapus</div>
+                        {orderData.length === 0 ? 
+                            <tr>
+                                <td colSpan="11" className="empty-message">
+                                    Silakan melakukan order
                                 </td>
-                            </tr>
-                        ))}
+                            </tr> : (
+                            orderData.map((order) => (
+                                <tr key={order.id}>
+                                    <td>{order.nama_obat}</td>
+                                    <td>{order.kode_obat}</td>
+                                    <td>{order.satuan_obat}</td>
+                                    <td>{order.harga_obat}</td>
+                                    <td>{order.kuantitas}</td>
+                                    <td>{order.stok_obat}</td>
+                                    <td>{order.dosis}</td>
+                                    <td>{order.catatan}</td>
+                                    <td>{order.total}</td>
+                                    <td>{order.status}</td>
+                                    <td>
+                                        <div className="hapus-order-obat" onClick={() => hapusOrderObat(order.id)}>Hapus</div>
+                                    </td>
+                                </tr>
+                            ))
+                        )}
                     </tbody>
                 </table>
             </div>

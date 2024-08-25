@@ -35,9 +35,6 @@ const EntriMasuk = () => {
         setIsPopupVisible(false);
     };
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
-
     return (
         <div className='emr-resepsionis-container'>
             <h1 className='text-emr-resepsionis'>CPPT</h1>

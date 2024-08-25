@@ -6,7 +6,7 @@ import { formatDateStrip } from "../../utils/dateUtils";
 import SearchBar from "../../components/SearchBar"; 
 import '../../Style/Perawat/PasienPerawat.css'; 
 
-const PasienPerawat= () => {
+const AntrianPerawat= () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { data, loading, error } = useSelector(state => state.getEmr);
@@ -43,17 +43,25 @@ const PasienPerawat= () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {data.map((emr) => (
-                                    <tr key={emr.id}>
-                                        <td>{emr.noEMR}</td>
-                                        <td>{emr.nama_pasien}</td>
-                                        <td>{formatDateStrip(emr.tanggal_lahir)}</td>
-                                        <td>{emr.jenis_kelamin}</td>
-                                        <td>
-                                            <button className="emr-perawat" onClick={() => EmrPerawat(emr.id)}>Isi CPPT</button>
+                                {data.length === 0 ? (
+                                    <tr>
+                                        <td colSpan="5" className="empty-message">
+                                            Belum ada antrian yang masuk
                                         </td>
                                     </tr>
-                                ))}
+                                ) : (
+                                    data.map((emr) => (
+                                        <tr key={emr.id}>
+                                            <td>{emr.noEMR}</td>
+                                            <td>{emr.nama_pasien}</td>
+                                            <td>{formatDateStrip(emr.tanggal_lahir)}</td>
+                                            <td>{emr.jenis_kelamin}</td>
+                                            <td>
+                                                <button className="emr-perawat" onClick={() => EmrPerawat(emr.id)}>Isi CPPT</button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
                             </tbody>
                         </table>
                     </div>
@@ -63,4 +71,4 @@ const PasienPerawat= () => {
     );
 };
 
-export default PasienPerawat;
+export default AntrianPerawat;

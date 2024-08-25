@@ -107,19 +107,27 @@ const KelolaItem = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {data.map((item) => (
-                                    <tr key={item.id}>
-                                        <td>{item.nama_item}</td>
-                                        <td>{item.kode_item}</td>
-                                        <td>{item.harga_item}</td>
-                                        <td>{item.satuan_item}</td>
-                                        <td>{item.stok_item}</td>
-                                        <td>
-                                            <button className="ubah-jadwal" onClick={() => handleUbahItem(item.id)}>Ubah</button>
-                                            <div className="hapus-jadwal" onClick={() => hapusItem(item.id)}>Hapus</div>
+                                {data.length === 0 ? (
+                                    <tr>
+                                        <td colSpan="6" className="empty-message">
+                                            Belum ada item yang terdaftar
                                         </td>
                                     </tr>
-                                ))}
+                                ) : (
+                                    data.map((item) => (
+                                        <tr key={item.id}>
+                                            <td>{item.nama_item}</td>
+                                            <td>{item.kode_item}</td>
+                                            <td>{item.harga_item}</td>
+                                            <td>{item.satuan_item}</td>
+                                            <td>{item.stok_item}</td>
+                                            <td>
+                                                <button className="ubah-jadwal" onClick={() => handleUbahItem(item.id)}>Ubah</button>
+                                                <button className="hapus-jadwal" onClick={() => hapusItem(item.id)}>Hapus</button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
                             </tbody>
                         </table>
                     </div>
