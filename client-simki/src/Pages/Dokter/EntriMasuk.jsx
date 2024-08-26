@@ -126,7 +126,7 @@ const EntriMasuk = () => {
                 />
             }
             </div>
-            <RiwayatEpisode />
+            <RiwayatEpisode noEMR={data.noEMR}/>
         </div>
     );
 };

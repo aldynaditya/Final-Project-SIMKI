@@ -23,7 +23,7 @@ const Episode = db.define('episode', {
     },
     alergi: {
         type: DataTypes.STRING,
-        defaultValue: "-",
+        defaultValue: "",
         allowNull: false,
         validate: {
             notEmpty: true,
@@ -31,12 +31,12 @@ const Episode = db.define('episode', {
     },
     riwayat_penyakit: {
         type: DataTypes.TEXT,
-        defaultValue: "-",
+        defaultValue: "",
         allowNull: false,
     },
     subjective: {
         type: DataTypes.TEXT,
-        defaultValue: "-",
+        defaultValue: "",
         allowNull: false,
     },
     TD: {
@@ -76,17 +76,17 @@ const Episode = db.define('episode', {
     },
     objective: {
         type: DataTypes.TEXT,
-        defaultValue: "-",
+        defaultValue: "",
         allowNull: false,
     },
     assessment: {
         type: DataTypes.TEXT,
-        defaultValue: "-",
+        defaultValue: "",
         allowNull: false,
     },
     plan: {
         type: DataTypes.TEXT,
-        defaultValue: "-",
+        defaultValue: "",
         allowNull: false,
     },
     tindakan: {

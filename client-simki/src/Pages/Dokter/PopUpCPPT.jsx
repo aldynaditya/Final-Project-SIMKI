@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import { createCPPTEntry } from '../../redux/doctor/cpptEntry/actions';
@@ -25,9 +25,11 @@ const PopUpCPPT = ({ onClose }) => {
 
     const [alert, setAlert] = useState({ status: false, message: '', type: '' });
 
-    useEffect(() => {
-        dispatch(fetchVitalsign(datavs.id));
-    }, [dispatch, datavs.id]);
+    const isFormValid = useCallback(() => {
+        return Object.values(formData).every(value => {
+            return String(value).trim() !== '';
+        });
+    }, [formData]);
 
     useEffect(() => {
         if (datavs) {
@@ -85,7 +87,17 @@ const PopUpCPPT = ({ onClose }) => {
     };
 
     const SimpanCppt = () => {
+        if (!isFormValid()) {
+            setAlert({
+                status: true,
+                message: 'Isi seluruh form',
+                type: 'danger'
+            });
+            return;
+        }
+
         dispatch(createCPPTEntry(datavs.id, formData));
+        dispatch(fetchVitalsign(datavs.id));
         setAlert({ status: false, message: '', type: '' });
     };
 
@@ -96,7 +108,16 @@ const PopUpCPPT = ({ onClose }) => {
 
     const DropdownOrder = async (event) => {
         const selectedOption = event.target.value;
-
+    
+        if (!datavs.riwayat_penyakit || !datavs.subjective || !datavs.objective || !datavs.assessment || !datavs.plan) {
+            setAlert({
+                status: true,
+                message: 'Pastikan seluruh form CPPT terisi sebelum melanjutkan.',
+                type: 'danger'
+            });
+            return;
+        }
+    
         if (!datavs.id) {
             setAlert({
                 status: true,
@@ -182,7 +203,14 @@ const PopUpCPPT = ({ onClose }) => {
             >
                 <div className="modal-content">
                     <p>{alert.message}</p>
-                    <button onClick={() => setAlert({ status: false, message: '', type: '' })}>Close</button>
+                    <button 
+                        onClick={() => {
+                            setAlert({ status: false, message: '', type: '' });
+                            window.location.reload();
+                        }}
+                    >
+                        Close
+                    </button>
                 </div>
             </Modal>
         </div>

@@ -31,6 +31,7 @@ const EditItem = ({ onClose, itemId, onSuccess }) => {
             return String(value).trim() !== '';
         });
     }, [formData]);
+    
     const handleChange = (e) => {
         setFormData({
             ...formData,
