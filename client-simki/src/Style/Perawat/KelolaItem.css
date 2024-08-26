@@ -29,7 +29,6 @@ body {
     display: flex;
     flex-direction: column;
     padding: 20px;
-    margin-top: 80px;
 }
 
 .content-wrapper-kelola-item {

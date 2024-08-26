@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getScheduleP } from '../../redux/resepsionis/schedule/actions';
-import '../../Style/Perawat/JadwalDokter.css';
+import '../../Style/Pasien/jadwal.css';
 
 const JadwalDokter = () => {
     const dispatch = useDispatch();
@@ -32,9 +32,9 @@ const JadwalDokter = () => {
         })
         .map((schedule, index) => (
             <tr key={index}>
-            <td>{schedule.dokter}</td>
-            <td>{schedule.hari}</td>
-            <td>{schedule.jam}</td>
+            <td className='td-jadwal'>{schedule.dokter}</td>
+            <td className='td-jadwal'>{schedule.hari}</td>
+            <td className='td-jadwal'>{schedule.jam}</td>
             </tr>
         ));
     };
@@ -49,9 +49,9 @@ const JadwalDokter = () => {
             <table>
                 <thead>
                 <tr>
-                    <th>Dokter</th>
-                    <th>Hari</th>
-                    <th>Jam</th>
+                    <th className='th-jadwal'>Dokter</th>
+                    <th className='th-jadwal'>Hari</th>
+                    <th className='th-jadwal'>Jam</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -65,9 +65,9 @@ const JadwalDokter = () => {
             <table>
                 <thead>
                 <tr>
-                    <th>Dokter</th>
-                    <th>Hari</th>
-                    <th>Jam</th>
+                    <th className='th-jadwal'>Dokter</th>
+                    <th className='th-jadwal'>Hari</th>
+                    <th className='th-jadwal'>Jam</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -78,7 +78,7 @@ const JadwalDokter = () => {
         </div>
         <div className="desc-jadwal">
             <p>
-            {/* Keterangan tambahan */}
+            {/* keterangan tambahan */}
             </p>
         </div>
         </div>

@@ -40,8 +40,7 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 20px;
-    margin-top: 80px;
+    padding: 40px;
 }
 
 .content-wrapper-antrian {
@@ -56,7 +55,6 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 20px 70px;
-    margin-top: 50px;
 }
 
 .header-antrian-action {
@@ -120,7 +118,6 @@ body {
 }
 
 .tabel_antrian {
-    margin: 20px;
     flex: 1;
     overflow: auto;
     max-height: 400px;

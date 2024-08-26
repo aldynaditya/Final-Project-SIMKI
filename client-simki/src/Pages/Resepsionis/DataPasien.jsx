@@ -93,7 +93,7 @@ const PendaftarBaru = () => {
             <div className="pendaftar-baru-container">
                 <div className="content-wrapper">
                     <div className="header-pendaftar-baru">
-                        <h1 className="text_pendaftar">Identitas Pasien</h1>
+                        <h1 className="text_pendaftar">Pendaftar Baru</h1>
                         <div className="header-pendaftar-action">
                             <button className='tambah_pendaftar' onClick={handleTambahPendaftar}>Tambah</button>
                             <SearchBar />

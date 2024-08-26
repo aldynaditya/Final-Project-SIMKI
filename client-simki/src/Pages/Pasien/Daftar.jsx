@@ -160,7 +160,7 @@ const Daftar = () => {
               value={userData.jenis_kelamin} 
               onChange={handleChange}
             >
-              <option value="">Pilih Jenis Kelamin</option>
+              <option value="" disabled hidden>Pilih Jenis Kelamin</option>
               <option value="laki-laki">Laki-laki</option>
               <option value="perempuan">Perempuan</option>
             </select>
@@ -171,7 +171,7 @@ const Daftar = () => {
               value={userData.gol_darah} 
               onChange={handleChange}
             >
-              <option value="">Pilih Golongan Darah</option>
+              <option value="" disabled hidden>Pilih Golongan Darah</option>
               <option value="O">O</option>
               <option value="A">A</option>
               <option value="B">B</option>
@@ -184,7 +184,7 @@ const Daftar = () => {
               value={userData.kewarganegaraan} 
               onChange={handleChange}
             >
-              <option value="">Pilih Kewarganegaraan</option>
+              <option value="" disabled hidden>Pilih Kewarganegaraan</option>
               <option value="WNI">WNI</option>
               <option value="WNA">WNA</option>
             </select>

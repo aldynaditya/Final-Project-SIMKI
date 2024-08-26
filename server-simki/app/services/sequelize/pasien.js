@@ -34,18 +34,13 @@ const signupPasien = async (req) => {
     const { nik, nama_lengkap, tempat_lahir, tanggal_lahir, jenis_kelamin, gol_darah, kewarganegaraan, alamat, email, password } = req.body;
 
     let result = await Pasien.findOne({
-        where: { email, status: 'tidak aktif' }
+        where: { email, status: 'tidak aktif' },
+        include: {
+            model: DataPasien
+        }
     });
 
     if (result) {
-        result.nik = nik;
-        result.nama_lengkap = nama_lengkap;
-        result.tempat_lahir = tempat_lahir;
-        result.tanggal_lahir = tanggal_lahir;
-        result.jenis_kelamin = jenis_kelamin;
-        result.gol_darah = gol_darah;
-        result.kewarganegaraan = kewarganegaraan;
-        result.alamat = alamat;
         result.email = email;
         result.password = password;
         result.otp = Math.floor(Math.random() * 9999);

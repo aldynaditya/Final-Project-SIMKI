@@ -125,8 +125,8 @@ const EntriMasuk = () => {
                     onComplete={handleCPPTComplete} 
                 />
             }
-                <RiwayatEpisode />
             </div>
+            <RiwayatEpisode />
         </div>
     );
 };

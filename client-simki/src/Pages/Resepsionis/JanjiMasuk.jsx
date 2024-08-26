@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AksiPopUp from './AksiPopup';
 import '../../Style/Resepsionis/Antrian.css';
 import { fetchAppointment } from '../../redux/resepsionis/queue/actions'; 
+import { formatDateSlash } from '../../utils/dateUtils';
 
 const JanjiMasuk = () => {
     const dispatch = useDispatch();
@@ -66,9 +67,9 @@ const JanjiMasuk = () => {
                                         data.map((row) => (
                                             <tr key={row.id}>
                                                 <td>{row.nama_lengkap}</td>
-                                                <td>{row.dokter}</td>
+                                                <td>{row.nama_dokter}</td>
                                                 <td>{row.poli}</td>
-                                                <td>{row.tanggal}</td>
+                                                <td>{formatDateSlash(row.tanggal)}</td>
                                                 <td>{row.jam}</td>
                                                 <td>{row.penjamin}</td>
                                                 <td>

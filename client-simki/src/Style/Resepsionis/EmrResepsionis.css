@@ -18,13 +18,13 @@ body {
 .text-emr-resepsionis {
     margin: 0;
     text-align: left;
-    margin-left: 70px;
     margin-top: 50px;
+    padding: 0px 70px;
 }
 
 .kolom-emr-resepsionis {
     margin-top: 50px;
-    margin-left: 70px;
+    padding: 0px 70px;
     display: flex;
     flex-direction: column;
     gap: 10px;

@@ -10,6 +10,7 @@
     text-align: center;
     line-height: 35px;
     display: inline-block;
+    margin: 0px 5px;
 }
 
 .emr-dokter:hover {
