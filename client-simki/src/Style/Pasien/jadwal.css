@@ -43,25 +43,25 @@ table {
   table-layout: fixed;
 }
 
-th, td {
+.th-jadwal, .td-jadwal {
   border: 1px solid #ddd;
   padding: 8px;
 }
 
-th {
+.th-jadwal {
   background-color: #f2f2f2;
   font-weight: bold;
   text-align: center;
 }
 
-td:first-child {
+.td-jadwal:first-child {
   text-align: left;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-td {
+.td-jadwal {
   text-align: center;
 }
 

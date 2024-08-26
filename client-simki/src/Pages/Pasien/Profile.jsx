@@ -127,34 +127,44 @@ const Profile = () => {
                         />
                     </div>
                     <div className='gender-public'>
-                        <input
-                            type='text'
+                        <select
                             className='kolom-gender-public'
                             placeholder='Jenis Kelamin'
                             name='jenis_kelamin'
                             value={localProfile.jenis_kelamin}
                             onChange={handleChange}
-                        />
+                        >
+                            <option value="laki-laki">Laki-laki</option>
+                            <option value="perempuan">Perempuan</option>
+                        </select>
                     </div>
                     <div className='blood-public'>
-                        <input
+                        <select
                             type='text'
                             className='kolom-blood-public'
                             placeholder='Golongan Darah'
                             name='gol_darah'
                             value={localProfile.gol_darah}
                             onChange={handleChange}
-                        />
+                        >
+                            <option value="O">O</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="AB">AB</option>
+                        </select>
                     </div>
                     <div className='suku-public'>
-                        <input
+                        <select
                             type='text'
                             className='kolom-suku-public'
                             placeholder='Kewarganegaraan'
                             name='kewarganegaraan'
                             value={localProfile.kewarganegaraan}
                             onChange={handleChange}
-                        />
+                        >
+                            <option value="WNI">WNI</option>
+                            <option value="WNA">WNA</option>
+                        </select>
                     </div>
                     <div className='alamat-public'>
                         <input

@@ -20,7 +20,7 @@ body {
 
 .kolom-detail-eps {
     margin-top: 50px;
-    margin-left: 70px;
+    padding: 0px 70px;
     display: flex;
     flex-direction: column;
     gap: 10px; 
@@ -51,7 +51,7 @@ body {
     font-size: 16px;
 }
 .text-pemeriksa-detail{
-    margin-right: 50px;
+    margin-right: 51px;
     font-size: 16px;
 }
 
@@ -190,7 +190,7 @@ body {
 }
 
 .text-assestment-detail{
-    margin-right: 70px;
+    margin-right: 40px;
     font-size: 16px;
 }
 .kolom-assestment-detail{
@@ -226,7 +226,7 @@ body {
 }
 
 .text-tindakan-detail{
-    margin-right: 60px;
+    margin-right: 57px;
     font-size: 16px;
 }
 .kolom-tindakan-detail{
@@ -238,18 +238,18 @@ body {
 }
 
 .button-detail{
-    margin-left: 70px;
+    padding: 0px 70px;
     display: flex;
     flex-direction: row;
     gap: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 30px;
+    margin-bottom: 50px;
 }
 
-.cetak-surat, .hasil-kuisioner{
+.cetak-surat{
     background-color: #7DAEA8;
     color: black;
-    width: 120px;
+    width: 150px;
     height: 30px;
     border: none;
     border-radius: 10px;
@@ -258,7 +258,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
     position: relative;
 }
 
@@ -274,7 +273,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
     position: relative;
 }
 .cetak-surat:hover, .hasil-kuisioner:hover {

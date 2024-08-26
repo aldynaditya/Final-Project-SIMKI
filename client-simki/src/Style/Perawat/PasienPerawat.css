@@ -12,6 +12,67 @@
     display: inline-block;
 }
 
+.pasien-resepsionis-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.pasien-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.header-pasien-resepsionis {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 70px;
+    margin-top: 20px;
+}
+
+.text_pasien_resepsionis {
+    margin: 0;
+    flex-grow: 1;
+    text-align: left;
+}
+
+.tabel_pasien_resepsionis {
+    margin: 20px;
+    flex: 1;
+}
+
+.tabel_pasien_resepsionis table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: center;
+}
+
+.tabel_pasien_resepsionis th, .tabel_pasien_resepsionis td {
+    padding: 8px;
+    border-bottom: 1px solid black;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.tabel_pasien_resepsionis th {
+    background-color: #f2f2f2;
+    cursor: pointer;
+}
+
+.tabel_pasien_resepsionis tr {
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.2s ease;
+}
+
+.tabel_pasien_resepsionis tr:hover {
+    background-color: #f1f1f1;
+}
+
 .emr-perawat:hover {
     background-color: #7DAEA8;
 }

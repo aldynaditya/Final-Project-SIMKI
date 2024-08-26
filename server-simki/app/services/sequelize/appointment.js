@@ -20,12 +20,10 @@ const getAllAppointment = async () => {
             {
                 model: DataPasien,
                 as: 'datapasien',
-                attributes: ['nik', 'nama_lengkap', 'tempat_lahir', 'tanggal_lahir', 'jenis_kelamin', 'gol_darah', 'kewarganegaraan', 'alamat']
             },
             {
                 model: Schedule,
                 as: 'schedule', 
-                attributes: ['hari', 'poli'],
                 include: {
                     model: UserKlinik,
                     attributes: ['nama'],
@@ -38,6 +36,8 @@ const getAllAppointment = async () => {
     const result = appointment.map(appointment => {
         const datapasien = appointment.datapasien;
         const schedule = appointment.schedule;
+        const startTime = schedule.start_time.slice(0, 5);
+        const endTime = schedule.end_time.slice(0, 5);
 
         return {
             id: appointment.uuid,
@@ -45,6 +45,7 @@ const getAllAppointment = async () => {
             nama_dokter: schedule.user_klinik.nama,
             poli: schedule.poli,
             tanggal: appointment.tanggal,
+            jam: `${startTime}-${endTime}`,
             keluhan: appointment.keluhan,
             penjamin: appointment.penjamin,
             status: appointment.status,

@@ -32,9 +32,9 @@ const Jadwal = () => {
       })
       .map((schedule, index) => (
         <tr key={index}>
-          <td>{schedule.dokter}</td>
-          <td>{schedule.hari}</td>
-          <td>{schedule.jam}</td>
+          <td className='td-jadwal'>{schedule.dokter}</td>
+          <td className='td-jadwal'>{schedule.hari}</td>
+          <td className='td-jadwal'>{schedule.jam}</td>
         </tr>
       ));
   };
@@ -49,9 +49,9 @@ const Jadwal = () => {
           <table>
             <thead>
               <tr>
-                <th>Dokter</th>
-                <th>Hari</th>
-                <th>Jam</th>
+                <th className='th-jadwal'>Dokter</th>
+                <th className='th-jadwal'>Hari</th>
+                <th className='th-jadwal'>Jam</th>
               </tr>
             </thead>
             <tbody>
@@ -64,10 +64,10 @@ const Jadwal = () => {
           <br />
           <table>
             <thead>
-              <tr>
-                <th>Dokter</th>
-                <th>Hari</th>
-                <th>Jam</th>
+              <tr >
+                <th className='th-jadwal'>Dokter</th>
+                <th className='th-jadwal'>Hari</th>
+                <th className='th-jadwal'>Jam</th>
               </tr>
             </thead>
             <tbody>

@@ -67,13 +67,26 @@ body {
     text-align: center;
 }
 
-.tabel_jadwal_dokter th, .tabel_jadwal_dokter td {
-    padding: 8px;
-    border: 1px solid black;
+.th-jadwal, .td-jadwal {
+  border: 1px solid #ddd;
+  padding: 8px;
 }
 
-.tabel_jadwal_dokter th {
-    background-color: #f2f2f2;
+.th-jadwal {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  text-align: center;
+}
+
+.td-jadwal:first-child {
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.td-jadwal {
+  text-align: center;
 }
 
 .kolom-jam {

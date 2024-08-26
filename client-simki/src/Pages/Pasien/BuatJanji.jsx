@@ -11,9 +11,8 @@ import '../../Style/Pasien/BuatJanji.css';
 const BuatJanji = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const schedules = useSelector(state => state.schedule.schedules);
-    const error = useSelector(state => state.schedule.error);
-    const errorform = useSelector(state => state.createAppointment.error);
+    const {schedules, error} = useSelector(state => state.schedule);
+    const {data: dataform, error: errorform, loading: loadingform} = useSelector(state => state.createAppointment);
     const [alert, setAlert] = useState({ status: false, message: '' });
     const [navigateAfterClose, setNavigateAfterClose] = useState(false);
     const minDate = getMinDate();
@@ -101,20 +100,16 @@ const BuatJanji = () => {
 
         setAlert({ status: false, message: '' });
         dispatch(createAppointment(appointmentData));
-
+    };
+    
+    useEffect(() => {
         if (errorform) {
             setAlert({
                 status: true,
-                message: errorform || 'Isian tidak valid, tolong cek kembali',
-                type: 'danger',
+                message: errorform,
+                type: 'danger'
             });
-        } else if (error) {
-            setAlert({
-                status: true,
-                message: error || 'Isian tidak valid, tolong cek kembali',
-                type: 'danger',
-            });
-        } else {
+        } else if (errorform === null && dataform !== null){
             setAlert({
                 status: true,
                 message: 'Janji berhasil dibuat!',
@@ -122,7 +117,7 @@ const BuatJanji = () => {
             });
             setNavigateAfterClose(true);
         }
-    };
+    }, [errorform, dataform]);
 
     const closeModal = () => {
         setAlert({ status: false, message: '' });
