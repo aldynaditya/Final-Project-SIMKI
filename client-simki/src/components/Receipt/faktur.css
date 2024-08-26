@@ -1,6 +1,7 @@
 .invoice-container {
     font-family: 'Arial', sans-serif;
-    width: 80%;
+    width: 21cm;
+    min-height: 29.7cm;
     margin: 0 auto;
     padding: 20px;
     background-color: #fff;
@@ -30,7 +31,7 @@
 }
 
 .right-header {
-    text-align: left;
+    text-align: right;
 }
 
 .info-row {
@@ -47,6 +48,22 @@
 }
 
 .info-value {
+    text-align: left;
+}
+
+.info-row-r {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 5px;
+}
+
+.info-label-r {
+    font-weight: bold;
+    min-width: 20px;
+    text-align: left;
+}
+
+.info-value-r {
     text-align: left;
 }
 
@@ -106,7 +123,7 @@
     text-align: right;
 }
 
-@media print {
+/* @media print {
     .invoice-container {
         width: 100%;
         box-sizing: border-box;
@@ -116,6 +133,6 @@
     @page {
         size: A4;
     }
-}
+} */
 
 

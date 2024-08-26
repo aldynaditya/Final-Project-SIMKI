@@ -248,7 +248,7 @@ const EntriBaru = () => {
                 <button className="simpan-entri-baru" onClick={SimpanEntriBaru}>Simpan</button>
                 <button className="selesaikan-order-baru" onClick={SelesaikanOrder}>Selesaikan Order</button>
             </div>
-            <RiwayatEpisode />
+            <RiwayatEpisode noEMR={data.noEMR}/>
             <Modal
                 isOpen={alert.status}
                 onRequestClose={() => setAlert({ status: false, message: '', type: '' })}

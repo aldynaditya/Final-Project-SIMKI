@@ -53,7 +53,7 @@ const Dokter = () => {
                     <div className="notifikasi" onClick={() => handleNavigation('notifikasi-dokter')}>
                         <img src={notif} alt='notifikasi' className='icon' />
                         <p>NOTIFIKASI</p>
-                        {updatedCount > 0 && <span className='notification-badge'>{updatedCount}</span>}
+                        {/* {updatedCount > 0 && <span className='notification-badge'>{updatedCount}</span>} */}
                     </div>
                 </div>
             </div>

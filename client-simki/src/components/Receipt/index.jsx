@@ -32,13 +32,13 @@ const Invoice = React.forwardRef(({ data }, ref) => {
                     <p>Jln. Prof. H. Soedarto, S.H., Tembalang, Kota Semarang, Jawa Tengah<br />Telp. (082) 242780601</p>
                 </div>
                 <div className="right-header">
-                    <div className="info-row">
-                        <span className="info-label">No Invoice</span>
-                        <span className="info-value">: {data.noInvoice}</span>
+                    <div className="info-row-r">
+                        <span className="info-label-r">No Invoice </span>
+                        <span className="info-value-r">: {data.noInvoice}</span>
                     </div>
-                    <div className="info-row">
-                        <span className="info-label">No Pasien</span>
-                        <span className="info-value">: {data.noEMR}</span>
+                    <div className="info-row-r">
+                        <span className="info-label-r">No Pasien</span>
+                        <span className="info-value-r">: {data.noEMR}</span>
                     </div>
                 </div>
             </div>

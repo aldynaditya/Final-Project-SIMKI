@@ -147,7 +147,7 @@ const EmrPerawat = () => {
             <div className='button-emr-perawat'>
                 <button type="submit" className="simpan-emr-perawat" onClick={handleSimpan}>Simpan</button>
             </div>
-            <RiwayatEpisode />
+            <RiwayatEpisode noEMR={data.noEMR} />
 
             <Modal
                 isOpen={alert.status}
@@ -160,7 +160,14 @@ const EmrPerawat = () => {
             >
                 <div className="modal-content">
                     <p>{alert.message}</p>
-                    <button onClick={() => setAlert({ status: false, message: '', type: '' })}>Close</button>
+                    <button 
+                        onClick={() => {
+                            setAlert({ status: false, message: '', type: '' });
+                            window.location.reload();
+                        }}
+                    >
+                        Close
+                    </button>
                 </div>
             </Modal>
         </div>
