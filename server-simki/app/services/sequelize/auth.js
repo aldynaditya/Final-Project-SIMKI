@@ -1,4 +1,5 @@
 const UserKlinik = require('../../api/v1/userKlinik/model');
+const User = require('../../api/v1/user/model');
 const { 
     BadRequestError, 
     UnauthorizedError 
@@ -15,7 +16,12 @@ const signin = async (req) => {
         throw new BadRequestError('Please provide email and password');
     }
 
-    const result = await UserKlinik.findOne({ where: { email: email } });
+    const result = await User.findOne({
+        where: { email: email },
+        include: {
+            model: UserKlinik
+        } 
+    });
 
     if (!result) {
         throw new UnauthorizedError('Invalid Credentials');
@@ -32,7 +38,7 @@ const signin = async (req) => {
     return { 
         token: token,
         role: result.role,
-        nama: result.nama
+        nama: result.userKlinik.nama
     };
 };
 

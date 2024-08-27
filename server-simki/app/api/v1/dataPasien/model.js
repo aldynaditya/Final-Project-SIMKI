@@ -1,6 +1,6 @@
 const db = require('../../../db/index');
 const { DataTypes } = require('sequelize');
-const Pasien = require('../pasien/model');
+const UserPasien = require('../userPasien/model');
 
 const DataPasien = db.define('dataPasien', {
     uuid:{
@@ -100,7 +100,7 @@ const DataPasien = db.define('dataPasien', {
     tableName: 'dataPasien'
 });
 
-Pasien.hasOne(DataPasien, { foreignKey: 'userId' });
-DataPasien.belongsTo(Pasien, { foreignKey: 'userId' });
+UserPasien.hasOne(DataPasien, { foreignKey: 'userId' });
+DataPasien.belongsTo(UserPasien, { foreignKey: 'userId' });
 
 module.exports = DataPasien;

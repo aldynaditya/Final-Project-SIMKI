@@ -1,48 +1,68 @@
-const  UserKlinik  = require('../../api/v1/userKlinik/model');
-const { 
-    NotFoundError 
-} = require('../../errors');
+const UserKlinik = require('../../api/v1/userKlinik/model');
+const User = require('../../api/v1/user/model');
+const db = require('../../db');
+const { NotFoundError } = require('../../errors');
 
 const createUsers = async (req) => {
     const { nama, password, role, email } = req.body;
 
-    const result = await UserKlinik.create({
-        nama,
-        email,
-        password,
-        role,
-    });
-    
-    return result;
+    const transaction = await db.transaction();
+
+    try {
+        const user = await User.create({
+            email,
+            password,
+            role,
+            userKlinikId: user.uuid
+        }, { transaction });
+        
+        const userKlinik = await UserKlinik.create({ nama, userKlinikId: user.uuid, }, { transaction });
+
+        await transaction.commit();
+
+        return { userKlinik, user };
+    } catch (error) {
+        await transaction.rollback();
+        throw error;
+    }
 };
 
 const getAllUserKlinik = async () => {
-    const userklinik = await UserKlinik.findAll();
-    
-    const result = userklinik.map(user => {
-
-        return {
-            id: user.uuid,
-            nama: user.nama,
-            email: user.email,
-            password: user.password,
-            role: user.role,
+    const userKliniks = await UserKlinik.findAll({
+        include: {
+            model: User
         }
     });
-    
-    return result;
+
+    // const result = userKliniks.map(userk => ({
+    //     id: userk.uuid,
+    //     nama: userk.nama,
+    //     userKlinikId: userk.user,
+    //     email: userk.user.email,
+    //     role: userk.user.role,
+    // }));
+
+    return userKliniks;
 };
 
 const deleteUserKlinik = async (req) => {
     const { id } = req.params;
 
-    const result = await UserKlinik.findOne({ where: {uuid: id} });
+    const userKlinik = await UserKlinik.findOne({
+        where: { uuid: id },
+        include: { model: User }
+    });
 
-    if (!result) throw new NotFoundError(`Tidak ada User Klinik dengan id :  ${id}`);
+    if (!userKlinik) throw new NotFoundError(`Tidak ada User Klinik dengan id: ${id}`);
 
-    await result.destroy();
+    const user = userKlinik.user;
+    if (user) {
+        await user.destroy();
+    }
 
-    return result;
+    await userKlinik.destroy();
+
+    return userKlinik;
 };
 
 module.exports = { 

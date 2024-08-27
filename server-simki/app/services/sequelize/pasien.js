@@ -1,4 +1,6 @@
-const Pasien = require('../../api/v1/pasien/model');
+const db = require('../../db');
+const User = require('../../api/v1/user/model');
+const UserPasien = require('../../api/v1/userPasien/model');
 const DataPasien = require('../../api/v1/dataPasien/model');
 const Schedule = require('../../api/v1/schedule/model');
 const UserKlinik = require('../../api/v1/userKlinik/model');
@@ -33,25 +35,36 @@ const {
 const signupPasien = async (req) => {
     const { nik, nama_lengkap, tempat_lahir, tanggal_lahir, jenis_kelamin, gol_darah, kewarganegaraan, alamat, email, password } = req.body;
 
-    let result = await Pasien.findOne({
-        where: { email, status: 'tidak aktif' },
-        include: {
-            model: DataPasien
-        }
-    });
+    const transaction = await db.transaction();
 
-    if (result) {
-        result.email = email;
-        result.password = password;
-        result.otp = Math.floor(Math.random() * 9999);
-        await result.save();
-    } else {
-        try {
-            result = await Pasien.create({
+    try {
+        let userPasien = await UserPasien.findOne({
+            include: {
+                model: User,
+                where: { email }
+            },
+            where: { status: 'tidak aktif' },
+            transaction
+        });
+
+        if (userPasien) {
+            userPasien.otp = Math.floor(Math.random() * 9999).toString().padStart(4, '0');
+            await userPasien.save({ transaction });
+
+            const user = userPasien.User;
+            user.password = password;
+            await user.save({ transaction });
+        } else {
+            const user = await User.create({
                 email,
                 password,
-                otp: Math.floor(Math.random() * 9999),
-            });
+                role: 'pasien',
+            }, { transaction });
+
+            userPasien = await UserPasien.create({
+                otp: Math.floor(Math.random() * 9999).toString().padStart(4, '0'),
+                userPasienId: user.uuid
+            }, { transaction });
 
             await DataPasien.create({
                 nik,
@@ -62,33 +75,31 @@ const signupPasien = async (req) => {
                 gol_darah,
                 kewarganegaraan,
                 alamat,
-                userId: result.uuid,
-            });
-        } catch (err) {
-            if (result) {
-                await result.destroy();
-            }
-            throw err;
+                userId: userPasien.uuid
+            }, { transaction });
         }
+
+        const data = { otp: userPasien.otp };
+        await otpMail(email, data, 'otp');
+
+        await transaction.commit();
+        return userPasien;
+    } catch (error) {
+        await transaction.rollback();
+        throw error;
     }
-
-    const data = { otp: result.otp };
-    await otpMail(email, data, 'otp');
-
-    delete result.dataValues.password;
-    delete result.dataValues.otp;
-
-    return result;
 };
+
 
 const resendOtp = async (req) => {
     const { email } = req.body;
 
-    const pasien = await Pasien.findOne({
-        where: { 
-            email,
-            status: 'tidak aktif' 
-        }
+    const pasien = await UserPasien.findOne({
+        include: {
+            model: User,
+            where: { email }
+        },
+        where: { status: 'tidak aktif' },
     });
     if (!pasien) throw new NotFoundError('Partisipan tidak ditemukan')
 
@@ -103,8 +114,11 @@ const resendOtp = async (req) => {
 
 const activatePasien = async (req) => {
     const { otp, email } = req.body;
-    const check = await Pasien.findOne({
-        where: { email }
+    const check = await UserPasien.findOne({
+        include: {
+            model: User,
+            where: { email }
+        }
     });
 
     if (!check) throw new NotFoundError('Partisipan belum terdaftar');
@@ -125,7 +139,12 @@ const signinPasien = async (req) => {
     if (!email || !password) throw new BadRequestError('Please provide email and password');
     
 
-    const result = await Pasien.findOne({ where: { email } });
+    const result = await UserPasien.findOne({
+        include: {
+            model: User,
+            where: { email }
+        },
+    });
 
     if (!result) throw new UnauthorizedError('Invalid Credentials');
 

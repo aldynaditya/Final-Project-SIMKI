@@ -49,28 +49,24 @@ const Navbar = () => {
       </div>
       <nav>
         <ul>
-          {!isLoggedIn && (
-            <>
-              <li>
-                <Link 
-                  to="/" 
-                  className={activeLink === 'home' ? 'active' : ''} 
-                  onClick={() => handleLinkClick('home')}
-                >
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/layanan" 
-                  className={activeLink === 'layanan' ? 'active' : ''} 
-                  onClick={() => handleLinkClick('layanan')}
-                >
-                  Layanan
-                </Link>
-              </li>
-            </>
-          )}
+        <li>
+            <Link 
+              to="/" 
+              className={activeLink === 'home' ? 'active' : ''} 
+              onClick={() => handleLinkClick('home')}
+            >
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link 
+              to="/layanan" 
+              className={activeLink === 'layanan' ? 'active' : ''} 
+              onClick={() => handleLinkClick('layanan')}
+            >
+              Layanan
+            </Link>
+          </li>
           <li>
             <Link 
               to="/jadwal" 

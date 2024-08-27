@@ -2,7 +2,7 @@ const db = require('../../../db/index');
 const User = require('../user/model');
 const { DataTypes } = require('sequelize');
 
-const UserKlinik = db.define('userKlinik', {
+const UserPasien = db.define('userPasien', {
     uuid: {
         type: DataTypes.UUID,
         primaryKey: true,
@@ -12,17 +12,15 @@ const UserKlinik = db.define('userKlinik', {
             notEmpty: true
         }
     },
-    nama: {
+    status: {
+        type: DataTypes.ENUM('aktif', 'tidak aktif'),
+        defaultValue: 'tidak aktif',
+    },
+    otp: {
         type: DataTypes.STRING,
         allowNull: false,
-        validate: {
-            len: { 
-                args: [3, 50], 
-                msg: 'Nama harus antara 3 dan 50 karakter' 
-            },
-        },
     },
-    userKlinikId: {
+    userPasienId: {
         type: DataTypes.UUID,
         references: {
             model: User,
@@ -30,11 +28,11 @@ const UserKlinik = db.define('userKlinik', {
         }
     },
 }, {
-    tableName: 'userKlinik'
+    tableName: 'userPasien'
 });
 
-UserKlinik.hasOne(User, { foreignKey: 'userKlinikId' });
-User.belongsTo(UserKlinik, { foreignKey: 'userKlinikId' });
+UserPasien.hasOne(User, { foreignKey: 'userPasienId' });
+User.belongsTo(UserPasien, { foreignKey: 'userPasienId' });
 
-module.exports = UserKlinik;
+module.exports = UserPasien;
 

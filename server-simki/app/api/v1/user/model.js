@@ -2,8 +2,8 @@ const db = require('../../../db/index');
 const argon2 = require('argon2');
 const { DataTypes } = require('sequelize');
 
-const Pasien = db.define('pasien', {
-    uuid:{
+const User = db.define('user', {
+    uuid: {
         type: DataTypes.UUID,
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4,
@@ -17,7 +17,6 @@ const Pasien = db.define('pasien', {
         unique: true,
         allowNull: false,
         validate: {
-            notEmpty: true,
             notNull: { msg: 'Email harus diisi' },
             isEmail: { msg: 'Email tidak valid' },
         },
@@ -26,29 +25,23 @@ const Pasien = db.define('pasien', {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-            notEmpty: true,
             notNull: { msg: 'Password harus diisi' },
             len: { args: [6], msg: 'Password minimal 6 karakter' },
         },
     },
     role: {
-        type: DataTypes.ENUM('pasien'),
-        defaultValue: 'pasien',
-    },
-    status: {
-        type: DataTypes.ENUM('aktif', 'tidak aktif'),
-        defaultValue: 'tidak aktif',
-    },
-    otp: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM('superuser', 'dokter', 'perawat', 'farmasi', 'kasir', 'pimpinan', 'spvkeuangan', 'resepsionis', 'pasien'),
         allowNull: false,
-    },
+        validate: {
+            isIn: {
+                args: [['superuser', 'dokter', 'perawat', 'farmasi', 'kasir', 'pimpinan', 'spvkeuangan', 'resepsionis', 'pasien']],
+                msg: 'Role tidak valid',
+            },
+        },
+    }
 }, {
     hooks: {
         beforeCreate: async (user) => {
-            if (!user.role) {
-                user.role = 'pasien';
-            }
             user.password = await argon2.hash(user.password);
         },
         beforeUpdate: async (user) => {
@@ -57,17 +50,12 @@ const Pasien = db.define('pasien', {
             }
         },
     },
-    tableName: 'pasien'
+    tableName: 'user'
 });
 
-Pasien.prototype.comparePassword = async function (candidatePassword) {
+User.prototype.comparePassword = async function (candidatePassword) {
     return await argon2.verify(this.password, candidatePassword);
 };
 
-Pasien.prototype.generateAndSaveNewOtp = async function() {
-    this.otp = Math.floor(Math.random() * 9999).toString().padStart(4, '0');
-    await this.save();
-};
-
-module.exports = Pasien;
+module.exports = User;
 

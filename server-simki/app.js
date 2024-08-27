@@ -12,7 +12,8 @@ const app = express();
 const DataPasien = require('./app/api/v1/dataPasien/model');
 const Appointment = require('./app/api/v1/appointment/model');
 const Schedule = require('./app/api/v1/schedule/model');
-const Pasien = require('./app/api/v1/pasien/model');
+const User = require('./app/api/v1/user/model');
+const UserPasien = require('./app/api/v1/userPasien/model');
 const emrpasien = require('./app/api/v1/emrPasien/model');
 const Episode = require('./app/api/v1/episode/model');
 const UserKlinik = require('./app/api/v1/userKlinik/model');
@@ -36,8 +37,9 @@ const Laporan = require('./app/api/v1/laporan/model');
 // });
 
 // (async()=>{
-//     await OrderSurat.sync({force:true}); 
+//     await db.sync({force:true}); 
 // })();
+
 
 
 //router
@@ -46,7 +48,7 @@ const authRouter = require('./app/api/v1/auth/router');
 const obatRouter = require('./app/api/v1/obat/router');
 const itemRouter = require('./app/api/v1/item/router');
 const suratRouter = require('./app/api/v1/suratSakit/router');
-const pasienRouter = require('./app/api/v1/pasien/router');
+const pasienRouter = require('./app/api/v1/userPasien/router');
 const scheduleRouter = require('./app/api/v1/schedule/router');
 const appointmentRouter = require('./app/api/v1/appointment/router');
 const datapasienRouter = require('./app/api/v1/dataPasien/router');
