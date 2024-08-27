@@ -49,8 +49,6 @@ const Navbar = () => {
       </div>
       <nav>
         <ul>
-          {!isLoggedIn && (
-            <>
               <li>
                 <Link 
                   to="/" 
@@ -69,8 +67,6 @@ const Navbar = () => {
                   Layanan
                 </Link>
               </li>
-            </>
-          )}
           <li>
             <Link 
               to="/jadwal" 

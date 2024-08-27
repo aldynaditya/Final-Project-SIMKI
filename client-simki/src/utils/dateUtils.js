@@ -40,8 +40,16 @@ export const formatTime = (dateString) => {
     return `${hours}:${minutes}`;
 };
 
-export const getMinDate = () => {
+export const getDateLimits = () => {
     const today = new Date();
-    today.setDate(today.getDate() + 1); 
-    return today.toISOString().split('T')[0];
+    const minDate = new Date();
+    const maxDate = new Date();
+
+    minDate.setDate(today.getDate() - 1); // Set minDate to yesterday
+    maxDate.setDate(today.getDate() + 14); // Set maxDate to 14 days from today
+
+    return {
+        minDate: minDate.toISOString().split('T')[0],
+        maxDate: maxDate.toISOString().split('T')[0],
+    };
 };

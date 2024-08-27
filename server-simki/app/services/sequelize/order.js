@@ -74,7 +74,7 @@ const getALlOrderObatbyFarmasi = async() => {
     const orderObat = await OrderObat.findAll({
         where: {
             status: {
-                [Op.or]: ['in process', 'accepted']
+                [Op.or]: ['paid', 'accepted']
             }
         },
         include: [

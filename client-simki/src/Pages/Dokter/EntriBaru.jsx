@@ -90,10 +90,28 @@ const EntriBaru = () => {
     }, [errorForm, entry, errorOrder, dataOrder, id]);
 
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+        const { name, value } = e.target;
+    
+        const numericFields = ['indeks', 'detak', 'suhu', 'napas'];
+    
+        if (name === 'TD') {
+            const formattedValue = value.replace(/[^0-9/]/g, '');
+            setFormData({
+                ...formData,
+                [name]: formattedValue
+            });
+        } else if (numericFields.includes(name)) {
+            const numericValue = value.replace(/[^0-9]/g, '');
+            setFormData({
+                ...formData,
+                [name]: numericValue
+            });
+        } else {
+            setFormData({
+                ...formData,
+                [name]: value
+            });
+        }
     };
 
     const SimpanEntriBaru = () => {

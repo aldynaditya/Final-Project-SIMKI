@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 import { createAppointment } from '../../redux/patient/create/actions';
 import { getSchedules } from '../../redux/patient/schedule/actions';
 import { getDayString } from '../../utils/convertfunction';
-import { getMinDate } from '../../utils/dateUtils';
+import { getDateLimits } from '../../utils/dateUtils';
 import '../../Style/Pasien/BuatJanji.css';
 
 const BuatJanji = () => {
@@ -15,7 +15,7 @@ const BuatJanji = () => {
     const {data: dataform, error: errorform, loading: loadingform} = useSelector(state => state.createAppointment);
     const [alert, setAlert] = useState({ status: false, message: '' });
     const [navigateAfterClose, setNavigateAfterClose] = useState(false);
-    const minDate = getMinDate();
+    const { minDate, maxDate } = getDateLimits();
 
     const [formData, setFormData] = useState({
         poli: '',
@@ -157,6 +157,7 @@ const BuatJanji = () => {
                         value={formData.tanggal} 
                         onChange={handleChange} 
                         min={minDate}
+                        max={maxDate}
                     />
                 </div>
                 <div className='form_group'>
