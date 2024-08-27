@@ -204,7 +204,7 @@ const OrderObat = () => {
                     </tbody>
                 </table>
             </div>
-            <button className="simpan-obat" onClick={SimpanObat}>Simpan</button>
+            <button className="simpan-obat" onClick={SimpanObat}>Proses</button>
             <Modal
                 isOpen={alert.status}
                 onRequestClose={closeModal}

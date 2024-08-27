@@ -278,6 +278,28 @@ const createAppointment = async (req) => {
 
     if (!dataPasien) throw new NotFoundError('Data Pasien tidak ditemukan');
 
+    const existingAppointments = await Appointment.findAll({
+        where: {
+            pasienId: dataPasien.uuid,
+            tanggal: appointmentDate
+        },
+        include: {
+            model: Schedule,
+            as: 'schedule',
+        }
+    });
+
+    const hasConflict = existingAppointments.some(appointment => {
+        const existingStart = appointment.schedule.start_time;
+        const existingEnd = appointment.schedule.end_time;
+
+        return (formattedStartTime < existingEnd && formattedEndTime > existingStart);
+    });
+
+    if (hasConflict) {
+        throw new Error('Ada janji temu yang bertabrakan dengan waktu yang dipilih');
+    }
+
     const result = await Appointment.create({
         tanggal,
         keluhan,
@@ -291,6 +313,7 @@ const createAppointment = async (req) => {
 
     return result;
 };
+
 
 const getDataPasien = async (req) => {
     const { pasienId } = req.pasien;

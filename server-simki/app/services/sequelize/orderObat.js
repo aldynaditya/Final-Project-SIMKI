@@ -24,7 +24,7 @@ const createOrderObat = async (req) => {
         obatId: obat.uuid,
         kuantitas,
         dosis,
-        status: 'none',
+        status: 'unprocessed',
         catatan,
         total: kuantitas * obat.harga_satuan_obat
     });
@@ -102,7 +102,7 @@ const updateAllOrderObatStatusById = async (req) => {
     const orders = await OrderObat.findAll({
         where: {
             episodeId: id, 
-            status: 'none' 
+            status: 'unprocessed' 
             } 
         });
     if (orders.length === 0) throw new NotFoundError('Tidak ada order obat dengan status none untuk episode ini');
@@ -112,7 +112,7 @@ const updateAllOrderObatStatusById = async (req) => {
     }, {
         where: {
             episodeId: id, 
-            status: 'none' 
+            status: 'unprocessed' 
         } 
     });
 

@@ -77,7 +77,7 @@ const OrderMasuk = () => {
                                         <th>Kuantitas</th>
                                         <th>Dosis</th>
                                         <th>Catatan</th>
-                                        <th>Aksi</th>
+                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>

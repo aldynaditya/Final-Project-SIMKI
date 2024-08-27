@@ -66,7 +66,7 @@ const getOneDataPasien = async (req) => {
     if (!appointment) throw new NotFoundError('Data tidak ditemukan');
 
     const datapasien = await DataPasien.findOne({
-        wheree: { uuid: appointment.pasienId}
+        where: { uuid: appointment.pasienId}
     })
 
     return datapasien;
@@ -75,6 +75,8 @@ const getOneDataPasien = async (req) => {
 const createAppointment = async (req) => {
     const { id: uuid } = req.params
     const { tanggal, keluhan, penjamin, dokter, poli, start_time, end_time } = req.body;
+
+    const appointmentDate = new Date(tanggal);
 
     let dataPasien = await DataPasien.findOne({
         where: { uuid }
@@ -112,6 +114,28 @@ const createAppointment = async (req) => {
 
     if (formattedStartTime < schedule.start_time || formattedEndTime > schedule.end_time) {
         throw new Error('Waktu janji tidak sesuai dengan jadwal dokter');
+    }
+
+    const existingAppointments = await Appointment.findAll({
+        where: {
+            pasienId: dataPasien.uuid,
+            tanggal: appointmentDate
+        },
+        include: {
+            model: Schedule,
+            as: 'schedule',
+        }
+    });
+
+    const hasConflict = existingAppointments.some(appointment => {
+        const existingStart = appointment.schedule.start_time;
+        const existingEnd = appointment.schedule.end_time;
+
+        return (formattedStartTime < existingEnd && formattedEndTime > existingStart);
+    });
+
+    if (hasConflict) {
+        throw new Error('Ada janji temu yang bertabrakan dengan waktu yang dipilih');
     }
 
     const result = await Appointment.create({

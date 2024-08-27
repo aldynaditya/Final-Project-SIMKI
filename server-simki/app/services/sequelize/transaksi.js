@@ -121,8 +121,41 @@ const updateTransaction = async (req) => {
     const { id } = req.params;
     const { metode_bayar, diskon, keterangan } = req.body;
 
-    const transaction = await Transaksi.findByPk(id);
+    // Cari transaksi berdasarkan ID
+    const transaction = await Transaksi.findByPk(id, {
+        include: [
+            {
+                model: Episode,
+                as: 'episode',
+                include: {
+                    model: EMRPasien,
+                    as: 'emrpasien',
+                    include: {
+                        model: Appointment,
+                        include: [
+                            {
+                                model: DataPasien,
+                                as: 'datapasien',
+                                attributes: ['nama_lengkap', 'alamat']
+                            },
+                            {
+                                model: Schedule,
+                                as: 'schedule',
+                                include: {
+                                    model: UserKlinik,
+                                    as: 'user_klinik'
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    });
+
     if (!transaction) throw new NotFoundError('Transaksi tidak ditemukan');
+
+    const episodeId = transaction.episodeId;
 
     const totalAfterDiscount = transaction.total - (transaction.total * (diskon / 100));
 
@@ -135,6 +168,13 @@ const updateTransaction = async (req) => {
         userKlinikId: req.user.id
     }, {
         where: { uuid: id },
+        returning: true
+    });
+
+    await OrderObat.update({
+        status: 'paid',
+    }, {
+        where: { episodeId },
         returning: true
     });
 
