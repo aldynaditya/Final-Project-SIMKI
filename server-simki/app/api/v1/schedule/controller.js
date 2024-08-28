@@ -1,10 +1,23 @@
 const { StatusCodes } = require('http-status-codes');
 const { 
     getAllSchedule,
+    getAllDoctor,
     createSchedule,
     updateSchedule,
     deleteSchedule 
 } = require('../../../services/sequelize/schedule');
+
+const indexDoctor = async (req, res, next) => {
+    try {
+        const result = await getAllDoctor(req);
+
+    res.status(StatusCodes.OK).json({
+        data: result,
+    });
+    } catch (err) {
+        next(err);
+    }
+};
 
 const index = async (req, res, next) => {
     try {
@@ -56,6 +69,7 @@ const destroy = async (req, res, next) => {
 
 module.exports = {
     index,
+    indexDoctor,
     update,
     destroy,
     create,

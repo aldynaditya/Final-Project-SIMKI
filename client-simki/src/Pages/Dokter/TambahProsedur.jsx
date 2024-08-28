@@ -121,10 +121,10 @@ const TambahProsedur = ({ onClose, onComplete }) => {
                 <button className='cancel-x' onClick={onClose}>
                     Cancel X
                 </button>
-                <h1 className='text-tambahprosedur'>Tambah Prosedur</h1>
+                <h1 className='text-tambahprosedur'>Tambah Item</h1>
                 <div className='kolom-tambah-prosedur'>
                     <div className='nama-prosedur-prosedur'>
-                        <span className='text-prosedur-prosedur'>Nama Prosedur :</span>
+                        <span className='text-prosedur-prosedur'>Nama Item :</span>
                         <div className="search-bar-prosedur-container">
                             <input 
                                 type="text" 

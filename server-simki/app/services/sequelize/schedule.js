@@ -39,6 +39,24 @@ const getAllSchedule = async () => {
     return result;
 };
 
+const getAllDoctor = async () => {
+    const userklinik = await UserKlinik.findAll({
+        where: {
+            role: 'dokter'
+        }
+    });
+    
+    const result = userklinik.map(user => {
+        return {
+            id: user.uuid,
+            nama: user.nama,
+            role: user.role,
+        };
+    });
+    
+    return result;
+};
+
 const createSchedule = async (req) => {
     const { hari, start_time, end_time, namaDokter } = req.body;
 
@@ -147,6 +165,7 @@ const deleteSchedule = async (req) => {
 
 module.exports = {
     getAllSchedule,
+    getAllDoctor,
     createSchedule,
     updateSchedule,
     deleteSchedule
