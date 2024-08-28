@@ -11,6 +11,7 @@ const TambahJadwal = ({ onClose, onSuccess, schedules }) => {
     const { data: dataDokter, loading: loadingDokter, error: errorDokter } = useSelector(state => state.getDoctor);
     const [formData, setFormData] = useState({
         hari: '',
+        poli: '', 
         start_time: '',
         end_time: '',
         namaDokter: '',
@@ -106,10 +107,22 @@ const TambahJadwal = ({ onClose, onSuccess, schedules }) => {
                             name="namaDokter" 
                             value={formData.namaDokter} 
                             onChange={handleChange}>
-                            <option value="">Pilih Dokter</option>
+                            <option value="" disabled hidden>Pilih Dokter</option>
                             {Array.isArray(dataDokter) && dataDokter.length > 0 && dataDokter.map(dokter => (
                                 <option key={dokter.id} value={dokter.nama}>{dokter.nama}</option>
                             ))}
+                        </select>
+                    </div>
+                    <div className='hari-tambahjadwal'>
+                        <span className='text-hari-tambahjadwal'>Poli :</span>
+                        <select 
+                            className='kolom-hari-tambahjadwal'
+                            name="poli" 
+                            value={formData.poli} 
+                            onChange={handleChange}>
+                            <option value="" disabled hidden>Pilih Poli</option>
+                            <option value="Umum">Poli Umum</option>
+                            <option value="Gigi">Poli Gigi</option>
                         </select>
                     </div>
                     <div className='hari-tambahjadwal'>
@@ -119,7 +132,7 @@ const TambahJadwal = ({ onClose, onSuccess, schedules }) => {
                             name="hari" 
                             value={formData.hari} 
                             onChange={handleChange}>
-                            <option value="">Pilih Hari</option>
+                            <option value="" disabled hidden>Pilih Hari</option>
                             <option value="Senin">Hari Senin</option>
                             <option value="Selasa">Hari Selasa</option>
                             <option value="Rabu">Hari Rabu</option>
@@ -136,7 +149,7 @@ const TambahJadwal = ({ onClose, onSuccess, schedules }) => {
                             name='start_time'
                             value={formData.start_time}
                             onChange={handleChange}>
-                            <option value="">Pilih Waktu</option>
+                            <option value="" disabled hidden>Pilih Waktu</option>
                             {timeOptions.map((time) => (
                                 <option key={time} value={time}>{time}</option>
                             ))}
@@ -147,7 +160,7 @@ const TambahJadwal = ({ onClose, onSuccess, schedules }) => {
                             name='end_time'
                             value={formData.end_time}
                             onChange={handleChange}>
-                            <option value="">Pilih Waktu</option>
+                            <option value="" disabled hidden>Pilih Waktu</option>
                             {timeOptions.map((time) => (
                                 <option key={time} value={time}>{time}</option>
                             ))}

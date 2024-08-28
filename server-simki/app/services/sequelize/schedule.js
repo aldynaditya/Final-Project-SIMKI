@@ -58,7 +58,7 @@ const getAllDoctor = async () => {
 };
 
 const createSchedule = async (req) => {
-    const { hari, start_time, end_time, namaDokter } = req.body;
+    const { hari, poli, start_time, end_time, namaDokter } = req.body;
 
     const formattedStartTime = validateTimeFormat(start_time);
     const formattedEndTime = validateTimeFormat(end_time);
@@ -90,20 +90,9 @@ const createSchedule = async (req) => {
         }
     }
 
-    const getPoli = await Schedule.findOne({
-        where: {
-            userKlinikId: dokter.uuid
-        },
-        attributes: ['poli']
-    });
-
-    if (!getPoli) {
-        throw new NotFoundError('Poli tidak ditemukan');
-    }
-
     const result = await Schedule.create({
         hari,
-        poli: getPoli.poli,
+        poli,
         status: 'ada',
         start_time: formattedStartTime,
         end_time: formattedEndTime,
