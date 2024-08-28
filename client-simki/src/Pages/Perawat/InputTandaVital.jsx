@@ -24,6 +24,9 @@ const EmrPerawat = () => {
         suhu: '',
         napas: '',
     });
+
+    const [TD1, setTD1] = useState('');
+    const [TD2, setTD2] = useState('');
     
     const [alert, setAlert] = useState({ status: false, message: '', type: '' });
     
@@ -34,6 +37,10 @@ const EmrPerawat = () => {
 
     useEffect(() => {
         if (datavs) {
+            const [systolic, diastolic] = (datavs.td|| '').split('/');
+    
+            setTD1(systolic || '');
+            setTD2(diastolic || '');
             setFormData({
                 alergi: datavs.alergi || '',
                 TD: datavs.td || '',
@@ -49,7 +56,7 @@ const EmrPerawat = () => {
         if (errorForm) {
             setAlert({
                 status: true,
-                message: 'Isi seluruh Form Tanda Vital',
+                message: errorForm,
                 type: 'danger'
             });
         } else if (vital) {
@@ -62,10 +69,37 @@ const EmrPerawat = () => {
     }, [errorForm, vital]);
 
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+        const { name, value } = e.target;
+    
+        const numericFields = ['indeks', 'detak', 'suhu', 'napas', 'TD1', 'TD2'];
+    
+        if (numericFields.includes(name)) {
+            const numericValue = value.replace(/[^0-9]/g, '');
+    
+            if (name === 'TD1') {
+                setTD1(numericValue);
+                setFormData({
+                    ...formData,
+                    TD: `${numericValue}/${TD2}`
+                });
+            } else if (name === 'TD2') {
+                setTD2(numericValue);
+                setFormData({
+                    ...formData,
+                    TD: `${TD1}/${numericValue}`
+                });
+            } else {
+                setFormData({
+                    ...formData,
+                    [name]: numericValue
+                });
+            }
+        } else {
+            setFormData({
+                ...formData,
+                [name]: value
+            });
+        }
     };
 
     const handleSimpan = () => {
@@ -120,7 +154,19 @@ const EmrPerawat = () => {
                         <div className='atas-vital-detail'>
                             <div className='td-detail'>
                                 <span className='text-td-detail'>TD :</span>
-                                <input type='text' className='kolom-td-detail' name="TD" value={formData.TD} onChange={handleChange}></input>
+                                <input
+                                    type='text'
+                                    className='kolom-td-detail'
+                                    name="TD1"
+                                    value={TD1}
+                                    onChange={handleChange}
+                                />  / <input
+                                    type='text'
+                                    className='kolom-td-detail'
+                                    name="TD2"
+                                    value={TD2}
+                                    onChange={handleChange}
+                                />
                             </div>
                             <div className='suhu-detail'>
                                 <span className='text-suhu-detail'>Suhu :</span>

@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { fetchdetailEmr } from '../../redux/doctor/detailEmr/actions';
 import { fetchVitalsign } from '../../redux/doctor/vitalSign/actions';
 import { formatDateStrip } from '../../utils/dateUtils';
 import RiwayatEpisode from '../../components/RiwayatEps';
-import PopUpCPPT from './PopUpCPPT';
 import '../../Style/Dokter/EntriMasuk.css';
 
 const EntriMasuk = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { data, loading, error } = useSelector(state => state.getdetailEmr);
     const { data: datavs, loading: loadingvs, error: errorvs } = useSelector(state => state.getVital);
     const [isPopupVisible, setIsPopupVisible] = useState(false);
-
+    const [TD1, setTD1] = useState('');
+    const [TD2, setTD2] = useState('');
+    
     useEffect(() => {
         dispatch(fetchdetailEmr(id));
     }, [dispatch, id]);
@@ -23,16 +25,17 @@ const EntriMasuk = () => {
         dispatch(fetchVitalsign(id));
     }, [dispatch, id]);
 
-    const handlePopUpCPPT = () => {
-        setIsPopupVisible(true);
-    };
+    useEffect(() => {
+        if (datavs) {
+            const [systolic, diastolic] = (datavs.td|| '').split('/');
+    
+            setTD1(systolic || '');
+            setTD2(diastolic || '');
+        }
+    }, [datavs]);
 
-    const handleCloseCPPT = () => {
-        setIsPopupVisible(false);
-    };
-
-    const handleCPPTComplete = () => {
-        setIsPopupVisible(false);
+    const handleCPPT = () => {
+        navigate(`/dokter/entri-masuk-cppt/${id}`);
     };
 
     return (
@@ -86,7 +89,19 @@ const EntriMasuk = () => {
                         <div className='atas-vital-detail'>
                             <div className='td-detail'>
                                 <span className='text-td-detail'>TD :</span>
-                                <input type='text' className='kolom-td-detail' name="td" value={datavs.td} readOnly></input>
+                                <input
+                                    type='text'
+                                    className='kolom-td-detail'
+                                    name="TD1"
+                                    value={TD1}
+                                    readOnly
+                                />  / <input
+                                    type='text'
+                                    className='kolom-td-detail'
+                                    name="TD2"
+                                    value={TD2}
+                                    readOnly
+                                />
                             </div>
                             <div className='suhu-detail'>
                                 <span className='text-suhu-detail'>Suhu :</span>
@@ -112,19 +127,11 @@ const EntriMasuk = () => {
                     <div className='button-entri-masuk'>
                 <button 
                     className="simpan-entri-masuk" 
-                    onClick={handlePopUpCPPT}
+                    onClick={handleCPPT}
                 >
                     Isi CPPT
                 </button>
-            </div>
-            {isPopupVisible &&
-                <PopUpCPPT 
-                    id={id}
-                    episodeId={data.episodeId} 
-                    onClose={handleCloseCPPT} 
-                    onComplete={handleCPPTComplete} 
-                />
-            }
+                </div>
             </div>
             <RiwayatEpisode noEMR={data.noEMR}/>
         </div>

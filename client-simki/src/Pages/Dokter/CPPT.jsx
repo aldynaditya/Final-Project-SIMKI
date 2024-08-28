@@ -1,34 +1,34 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchdetailEmr } from '../../redux/doctor/detailEmr/actions';
 import { fetchVitalsign } from '../../redux/doctor/vitalSign/actions';
-import { createNewEntry } from '../../redux/doctor/newEntry/actions';
+import { createCPPTEntry } from '../../redux/doctor/cpptEntry/actions';
 import { updateActionEntry } from '../../redux/doctor/action/actions';
 import { createOrder } from '../../redux/doctor/finishOrder/actions';
 import { formatDateStrip } from '../../utils/dateUtils';
-import Modal from 'react-modal';
 import RiwayatEpisode from '../../components/RiwayatEps';
-import '../../Style/Dokter/EntriBaru.css';
+import Modal from 'react-modal';
+import '../../Style/Dokter/EntriMasuk.css';
 
-const EntriBaru = () => {
+const CPPT = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const { data, loading, error } = useSelector(state => state.getdetailEmr);
     const { data: datavs, loading: loadingvs, error: errorvs } = useSelector(state => state.getVital);
-    const { error: errorForm, entry } = useSelector(state => state.createNewEntry);
+    const { cppt, loading: loadingcppt, error: errorcppt } = useSelector(state => state.createCpptEntry);
     const { data: act, loading: erroract } = useSelector(state => state.updateAction);
     const { error: errorOrder, data: dataOrder } = useSelector(state => state.createOrder);
-    
+
     const [formData, setFormData] = useState({
         alergi: '',
-        riwayat_penyakit: '',
-        subjective: '',
+        riwayatPenyakit: '',
         TD: '', 
         indeks: '',
         detak: '',
         suhu: '',
         napas: '',
+        subjective: '',
         objective: '',
         assessment: '',
         plan: '',
@@ -38,12 +38,18 @@ const EntriBaru = () => {
     const [TD1, setTD1] = useState('');
     const [TD2, setTD2] = useState('');
 
-    const [alert, setAlert] = useState({ status: false, message: '', type: '' });
-
     useEffect(() => {
         dispatch(fetchdetailEmr(id));
         dispatch(fetchVitalsign(id));
     }, [dispatch, id]);
+
+    const [alert, setAlert] = useState({ status: false, message: '', type: '' });
+
+    const isFormValid = useCallback(() => {
+        return Object.values(formData).every(value => {
+            return String(value).trim() !== '';
+        });
+    }, [formData]);
 
     useEffect(() => {
         if (datavs) {
@@ -67,9 +73,9 @@ const EntriBaru = () => {
             });
         }
     }, [datavs]);
-
+    
     useEffect(() => {
-        if (errorForm) {
+        if (error) {
             setAlert({
                 status: true,
                 message: 'Isi seluruh Form Entry',
@@ -81,7 +87,7 @@ const EntriBaru = () => {
                 message: 'Isi seluruh Form Entry',
                 type: 'danger'
             });
-        } else if (entry) {
+        } else if (cppt) {
             setAlert({
                 status: true,
                 message: 'Data berhasil disimpan!',
@@ -93,8 +99,9 @@ const EntriBaru = () => {
                 message: 'Order Berhasil Dibuat',
                 type: 'success'
             });
+            dispatch(fetchVitalsign(datavs.id));
         }
-    }, [errorForm, entry, errorOrder, dataOrder, id]);
+    }, [error, cppt, errorOrder, dataOrder, dispatch, datavs.id]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -130,8 +137,18 @@ const EntriBaru = () => {
         }
     };
 
-    const SimpanEntriBaru = () => {
-        dispatch(createNewEntry(id, formData));
+    const SimpanCppt = () => {
+        if (!isFormValid()) {
+            setAlert({
+                status: true,
+                message: 'Isi seluruh form',
+                type: 'danger'
+            });
+            return;
+        }
+
+        dispatch(createCPPTEntry(datavs.id, formData));
+        dispatch(fetchVitalsign(datavs.id));
         setAlert({ status: false, message: '', type: '' });
     };
 
@@ -142,7 +159,16 @@ const EntriBaru = () => {
 
     const DropdownOrder = async (event) => {
         const selectedOption = event.target.value;
-
+    
+        if (!datavs.riwayat_penyakit || !datavs.subjective || !datavs.objective || !datavs.assessment || !datavs.plan) {
+            setAlert({
+                status: true,
+                message: 'Pastikan seluruh form CPPT terisi sebelum melanjutkan.',
+                type: 'danger'
+            });
+            return;
+        }
+    
         if (!datavs.id) {
             setAlert({
                 status: true,
@@ -172,7 +198,6 @@ const EntriBaru = () => {
             }
         }
     };
-
 
     return (
         <div className='emr-resepsionis-container'>
@@ -205,9 +230,9 @@ const EntriBaru = () => {
                     <input type='text' className='kolom-alergi-rsp' name="alergi" value={formData.alergi} onChange={handleChange}></input>
                 </div>
             </div>
-            <h2 className='text-riwayat-episode'>Entri Baru :</h2>
+            <h2 className='text-riwayat-episode'>Entri Masuk :</h2>
             <div className='kolom-detail-eps'>
-            <div className='tgl-detail'>
+                <div className='tgl-detail'>
                     <span className='text-tgl-detail'>Tanggal :</span>
                     <input type='text' className='kolom-tgl-detail' name="tanggal" value={formatDateStrip(data.tanggal)} readOnly></input>
                 </div>
@@ -218,14 +243,6 @@ const EntriBaru = () => {
                 <div className='poli-detail'>
                     <span className='text-poli-detail'>Poli :</span>
                     <input type='text' className='kolom-poli-detail' name="poli" value={data.poli} readOnly></input>
-                </div>
-                <div className='penyakit-detail'>
-                    <span className='text-penyakit-detail'>Riwayat Penyakit :</span>
-                    <input type='text' className='kolom-penyakit-detail' name="riwayat_penyakit" value={formData.riwayat_penyakit} onChange={handleChange}></input>
-                </div>
-                <div className='subjektif-detail'>
-                    <span className='text-subjektif-detail'>Subjektif :</span>
-                    <input type='text' className='kolom-subjektif-detail' name="subjective" value={formData.subjective} onChange={handleChange}></input>
                 </div>
                 <div className='vital-detail'>
                     <span className='text-vital-detail'>Tanda Vital :</span>
@@ -266,7 +283,15 @@ const EntriBaru = () => {
                             <span className='text-detak-detail'>Detak :</span>
                             <input type='text' className='kolom-detak-detail' name="detak" value={formData.detak} onChange={handleChange}></input>
                         </div>
-                    </div>
+                    </div> 
+                </div>
+                <div className='penyakit-detail'>
+                    <span className='text-penyakit-detail'>Riwayat Penyakit :</span>
+                    <input type='text' className='kolom-penyakit-detail' name="riwayat_penyakit" value={formData.riwayat_penyakit} onChange={handleChange}></input>
+                </div>
+                <div className='subjektif-detail'>
+                    <span className='text-subjektif-detail'>Subjektif :</span>
+                    <input type='text' className='kolom-subjektif-detail' name="subjective" value={formData.subjective} onChange={handleChange}></input>
                 </div>
                 <div className='objektif-detail'>
                     <span className='text-objektif-detail'>Objektif :</span>
@@ -280,20 +305,18 @@ const EntriBaru = () => {
                     <span className='text-plan-detail'>Plan :</span>
                     <input type='text' className='kolom-plan-detail' name="plan" value={formData.plan} onChange={handleChange}></input>
                 </div>
-                    <button className="simpan-entri-baru" onClick={SimpanEntriBaru}>Simpan</button>     
-                <div className='tindakan-entri-baru'>
-                    <span className='text-tindakan-entri-baru'>Tindakan :</span>
-                    <select onChange={DropdownOrder} className='dropdown-entri-baru'>
+                    <button className="simpan-entri-baru" onClick={SimpanCppt}>Simpan</button>
+                <div className='tindakan-cppt'>
+                        <span className='text-tindakan-cppt'>Tindakan :</span>
+                        <select onChange={DropdownOrder} className='dropdown-entri-baru'>
                             <option value="">Order</option>
                             <option value="obat">Obat</option>
                             <option value="prosedur">Prosedur Medis</option>
                             <option value="surat">Buat Surat</option>
                         </select>
+                    </div>
                 </div>
-            </div>
-            <div className='button-entri-baru'>
-                <button className="selesaikan-order-baru" onClick={SelesaikanOrder}>Selesaikan Episode</button>
-            </div>
+                    <button className="selesaikan-order-baru" onClick={SelesaikanOrder}>Selesaikan Episode</button>
             <RiwayatEpisode noEMR={data.noEMR}/>
             <Modal
                 isOpen={alert.status}
@@ -316,4 +339,4 @@ const EntriBaru = () => {
     );
 };
 
-export default EntriBaru;
+export default CPPT;

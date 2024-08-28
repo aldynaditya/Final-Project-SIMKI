@@ -172,17 +172,23 @@ const getVitalSignbyDoctor = async (req) => {
 
 const updateEpisode = async ( req ) => {
     const { id } = req.params;
-    const { riwayat_penyakit, subjective, objective, assessment, plan } = req.body;
+    const { alergi, riwayat_penyakit, subjective, TD, indeks, detak, suhu, napas, objective, assessment, plan } = req.body;
 
     const previousEpisode = await Episode.findByPk(id);
     if (!previousEpisode) throw new NotFoundError('Previous episode not found');
 
     const result = await Episode.update({
-            riwayat_penyakit,
-            subjective,
-            objective,
-            assessment,
-            plan,
+        alergi,
+        riwayat_penyakit,
+        TD, 
+        indeks, 
+        detak, 
+        suhu, 
+        napas,
+        subjective,
+        objective,
+        assessment,
+        plan,
         },
         { where: { uuid: id } }
     );

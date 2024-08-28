@@ -98,7 +98,7 @@ const TambahObatDr = ({ onClose, onComplete }) => {
         if (searchResults.length > 0) {
             const formattedResults = searchResults.map(obat => ({
                 ...obat,
-                formattedName: `${obat.nama_obat} ${obat.satuan}`
+                formattedName: `${obat.nama_obat}`
             }));
             setAllObat(formattedResults);
         }
@@ -143,15 +143,12 @@ const TambahObatDr = ({ onClose, onComplete }) => {
                             {showResults && allObat.length > 0 && (
                                 <ul className="search-results">
                                     {allObat
-                                        .filter(obat =>
-                                            obat.nama_obat.toLowerCase().includes(formData.namaObat.toLowerCase())
-                                        )
                                         .map((result) => (
                                             <li 
                                                 key={result.id} 
-                                                onClick={() => handleSearchSelect(`${result.nama_obat} ${result.satuan}`)}
+                                                onClick={() => handleSearchSelect(`${result.nama_obat}`)}
                                             >
-                                                {result.nama_obat} {result.satuan}
+                                                {result.nama_obat}
                                             </li>
                                         ))}
                                 </ul>

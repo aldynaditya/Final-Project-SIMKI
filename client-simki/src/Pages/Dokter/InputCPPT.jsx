@@ -52,10 +52,6 @@ const InputCPPT = () => {
                         <input type='text' className='kolom-goldar-rsp' name="gol_darah" value={data.gol_darah} readOnly></input>
                     </div>
                 </div>
-                <div className='alergi-rsp'>
-                    <span className='text-alergi-rsp'>Alergi :</span>
-                    <input type='text' className='kolom-alergi-rsp' name="alergi" value={data.alergi} readOnly></input>
-                </div>
             </div>
             <div className='button-emr-dokter'>
                 <div className="entri_masuk" onClick={EntriMasuk}>
