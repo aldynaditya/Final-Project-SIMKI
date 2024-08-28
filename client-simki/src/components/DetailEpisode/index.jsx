@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchEpisodeById } from '../../redux/doctor/DetailEpisodeById/actions';
+import { fetchResponseById } from '../../redux/doctor/indexResponse/actions';
+import { fetchOrderSurat } from '../../redux/doctor/indexLetter/actions';
 import CetakSuratPopup from '../../Pages/Resepsionis/CetakSuratPopup';
 import HasilKuisionerPopup from '../../Pages/Dokter/KuisionerPopUp'; 
 import { formatDateStrip } from '../../utils/dateUtils';
@@ -13,6 +15,8 @@ const DetailEpisode = () => {
     const dispatch = useDispatch();
     const { role } = useSelector((state) => state.auth);
     const { data, loading, error } = useSelector(state => state.getoneEpisode);
+    const { data: Rdata, loading: Rloading, error: Rerror } = useSelector(state => state.getResponse);
+    const { data: orderData, loading: orderloading, error: orderError } = useSelector((state) => state.getorderSurat);
     const [showCetakSuratPopup, setShowCetakSuratPopup] = useState(false);
     const [showHasilKuisionerPopup, setShowHasilKuisionerPopup] = useState(false);
     const [TD1, setTD1] = useState('');
@@ -20,7 +24,9 @@ const DetailEpisode = () => {
 
     useEffect(() => {
         dispatch(fetchEpisodeById(id));
-    }, [dispatch, id]);
+        dispatch(fetchOrderSurat(data.id));
+        dispatch(fetchResponseById(id));
+    }, [dispatch, id, data.id]);
 
     useEffect(() => {
         if (data) {
@@ -172,10 +178,24 @@ const DetailEpisode = () => {
             </div>
             <div className='button-detail'>
                 {role === 'resepsionis' && (
-                    <button className="cetak-surat" onClick={CetakSurat}>Cetak Surat</button>
+                    <button
+                    className="cetak-surat"
+                    onClick={CetakSurat}
+                    disabled={!orderData || orderData.length === 0}
+                    title={!orderData || orderData.length === 0 ? "Tidak terdapat data surat" : ""}
+                >
+                    Cetak Surat
+                </button>
                 )}
                 {role === 'dokter' && (
-                    <button className="hasil-kuisioner" onClick={HasilKuisioner}>Hasil Kuisioner</button>
+                    <button
+                    className="hasil-kuisioner"
+                    onClick={HasilKuisioner}
+                    disabled={!Rdata || Rdata.length === 0}
+                    title={!Rdata || Rdata.length === 0 ? "Response belum ada" : ""}
+                >
+                    Hasil Kuisioner
+                </button>
                 )}
             </div>
             {showCetakSuratPopup &&

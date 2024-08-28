@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchNotifikasiLaporan } from "../../redux/pimpinan/index/actions";
 import { updateStatus } from "../../redux/pimpinan/update/actions";
+import { formatDateSlash } from "../../utils/dateUtils";
 import '../../Style/Pimpinan/NotifikasiLead.css';
 import SearchBar from '../../components/SearchBar';
 import Modal from 'react-modal';
@@ -70,14 +71,14 @@ const NotifikasiPimpinan = () => {
                                 ) : (
                                     data.map((row) => (
                                         <tr key={row.uuid}>
-                                            <td>{row.tanggal}</td>
+                                            <td>{formatDateSlash(row.tanggal)}</td>
                                             <td>{row.no_laporan}</td>
                                             <td>{row.periode}</td>
                                             <td>{row.keterangan}</td>
                                             <td>{row.status}</td>
                                             <td className="notif-laporan-cell">
                                                 <button 
-                                                    className="ket-terima-pimpinan" 
+                                                    className="laporan-pimpinan" 
                                                     onClick={() => handleProsesClick(row.uuid)}
                                                 >
                                                     Terima

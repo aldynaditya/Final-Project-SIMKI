@@ -38,26 +38,30 @@ export function AppRoutes() {
     ];
 
     const Menuperawat = [
-        { name: "Jadwal perawat", path: "/perawat/jadwal-dokter" },
-        { name: "Pasien", path: "/perawat/pasien-perawat" },
+        { name: "Dashboard", path: '/perawat' },
+        { name: "Jadwal Dokter", path: "/perawat/jadwal-dokter" },
+        { name: "Pasien", path: "/perawat/pasien-dokter" },
         { name: "Kelola Item", path: "/perawat/kelola-item" }
     ];
 
     const MenuResepsionis = [
-        { name: "Pendaftar Baru", path: "pendaftar-baru" },
-        { name: "Antrian", path: "antrian" },
-        { name: "Pasien", path: "pasien-resepsionis" },
-        { name: "Kelola Jadwal", path: "kelola-jadwal" }
+        { name: "Dashboard", path: '/resepsionis' },
+        { name: "Pendaftar", path: "/resepsionis/pendaftar-baru" },
+        { name: "Antrian", path: "/resepsionis/antrian" },
+        { name: "Pasien", path: "/resepsionis/pasien-dokter" },
+        { name: "Kelola Jadwal", path: "/resepsionis/kelola-jadwal" }
     ];
 
     const Menufarmasi = [
-        { name: "Order Masuk", path: "order-masuk" },
-        { name: "Kelola Obat", path: "kelola-obat" }
+        { name: "Dashboard", path: '/farmasi' },
+        { name: "Order Masuk", path: "/farmasi/order-masuk" },
+        { name: "Kelola Obat", path: "/farmasi/kelola-obat" }
     ];
 
     const Menuspv = [
-        { name: "Transaksi", path: "transaksi-keuangan" },
-        { name: "Laporan", path: "notifikasi-keuangan" }
+        { name: "Dashboard", path: '/spvkeuangan' },
+        { name: "Transaksi", path: "/spvkeuangan/transaksi-keuangan" },
+        { name: "Laporan", path: "/spvkeuangan/notifikasi-keuangan" }
     ];
 
     return (

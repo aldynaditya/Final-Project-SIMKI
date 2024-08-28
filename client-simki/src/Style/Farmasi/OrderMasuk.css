@@ -79,13 +79,13 @@ body {
 }
 
 .tabel-pendaftar-baru-wrapper {
-    overflow-x: auto;
+    overflow-x: auto; /* Pengguliran horizontal */
+    overflow-y: auto; /* Pengguliran vertikal */
     flex: 1;
 }
 
 .tabel_pendaftar_baru {
     margin: 20px;
-    min-width: 1200px;
 }
 
 .tabel_pendaftar_baru table {
@@ -93,6 +93,7 @@ body {
     border-collapse: collapse;
     font-size: 18px;
     text-align: center;
+    table-layout: auto; /* Menyebabkan kolom menyesuaikan ukurannya sesuai dengan konten */
 }
 
 .tabel_pendaftar_baru th, .tabel_pendaftar_baru td {
@@ -100,6 +101,14 @@ body {
     border-bottom: 1px solid black;
     text-align: center;
     vertical-align: middle;
+    white-space: normal; /* Izinkan teks membungkus menjadi beberapa baris */
+    word-wrap: break-word; /* Bungkus teks panjang ke baris berikutnya jika tidak ada spasi */
+}
+
+.tabel_pendaftar_baru td.namaPasien {
+    max-width: 100px; /* Batasi lebar kolom untuk Nama Pasien */
+    white-space: normal; /* Izinkan teks memecah menjadi beberapa baris */
+    word-wrap: break-word; /* Bungkus kata jika terlalu panjang */
 }
 
 .tabel_pendaftar_baru th {

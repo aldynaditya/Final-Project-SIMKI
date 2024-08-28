@@ -33,7 +33,7 @@ const Resepsionis = () => {
         <div className="klik_resepsionis">
           <div className='pendaftar-baru' onClick={handlePendaftarBaru}>
             <img src={list} alt='Pendaftar_Baru' className='icon' />
-            <p>PENDAFTAR BARU</p>
+            <p>PENDAFTAR</p>
           </div>
           <div className="antrian" onClick={handleAntrian}>
             <img src={antrian} alt='Antrian' className='icon' />
