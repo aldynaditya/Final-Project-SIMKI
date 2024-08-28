@@ -40,48 +40,55 @@ const RiwayatEpisode = ({ noEMR }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {dataEpisode.map((row) => (
-                        <tr key={row.id}>
-                            <td className='kolom-tgl-eps-rsp'>
-                                <p className='tgl-eps-rsp'>{formatDateSlash(row.tanggal)}</p>
-                                <button className='lihat-emr-rsp' onClick={() => LihatDetailEps(row.id)}>Lihat</button>
-                            </td>
-                            <td className='kolom-dr-eps-rsp'>
-                                <p className='dr-eps-rsp'>{row.pemeriksa}</p>
-                                <p className='poli-eps-rsp'>{row.department}</p>
-                            </td>
-                            <td className='kolom-soap-eps-rsp'>
-                                <ul 
-                                    className='soap-list'>
-                                    <li>
-                                        <div className='soap-entry'>
-                                            <span>S :{row.subjective}</span> 
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className='soap-entry'>
-                                            <span>O :{row.objective}</span> 
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className='soap-entry'>
-                                            <span>A :{row.assessment}</span> 
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className='soap-entry'>
-                                            <span>P :{row.plan}</span> 
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className='soap-entry'>
-                                            <span>Tindakan :{row.tindakan}</span> 
-                                        </div>
-                                    </li>
-                                </ul>
+                    {dataEpisode.length > 0 ? (
+                        dataEpisode.map((row) => (
+                            <tr key={row.id}>
+                                <td className='kolom-tgl-eps-rsp'>
+                                    <p className='tgl-eps-rsp'>{formatDateSlash(row.tanggal)}</p>
+                                    <button className='lihat-emr-rsp' onClick={() => LihatDetailEps(row.id)}>Lihat</button>
+                                </td>
+                                <td className='kolom-dr-eps-rsp'>
+                                    <p className='dr-eps-rsp'>{row.pemeriksa}</p>
+                                    <p className='poli-eps-rsp'>{row.department}</p>
+                                </td>
+                                <td className='kolom-soap-eps-rsp'>
+                                    <ul className='soap-list'>
+                                        <li>
+                                            <div className='soap-entry'>
+                                                <span>S :{row.subjective}</span> 
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className='soap-entry'>
+                                                <span>O :{row.objective}</span> 
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className='soap-entry'>
+                                                <span>A :{row.assessment}</span> 
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className='soap-entry'>
+                                                <span>P :{row.plan}</span> 
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className='soap-entry'>
+                                                <span>Tindakan :{row.tindakan}</span> 
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan="3" className='no-data-message'>
+                                Belum ada rekam medis yang terdaftar
                             </td>
                         </tr>
-                    ))}
+                    )}
                 </tbody>
             </table>
         </div>

@@ -103,12 +103,12 @@ const OrderMasuk = () => {
                                                     <td>{row.dosis}</td>
                                                     <td>{row.catatan}</td>
                                                     <td>
-                                                        <div
-                                                            className="proses-obat"
-                                                            onClick={() => handleProsesClick(row.id)}
-                                                        >
-                                                            {row.status}
-                                                        </div>
+                                                    <div
+                                                        className={`proses-obat ${row.status === 'paid' ? 'proses' : 'diterima'}`}
+                                                        onClick={() => handleProsesClick(row.id)}
+                                                    >
+                                                        {row.status === 'paid' ? 'proses' : 'diterima'}
+                                                    </div>
                                                     </td>
                                                 </tr>
                                             );

@@ -126,6 +126,19 @@ const BuatJanji = () => {
         }
     };
 
+    useEffect(() => {
+        setFormData({
+            poli: '',
+            dokter: '',
+            tanggal: '',
+            jam: '',
+            penjamin: '',
+            keluhan: ''
+        });
+        setAlert({ status: false, message: '' });
+        setNavigateAfterClose(false);
+    }, []);
+
     return (
         <div className='BuatJanji_container'>
             <h1 className='text_buatjanji'>Buat Janji</h1>

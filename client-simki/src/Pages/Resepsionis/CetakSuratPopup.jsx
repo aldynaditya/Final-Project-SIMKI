@@ -21,6 +21,7 @@ const CetakSuratPopup = ({ id, onClose }) => {
     });
 
     const [alert, setAlert] = useState({ status: false, message: '', type: '' });
+    const [successCallback, setSuccessCallback] = useState(null);
     const [printData, setPrintData] = useState(null);
 
     const isFormValid = useCallback(() => {
@@ -72,9 +73,11 @@ const CetakSuratPopup = ({ id, onClose }) => {
                     message: 'Data berhasil diperbarui!',
                     type: 'success'
                 });
+                setSuccessCallback(() => () => {
+                    dispatch(fetchorderInfo(id));
+                    dispatch(fetchOrderSurat(id));
+                });
             })
-            dispatch(fetchorderInfo(id))
-            dispatch(fetchOrderSurat(id))
             .catch(() => {
                 setAlert({
                     status: true,
@@ -83,6 +86,14 @@ const CetakSuratPopup = ({ id, onClose }) => {
                 });
             });
     };
+
+    useEffect(() => {
+        if (!alert.status && successCallback) {
+            successCallback();
+            setSuccessCallback(null);
+        }
+    }, [alert.status, successCallback]);
+    
 
     const printRef = useRef();
 
@@ -193,7 +204,13 @@ const CetakSuratPopup = ({ id, onClose }) => {
             </div>
             <Modal
                 isOpen={alert.status}
-                onRequestClose={() => setAlert({ status: false, message: '', type: '' })}
+                onRequestClose={() => {
+                    setAlert({ status: false, message: '', type: '' });
+                    if (successCallback) {
+                        successCallback();
+                        setSuccessCallback(null);
+                    }
+                }}
                 contentLabel="Alert Message"
                 className="Modal"
                 overlayClassName="Overlay"
@@ -202,7 +219,13 @@ const CetakSuratPopup = ({ id, onClose }) => {
             >
                 <div className="modal-content">
                     <p>{alert.message}</p>
-                    <button onClick={() => setAlert({ status: false, message: '', type: '' })}>Close</button>
+                    <button onClick={() => {
+                        setAlert({ status: false, message: '', type: '' });
+                        if (successCallback) {
+                            successCallback();
+                            setSuccessCallback(null);
+                        }
+                    }}>Close</button>
                 </div>
             </Modal>
         </div>
