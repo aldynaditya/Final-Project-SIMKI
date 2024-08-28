@@ -15,10 +15,21 @@ const DetailEpisode = () => {
     const { data, loading, error } = useSelector(state => state.getoneEpisode);
     const [showCetakSuratPopup, setShowCetakSuratPopup] = useState(false);
     const [showHasilKuisionerPopup, setShowHasilKuisionerPopup] = useState(false);
+    const [TD1, setTD1] = useState('');
+    const [TD2, setTD2] = useState('');
 
     useEffect(() => {
         dispatch(fetchEpisodeById(id));
     }, [dispatch, id]);
+
+    useEffect(() => {
+        if (data) {
+            const [systolic, diastolic] = (data.td|| '').split('/');
+    
+            setTD1(systolic || '');
+            setTD2(diastolic || '');
+        }
+    }, [data]);
 
     const CetakSurat = () => {
         setShowCetakSuratPopup(true);
@@ -107,7 +118,19 @@ const DetailEpisode = () => {
                         <div className='atas-vital-detail'>
                             <div className='td-detail'>
                                 <span className='text-td-detail'>TD :</span>
-                                <input type='text' className='kolom-td-detail' name="td" value={data.td} readOnly></input>
+                                <input
+                                    type='text'
+                                    className='kolom-td-detail'
+                                    name="TD1"
+                                    value={TD1}
+                                    readOnly
+                                />  / <input
+                                    type='text'
+                                    className='kolom-td-detail'
+                                    name="TD2"
+                                    value={TD2}
+                                    readOnly
+                                />
                             </div>
                             <div className='suhu-detail'>
                                 <span className='text-suhu-detail'>Suhu :</span>

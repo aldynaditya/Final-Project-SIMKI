@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import Dokter from '../Pages/Dokter';
 import AntrianDokter from '../Pages/Dokter/Antrian';
+import CPPT from '../Pages/Dokter/CPPT';
 import PasienDokter from '../Pages/Dokter/Pasien';
 import NotifikasiDokter from '../Pages/Dokter/Notifikasi';
 import Schedule from '../Pages/Dokter/Schedule';
@@ -27,6 +28,7 @@ export function DoctorsRoute() {
             <Route path="input-cppt/:id" element={<InputCPPT />} />
             <Route path="emr-pasien/:id" element={<Emr />} />
             <Route path="entri-masuk/:id" element={<EntriMasuk />} />
+            <Route path="entri-masuk-cppt/:id" element={<CPPT />} />
             <Route path="entri-baru/:id" element={<EntriBaru />} />
             <Route path="order-obat/:id" element={<OrderObat />} />
             <Route path="order-prosedur/:id" element={<OrderProsedur />} />
