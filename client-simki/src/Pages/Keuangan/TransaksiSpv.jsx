@@ -4,6 +4,7 @@ import '../../Style/Keuangan/TransaksiSpv.css';
 import { fetchTransaksi } from '../../redux/keuangan/indextransaksi/actions';
 import { formatDateSlash, formatDateStrip } from "../../utils/dateUtils";
 import jsPDF from 'jspdf';
+import 'jspdf-autotable'; 
 import html2canvas from 'html2canvas';
 
 const TransaksiKeuangan = () => {
@@ -33,27 +34,27 @@ const TransaksiKeuangan = () => {
 
     const BuatLaporan = async () => {
         const doc = new jsPDF();
-
+    
         doc.setFont("times", "bold");
         doc.setFontSize(12);
-
+    
         const title = `Laporan Periode ${formatDateStrip(formData.startDate)} hingga ${formatDateStrip(formData.endDate)}`;
-
+    
         const pageWidth = doc.internal.pageSize.getWidth();
         const textWidth = doc.getTextWidth(title);
         const titleX = (pageWidth - textWidth) / 2;
-
+    
         doc.text(title, titleX, 10);
-
+    
         const table = document.querySelector('.tabel_transaksi-keuangan table');
         const canvas = await html2canvas(table);
         const imgData = canvas.toDataURL('image/png');
-
+    
         const imgWidth = 190; // PDF page width is 210mm
         const pageHeight = 290; // PDF page height is 297mm
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
         let position = 20;
-    
+        
         if (imgHeight > pageHeight) {
             doc.addImage(imgData, 'PNG', 10, position, imgWidth, pageHeight - position);
             doc.addPage();
@@ -62,7 +63,35 @@ const TransaksiKeuangan = () => {
         } else {
             doc.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
         }
-        
+        // Menghitung total pemasukan
+        const totalPemasukan = data.reduce((sum, row) => sum + parseFloat(row.total), 0);
+        position += imgHeight + 10; // Pindahkan posisi ke bawah tabel gambar
+        doc.text(`Total Pemasukan: Rp ${totalPemasukan.toLocaleString('id-ID')}`, 10, position);
+        position += 10;
+    
+        // Akumulasi data penjamin
+        const totalUmum = data.filter(row => row.penjamin === 'umum').length;
+        const totalAsuransi = data.filter(row => row.penjamin === 'asuransi').length;
+        const totalKeseluruhan = totalUmum + totalAsuransi;
+    
+        position += imgHeight + 10; // Pindahkan posisi ke bawah tabel gambar
+    
+        // Tabel pengunjung berdasarkan penjamin
+        doc.text("Tabel Pengunjung Berdasarkan Penjamin:", 10, position);
+        position += 10;
+    
+        doc.autoTable({
+            startY: position,
+            head: [['Nama', 'Jumlah']],
+            body: [
+                ['Umum', totalUmum],
+                ['Asuransi', totalAsuransi],
+                ['Total', totalKeseluruhan],
+            ],
+            theme: 'grid',
+            headStyles: { fillColor: [128, 128, 128] },
+        });
+    
         doc.save(`Laporan_Transaksi_${formData.startDate}_hingga_${formData.endDate}.pdf`);
     };
 

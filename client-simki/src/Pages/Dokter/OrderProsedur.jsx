@@ -122,7 +122,7 @@ const OrderProsedur = () => {
                     className='tambah-prosedur' 
                     onClick={handlePopUpTambahProsedur}
                     >
-                        Tambah Prosedur
+                        Tambah Item
                 </button>
             </div>
             {isPopupVisible &&

@@ -2,11 +2,13 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import { createJadwal } from '../../redux/resepsionis/scheduleCreate/actions';
+import { fetchDoctor } from '../../redux/resepsionis/getDoctor/actions';
 import '../../Style/Resepsionis/JadwalPopup.css';
 
 const TambahJadwal = ({ onClose, onSuccess, schedules }) => {
     const dispatch = useDispatch();
     const { data, loading, error } = useSelector(state => state.createObat);
+    const { data: dataDokter, loading: loadingDokter, error: errorDokter } = useSelector(state => state.getDoctor);
     const [formData, setFormData] = useState({
         hari: '',
         start_time: '',
@@ -15,6 +17,14 @@ const TambahJadwal = ({ onClose, onSuccess, schedules }) => {
     });
 
     const [alert, setAlert] = useState({ status: false, message: '', type: '' });
+
+    useEffect(() => {
+        dispatch(fetchDoctor());
+    }, [dispatch]);
+    
+    useEffect(() => {
+        console.log(dataDokter); // Check the structure of dataDokter
+    }, [dataDokter]);
 
     const isFormValid = useCallback(() => {
         return Object.values(formData).every(value => value.trim() !== '');
@@ -97,8 +107,8 @@ const TambahJadwal = ({ onClose, onSuccess, schedules }) => {
                             value={formData.namaDokter} 
                             onChange={handleChange}>
                             <option value="">Pilih Dokter</option>
-                            {Array.isArray(schedules) && schedules.length > 0 && [...new Set(schedules.map(schedule => schedule.dokter))].map(dokter => (
-                                <option key={dokter} value={dokter}>{dokter}</option>
+                            {Array.isArray(dataDokter) && dataDokter.length > 0 && dataDokter.map(dokter => (
+                                <option key={dokter.id} value={dokter.nama}>{dokter.nama}</option>
                             ))}
                         </select>
                     </div>

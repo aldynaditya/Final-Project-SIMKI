@@ -34,16 +34,6 @@ const TambahObatDr = ({ onClose, onComplete }) => {
     const handleSearchChange = (e) => {
         const query = e.target.value;
         setFormData({ ...formData, namaObat: query });
-
-        if (query.trim()) {
-            const filteredResults = allObat.filter(obat =>
-                obat.nama_obat.toLowerCase().includes(query.toLowerCase())
-            );
-            setShowResults(true);
-            dispatch(searchObat(query));
-        } else {
-            setShowResults(false);
-        }
     };
 
     const handleSearchClick = () => {
@@ -98,7 +88,7 @@ const TambahObatDr = ({ onClose, onComplete }) => {
         if (searchResults.length > 0) {
             const formattedResults = searchResults.map(obat => ({
                 ...obat,
-                formattedName: `${obat.nama_obat}`
+                formattedName: `${obat.nama_obat} ${obat.satuan}`
             }));
             setAllObat(formattedResults);
         }
@@ -143,12 +133,15 @@ const TambahObatDr = ({ onClose, onComplete }) => {
                             {showResults && allObat.length > 0 && (
                                 <ul className="search-results">
                                     {allObat
+                                        .filter(obat =>
+                                            obat.nama_obat.toLowerCase().includes(formData.namaObat.toLowerCase())
+                                        )
                                         .map((result) => (
                                             <li 
                                                 key={result.id} 
-                                                onClick={() => handleSearchSelect(`${result.nama_obat}`)}
+                                                onClick={() => handleSearchSelect(`${result.nama_obat} ${result.satuan}`)}
                                             >
-                                                {result.nama_obat}
+                                                {result.nama_obat} {result.satuan}
                                             </li>
                                         ))}
                                 </ul>
