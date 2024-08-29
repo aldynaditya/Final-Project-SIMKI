@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchNotifikasiSurat } from '../../redux/doctor/indexNotification/actions';
 import { formatDateStrip } from "../../utils/dateUtils";
@@ -8,10 +8,33 @@ import SearchBar from "../../components/SearchBar";
 const Notifikasi = () => {
     const dispatch = useDispatch();
     const { data, loading, error } = useSelector(state => state.getnotifikasiSurat);
+    const [filteredData, setFilteredData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [noResults, setNoResults] = useState(false);
 
     useEffect(() => {
         dispatch(fetchNotifikasiSurat());
     }, [dispatch]);
+
+    useEffect(() => {
+        setFilteredData(data);
+        setNoResults(data.length === 0);
+    }, [data]);
+
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+        if (query) {
+            const result = data.filter(row =>
+                row.noEMR.toLowerCase().includes(query) ||
+                row.namaPasien.toLowerCase().includes(query)
+            );
+            setFilteredData(result);
+            setNoResults(result.length === 0);
+        } else {
+            setFilteredData(data);
+            setNoResults(false);
+        }
+    };
 
     return (
         <div className="notifikasi-wrapper">
@@ -21,7 +44,7 @@ const Notifikasi = () => {
                 <div className="content-wrapper-notifikasi">
                     <div className="header-notifikasi">
                         <h1 className="text_notifikasi">Notifikasi</h1>
-                        <SearchBar />
+                        <SearchBar onSearch={handleSearch}/>
                     </div>
                     <div className="tabel_notifikasi">
                         <table>
@@ -36,12 +59,19 @@ const Notifikasi = () => {
                             </thead>
                             <tbody>
                                 {data.length === 0 ? 
-                                <tr>
-                                    <td colSpan="5" className="empty-message">
-                                        Belum ada history perpanjangan surat
-                                    </td>
-                                </tr> : (
-                                    data.map((row) => (
+                                        <tr>
+                                            <td colSpan="5" className="empty-message">
+                                                Belum ada data perpanjangan surat
+                                            </td>
+                                        </tr>
+                                    : filteredData.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="5" className="empty-message">
+                                                {noResults ? "Tidak ditemukan" : "Tidak ditemukan"}
+                                            </td>
+                                        </tr>
+                                    ) : (
+                                        filteredData.map((row) => (
                                         <tr key={row.id}>
                                             <td>{row.noEMR}</td>
                                             <td>{row.namaPasien}</td>

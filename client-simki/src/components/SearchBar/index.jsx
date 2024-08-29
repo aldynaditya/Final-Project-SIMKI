@@ -2,31 +2,13 @@ import React from "react";
 import '../../Style/components/SearchBar.css';  
 import search from "../../images/search.png";
 
-const SearchBar = () => {
-    const handleSearch = () => {
-  
-        const query = document.querySelector('.search-bar-input').value.toLowerCase();
+const SearchBar = ({ onSearch }) => {
+    const handleChange = (event) => {
+        const query = event.target.value.toLowerCase();
         console.log("Mencari: ", query);
-        
-
-        const rows = document.querySelectorAll('table tbody tr');
-        
-        rows.forEach(row => {
-            const cells = row.querySelectorAll('td');
-            let rowContainsQuery = false;
-            
-            cells.forEach(cell => {
-                if (cell.textContent.toLowerCase().includes(query)) {
-                    rowContainsQuery = true;
-                }
-            });
-            
-            if (rowContainsQuery) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        });
+        if (onSearch) {
+            onSearch(query);
+        }
     };
 
     return (
@@ -35,8 +17,9 @@ const SearchBar = () => {
                 type="text" 
                 placeholder="Pencarian" 
                 className="search-bar-input" 
+                onChange={handleChange}
             />
-            <button className="search-bar-button" onClick={handleSearch}>
+            <button className="search-bar-button">
                 <img src={search} alt="Search" />
             </button>
         </div>

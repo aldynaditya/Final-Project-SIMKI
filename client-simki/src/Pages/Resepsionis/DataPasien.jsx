@@ -13,7 +13,9 @@ const PendaftarBaru = () => {
     const dispatch = useDispatch();
     const { data, loading, error } = useSelector(state => state.getPatient);
     const { loading: deleteLoading, error: deleteError } = useSelector(state => state.deletePatient);
-
+    const [filteredData, setFilteredData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [noResults, setNoResults] = useState(false);
     const [selectedPasienId, setSelectedPasienId] = useState(null);
     const [isTambahPendaftarPopupVisible, setIsTambahPendaftarPopupVisible] = useState(false);
     const [isBuatJanjiPopupVisible, setIsBuatJanjiPopupVisible] = useState(false);
@@ -22,6 +24,11 @@ const PendaftarBaru = () => {
     useEffect(() => {
         dispatch(fetchPasien());
     }, [dispatch]);
+
+    useEffect(() => {
+        setFilteredData(data);
+        setNoResults(data.length === 0);
+    }, [data]);
 
     useEffect(() => {
         if (!deleteLoading && !deleteError) {
@@ -84,6 +91,21 @@ const PendaftarBaru = () => {
         return <div>Loading...</div>;
     }
 
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+        if (query) {
+            const result = data.filter(row =>
+                row.nama_lengkap.toLowerCase().includes(query) ||
+                row.nik.toLowerCase().includes(query)
+            );
+            setFilteredData(result);
+            setNoResults(result.length === 0);
+        } else {
+            setFilteredData(data);
+            setNoResults(false);
+        }
+    };
+
     const closeModal = () => {
         setAlert({ status: false, message: '', type: '' });
     };
@@ -96,7 +118,7 @@ const PendaftarBaru = () => {
                         <h1 className="text_pendaftar">Pendaftar</h1>
                         <div className="header-pendaftar-action">
                             <button className='tambah_pendaftar' onClick={handleTambahPendaftar}>Tambah</button>
-                            <SearchBar />
+                            <SearchBar onSearch={handleSearch}/>
                         </div>
                     </div>
                     <div className="tabel_pendaftar_baru">
@@ -114,12 +136,18 @@ const PendaftarBaru = () => {
                             <tbody>
                                 {data.length === 0 ? (
                                     <tr>
+                                        <td colSpan="5" className="empty-message">
+                                            Belum ada data pasien yang terdaftar
+                                        </td>
+                                    </tr>
+                                ) :filteredData.length === 0 ? (
+                                    <tr>
                                         <td colSpan="6" className="empty-message">
-                                            Data pasien belum tersedia
+                                            {noResults ? "Tidak ditemukan" : "Tidak ditemukan"}
                                         </td>
                                     </tr>
                                 ) : (
-                                    data.map((row) => (
+                                    filteredData.map((row) => (
                                         <tr key={row.id}>
                                             <td>{row.nama_lengkap}</td>
                                             <td>{row.nik}</td>
