@@ -13,7 +13,9 @@ const KelolaItem = () => {
     const dispatch = useDispatch();
     const { data, loading } = useSelector((state) => state.getItem);
     const { loading: deleteLoading, error: deleteError } = useSelector((state) => state.deleteItem);
-
+    const [filteredData, setFilteredData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [noResults, setNoResults] = useState(false);
     const [isPopupVisible, setIsPopupVisible] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [selectedItemId, setSelectedItemId] = useState(null);
@@ -22,6 +24,11 @@ const KelolaItem = () => {
     useEffect(() => {
         dispatch(fetchItem());
     }, [dispatch]);
+
+    useEffect(() => {
+        setFilteredData(data);
+        setNoResults(data.length === 0);
+    }, [data]);
 
     useEffect(() => {
         if (!deleteLoading && !deleteError) {
@@ -79,6 +86,21 @@ const KelolaItem = () => {
         return <div>Loading...</div>;
     }
 
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+        if (query) {
+            const result = data.filter(item =>
+                item.nama_item.toLowerCase().includes(query) ||
+                item.kode_item.toLowerCase().includes(query)
+            );
+            setFilteredData(result);
+            setNoResults(result.length === 0);
+        } else {
+            setFilteredData(data);
+            setNoResults(false);
+        }
+    };
+
     const closeModal = () => {
         setAlert({ status: false, message: '', type: '' });
     };
@@ -92,7 +114,7 @@ const KelolaItem = () => {
                         <h1 className="text_kelola-item">Stok Item</h1>
                         <div className="header-kelola-item-action">
                             <button className="tombol_tambahitem" onClick={handleTambahItem}>Tambah Item</button>
-                            <SearchBar />
+                            <SearchBar onSearch={handleSearch}/>
                         </div>
                     </div>
                     <div className="tabel_kelola-item">
@@ -113,9 +135,15 @@ const KelolaItem = () => {
                                         <td colSpan="6" className="empty-message">
                                             Belum ada item yang terdaftar
                                         </td>
+                                    </tr> 
+                                ) : filteredData.length === 0 ? (
+                                    <tr>
+                                        <td colSpan="6" className="empty-message">
+                                            {noResults ? "Tidak ditemukan" : "Tidak ditemukan"}
+                                        </td>
                                     </tr>
                                 ) : (
-                                    data.map((item) => (
+                                    filteredData.map((item) => (
                                         <tr key={item.id}>
                                             <td>{item.nama_item}</td>
                                             <td>{item.kode_item}</td>

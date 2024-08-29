@@ -9,11 +9,19 @@ import { fetchNotif } from '../../redux/keuangan/indexnotif/actions';
 const NotifikasiKeuangan = () => {
     const dispatch = useDispatch();
     const { data, loading, error } = useSelector(state => state.notif);
+    const [filteredData, setFilteredData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [noResults, setNoResults] = useState(false);
     const [isPopupVisible, setIsPopupVisible] = useState(false);
 
     useEffect(() => {
         dispatch(fetchNotif());
     }, [dispatch]);
+
+    useEffect(() => {
+        setFilteredData(data);
+        setNoResults(data.length === 0);
+    }, [data]);
 
     const UnggahLaporan = () => {
         setIsPopupVisible(true);
@@ -28,6 +36,20 @@ const NotifikasiKeuangan = () => {
         window.open(fileUrl, '_blank');
     };
     
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+        if (query) {
+            const result = data.filter(row =>
+                row.no_laporan.toLowerCase().includes(query) ||
+                row.periode.toLowerCase().includes(query)
+            );
+            setFilteredData(result);
+            setNoResults(result.length === 0);
+        } else {
+            setFilteredData(data);
+            setNoResults(false);
+        }
+    };
 
     return (
         <div className="notif-keuangan-wrapper">
@@ -36,7 +58,7 @@ const NotifikasiKeuangan = () => {
                     <div className="header-notif-keuangan">
                         <h1 className="text_notif-keuangan">Notifikasi</h1>
                         <button className='upload-laporan' onClick={UnggahLaporan}>Unggah Laporan</button>
-                        <SearchBar />
+                        <SearchBar onSearch={handleSearch}/>
                     </div>
                     <div className="tabel_notif-keuangan">
                         <table>
@@ -51,18 +73,20 @@ const NotifikasiKeuangan = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {!data ? (
-                                    <tr>
-                                        <td colSpan="6">Tidak terdapat data</td>
-                                    </tr>
-                                ) : error ? (
-                                    <tr>
-                                        <td colSpan="6" className="empty-message">
-                                            {error || 'Terjadi kesalahan saat memuat data.'}
-                                        </td>
-                                    </tr>
-                                ) : (
-                                    data.map((row) => (
+                                {data.length === 0 ? 
+                                        <tr>
+                                            <td colSpan="12" className="empty-message">
+                                                Belum ada Laporan yang masuk
+                                            </td>
+                                        </tr>
+                                    : filteredData.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="12" className="empty-message">
+                                                {noResults ? "Tidak ditemukan" : "Tidak ditemukan"}
+                                            </td>
+                                        </tr>
+                                    ) : (
+                                        filteredData.map((row) => (
                                         <tr key={row.uuid}>
                                             <td>{formatDateSlash(row.tanggal)}</td>
                                             <td>{row.no_laporan}</td>

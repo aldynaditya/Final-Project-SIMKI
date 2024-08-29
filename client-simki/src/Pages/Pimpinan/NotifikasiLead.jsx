@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchNotifikasiLaporan } from "../../redux/pimpinan/index/actions";
 import { updateStatus } from "../../redux/pimpinan/update/actions";
@@ -11,12 +11,19 @@ import { useNavigate } from 'react-router-dom';
 const NotifikasiPimpinan = () => {
     const dispatch = useDispatch();
     const { data, loading, error } = useSelector((state) => state.getlaporanbyPimpinan);
-
+    const [filteredData, setFilteredData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [noResults, setNoResults] = useState(false);
     const [alert, setAlert] = React.useState({ status: false, message: '', type: '' });
 
     useEffect(() => {
         dispatch(fetchNotifikasiLaporan());
     }, [dispatch]);
+
+    useEffect(() => {
+        setFilteredData(data);
+        setNoResults(data.length === 0);
+    }, [data]);
 
     const handleProsesClick = async (id) => {
         try {
@@ -32,6 +39,21 @@ const NotifikasiPimpinan = () => {
         window.open(fileUrl, '_blank');
     };
 
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+        if (query) {
+            const result = data.filter(row =>
+                row.no_laporan.toLowerCase().includes(query) ||
+                row.periode.toLowerCase().includes(query)
+            );
+            setFilteredData(result);
+            setNoResults(result.length === 0);
+        } else {
+            setFilteredData(data);
+            setNoResults(false);
+        }
+    };
+
     const closeModal = () => {
         setAlert({ status: false, message: '', type: '' });
     };
@@ -43,7 +65,7 @@ const NotifikasiPimpinan = () => {
                 <div className="content-wrapper-notif-pimpinan">
                     <div className="header-notif-pimpinan">
                         <h1 className="text_notif-pimpinan">Notifikasi</h1>
-                        <SearchBar />
+                        <SearchBar onSearch={handleSearch}/>
                     </div>
                     <div className="tabel_notif-pimpinan">
                         <table>
@@ -58,14 +80,20 @@ const NotifikasiPimpinan = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {data.length === 0 ? (
-                                    <tr>
-                                        <td colSpan="6" className="empty-message">
-                                            Belum ada laporan yang masuk
-                                        </td>
-                                    </tr>
-                                ) : (
-                                    data.map((row) => (
+                                {data.length === 0 ? 
+                                        <tr>
+                                            <td colSpan="12" className="empty-message">
+                                                Belum ada Laporan yang masuk
+                                            </td>
+                                        </tr>
+                                    : filteredData.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="12" className="empty-message">
+                                                {noResults ? "Tidak ditemukan" : "Tidak ditemukan"}
+                                            </td>
+                                        </tr>
+                                    ) : (
+                                        filteredData.map((row) => (
                                         <tr key={row.uuid}>
                                             <td>{formatDateSlash(row.tanggal)}</td>
                                             <td>{row.no_laporan}</td>

@@ -13,7 +13,9 @@ import Modal from 'react-modal';
 const TransaksiKasir = () => {
     const dispatch = useDispatch();
     const { data, loading, error } = useSelector(state => state.getallOrder);
-
+    const [filteredData, setFilteredData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [noResults, setNoResults] = useState(false);
     const [isDetailFakturVisible, setIsDetailFakturVisible] = useState(false);
     const [selectedFakturId, setSelectedFakturId] = useState(null);
     const [alert, setAlert] = useState({ status: false, message: '', type: '' });
@@ -22,6 +24,11 @@ const TransaksiKasir = () => {
     useEffect(() => {
         dispatch(fetchAllOrder());
     }, [dispatch]);
+
+    useEffect(() => {
+        setFilteredData(data);
+        setNoResults(data.length === 0);
+    }, [data]);
 
     const printRef = useRef();
 
@@ -57,6 +64,21 @@ const TransaksiKasir = () => {
     if (error) {
         return <div>Error: {error}</div>;
     }
+    
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+        if (query) {
+            const result = data.filter(row =>
+                row.noInvoice.toLowerCase().includes(query) ||
+                row.namaPasien.toLowerCase().includes(query)
+            );
+            setFilteredData(result);
+            setNoResults(result.length === 0);
+        } else {
+            setFilteredData(data);
+            setNoResults(false);
+        }
+    };
 
     const closeModal = () => {
         setAlert({ status: false, message: '', type: '' });
@@ -69,7 +91,7 @@ const TransaksiKasir = () => {
                 <div className="content-wrapper-transaksi">
                     <div className="header-transaksi">
                         <h1 className="text_transaksi">Transaksi</h1>
-                        <SearchBar />
+                        <SearchBar onSearch={handleSearch}/>
                     </div>
                     <div className="tabel_transaksi_wrapper">
                         <div className="tabel_transaksi">
@@ -89,14 +111,20 @@ const TransaksiKasir = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {data.length === 0 ? (
+                                    {data.length === 0 ? 
                                         <tr>
-                                            <td colSpan="10" className="empty-message">
+                                            <td colSpan="12" className="empty-message">
                                                 Tidak ada data transaksi
                                             </td>
                                         </tr>
+                                    : filteredData.length === 0 ? (
+                                        <tr>
+                                            <td colSpan="12" className="empty-message">
+                                                {noResults ? "Tidak ditemukan" : "Tidak ditemukan"}
+                                            </td>
+                                        </tr>
                                     ) : (
-                                        data.map((row) => (
+                                        filteredData.map((row) => (
                                             <tr key={row.id}>
                                                 <td>{row.noInvoice}</td>
                                                 <td>{formatDateSlash(row.tanggaldaftar)}</td>

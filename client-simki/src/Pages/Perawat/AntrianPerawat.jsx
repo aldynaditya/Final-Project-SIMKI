@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchEmr } from '../../redux/doctor/indexEmr/actions';
@@ -10,10 +10,22 @@ const AntrianPerawat= () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { data, loading, error } = useSelector(state => state.getEmr);
+    const [filteredData, setFilteredData] = useState(data);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [noResults, setNoResults] = useState(false);
 
     useEffect(() => {
         dispatch(fetchEmr());
     }, [dispatch]);
+
+    useEffect(() => {
+        setFilteredData(data);
+        if (data.length === 0) {
+            setNoResults(true);
+        } else {
+            setNoResults(false);
+        }
+    }, [data]);
 
     const EmrPerawat = (id) => {
         navigate(`/perawat/emr-perawat/${id}`);
@@ -21,6 +33,21 @@ const AntrianPerawat= () => {
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
+
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+        if (query) {
+            const result = data.filter(emr =>
+                emr.nama_pasien.toLowerCase().includes(query) ||
+                emr.noEMR.toLowerCase().includes(query)
+            );
+            setFilteredData(result);
+            setNoResults(result.length === 0);
+        } else {
+            setFilteredData(data);
+            setNoResults(false);
+        }
+    };
 
     return (
         <div className="pasien-resepsionis-wrapper">
@@ -30,6 +57,7 @@ const AntrianPerawat= () => {
                 <div className="pasien-wrapper">
                     <div className="header-pasien-resepsionis">
                         <h1 className="text_pasien_resepsionis">Antrian</h1>
+                        <SearchBar onSearch={handleSearch}/>
                     </div>
                     <div className="tabel_pasien_resepsionis">
                         <table>
@@ -46,11 +74,17 @@ const AntrianPerawat= () => {
                                 {data.length === 0 ? (
                                     <tr>
                                         <td colSpan="5" className="empty-message">
-                                            Belum ada antrian yang masuk
+                                            Belum terdapat antrian yang masuk
+                                        </td>
+                                    </tr>
+                                ) : noResults ? (
+                                    <tr>
+                                        <td colSpan="5" className="empty-message">
+                                            Tidak ditemukan
                                         </td>
                                     </tr>
                                 ) : (
-                                    data.map((emr) => (
+                                    filteredData.map((emr) => (
                                         <tr key={emr.id}>
                                             <td>{emr.noEMR}</td>
                                             <td>{emr.nama_pasien}</td>

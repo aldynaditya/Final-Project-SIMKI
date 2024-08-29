@@ -13,7 +13,9 @@ const KelolaObat = () => {
     const dispatch = useDispatch();
     const { data, loading } = useSelector((state) => state.getObat);
     const { loading: deleteLoading, error: deleteError } = useSelector((state) => state.deleteObat);
-
+    const [filteredData, setFilteredData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [noResults, setNoResults] = useState(false);
     const [isPopupVisible, setIsPopupVisible] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [selectedObatId, setSelectedObatId] = useState(null);
@@ -22,6 +24,11 @@ const KelolaObat = () => {
     useEffect(() => {
         dispatch(fetchObat());
     }, [dispatch]);
+
+    useEffect(() => {
+        setFilteredData(data);
+        setNoResults(data.length === 0);
+    }, [data]);
 
     useEffect(() => {
         if (!deleteLoading && !deleteError) {
@@ -79,6 +86,21 @@ const KelolaObat = () => {
         return <div>Loading...</div>;
     }
 
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+        if (query) {
+            const result = data.filter(obat =>
+                obat.nama_obat.toLowerCase().includes(query) ||
+                obat.kode_obat.toLowerCase().includes(query)
+            );
+            setFilteredData(result);
+            setNoResults(result.length === 0);
+        } else {
+            setFilteredData(data);
+            setNoResults(false);
+        }
+    };
+
     const closeModal = () => {
         setAlert({ status: false, message: '', type: '' });
     };
@@ -93,7 +115,7 @@ const KelolaObat = () => {
                         <div className="header-kelola-item-action">
                             <button className="tombol_tambahitem" onClick={handleTambahObat}>Tambah Obat</button>
                             
-                            <SearchBar />
+                            <SearchBar onSearch={handleSearch}/>
                         </div>
                     </div>
                     <div className="tabel_kelola-item">
@@ -112,10 +134,17 @@ const KelolaObat = () => {
                                 {data.length === 0 ? 
                                 <tr>
                                     <td colSpan="6" className="empty-message">
-                                        Belum ada data obat
+                                        Belum ada data obat yang terdaftar
                                     </td>
-                                </tr> : (
-                                    data.map((obat) => (
+                                </tr> 
+                                :filteredData.length === 0 ? (
+                                    <tr>
+                                        <td colSpan="6" className="empty-message">
+                                            {noResults ? "Tidak ditemukan" : "Tidak ditemukan"}
+                                        </td>
+                                    </tr>
+                                ) : (
+                                    filteredData.map((obat) => (
                                         <tr key={obat.id}>
                                             <td>{obat.nama_obat}</td>
                                             <td>{obat.kode_obat}</td>
