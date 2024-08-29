@@ -44,7 +44,7 @@ const TambahObatDr = ({ onClose, onComplete }) => {
     };
 
     const handleSearchSelect = (selectedObat) => {
-        const [namaObat] = selectedObat.split(' ');
+        const [namaObat, stok] = selectedObat.split(' ');
         setFormData({ ...formData, namaObat });
         setShowResults(false);
     };
@@ -88,7 +88,7 @@ const TambahObatDr = ({ onClose, onComplete }) => {
         if (searchResults.length > 0) {
             const formattedResults = searchResults.map(obat => ({
                 ...obat,
-                formattedName: `${obat.nama_obat} ${obat.satuan}`
+                formattedName: `${obat.nama_obat} (${obat.stok_obat})`
             }));
             setAllObat(formattedResults);
         }
@@ -139,9 +139,9 @@ const TambahObatDr = ({ onClose, onComplete }) => {
                                         .map((result) => (
                                             <li 
                                                 key={result.id} 
-                                                onClick={() => handleSearchSelect(`${result.nama_obat} ${result.satuan}`)}
+                                                onClick={() => handleSearchSelect(result.formattedName)}
                                             >
-                                                {result.nama_obat} {result.satuan}
+                                                {result.formattedName}
                                             </li>
                                         ))}
                                 </ul>
