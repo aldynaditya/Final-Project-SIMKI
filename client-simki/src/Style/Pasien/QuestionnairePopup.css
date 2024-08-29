@@ -23,6 +23,12 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.questionnaire_content h3 {
+    width:500px;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
 .questionnaire_header {
     display: flex;
     justify-content: center;

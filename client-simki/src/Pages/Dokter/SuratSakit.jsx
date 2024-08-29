@@ -95,11 +95,9 @@ const SuratSakit = ({ onClose, onComplete }) => {
                     </div>
                     <div className='kadaluarsa-surat'>
                         <div className='periode-surat'>
-                            <span className='text-periode-surat'>Periode :</span>
+                            <span className='text-periode-surat-sakit'>Periode :</span>
                             <input type='date' className='kolom-periode-surat' name="periode_start" value={formData.periode_start} onChange={handleChange}/>
-                        </div>
-                        <div className='hingga-surat'>
-                            <span className='text-hingga-surat'>Hingga :</span>
+                            <span className='text-hingga-surat-rujukan'>Hingga :</span>
                             <input type='date' className='kolom-hingga-surat' name="periode_end" value={formData.periode_end} onChange={handleChange}/>
                         </div>
                     </div>

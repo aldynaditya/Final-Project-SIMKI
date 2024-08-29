@@ -53,13 +53,18 @@
     margin-top: 0%;
 }
 
-.cancel-x {
+.cancel-x-b {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 100px;
+    right: 610px;
     text-decoration: none;
-    color: #000;
+    color: #333;
+    font-size: 16px;
+    background: transparent;
+    border: none;
     cursor: pointer;
+    font-family: 'Arial', sans-serif;
+    font-weight: normal; 
 }
 
 .popup-content form {

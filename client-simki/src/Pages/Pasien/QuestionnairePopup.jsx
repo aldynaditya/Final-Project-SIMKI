@@ -76,9 +76,9 @@ const QuestionnairePopup = ({ id, onClose, onComplete }) => {
                 </div>
                 {!loadingQuestions && questions.length > 0 ? (
                     <>
-                        <h2>{questions[currentQuestion].text}</h2>
+                        <h3>{questions[currentQuestion].text}</h3>
                         <div className="options">
-                            {["Strongly Agree", "Agree", "Neutral", "Disagree", "Strongly Disagree"].map((option, index) => (
+                            {["Sangat Setuju", "Setuju", "Netral", "Tidak Setuju", "Sangat Tidak Setuju"].map((option, index) => (
                                 <div
                                     key={index}
                                     className={`option_container ${answers[currentQuestion] === index ? 'selected' : ''}`}

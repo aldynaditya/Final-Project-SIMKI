@@ -45,9 +45,6 @@ const PopUpDetailFaktur = ({ id, onClose, onSuccess }) => {
 
     useEffect(() => {
         if (isSubmitted && !loading) {
-            console.log('Data:', updatedata);
-            console.log('Error:', errordata);
-    
             if (errordata) {
                 setAlert({
                     status: true,

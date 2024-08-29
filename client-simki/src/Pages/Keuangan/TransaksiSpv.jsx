@@ -94,6 +94,8 @@ const TransaksiKeuangan = () => {
         doc.save(`Laporan_Transaksi_${formData.startDate}_hingga_${formData.endDate}.pdf`);
     };
 
+    const isFormDataValid = formData.startDate && formData.endDate;
+
     return (
         <div className="transaksi-keuangan-wrapper">
             <div className="transaksi-keuangan-container">
@@ -168,11 +170,17 @@ const TransaksiKeuangan = () => {
                         </table>
                     </div>
                     
-                    <button className="buat-laporan" onClick={BuatLaporan}>Buat Laporan</button>
+                    <button
+                        className="buat-laporan"
+                        onClick={BuatLaporan}
+                        disabled={!isFormDataValid}
+                    >
+                        Buat Laporan
+                    </button>
                 </div>
             </div>
         </div>
     );
-}  
+}
 
 export default TransaksiKeuangan;
