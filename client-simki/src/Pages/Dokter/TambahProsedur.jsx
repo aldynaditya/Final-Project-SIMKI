@@ -34,16 +34,6 @@ const TambahProsedur = ({ onClose, onComplete }) => {
     const handleSearchChange = (e) => {
         const query = e.target.value;
         setFormData({ ...formData, namaItem: query });
-
-        if (query.trim()) {
-            const filteredResults = allItem.filter(item =>
-                item.nama_item.toLowerCase().includes(query.toLowerCase())
-            );
-            setShowResults(true);
-            dispatch(searchProsedur(query));
-        } else {
-            setShowResults(false);
-        }
     };
 
     const handleSearchClick = () => {
@@ -96,7 +86,7 @@ const TambahProsedur = ({ onClose, onComplete }) => {
         if (searchResults.length > 0) {
             const formattedResults = searchResults.map(item => ({
                 ...item,
-                formattedName: `${item.nama_item} ${item.satuan}`
+                formattedName: `${item.nama_item} (${item.stok_item})`
             }));
             setAllItem(formattedResults);
         }
@@ -148,9 +138,9 @@ const TambahProsedur = ({ onClose, onComplete }) => {
                                         .map((result) => (
                                             <li 
                                                 key={result.id} 
-                                                onClick={() => handleSearchSelect(`${result.nama_item} ${result.satuan}`)}
+                                                onClick={() => handleSearchSelect((result.formattedName))}
                                             >
-                                                {result.nama_item} {result.satuan}
+                                                {result.formattedName}
                                             </li>
                                         ))}
                                 </ul>
