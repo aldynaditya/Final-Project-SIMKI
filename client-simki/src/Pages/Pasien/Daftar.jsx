@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import '../../Style/Pasien/Daftar.css';
 import { daftarUser } from '../../redux/patient/daftar/actions';
+import ReCAPTCHA from "react-google-recaptcha";
 
 const Daftar = () => {
   const dispatch = useDispatch();
@@ -31,15 +32,19 @@ const Daftar = () => {
     type: ''
   });
 
+  const [captchaVerified, setCaptchaVerified] = useState(false);
   const [formError, setFormError] = useState('');
 
   const isFormValid = useCallback(() => {
-    return Object.values(userData).every(value => value.trim() !== '');
-  }, [userData]);
+    return (
+      Object.values(userData).every(value => value.trim() !== '') &&
+      captchaVerified
+    );
+  }, [userData, captchaVerified]);
 
   useEffect(() => {
     if (!isFormValid()) {
-      setFormError('Isi seluruh form');
+      setFormError('Isi seluruh form dan selesaikan captcha');
     } else {
       setFormError('');
     }
@@ -66,7 +71,7 @@ const Daftar = () => {
     if (!isFormValid()) {
       setAlert({
         status: true,
-        message: 'Isi seluruh form',
+        message: 'Isi seluruh form dan selesaikan captcha',
         type: 'danger'
       });
       return;
@@ -117,6 +122,10 @@ const Daftar = () => {
       setNavigateAfterClose(false);
       navigate('/aktivasi-akun');
     }
+  };
+
+  const handleCaptchaChange = (value) => {
+    setCaptchaVerified(!!value);
   };
 
   return (
@@ -234,6 +243,12 @@ const Daftar = () => {
               placeholder="Ulang Kata Sandi" 
               value={userData.confirmPassword} 
               onChange={handleChange} 
+            />
+          </div>
+          <div className="captcha-container">
+            <ReCAPTCHA
+              sitekey="6LesWTIqAAAAAIZQEeNjMBOHOBPyH9m8OAz3vwv-"
+              onChange={handleCaptchaChange}
             />
           </div>
           <div className="daftar-container">

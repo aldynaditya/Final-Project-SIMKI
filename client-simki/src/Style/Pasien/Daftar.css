@@ -137,3 +137,17 @@
 .form-fields .suku {
   margin-bottom: 0px;
 }
+
+.captcha-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px; /* Sesuaikan jarak dari elemen sebelumnya */
+}
+
+/* Modifikasi pada elemen captcha */
+.captcha-container .g-recaptcha {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
