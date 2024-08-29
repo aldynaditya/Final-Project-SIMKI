@@ -25,11 +25,7 @@ const NotifikasiKeuangan = () => {
 
     const handleUnduh = (filePath) => {
         const fileUrl = `http://localhost:9000/uploads/${filePath}`;
-        const printWindow = window.open(fileUrl, '_blank');
-    
-        setTimeout(() => {
-            printWindow.focus();
-        }, 1000);
+        window.open(fileUrl, '_blank');
     };
     
 

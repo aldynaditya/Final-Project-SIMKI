@@ -56,7 +56,7 @@ const DetailKunjungan = () => {
     };
 
     if (loading || responsesLoading) return <div>Loading...</div>;
-    if (error || responsesError) return <div>Error: {error || responsesError}</div>;
+    if (error) return <div>Error: {error}</div>;
 
     return (
         <div className="detail_kunjungan_container">

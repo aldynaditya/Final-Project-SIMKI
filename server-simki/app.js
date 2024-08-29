@@ -70,7 +70,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use('/uploads', express.static(path.join(__dirname, './uploads')));
+app.get('/uploads/:filename', (req, res) => {
+    const file = path.join(__dirname, './uploads', req.params.filename);
+    res.setHeader('Content-Disposition', 'inline');
+    res.sendFile(file);
+});
 
 app.get('/', (req, res) => {
     res.status(200).json({

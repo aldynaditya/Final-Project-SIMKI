@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import '../../Style/Admin/KelolaUser.css';
+import TambahUser from './TambahUser';
 import { fetchUsers, deleteUser } from '../../redux/admin/user/actions';
-import { useNavigate } from 'react-router-dom'; 
 
 const KelolaUser = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { users, loading, error } = useSelector(state => state.user);
+
+    const [isPopupVisible, setIsPopupVisible] = useState(false);
 
     const [alert, setAlert] = useState({
         status: false,
@@ -21,7 +22,15 @@ const KelolaUser = () => {
     }, [dispatch]);
 
     const handleTambahUser = () => {
-        navigate('tambah-user');
+        setIsPopupVisible(true);
+    };
+
+    const handleCloseTambahUser = () => {
+        setIsPopupVisible(false);
+    };
+
+    const handleSuccess = () => {
+        dispatch(fetchUsers());
     };
 
     const handleDeleteUser = async (id) => {
@@ -49,7 +58,7 @@ const KelolaUser = () => {
         <div className="kelola-item-wrapper">
             <div className="navbar-kelola-item">
             </div>
-            <div className="kelola-item-container">
+            <div className={`kelola-item-container ${isPopupVisible ? 'overlay' : ''}`}>
                 <div className="content-wrapper-kelola-item">
                     <div className="header-kelola-item">
                         <h1 className="text_kelola-item">User Klinik</h1>
@@ -69,20 +78,33 @@ const KelolaUser = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {users.map((user, index) => (
-                                    <tr key={user.id}>
-                                        <td>{index + 1}</td>
-                                        <td>{user.nama}</td>
-                                        <td>{user.email}</td>
-                                        <td>{user.role}</td>
-                                        <td><div className="ket_aksi" onClick={() => handleDeleteUser(user.id)}>Delete</div></td>
-                                    </tr>
-                                ))}
+                                {users.length === 0 ? 
+                                <tr>
+                                    <td colSpan="6" className="empty-message">
+                                        Belum ada akun terdaftar
+                                    </td>
+                                </tr> : (
+                                    users.map((user, index) => (
+                                        <tr key={user.id}>
+                                            <td>{index + 1}</td>
+                                            <td>{user.nama}</td>
+                                            <td>{user.email}</td>
+                                            <td>{user.role}</td>
+                                            <td><div className="hapus-jadwal" onClick={() => handleDeleteUser(user.id)}>Delete</div></td>
+                                        </tr>
+                                    ))
+                                )}
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+            {isPopupVisible &&
+                <TambahUser
+                    onClose={handleCloseTambahUser} 
+                    onSuccess={handleSuccess} 
+                />
+            }
             <Modal
                 isOpen={alert.status}
                 onRequestClose={closeModal}

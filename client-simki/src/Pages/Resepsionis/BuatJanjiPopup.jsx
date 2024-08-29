@@ -109,10 +109,10 @@ const BuatJanjiPopup = ({ id, onClose, onSuccess }) => {
 
     return (
         <div className="popup-container">
-            <div className="popup-content">
-            <button className='cancel-x' onClick={onClose}>
+            <button className='cancel-x-b' onClick={onClose}>
                     Cancel X
                 </button>
+            <div className="popup-content">
                 <h1 className='text-popup-buatjanji'>Buat Janji</h1>
                 <form>
                     <label>

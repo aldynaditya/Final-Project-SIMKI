@@ -137,7 +137,7 @@ const OrderSurat = () => {
                 <div className='baris-dua'>
                     <div className='tanggal-order-obat'>
                         <span className='text-tanggal-obat'>Tanggal :</span>
-                        <input type="date" className='kolom-tanggal-obat' name="tanggal" value={formatDateStrip(data.tanggal)} readOnly/>
+                        <input type="text" className='kolom-tanggal-obat' name="tanggal" value={formatDateStrip(data.tanggal)} readOnly/>
                     </div>
                     <div className='nfaktur-order-obat'>
                         <span className='text-nfaktur-obat'>Nomor Faktur :</span>

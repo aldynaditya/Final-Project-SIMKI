@@ -1,22 +1,19 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import '../../Style/Admin/TambahUser.css';
 import '../../Style/Resepsionis/CetakSuratPopup.css';
 import { addUser } from '../../redux/admin/add/actions';
 
-const TambahUser = () => {
-    const [formData, setFormData] = useState({
-        role: '',
-        nama: '',
-        email: '',
-        password: '',
-        confirmPassword: ''
-    });
-    const navigate = useNavigate();
+const TambahUser = ({ onClose, onSuccess }) => {
     const dispatch = useDispatch();
-    const { loading, error } = useSelector(state => state.addUser);
+    const { data, loading, error } = useSelector(state => state.addUser);
+    const [formData, setFormData] = useState({
+            role: '',
+            nama: '',
+            email: '',
+            password: ''
+        });
 
     const [alert, setAlert] = useState({
         status: false,
@@ -24,7 +21,11 @@ const TambahUser = () => {
         type: ''
     });
 
-    const BACK_PATH = '/admin';
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
+    const isFormValid = useCallback(() => {
+        return Object.values(formData).every(value => value.trim() !== '');
+    }, [formData]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -35,31 +36,48 @@ const TambahUser = () => {
     };
 
     const handleSubmit = async () => {
-        try {
-            await dispatch(addUser(formData));
-            navigate(BACK_PATH);
-        } catch (err) {
+        if (!isFormValid()) {
             setAlert({
                 status: true,
-                message: error || 'Gagal',
+                message: 'Isi seluruh form',
                 type: 'danger'
             });
+            return;
         }
+        setIsSubmitted(true);
+        dispatch(addUser(formData));
     };
 
-    const closeModal = () => {
-        setAlert({ status: false, message: '', type: '' });
-    };
+    useEffect(() => {
+        if (isSubmitted && !loading) {
+            if (error) {
+                setAlert({
+                    status: true,
+                    message: error,
+                    type: 'danger'
+                });
+            }
+            else if (data && !loading) {
+                setAlert({
+                    status: true,
+                    message: 'Akun berhasil dibuat!',
+                    type: 'success'
+                });
+                setTimeout(() => {
+                    onSuccess();
+                    onClose();
+                }, 2000);
+            }
+            setIsSubmitted(false);
+        }
+    }, [data, error, loading, isSubmitted, onClose, onSuccess]);
 
     return (
         <div className='tambah-popup-container'>
             <div className='tambah-popup-content'>
-                <Link 
-                    to={BACK_PATH}
-                    className='cancel-x' 
-                >
+                <button className='cancel-x' onClick={onClose}>
                     Cancel X
-                </Link>
+                </button>
                 <h1 className='text-tambah-popup'>Tambah User</h1>
                 <div className='kolom-tambah'>
                     <div className='nama'>
@@ -118,22 +136,20 @@ const TambahUser = () => {
                     </button>
                 </div>
             </div>
-            {error && (
-                <Modal
-                    isOpen={alert.status}
-                    onRequestClose={closeModal}
-                    contentLabel="Error Message"
-                    className="Modal"
-                    overlayClassName="Overlay"
-                    shouldCloseOnOverlayClick={true}
-                    shouldCloseOnEsc={true}
-                >
-                    <div className="modal-content">
-                        <p>{error}</p>
-                        <button onClick={closeModal}>Close</button>
-                    </div>
-                </Modal>
-            )}
+            <Modal
+                isOpen={alert.status}
+                onRequestClose={() => setAlert({ status: false, message: '', type: '' })}
+                contentLabel="Alert Message"
+                className="Modal"
+                overlayClassName="Overlay"
+                shouldCloseOnOverlayClick={true}
+                shouldCloseOnEsc={true}
+            >
+                <div className="modal-content">
+                    <p>{alert.message}</p>
+                    <button onClick={() => setAlert({ status: false, message: '', type: '' })}>Close</button>
+                </div>
+            </Modal>
         </div>
     );
 };

@@ -21,7 +21,8 @@ const FeedbackPopUp = ({ data, onClose }) => {
                 </button>
                 <h1 className='text-hasilkuisioner-popup'>Feedback</h1>
                 <div className='keluhan'>
-                    <input 
+                    <textarea
+                        className='textarea-kuisioner' 
                         type="text" 
                         placeholder="Feedback" 
                         value={feedback} 

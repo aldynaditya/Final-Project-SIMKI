@@ -44,7 +44,7 @@ const SuratRujukan = ({ onClose, onComplete }) => {
         if (error) {
             setAlert({
                 status: true,
-                message: 'Isi seluruh Form Entry',
+                message: error,
                 type: 'danger'
             });
         } else if (data) {

@@ -20,6 +20,15 @@
     position: relative;
 }
 
+.text-periode-surat-sakit{
+    margin-right: 35px;
+}
+
+.text-hingga-surat-rujukan{
+    margin-right: 8px;
+    margin-left: 12px;
+}
+
 .cancel-x {
     position: absolute;
     top: 10px;

@@ -32,6 +32,7 @@ const HasilKuisionerPopup = ({ onClose, onComplete }) => {
     }, [Gdatafb]);
     
     const [alert, setAlert] = useState({ status: false, message: '', type: '' });
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
     const handleChange = (e) => {
         setFormData({
@@ -54,22 +55,25 @@ const HasilKuisionerPopup = ({ onClose, onComplete }) => {
     }, [alert.status]);
 
     useEffect(() => {
-        if (errorfb) {
-            setAlert({
-                status: true,
-                message: errorfb,
-                type: 'danger'
-            });
-        } else if (datafb) {
-            setAlert({
-                status: true,
-                message: 'Data berhasil disimpan!',
-                type: 'success'
-            });
-            setTimeout(() => {
-                onComplete();
-                onClose();
-            }, 2000);
+        if (isSubmitted && !Gloadingfb) {
+            if (errorfb) {
+                setAlert({
+                    status: true,
+                    message: errorfb,
+                    type: 'danger'
+                });
+            } else if (datafb) {
+                setAlert({
+                    status: true,
+                    message: 'Data berhasil disimpan!',
+                    type: 'success'
+                });
+                setTimeout(() => {
+                    onComplete();
+                    onClose();
+                }, 2000);
+            }
+            setIsSubmitted(false);
         }
     }, [errorfb, datafb, onClose, onComplete]);
 
@@ -82,9 +86,26 @@ const HasilKuisionerPopup = ({ onClose, onComplete }) => {
             });
             return;
         }
+        setIsSubmitted(true);
         dispatch(createFeedback(id, formData));
     };
 
+    const translateAnswer = (answer) => {
+        switch (answer) {
+            case 'Strongly Agree':
+                return 'Sangat Setuju';
+            case 'Agree':
+                return 'Setuju';
+            case 'Neutral':
+                return 'Netral';
+            case 'Disagree':
+                return 'Tidak Setuju';
+            case 'Strongly Disagree':
+                return 'Sangat Tidak Setuju';
+            default:
+                return answer;
+        }
+    };
     
     return (
         <div className='hasilkuisioner-popup-container'>
@@ -105,14 +126,20 @@ const HasilKuisionerPopup = ({ onClose, onComplete }) => {
                             {data.map((row) => (
                                 <tr key={row.id}>
                                     <td>{row.question}</td>
-                                    <td>{row.answer}</td>
+                                    <td>{translateAnswer(row.answer)}</td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
                 <div className='keluhan'>
-                    <input type="text" placeholder="Feedback" name="feed_back" value={formData.feed_back} onChange={handleChange} />
+                    <textarea
+                        className='textarea-kuisioner' 
+                        placeholder="Feedback" 
+                        name="feed_back" 
+                        value={formData.feed_back} 
+                        onChange={handleChange}
+                    />
                 </div>
                 <div className='perubahan-surat-container'>
                     <button className="perubahan-surat" onClick={handleSimpan}>Simpan</button>
@@ -133,7 +160,6 @@ const HasilKuisionerPopup = ({ onClose, onComplete }) => {
                 </div>
             </Modal>
         </div>
-        
     );
 };
 
