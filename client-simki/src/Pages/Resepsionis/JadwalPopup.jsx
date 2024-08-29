@@ -24,7 +24,7 @@ const TambahJadwal = ({ onClose, onSuccess, schedules }) => {
     }, [dispatch]);
     
     useEffect(() => {
-        console.log(dataDokter); // Check the structure of dataDokter
+        console.log(dataDokter);
     }, [dataDokter]);
 
     const isFormValid = useCallback(() => {

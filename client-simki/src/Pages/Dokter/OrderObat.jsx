@@ -6,6 +6,7 @@ import { fetchOrderObat } from '../../redux/doctor/indexMedicine/actions';
 import { deleteorderObat } from '../../redux/doctor/indexDeleteMedicine/actions';
 import { finishorderObat } from '../../redux/doctor/finishOrderObat/actions';
 import { formatDateStrip, formatTime } from '../../utils/dateUtils';
+import { formatCurrency } from '../../utils/convertfunction';
 import TambahObat from './TambahObat';
 import Modal from 'react-modal';
 import '../../Style/Dokter/OrderObat.css';
@@ -188,12 +189,12 @@ const OrderObat = () => {
                                     <td>{order.nama_obat}</td>
                                     <td>{order.kode_obat}</td>
                                     <td>{order.satuan_obat}</td>
-                                    <td>{order.harga_obat}</td>
+                                    <td>{formatCurrency(order.harga_obat)}</td>
                                     <td>{order.kuantitas}</td>
                                     <td>{order.stok_obat}</td>
                                     <td>{order.dosis}</td>
                                     <td>{order.catatan}</td>
-                                    <td>{order.total}</td>
+                                    <td>{formatCurrency(order.total)}</td>
                                     <td>{order.status}</td>
                                     <td>
                                         <div className="hapus-order-obat" onClick={() => hapusOrderObat(order.id)}>Hapus</div>

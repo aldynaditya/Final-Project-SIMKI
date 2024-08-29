@@ -30,6 +30,20 @@ const getAllItem = async () => {
     return result;
 };
 
+const getItembyId = async (req) => {
+    const { id } = req.params;
+
+    const item = await Item.findOne({
+        where: { uuid: id },
+    });
+
+    if (!item) {
+        throw new NotFoundError('Item tidak ditemukan');
+    }
+
+    return item;
+}
+
 const createItem = async (req) => {
     const {nama_item, kode_item, harga_satuan_item, satuan, stok } = req.body;
     const userKlinikId = req.user.id;
@@ -99,6 +113,7 @@ const deleteItem = async (req) => {
 
 module.exports = {
     getAllItem,
+    getItembyId,
     createItem,
     searchItem,
     updateItem,

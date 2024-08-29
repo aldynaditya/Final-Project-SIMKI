@@ -86,6 +86,7 @@ const getAllOrders = async () => {
                 alamatPasien: transaksi.episode.emrpasien.appointment.datapasien.alamat,
                 penjamin: transaksi.episode.emrpasien.appointment.penjamin,
                 metodeBayar: transaksi.metode_bayar,
+                diskon: transaksi.diskon,
                 status: transaksi.status,
                 totalOrder: transaksi.total_order,
                 total: transaksi.total,
@@ -121,7 +122,6 @@ const updateTransaction = async (req) => {
     const { id } = req.params;
     const { metode_bayar, diskon, keterangan } = req.body;
 
-    // Cari transaksi berdasarkan ID
     const transaction = await Transaksi.findByPk(id, {
         include: [
             {
@@ -154,6 +154,10 @@ const updateTransaction = async (req) => {
     });
 
     if (!transaction) throw new NotFoundError('Transaksi tidak ditemukan');
+
+    if (transaction.status === 'Completed') {
+        throw new Error('Transaksi sudah selesai dan tidak dapat diubah');
+    }
 
     const episodeId = transaction.episodeId;
 

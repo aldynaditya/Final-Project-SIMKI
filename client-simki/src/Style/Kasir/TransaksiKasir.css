@@ -79,39 +79,30 @@ body {
 }
 
 .tabel_transaksi_wrapper {
-    overflow-x: auto;
-    padding: 20px;
+    overflow-x: auto; /* Pengguliran horizontal */
+    overflow-y: auto; /* Pengguliran vertikal */
+    flex: 1;
 }
 
 .tabel_transaksi {
     margin: 20px;
-    flex: 1;
-    overflow: auto;
-    max-height: 400px;
-    border-collapse: collapse;
-    overflow-x: auto;
 }
 
 .tabel_transaksi table {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
     font-size: 18px;
-    text-align: center; 
+    text-align: center;
+    table-layout: auto; 
 }
 
 .tabel_transaksi th, .tabel_transaksi td {
-    padding: 8px;
+    padding: 8px 30px;
     border-bottom: 1px solid black;
-    text-align: center;  
-    vertical-align: middle;  
-    width: 200px;
+    text-align: center;
+    vertical-align: middle; /* Izinkan teks membungkus menjadi beberapa baris */
+    white-space: nowrap;  /* Mencegah teks membungkus */
 }
-
-.tabel_transaksi th:nth-child(4), .tabel_transaksi td:nth-child(4), .tabel_transaksi th:nth-child(9), .tabel_transaksi td:nth-child(9) {
-    width: 300px; 
-}
-
 
 .tabel_transaksi th {
     background-color: #f2f2f2;
@@ -128,15 +119,8 @@ body {
 }
 
 .tabel_transaksi .detail-faktur-cell {
-    display: flex;
-    justify-content: center; 
-    align-items: center;    
-}
-
-.detail-faktur-cell{
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
+    justify-content: center;
+    align-items: center;
 }
 
 .detail-faktur, .cetak-transaksi {

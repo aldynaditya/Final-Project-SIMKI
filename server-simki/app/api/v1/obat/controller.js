@@ -1,6 +1,7 @@
 const { StatusCodes } = require('http-status-codes');
 const { 
     getAllObat,
+    getObatbyId,
     createObat,
     updateObat,
     deleteObat, 
@@ -10,6 +11,18 @@ const {
 const index = async (req, res, next) => {
     try {
         const result = await getAllObat(req);
+
+    res.status(StatusCodes.OK).json({
+        data: result,
+    });
+    } catch (err) {
+        next(err);
+    }
+};
+
+const one = async (req, res, next) => {
+    try {
+        const result = await getObatbyId(req);
 
     res.status(StatusCodes.OK).json({
         data: result,
@@ -69,6 +82,7 @@ const destroy = async (req, res, next) => {
 
 module.exports = {
     index,
+    one,
     find,
     update,
     destroy,

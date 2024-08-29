@@ -33,6 +33,7 @@ export function AppRoutes() {
     const Menudokter = [
         { name: "Dashboard", path: '/dokter' },
         { name: "Jadwal Dokter", path: '/dokter/schedule-dokter' },
+        { name: "Antrian", path: '/dokter/antrian-dokter' },
         { name: "Pasien", path: '/dokter/pasien-dokter' },
         { name: "Notifikasi", path: '/dokter/notifikasi-dokter' }
     ];
@@ -40,6 +41,7 @@ export function AppRoutes() {
     const Menuperawat = [
         { name: "Dashboard", path: '/perawat' },
         { name: "Jadwal Dokter", path: "/perawat/jadwal-dokter" },
+        { name: "Antrian", path: '/perawat/antrian-perawat' },
         { name: "Pasien", path: "/perawat/pasien-dokter" },
         { name: "Kelola Item", path: "/perawat/kelola-item" }
     ];
@@ -47,7 +49,7 @@ export function AppRoutes() {
     const MenuResepsionis = [
         { name: "Dashboard", path: '/resepsionis' },
         { name: "Pendaftar", path: "/resepsionis/pendaftar-baru" },
-        { name: "Antrian", path: "/resepsionis/antrian" },
+        { name: "Janji Masuk", path: "/resepsionis/antrian" },
         { name: "Pasien", path: "/resepsionis/pasien-dokter" },
         { name: "Kelola Jadwal", path: "/resepsionis/kelola-jadwal" }
     ];
@@ -61,7 +63,7 @@ export function AppRoutes() {
     const Menuspv = [
         { name: "Dashboard", path: '/spvkeuangan' },
         { name: "Transaksi", path: "/spvkeuangan/transaksi-keuangan" },
-        { name: "Laporan", path: "/spvkeuangan/notifikasi-keuangan" }
+        { name: "Notifikasi", path: "/spvkeuangan/notifikasi-keuangan" }
     ];
 
     return (

@@ -90,6 +90,7 @@
 .invoice-details table {
     width: 100%;
     border-collapse: collapse;
+    text-align: center;
 }
 
 .invoice-details td {

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {
     index,
+    one,
     find,
     create,
     update,
@@ -13,6 +14,7 @@ const {
 } = require('../../../middleware/auth');
 
 router.get('/obat',authenticateUser, authorizeRoles('superuser','farmasi','dokter'), index);
+router.get('/obat/:id',authenticateUser, authorizeRoles('superuser','farmasi','dokter'), one);
 router.get('/obat/:query',authenticateUser, authorizeRoles('superuser','farmasi','dokter'),find);
 router.post('/obat',authenticateUser, authorizeRoles('superuser','farmasi'), create);
 router.patch('/obat/:id',authenticateUser, authorizeRoles('superuser','farmasi'), update);

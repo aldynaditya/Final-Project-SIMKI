@@ -1,5 +1,6 @@
 import React from 'react';
 import { formatDateSlash } from '../../utils/dateUtils';
+import { formatCurrency } from '../../utils/convertfunction';
 import './faktur.css';
 
 const Invoice = React.forwardRef(({ data }, ref) => {
@@ -18,10 +19,14 @@ const Invoice = React.forwardRef(({ data }, ref) => {
         }).replace(',', '');
     };
 
+    const discountPercentage = parseFloat(data.diskon) || 0;
+    const priceAfterDiscount = data.total;
+    const priceBeforeDiscount = priceAfterDiscount / (1 - (discountPercentage / 100));
+    const discountAmount = (discountPercentage / 100) * priceBeforeDiscount;
     const konsultasiRow = {
         keterangan: `Konsultasi (${data.dokter})`,
         jumlah: 1,
-        nilai: data.total - data.totalOrder
+        nilai: priceBeforeDiscount - data.totalOrder
     };
 
     return (
@@ -83,7 +88,7 @@ const Invoice = React.forwardRef(({ data }, ref) => {
                             <th>Tanggal</th>
                             <th>Keterangan</th>
                             <th>Jumlah</th>
-                            <th>Nilai</th>
+                            <th>Harga</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -91,14 +96,14 @@ const Invoice = React.forwardRef(({ data }, ref) => {
                             <td>{formatDateSlash(data.tanggaldibuat)}</td>
                             <td>{konsultasiRow.keterangan}</td>
                             <td>{konsultasiRow.jumlah}</td>
-                            <td>{konsultasiRow.nilai}</td>
+                            <td>{formatCurrency(konsultasiRow.nilai)}</td>
                         </tr>
                         {data.ordersObat.map((order) => (
                             <tr key={order.uuid}>
                                 <td>{formatDateSlash(data.tanggaldibuat)}</td>
                                 <td>{order.namaobat}</td>
                                 <td>{order.kuantitas}</td>
-                                <td>{order.total}</td>
+                                <td>{formatCurrency(order.total)}</td>
                             </tr>
                         ))}
                         {data.ordersProsedur.map((order) => (
@@ -106,7 +111,7 @@ const Invoice = React.forwardRef(({ data }, ref) => {
                                 <td>{formatDateSlash(data.tanggaldibuat)}</td>
                                 <td>{order.namaitem}</td>
                                 <td>{order.kuantitas}</td>
-                                <td>{order.total}</td>
+                                <td>{formatCurrency(order.total)}</td>
                             </tr>
                         ))}
                     </tbody>
@@ -116,9 +121,16 @@ const Invoice = React.forwardRef(({ data }, ref) => {
                 <table>
                     <tbody>
                         <tr>
+                            <td><strong>Harga Sebelum Diskon</strong></td>
+                            <td className="right-align"><strong>{formatCurrency(priceBeforeDiscount)}</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Nominal Diskon</strong></td>
+                            <td className="right-align"><strong>{formatCurrency(discountAmount)}</strong></td>
+                        </tr>
+                        <tr>
                             <td><strong>Total</strong></td>
-                            <td className="right-align">Rp.</td>
-                            <td className="right-align"><strong>{data.total}</strong></td>
+                            <td className="right-align"><strong>{formatCurrency(data.total)}</strong></td>
                         </tr>
                     </tbody>
                 </table>

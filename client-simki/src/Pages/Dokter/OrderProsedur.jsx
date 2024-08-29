@@ -5,6 +5,7 @@ import { fetchorderInfo } from '../../redux/doctor/orderInfo/actions';
 import { fetchOrderProsedur } from '../../redux/doctor/indexProcedure/actions';
 import { deleteorderProsedur } from '../../redux/doctor/indexDeleteProcedure/actions';
 import { formatDateStrip, formatTime } from '../../utils/dateUtils';
+import { formatCurrency } from '../../utils/convertfunction';
 import TambahProsedur from './TambahProsedur';
 import Modal from 'react-modal';
 import '../../Style/Dokter/OrderProsedur.css';
@@ -160,12 +161,12 @@ const OrderProsedur = () => {
                                     <td>{order.nama_item}</td>
                                     <td>{order.kode_item}</td>
                                     <td>{order.satuan_item}</td>
-                                    <td>{order.harga_item}</td>
+                                    <td>{formatCurrency(order.harga_item)}</td>
                                     <td>{order.kuantitas}</td>
                                     <td>{order.stok_item}</td>
                                     <td>{order.dosis}</td>
                                     <td>{order.catatan}</td>
-                                    <td>{order.total}</td>
+                                    <td>{formatCurrency(order.total)}</td>
                                     <td>
                                         <div className="hapus-order-prosedur" onClick={() => hapusOrderProsedur(order.id)}>Hapus</div>
                                     </td>
