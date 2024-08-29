@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import '../../Style/Keuangan/TransaksiSpv.css';
 import { fetchTransaksi } from '../../redux/keuangan/indextransaksi/actions';
 import { formatDateSlash, formatDateStrip } from "../../utils/dateUtils";
+import { formatCurrency } from "../../utils/convertfunction";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable'; 
 import html2canvas from 'html2canvas';
@@ -63,20 +64,18 @@ const TransaksiKeuangan = () => {
         } else {
             doc.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
         }
-        // Menghitung total pemasukan
+
         const totalPemasukan = data.reduce((sum, row) => sum + parseFloat(row.total), 0);
-        position += imgHeight + 10; // Pindahkan posisi ke bawah tabel gambar
+        position += imgHeight + 10;
         doc.text(`Total Pemasukan: Rp ${totalPemasukan.toLocaleString('id-ID')}`, 10, position);
         position += 10;
-    
-        // Akumulasi data penjamin
+
         const totalUmum = data.filter(row => row.penjamin === 'umum').length;
         const totalAsuransi = data.filter(row => row.penjamin === 'asuransi').length;
         const totalKeseluruhan = totalUmum + totalAsuransi;
     
-        position += imgHeight + 10; // Pindahkan posisi ke bawah tabel gambar
+        position += imgHeight + 10;
     
-        // Tabel pengunjung berdasarkan penjamin
         doc.text("Tabel Pengunjung Berdasarkan Penjamin:", 10, position);
         position += 10;
     
@@ -160,7 +159,7 @@ const TransaksiKeuangan = () => {
                                             <td>{row.namaPasien}</td>
                                             <td>{row.penjamin}</td>
                                             <td>{row.metodeBayar}</td>
-                                            <td>{row.total}</td>
+                                            <td>{formatCurrency(row.total)}</td>
                                             <td>{row.petugas}</td>
                                         </tr>
                                     ))

@@ -45,8 +45,8 @@ export const getDateLimits = () => {
     const minDate = new Date();
     const maxDate = new Date();
 
-    minDate.setDate(today.getDate() - 1); // Set minDate to yesterday
-    maxDate.setDate(today.getDate() + 14); // Set maxDate to 14 days from today
+    minDate.setDate(today.getDate() - 1); 
+    maxDate.setDate(today.getDate() + 14);
 
     return {
         minDate: minDate.toISOString().split('T')[0],

@@ -4,6 +4,18 @@ import { fetchItemById, editItem } from '../../redux/nurse/edit/actions';
 import Modal from 'react-modal';
 import '../../Style/Perawat/TambahitemPopup.css';
 
+const formatCurrency = (value) => {
+    return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0,
+    }).format(value).replace(/\D00(?=\D*$)/, '');
+};
+
+const parseCurrency = (value) => {
+    return parseInt(value.replace(/[^0-9]/g, ''), 10) || 0;
+};
+
 const EditItem = ({ onClose, itemId, onSuccess }) => {
     const dispatch = useDispatch();
     const { item, loading } = useSelector(state => state.editItem);
@@ -22,7 +34,10 @@ const EditItem = ({ onClose, itemId, onSuccess }) => {
 
     useEffect(() => {
         if (item) {
-            setFormData(item);
+            setFormData({
+                ...item,
+                harga_satuan_item: formatCurrency(item.harga_satuan_item)
+            });
         }
     }, [item]);
 
@@ -33,10 +48,14 @@ const EditItem = ({ onClose, itemId, onSuccess }) => {
     }, [formData]);
     
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+        const { name, value } = e.target;
+
+        setFormData(prevData => ({
+            ...prevData,
+            [name]: name === 'harga_satuan_item'
+                ? formatCurrency(parseCurrency(value))
+                : value
+        }));
     };
 
     const handleSubmit = () => {
@@ -48,8 +67,13 @@ const EditItem = ({ onClose, itemId, onSuccess }) => {
             });
             return;
         }
+
+        const formattedData = {
+            ...formData,
+            harga_satuan_item: parseCurrency(formData.harga_satuan_item)
+        };
     
-        dispatch(editItem(itemId, formData))
+        dispatch(editItem(itemId, formattedData))
             .then(() => {
                 setAlert({
                     status: true,

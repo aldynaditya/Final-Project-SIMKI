@@ -74,7 +74,7 @@ const EmrPerawat = () => {
         const numericFields = ['indeks', 'detak', 'suhu', 'napas', 'TD1', 'TD2'];
     
         if (numericFields.includes(name)) {
-            const numericValue = value.replace(/[^0-9]/g, '');
+            const numericValue = value.replace(/[^0-9.]/g, '');
     
             if (name === 'TD1') {
                 setTD1(numericValue);

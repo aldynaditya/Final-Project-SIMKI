@@ -41,7 +41,6 @@ const createLaporan = async (req, res) => {
 
 const getAllLaporanByPimpinan = async () => {
     const result = await Laporan.findAll({
-        where: {status : 'in process'}
     });
 
     return result;

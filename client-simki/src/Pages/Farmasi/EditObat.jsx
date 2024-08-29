@@ -4,6 +4,18 @@ import { fetchObatById, editObat } from '../../redux/pharmacy/edit/actions';
 import Modal from 'react-modal';
 import '../../Style/Perawat/TambahitemPopup.css';
 
+const formatCurrency = (value) => {
+    return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0,
+    }).format(value).replace(/\D00(?=\D*$)/, '');
+};
+
+const parseCurrency = (value) => {
+    return parseInt(value.replace(/[^0-9]/g, ''), 10) || 0;
+};
+
 const EditObat = ({ onClose, obatId, onSuccess }) => {
     const dispatch = useDispatch();
     const { obat, loading } = useSelector(state => state.editObat);
@@ -22,7 +34,10 @@ const EditObat = ({ onClose, obatId, onSuccess }) => {
 
     useEffect(() => {
         if (obat) {
-            setFormData(obat);
+            setFormData({
+                ...obat,
+                harga_satuan_obat: formatCurrency(obat.harga_satuan_obat)
+            });
         }
     }, [obat]);
 
@@ -31,12 +46,16 @@ const EditObat = ({ onClose, obatId, onSuccess }) => {
             return String(value).trim() !== '';
         });
     }, [formData]);
-    
+
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+        const { name, value } = e.target;
+
+        setFormData(prevData => ({
+            ...prevData,
+            [name]: name === 'harga_satuan_obat'
+                ? formatCurrency(parseCurrency(value))
+                : value
+        }));
     };
 
     const handleSubmit = () => {
@@ -48,8 +67,13 @@ const EditObat = ({ onClose, obatId, onSuccess }) => {
             });
             return;
         }
-    
-        dispatch(editObat(obatId, formData))
+
+        const formattedData = {
+            ...formData,
+            harga_satuan_obat: parseCurrency(formData.harga_satuan_obat)
+        };
+
+        dispatch(editObat(obatId, formattedData))
             .then(() => {
                 setAlert({
                     status: true,
@@ -70,7 +94,6 @@ const EditObat = ({ onClose, obatId, onSuccess }) => {
                 });
             });
     };
-    
 
     return (
         <div className='tambahitem-popup-container'>
@@ -97,7 +120,7 @@ const EditObat = ({ onClose, obatId, onSuccess }) => {
                         <input type='text' className='kolom-satuan-item' name="satuan" value={formData.satuan} onChange={handleChange} />
                     </div>
                     <div className='stok-item'>
-                        <span className='text-stok-item'>Stok/Kuantitas :</span>
+                        <span className='text-stok-item'>Stok :</span>
                         <input type='text' className='kolom-stok-item' name="stok" value={formData.stok} onChange={handleChange} />
                     </div>
                 </div>

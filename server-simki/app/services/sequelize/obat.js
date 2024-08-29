@@ -30,6 +30,20 @@ const getAllObat = async () => {
     return result;
 };
 
+const getObatbyId = async (req) => {
+    const { id } = req.params;
+
+    const obat = await Obat.findOne({
+        where: { uuid: id },
+    });
+
+    if (!obat) {
+        throw new NotFoundError('Obat tidak ditemukan');
+    }
+
+    return obat;
+}
+
 const createObat = async (req) => {
     const {nama_obat, kode_obat, harga_satuan_obat, satuan, stok } = req.body;
     const userKlinikId = req.user.id;
@@ -99,6 +113,7 @@ const deleteObat = async (req) => {
 
 module.exports = {
     getAllObat,
+    getObatbyId,
     createObat,
     searchObat,
     updateObat,

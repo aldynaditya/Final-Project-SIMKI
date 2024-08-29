@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchObat } from '../../redux/pharmacy/index/actions';
 import { deleteObat } from '../../redux/pharmacy/delete/actions';
+import { formatCurrency } from '../../utils/convertfunction';
 import '../../Style/Perawat/KelolaItem.css';
 import SearchBar from '../../components/SearchBar';
 import TambahObat from './TambahObat';
@@ -118,7 +119,7 @@ const KelolaObat = () => {
                                         <tr key={obat.id}>
                                             <td>{obat.nama_obat}</td>
                                             <td>{obat.kode_obat}</td>
-                                            <td>{obat.harga_obat}</td>
+                                            <td>{formatCurrency(obat.harga_obat)}</td>
                                             <td>{obat.jenis_obat}</td>
                                             <td>{obat.stok_obat}</td>
                                             <td>

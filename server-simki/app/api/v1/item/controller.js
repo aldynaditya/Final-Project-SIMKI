@@ -4,12 +4,25 @@ const {
     createItem,
     updateItem,
     deleteItem,
-    searchItem
+    searchItem,
+    getItembyId
 } = require('../../../services/sequelize/item');
 
 const index = async (req, res, next) => {
     try {
         const result = await getAllItem(req);
+
+    res.status(StatusCodes.OK).json({
+        data: result,
+    });
+    } catch (err) {
+        next(err);
+    }
+};
+
+const one = async (req, res, next) => {
+    try {
+        const result = await getItembyId(req);
 
     res.status(StatusCodes.OK).json({
         data: result,
@@ -69,6 +82,7 @@ const destroy = async (req, res, next) => {
 
 module.exports = {
     index,
+    one,
     find,
     update,
     destroy,

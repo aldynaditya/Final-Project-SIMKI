@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchItem } from '../../redux/nurse/index/actions';
 import { deleteItem } from '../../redux/nurse/delete/actions';
+import { formatCurrency } from '../../utils/convertfunction';
 import '../../Style/Perawat/KelolaItem.css';
 import SearchBar from "../../components/SearchBar";
 import TambahItem from './TambahItem';
@@ -118,7 +119,7 @@ const KelolaItem = () => {
                                         <tr key={item.id}>
                                             <td>{item.nama_item}</td>
                                             <td>{item.kode_item}</td>
-                                            <td>{item.harga_item}</td>
+                                            <td>{formatCurrency(item.harga_item)}</td>
                                             <td>{item.satuan_item}</td>
                                             <td>{item.stok_item}</td>
                                             <td>

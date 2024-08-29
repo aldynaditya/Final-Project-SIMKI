@@ -6,6 +6,7 @@ import '../../Style/Kasir/TransaksiKasir.css';
 import SearchBar from '../../components/SearchBar';
 import { fetchAllOrder } from "../../redux/kasir/indexOrder/actions";
 import { formatDateSlash } from "../../utils/dateUtils";
+import { formatCurrency } from '../../utils/convertfunction';
 import PopUpDetailFaktur from './DetailFaktur';
 import Modal from 'react-modal';
 
@@ -26,6 +27,7 @@ const TransaksiKasir = () => {
 
     const handlePrint = useReactToPrint({
         content: () => printRef.current,
+        onAfterPrint: () => setPrintData(null),
     });
 
     const CetakTransaksi = (row) => {
@@ -36,7 +38,7 @@ const TransaksiKasir = () => {
         if (printData) {
             handlePrint();
         }
-    }, [handlePrint, printData]);
+    }, [printData, handlePrint]);
 
     const handleDetailFakturOpen = (id) => {
         setSelectedFakturId(id);
@@ -102,7 +104,7 @@ const TransaksiKasir = () => {
                                                 <td>{row.namaPasien}</td>
                                                 <td>{row.penjamin}</td>
                                                 <td>{row.metodeBayar}</td>
-                                                <td>{row.total}</td>
+                                                <td>{formatCurrency(row.total)}</td>
                                                 <td>{row.petugas}</td>
                                                 <td>{row.status}</td>
                                                 <td className="detail-faktur-cell">

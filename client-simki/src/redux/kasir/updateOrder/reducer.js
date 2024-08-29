@@ -6,18 +6,18 @@ import {
 
 const initialState = {
     loading: false,
-    error: null,
-    data: {},
+    errordata: null,
+    updatedata: {},
 };
 
 const updateordertotransactionReducer = (state = initialState, action) => {
     switch (action.type) {
         case UPDATE_ORDER_TO_TRANSACTION_REQUEST:
-            return { ...state, loading: true, error: null };
+            return { ...state, loading: true, errordata: null };
         case UPDATE_ORDER_TO_TRANSACTION_SUCCESS:
-            return { ...state, loading: false, data: action.payload };
+            return { ...state, loading: false, updatedata: action.payload, errordata: null };
         case UPDATE_ORDER_TO_TRANSACTION_FAILURE:
-            return { ...state, loading: false, error: action.payload };
+            return { ...state, loading: false, errordata: action.payload, updatedata: null };
         default:
             return state;
     }

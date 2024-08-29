@@ -20,11 +20,30 @@ const TambahItem = ({ onClose, onSuccess }) => {
         return Object.values(formData).every(value => value.trim() !== '');
     }, [formData]);
 
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0,
+        }).format(value).replace(/\D00(?=\D*$)/, '');
+    };
+
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+        let { name, value } = e.target;
+
+        if (name === 'harga_satuan_item') {
+            const numberValue = value.replace(/\D/g, '');
+            value = formatCurrency(numberValue);
+            setFormData(prevFormData => ({
+                ...prevFormData,
+                harga_satuan_item: numberValue
+            }));
+        } else {
+            setFormData({
+                ...formData,
+                [name]: value
+            });
+        }
     };
 
     useEffect(() => {
@@ -88,7 +107,7 @@ const TambahItem = ({ onClose, onSuccess }) => {
                     </div>
                     <div className='harga-item'>
                         <span className='text-harga-item'>Harga Satuan :</span>
-                        <input type='text' className='kolom-harga-item' name="harga_satuan_item" value={formData.harga_satuan_item} onChange={handleChange} />
+                        <input type='text' className='kolom-harga-item' name="harga_satuan_item" value={formatCurrency(formData.harga_satuan_item)} onChange={handleChange} />
                     </div>
                     <div className='satuan-item'>
                         <span className='text-satuan-item'>Satuan :</span>

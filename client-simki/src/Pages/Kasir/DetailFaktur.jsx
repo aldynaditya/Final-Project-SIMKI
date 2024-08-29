@@ -6,14 +6,18 @@ import '../../Style/Kasir/DetailFaktur.css';
 
 const PopUpDetailFaktur = ({ id, onClose, onSuccess }) => {
     const dispatch = useDispatch();
-    const { data, loading, error } = useSelector(state => state.updateOrder);
-
+    const { updatedata, loading, errordata } = useSelector(state => {
+        console.log('Redux State:', state);
+        return state.updateOrder;
+    });                                              
     const [formData, setFormData] = useState({
         metode_bayar: '',
-        diskon: '',
+        diskon: '0',
         keterangan: ''
     });
+
     const [alert, setAlert] = useState({ status: false, message: '', type: '' });
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
     const isFormValid = useCallback(() => {
         return Object.values(formData).every(value => value.trim() !== '');
@@ -26,7 +30,7 @@ const PopUpDetailFaktur = ({ id, onClose, onSuccess }) => {
         });
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!isFormValid()) {
             setAlert({
                 status: true,
@@ -35,12 +39,25 @@ const PopUpDetailFaktur = ({ id, onClose, onSuccess }) => {
             });
             return;
         }
+        setIsSubmitted(true);
+        dispatch(updateOrdertoTransaction(id, formData));
+    };
+
+    useEffect(() => {
+        if (isSubmitted && !loading) {
+            console.log('Data:', updatedata);
+            console.log('Error:', errordata);
     
-        dispatch(updateOrdertoTransaction(id, formData))
-            .then(() => {
+            if (errordata) {
                 setAlert({
                     status: true,
-                    message: 'Transaksi berhasil dibuat!',
+                    message: errordata,
+                    type: 'danger'
+                });
+            } else if (updatedata) {
+                setAlert({
+                    status: true,
+                    message: "Sukses",
                     type: 'success'
                 });
                 setTimeout(() => {
@@ -48,15 +65,11 @@ const PopUpDetailFaktur = ({ id, onClose, onSuccess }) => {
                     onSuccess();
                     onClose();
                 }, 2000);
-            })
-            .catch(() => {
-                setAlert({
-                    status: true,
-                    message: 'Gagal memperbarui data!',
-                    type: 'danger'
-                });
-            });
-    };
+            }
+            setIsSubmitted(false);
+        }
+    }, [updatedata, errordata, loading, isSubmitted, onClose, onSuccess]);
+
 
     return (
         <div className='modal-overlay'>
@@ -80,7 +93,7 @@ const PopUpDetailFaktur = ({ id, onClose, onSuccess }) => {
                         </select>
                     </div>
                     <div className='diskon-faktur'>
-                        <span className='text-diskon-faktur'>Diskon:</span>
+                        <span className='text-diskon-faktur'>Diskon(%):</span>
                         <input
                             className='kolom-diskon-faktur'
                             type='number'

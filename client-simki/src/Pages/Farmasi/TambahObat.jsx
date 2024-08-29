@@ -20,11 +20,30 @@ const TambahObat = ({ onClose, onSuccess }) => {
         return Object.values(formData).every(value => value.trim() !== '');
     }, [formData]);
 
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0,
+        }).format(value).replace(/\D00(?=\D*$)/, '');
+    };
+
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+        let { name, value } = e.target;
+
+        if (name === 'harga_satuan_obat') {
+            const numberValue = value.replace(/\D/g, '');
+            value = formatCurrency(numberValue);
+            setFormData(prevFormData => ({
+                ...prevFormData,
+                harga_satuan_obat: numberValue
+            }));
+        } else {
+            setFormData({
+                ...formData,
+                [name]: value
+            });
+        }
     };
 
     useEffect(() => {
@@ -79,23 +98,23 @@ const TambahObat = ({ onClose, onSuccess }) => {
                 <h1 className='text-tambahitem-popup'>Tambah Obat</h1>
                 <div className='kolom-tambah-item'>
                     <div className='nama-item'>
-                        <span className='text-nama-item'>Nama Obat :</span>
+                        <span className='text-nama-obat'>Nama Obat :</span>
                         <input type='text' className='kolom-nama-item' name="nama_obat" value={formData.nama_obat} onChange={handleChange} />
                     </div>
                     <div className='kode-item'>
-                        <span className='text-kode-item'>Kode Obat :</span>
+                        <span className='text-kode-obat'>Kode Obat :</span>
                         <input type='text' className='kolom-kode-item' name="kode_obat" value={formData.kode_obat} onChange={handleChange} />
                     </div>
                     <div className='harga-item'>
-                        <span className='text-harga-item'>Harga Satuan :</span>
-                        <input type='text' className='kolom-harga-item' name="harga_satuan_obat" value={formData.harga_satuan_obat} onChange={handleChange} />
+                        <span className='text-harga-obat'>Harga Satuan :</span>
+                        <input type='text' className='kolom-harga-item' name="harga_satuan_obat" value={formatCurrency(formData.harga_satuan_obat)} onChange={handleChange} />
                     </div>
                     <div className='satuan-item'>
-                        <span className='text-satuan-item'>Satuan :</span>
+                        <span className='text-satuan-obat'>Satuan :</span>
                         <input type='text' className='kolom-satuan-item' name="satuan" value={formData.satuan} onChange={handleChange} />
                     </div>
                     <div className='stok-item'>
-                        <span className='text-stok-item'>Stok :</span>
+                        <span className='text-stok-obat'>Stok :</span>
                         <input type='text' className='kolom-stok-item' name="stok" value={formData.stok} onChange={handleChange} />
                     </div>
                 </div>

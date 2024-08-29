@@ -68,6 +68,11 @@
     font-size: 16px;
 }
 
+.text-nama-obat {
+    margin-right: 50px;
+    font-size: 16px;
+}
+
 .kolom-nama-item {
     border-radius: 5px;
     width: 300px;
@@ -78,6 +83,11 @@
 
 .text-kode-item {
     margin-right: 56px;
+    font-size: 16px;
+}
+
+.text-kode-obat {
+    margin-right: 55px;
     font-size: 16px;
 }
 
@@ -94,6 +104,11 @@
     font-size: 16px;
 }
 
+.text-harga-obat {
+    margin-right: 33px;
+    font-size: 16px;
+}
+
 .kolom-harga-item {
     border-radius: 5px;
     width: 300px;
@@ -107,6 +122,11 @@
     font-size: 16px;
 }
 
+.text-satuan-obat {
+    margin-right: 81px;
+    font-size: 16px;
+}
+
 .kolom-satuan-item {
     border-radius: 5px;
     width: 300px;
@@ -116,7 +136,12 @@
 }
 
 .text-stok-item {
-    margin-right: 25px;
+    margin-right: 97px;
+    font-size: 16px;
+}
+
+.text-stok-obat {
+    margin-right: 100px;
     font-size: 16px;
 }
 
