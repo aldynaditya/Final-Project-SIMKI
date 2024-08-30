@@ -130,7 +130,7 @@ const OrderSurat = () => {
                         <input type='text' className='kolom-nemr-obat' name="noEMR" value={data.noEMR} readOnly/>
                     </div>
                     <div className='nama-order-obat'>
-                        <span className='text-nama-obat'>Nama Pasien :</span>
+                        <span className='text-nama-pasien'>Nama Pasien :</span>
                         <input type='text' className='kolom-nama-obat' name="namaPasien" value={data.namaPasien} readOnly/>
                     </div>
                 </div>
