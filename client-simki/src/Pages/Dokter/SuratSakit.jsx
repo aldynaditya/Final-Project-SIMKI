@@ -79,7 +79,7 @@ const SuratSakit = ({ onClose, onComplete }) => {
                 <button className='cancel-x' onClick={onClose}>
                     Cancel X
                 </button>
-                <h1 className='text-cetaksurat-popup'>Perpanjang Surat Sakit</h1>
+                <h1 className='text-cetaksurat-popup'>Surat Sakit</h1>
                 <div className='kolom-cetak-surat'>
                     <div className='umur-cetaksurat'>
                         <span className='text-umur-cetaksurat'>Umur :</span>

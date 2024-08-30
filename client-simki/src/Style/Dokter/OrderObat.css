@@ -38,8 +38,13 @@ html, body {
     align-items: center;
 }
 
+.text-nama-pasien{
+    margin-right: 62px;
+    font-size: 16px;
+}
+
 .nemr-order-obat{
-    margin-right: 400px;
+    margin-right: 398px;
 }
 .text-nemr-obat{
     margin-right: 60px;
@@ -104,10 +109,10 @@ html, body {
 }
 
 .jam-order-obat{
-    margin-right: 400px;
+    margin-right: 402px;
 }
 .text-jam-obat{
-    margin-right: 90px;
+    margin-right: 92px;
     font-size: 16px;
 }
 .kolom-jam-obat{
@@ -119,7 +124,7 @@ html, body {
 }
 
 .text-poli-obat{
-    margin-right: 134px;
+    margin-right: 130px;
     font-size: 16px;
 }
 .kolom-poli-obat{
@@ -131,7 +136,7 @@ html, body {
 }
 
 .text-pemeriksa-obat{
-    margin-right: 45px;
+    margin-right: 47px;
     font-size: 16px;
 }
 .kolom-pemeriksa-obat{
