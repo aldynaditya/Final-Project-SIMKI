@@ -7,6 +7,7 @@ import { fetchOrderSurat } from '../../redux/doctor/indexLetter/actions';
 import CetakSuratPopup from '../../Pages/Resepsionis/CetakSuratPopup';
 import HasilKuisionerPopup from '../../Pages/Dokter/KuisionerPopUp'; 
 import { formatDateStrip } from '../../utils/dateUtils';
+import Modal from 'react-modal';
 import '../../Style/Resepsionis/EmrResepsionis.css';
 import '../../Style/components/DetailEpisode.css';
 
@@ -19,6 +20,7 @@ const DetailEpisode = () => {
     const { data: orderData, loading: orderloading, error: orderError } = useSelector((state) => state.getorderSurat);
     const [showCetakSuratPopup, setShowCetakSuratPopup] = useState(false);
     const [showHasilKuisionerPopup, setShowHasilKuisionerPopup] = useState(false);
+    const [alert, setAlert] = useState({ status: false, message: '' });
     const [TD1, setTD1] = useState('');
     const [TD2, setTD2] = useState('');
 
@@ -38,11 +40,19 @@ const DetailEpisode = () => {
     }, [data]);
 
     const CetakSurat = () => {
-        setShowCetakSuratPopup(true);
+        if (!orderData || orderData.length === 0) {
+            setAlert({ status: true, message: "Tidak terdapat data surat sakit" });
+        } else {
+            setShowCetakSuratPopup(true);
+        }
     };
 
     const HasilKuisioner = () => {
-        setShowHasilKuisionerPopup(true);
+        if (!Rdata || Rdata.length === 0) {
+            setAlert({ status: true, message: "Belum ada respon dari Pasien" });
+        } else {
+            setShowHasilKuisionerPopup(true);
+        }
     };
 
     const closeCetakSuratPopup = () => {
@@ -181,7 +191,6 @@ const DetailEpisode = () => {
                     <button
                     className="cetak-surat"
                     onClick={CetakSurat}
-                    disabled={!orderData || orderData.length === 0}
                     title={!orderData || orderData.length === 0 ? "Tidak terdapat data surat" : ""}
                 >
                     Cetak Surat
@@ -191,7 +200,6 @@ const DetailEpisode = () => {
                     <button
                     className="hasil-kuisioner"
                     onClick={HasilKuisioner}
-                    disabled={!Rdata || Rdata.length === 0}
                     title={!Rdata || Rdata.length === 0 ? "Response belum ada" : ""}
                 >
                     Hasil Kuisioner
@@ -212,6 +220,20 @@ const DetailEpisode = () => {
                 onComplete={handleHasilKuisionerComplete} 
                 />
             }
+            <Modal
+                isOpen={alert.status}
+                onRequestClose={() => setAlert({ status: false, message: '', type: '' })}
+                contentLabel="Alert Message"
+                className="Modal"
+                overlayClassName="Overlay"
+                shouldCloseOnOverlayClick={true}
+                shouldCloseOnEsc={true}
+            >
+                <div className="modal-content">
+                    <p>{alert.message}</p>
+                    <button onClick={() => setAlert({ status: false, message: '', type: '' })}>Close</button>
+                </div>
+            </Modal>
         </div>
     );
 };
