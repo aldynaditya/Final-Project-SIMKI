@@ -19,6 +19,7 @@ const DetailKunjungan = () => {
     const [completed, setCompleted] = useState(false);
     const [alert, setAlert] = useState({ status: false, message: '' });
     const isFeedbackAvailable = data.feed_back && data.feed_back.length > 0;
+    const isKuisionerAvailable = responses && responses.length > 0;
 
     useEffect(() => {
         dispatch(fetchDetail(id));
@@ -37,11 +38,24 @@ const DetailKunjungan = () => {
     }, [responses]);
 
     const handleKuisioner = () => {
-        if (completed) {
-            setAlert({ status: true, message: "Kuisioner sudah terisi" });
-        } else {
-            setIsKuisionerPopUpOpen(true);
-        }
+    if (!data.tanggal) {
+        setAlert({ status: true, message: "Tanggal kunjungan tidak tersedia" });
+        return;
+    }
+
+    const visitDate = new Date(data.tanggal);
+    const currentDate = new Date();
+
+    const differenceInTime = currentDate.getTime() - visitDate.getTime();
+    const differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24));
+
+    if (differenceInDays < 3) {
+        setAlert({ status: true, message: "Kuisioner Hanya Bisa Diakses 3 Hari Setelah Kunjungan" });
+    } else if (isKuisionerAvailable) {
+        setAlert({ status: true, message: "Kuisioner sudah terisi" });
+    } else {
+        setIsKuisionerPopUpOpen(true);
+    }
     };
 
     const handleCloseQuestionnaire = () => {
@@ -102,7 +116,6 @@ const DetailKunjungan = () => {
                         <button
                             className='kuisioner'
                             onClick={handleKuisioner}
-                            disabled={completed}
                         >
                             Isi Kuisioner
                         </button>
