@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import '../../Style/Pasien/DetailKunjungan.css';
+import Modal from 'react-modal';
 import { fetchDetail } from '../../redux/patient/detail/actions';
 import { fetchResponses } from '../../redux/patient/response/actions';
 import { formatDateStrip } from '../../utils/dateUtils';
@@ -16,6 +17,7 @@ const DetailKunjungan = () => {
     const [isKuisionerPopUpOpen, setIsKuisionerPopUpOpen] = useState(false);
     const [isFeedbackPopUpOpen, setFeedbackPopUpOpen] = useState(false);
     const [completed, setCompleted] = useState(false);
+    const [alert, setAlert] = useState({ status: false, message: '' });
     const isFeedbackAvailable = data.feed_back && data.feed_back.length > 0;
 
     useEffect(() => {
@@ -35,7 +37,11 @@ const DetailKunjungan = () => {
     }, [responses]);
 
     const handleKuisioner = () => {
-        setIsKuisionerPopUpOpen(true);
+        if (completed) {
+            setAlert({ status: true, message: "Kuisioner sudah terisi" });
+        } else {
+            setIsKuisionerPopUpOpen(true);
+        }
     };
 
     const handleCloseQuestionnaire = () => {
@@ -48,7 +54,11 @@ const DetailKunjungan = () => {
     };
 
     const handleFeedback = () => {
+        if (!isFeedbackAvailable) {
+            setAlert({ status: true, message: "Belum ada feedback dari dokter" });
+        } else {
         setFeedbackPopUpOpen(true);
+        }
     };
 
     const handleCloseFeedback = () => {
@@ -97,10 +107,8 @@ const DetailKunjungan = () => {
                             Isi Kuisioner
                         </button>
                         <button
-                            className={`feedback ${!isFeedbackAvailable ? 'disabled' : ''}`}
+                            className='feedback'
                             onClick={handleFeedback}
-                            disabled={!isFeedbackAvailable}
-                            title={!isFeedbackAvailable ? 'Feedback belum ada' : ''}
                         >
                             Feedback
                         </button>
@@ -119,6 +127,20 @@ const DetailKunjungan = () => {
                 onClose={handleCloseFeedback}
                 />
             }
+            <Modal
+                isOpen={alert.status}
+                onRequestClose={() => setAlert({ status: false, message: '', type: '' })}
+                contentLabel="Alert Message"
+                className="Modal"
+                overlayClassName="Overlay"
+                shouldCloseOnOverlayClick={true}
+                shouldCloseOnEsc={true}
+            >
+                <div className="modal-content">
+                    <p>{alert.message}</p>
+                    <button onClick={() => setAlert({ status: false, message: '', type: '' })}>Close</button>
+                </div>
+            </Modal>
         </div>
     );
 };

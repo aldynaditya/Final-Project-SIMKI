@@ -92,11 +92,16 @@ const BuatJanji = () => {
         }
 
         const [start_time, end_time] = formData.jam.split('-');
+        const { jam, ...restFormData } = formData; // Exclude 'jam' from the form data
+
         const appointmentData = {
-            ...formData,
+            ...restFormData,  // include all other form data
             start_time,
             end_time
         };
+
+        // Menampilkan appointmentData di console
+    console.log('Appointment Data:', appointmentData);
 
         setAlert({ status: false, message: '' });
         dispatch(createAppointment(appointmentData));
@@ -138,6 +143,10 @@ const BuatJanji = () => {
         setAlert({ status: false, message: '' });
         setNavigateAfterClose(false);
     }, []);
+
+    useEffect(() => {
+        console.log('Current jam:', formData.jam);
+    }, [formData.jam]);
 
     return (
         <div className='BuatJanji_container'>

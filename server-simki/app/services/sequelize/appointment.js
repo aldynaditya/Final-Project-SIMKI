@@ -112,7 +112,11 @@ const createAppointment = async (req) => {
     const formattedStartTime = validateTimeFormat(start_time);
     const formattedEndTime = validateTimeFormat(end_time);
 
-    if (formattedStartTime < schedule.start_time || formattedEndTime > schedule.end_time) {
+    const matchedSchedule = schedules.find(schedule => 
+        formattedStartTime >= schedule.start_time && formattedEndTime <= schedule.end_time
+    );
+
+    if (!matchedSchedule) {
         throw new Error('Waktu janji tidak sesuai dengan jadwal dokter');
     }
 
@@ -128,6 +132,8 @@ const createAppointment = async (req) => {
     });
 
     const hasConflict = existingAppointments.some(appointment => {
+        if (appointment.status === 'ditolak') return false;
+        
         const existingStart = appointment.schedule.start_time;
         const existingEnd = appointment.schedule.end_time;
 

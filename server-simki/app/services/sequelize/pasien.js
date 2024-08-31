@@ -245,7 +245,8 @@ const createAppointment = async (req) => {
     }
 
     const dayOfWeek = getDayOfWeek(tanggal);
-    const schedule = await Schedule.findOne({
+
+    const schedules = await Schedule.findAll({
         where: {
             hari: dayOfWeek,
             status: 'ada',
@@ -263,12 +264,14 @@ const createAppointment = async (req) => {
         ],
     });
 
-    if (!schedule) throw new NotFoundError('Tidak ada Dokter yang tersedia pada tanggal itu');
-
     const formattedStartTime = validateTimeFormat(start_time);
     const formattedEndTime = validateTimeFormat(end_time);
 
-    if (formattedStartTime < schedule.start_time || formattedEndTime > schedule.end_time) {
+    const matchedSchedule = schedules.find(schedule => 
+        formattedStartTime >= schedule.start_time && formattedEndTime <= schedule.end_time
+    );
+
+    if (!matchedSchedule) {
         throw new Error('Waktu janji tidak sesuai dengan jadwal dokter');
     }
 
@@ -281,7 +284,7 @@ const createAppointment = async (req) => {
     const existingAppointments = await Appointment.findAll({
         where: {
             pasienId: dataPasien.uuid,
-            tanggal: appointmentDate
+            tanggal: appointmentDate,
         },
         include: {
             model: Schedule,
@@ -290,6 +293,8 @@ const createAppointment = async (req) => {
     });
 
     const hasConflict = existingAppointments.some(appointment => {
+        if (appointment.status === 'ditolak') return false;
+
         const existingStart = appointment.schedule.start_time;
         const existingEnd = appointment.schedule.end_time;
 
@@ -306,13 +311,16 @@ const createAppointment = async (req) => {
         penjamin,
         pasienId: dataPasien.uuid,
         dataPasienId: dataPasien.uuid,
-        scheduleId: schedule.uuid,
+        scheduleId: matchedSchedule.uuid,
         start_time: formattedStartTime,
         end_time: formattedEndTime
     });
 
     return result;
 };
+
+
+
 
 
 const getDataPasien = async (req) => {

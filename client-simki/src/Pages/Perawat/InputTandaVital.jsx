@@ -56,7 +56,7 @@ const EmrPerawat = () => {
         if (errorForm) {
             setAlert({
                 status: true,
-                message: errorForm,
+                message: 'Isi seluruh Form Entry',
                 type: 'danger'
             });
         } else if (vital) {
