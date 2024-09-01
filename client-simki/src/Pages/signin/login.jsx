@@ -26,6 +26,7 @@ const Login = () => {
   });
 
   const [isLoading, setIsLoading] = useState(false);
+  const [captchaValidated, setCaptchaValidated] = useState(false); // Tambahkan state untuk captcha
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -43,8 +44,31 @@ const Login = () => {
     setAlert({ status: false, message: '', type: '' });
   };
 
+  const handleCaptchaChange = (value) => {
+    setCaptchaValidated(!!value); // Perbarui state captcha berdasarkan apakah ada nilai atau tidak
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!form.email || !form.password) {
+      setAlert({
+        status: true,
+        message: 'Form belum terisi. Silakan lengkapi email dan password.',
+        type: 'danger',
+      });
+      return;
+    }
+
+    if (!captchaValidated) {
+      setAlert({
+        status: true,
+        message: 'Captcha belum terisi. Silakan selesaikan captcha.',
+        type: 'danger',
+      });
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -107,9 +131,9 @@ const Login = () => {
         <div className="captcha-container">
             <ReCAPTCHA
               sitekey="6LesWTIqAAAAAIZQEeNjMBOHOBPyH9m8OAz3vwv-"
-              onChange
+              onChange={handleCaptchaChange} // Pasangkan event handler untuk captcha
             />
-          </div>
+        </div>
         <div className='submit-container'>
           <button 
             type="button"
@@ -121,7 +145,6 @@ const Login = () => {
           <button 
             type="submit"
             className='submit'
-            disabled={isLoading}
           >
             {isLoading ? 'Loading...' : 'Login'}
           </button>
