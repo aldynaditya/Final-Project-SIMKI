@@ -136,13 +136,13 @@ const TransaksiKasir = () => {
                                                 <td>{row.petugas}</td>
                                                 <td>{row.status}</td>
                                                 <td className="detail-faktur-cell">
-                                                    <button 
-                                                        className="detail-faktur" 
-                                                        onClick={() => handleDetailFakturOpen(row.id)}
-                                                        disabled={data.status === 'Completed'}
-                                                        >
-                                                        Detail
-                                                    </button>
+                                                <button 
+                                                    className="detail-faktur" 
+                                                    onClick={() => handleDetailFakturOpen(row.id)}
+                                                    disabled={row.status === "Completed"}
+                                                >
+                                                    Detail
+                                                </button>
                                                     <button className="cetak-transaksi" onClick={() => CetakTransaksi(row)}>Cetak</button>
                                                 </td>
                                             </tr>
