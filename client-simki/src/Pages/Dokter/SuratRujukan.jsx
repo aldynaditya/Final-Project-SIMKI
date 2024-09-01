@@ -76,7 +76,7 @@ const SuratRujukan = ({ onClose, onComplete }) => {
         <div className='suratrujukan-container'>
             <div className='suratrujukan-content'>
             <button className='cancel-x' onClick={onClose}>
-                    Cancel X
+                    X
             </button>
                 <h1 className='text-suratrujukan'>Surat Rujukan</h1>
                 <div className='kolom-surat-rujukan'>

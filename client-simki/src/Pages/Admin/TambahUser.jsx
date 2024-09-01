@@ -76,7 +76,7 @@ const TambahUser = ({ onClose, onSuccess }) => {
         <div className='tambah-popup-container'>
             <div className='tambah-popup-content'>
                 <button className='cancel-x' onClick={onClose}>
-                    Cancel X
+                    X
                 </button>
                 <h1 className='text-tambah-popup'>Tambah User</h1>
                 <div className='kolom-tambah'>

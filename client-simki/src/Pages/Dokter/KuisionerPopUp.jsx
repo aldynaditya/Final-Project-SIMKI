@@ -111,7 +111,7 @@ const HasilKuisionerPopup = ({ onClose, onComplete }) => {
         <div className='hasilkuisioner-popup-container'>
             <div className='hasilkuisioner-popup-content'>
                 <button className='cancel-x' onClick={onClose}>
-                    Cancel X
+                    X
                 </button>
                 <h1 className='text-hasilkuisioner-popup'>Hasil Kuisioner</h1>
                 <div className='kolom-hasilkuisioner'>

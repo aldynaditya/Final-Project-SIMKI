@@ -56,7 +56,7 @@ const UploadLaporan = ({ onClose }) => {
         <div className='tambahlaporan-popup-container'>
             <div className='tambahlaporan-popup-content'>
                 <button className='cancel-x' onClick={onClose}>
-                    Cancel X
+                    X
                 </button>
                 <h1 className='text-tambahlaporan-popup'>Tambah Laporan</h1>
                 <div className='kolom-tambah-laporan'>

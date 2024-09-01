@@ -88,7 +88,7 @@ const EditJadwal = ({ onClose, jadwalId, onSuccess }) => {
         <div className='tambah-jadwal-container'>
             <div className='tambah-jadwal-content'>
                 <button className='cancel-x' onClick={onClose}>
-                    Cancel X
+                    X
                 </button>
                 <h1 className='text-tambah-jadwal'>Edit Jadwal</h1>
                 <div className='kolom-dokter-jadwal'>

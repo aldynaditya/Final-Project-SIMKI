@@ -99,7 +99,7 @@ const EditObat = ({ onClose, obatId, onSuccess }) => {
         <div className='tambahitem-popup-container'>
             <div className='tambahitem-popup-content'>
                 <button className='cancel-x' onClick={onClose}>
-                    Cancel X
+                    X
                 </button>
                 <h1 className='text-tambahitem-popup'>Edit Obat</h1>
                 <div className='kolom-tambah-item'>

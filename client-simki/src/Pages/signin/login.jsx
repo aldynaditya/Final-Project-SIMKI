@@ -8,6 +8,7 @@ import Modal from 'react-modal';
 import emailIcon from '../../images/email.png';
 import passIcon from '../../images/pass.png';
 import logoklinik from '../../images/logoklinik.png';
+import ReCAPTCHA from "react-google-recaptcha";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -103,6 +104,12 @@ const Login = () => {
         <div className="forgot-password">
           Lupa Kata Sandi? <span onClick={() => handleActionClick("LupaPassword")}>Klik Di sini</span>
         </div>
+        <div className="captcha-container">
+            <ReCAPTCHA
+              sitekey="6LesWTIqAAAAAIZQEeNjMBOHOBPyH9m8OAz3vwv-"
+              onChange
+            />
+          </div>
         <div className='submit-container'>
           <button 
             type="button"

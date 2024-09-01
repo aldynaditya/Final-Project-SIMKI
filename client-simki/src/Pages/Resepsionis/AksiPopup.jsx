@@ -64,7 +64,7 @@ const UpdateStatus = ({ id, onClose, onSuccess }) => {
         <div className='update-status-container'>
             <div className='update-status-content'>
                 <button className='cancel-x' onClick={onClose}>
-                    Cancel X
+                    X
                 </button>
                 <h1 className='text-update-status'>Update Status</h1>
                 <div className='kolom-update-status'>
