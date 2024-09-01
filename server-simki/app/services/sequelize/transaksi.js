@@ -90,6 +90,7 @@ const getAllOrders = async () => {
                 status: transaksi.status,
                 totalOrder: transaksi.total_order,
                 total: transaksi.total,
+                keterangan: transaksi.keterangan,
                 petugas: transaksi.user.nama,
                 poli: transaksi.episode.emrpasien.appointment.schedule.poli,
                 dokter: transaksi.episode.emrpasien.appointment.schedule.user_klinik.nama,

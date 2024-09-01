@@ -110,7 +110,7 @@ const TambahObatDr = ({ onClose, onComplete }) => {
         <div className='tambahobatdr-container'>
             <div className='tambahobatdr-content'>
                 <button className='cancel-x' onClick={onClose}>
-                    Cancel X
+                    X
                 </button>
                 <h1 className='text-tambahobatdr'>Tambah Obat</h1>
                 <div className='kolom-tambah-dokter'>

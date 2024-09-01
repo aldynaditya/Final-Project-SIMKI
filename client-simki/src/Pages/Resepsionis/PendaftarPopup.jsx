@@ -76,7 +76,7 @@ const TambahPendaftar = ({ onClose , onSuccess} ) => {
   return (
     <div className='tambah-pendaftar-container'>
       <div className='tambah-pendaftar-content'>
-        <div className='cancel-x' onClick={onClose}>Cancel X</div>
+        <div className='cancel-x' onClick={onClose}>X</div>
         <h1 className='text-tambah-pendaftar'>Pendaftar Baru</h1>
         <div className='kolom-pendaftar-baru'>
           <div className='npasien-pendaftar-baru'>

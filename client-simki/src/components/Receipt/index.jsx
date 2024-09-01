@@ -79,6 +79,10 @@ const Invoice = React.forwardRef(({ data }, ref) => {
                         <span className="info-label">Jenis Pembayaran</span>
                         <span className="info-value">: {data.metodeBayar}</span>
                     </div>
+                    <div className="info-row">
+                        <span className="info-label">Keterangan</span>
+                        <span className="info-value">: {data.keterangan}</span>
+                    </div>
                 </div>
             </div>
             <div className="invoice-details">

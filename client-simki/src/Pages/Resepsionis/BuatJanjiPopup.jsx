@@ -110,7 +110,7 @@ const BuatJanjiPopup = ({ id, onClose, onSuccess }) => {
     return (
         <div className="popup-container">
             <button className='cancel-x-b' onClick={onClose}>
-                    Cancel X
+                    X
                 </button>
             <div className="popup-content">
                 <h1 className='text-popup-buatjanji'>Buat Janji</h1>

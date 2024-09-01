@@ -96,7 +96,7 @@ const TambahJadwal = ({ onClose, onSuccess, schedules }) => {
         <div className='tambah-jadwal-container'>
             <div className='tambah-jadwal-content'>
                 <button className='cancel-x' onClick={onClose}>
-                    Cancel X
+                    X
                 </button>
                 <h1 className='text-tambah-jadwal'>Tambah Jadwal</h1>
                 <div className='kolom-dokter-jadwal'>

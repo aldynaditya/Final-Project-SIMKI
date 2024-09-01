@@ -77,7 +77,7 @@ const SuratSakit = ({ onClose, onComplete }) => {
         <div className='cetaksurat-popup-container'>
             <div className='cetaksurat-popup-content'>
                 <button className='cancel-x' onClick={onClose}>
-                    Cancel X
+                    X
                 </button>
                 <h1 className='text-cetaksurat-popup'>Surat Sakit</h1>
                 <div className='kolom-cetak-surat'>

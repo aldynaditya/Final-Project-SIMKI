@@ -109,7 +109,7 @@ const TambahProsedur = ({ onClose, onComplete }) => {
         <div className='tambahprosedur-container'>
             <div className='tambahprosedur-content'>
                 <button className='cancel-x' onClick={onClose}>
-                    Cancel X
+                    X
                 </button>
                 <h1 className='text-tambahprosedur'>Tambah Item</h1>
                 <div className='kolom-tambah-prosedur'>

@@ -72,7 +72,7 @@ const PopUpDetailFaktur = ({ id, onClose, onSuccess }) => {
         <div className='modal-overlay'>
             <div className='detail-faktur-popup-container'>
                 <button className='cancel-x' onClick={onClose}>
-                    Cancel X
+                    X
                 </button>
                 <h1 className='text-detail-faktur'>Detail Faktur</h1>
                 <div className='kolom-detail-faktur'>
