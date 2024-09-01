@@ -24,6 +24,7 @@ const OrderSurat = () => {
     const [isSuratRujukanPopupVisible, setIsSuratRujukanPopupVisible] = useState(false);
     const [alert, setAlert] = useState({ status: false, message: '', type: '' });
     const [printData, setPrintData] = useState(null);
+    const [isReadyToPrint, setIsReadyToPrint] = useState(false);
     
     useEffect(() => {
         dispatch(fetchorderInfo(id));
@@ -104,13 +105,15 @@ const OrderSurat = () => {
             orderDetails: order,
         };
         setPrintData(combinedData);
+        setIsReadyToPrint(true);
     };
 
     useEffect(() => {
-        if (printData) {
+        if (isReadyToPrint && printData) {
             handlePrint();
+            setIsReadyToPrint(false);
         }
-    }, [handlePrint, printData]);
+    }, [handlePrint, isReadyToPrint, printData]);
 
     if (loading || deleteLoading ) {
         return <div>Loading...</div>;
