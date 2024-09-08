@@ -55,20 +55,20 @@ const getAllSuratSakit = async (req) => {
     const result = notifikasi
         .filter(notifikasi => notifikasi.suratsakit !== null)
         .map(notifikasi => {
-            const emr = notifikasi.episode.emrpasien;
-            const datapasien = emr.appointment.datapasien;
+            const emr = notifikasi.episode?.emrpasien;
+            const datapasien = emr?.appointment?.datapasien;
             const suratsakit = notifikasi.suratsakit;
-            const userklinik = emr.appointment.schedule.user_klinik;
+            const userklinik = emr?.appointment?.schedule?.user_klinik;
 
             return {
                 id: notifikasi.uuid,
-                noEMR: emr.noEMR,
-                namaPasien: datapasien.nama_lengkap,
+                noEMR: emr?.noEMR || '',
+                namaPasien: datapasien?.nama_lengkap || '',
                 versi_surat: notifikasi.versi_surat,
                 tanggal: notifikasi.updatedAt,
                 status: notifikasi.status,
                 idsuratsakit: suratsakit.uuid,
-                pemeriksa:userklinik.nama
+                pemeriksa: userklinik?.nama || 'N/A'
             };
         });
 
